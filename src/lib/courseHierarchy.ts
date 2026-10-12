@@ -30,6 +30,8 @@ export type StoredModule = {
   id?: string;
   description?: string;
   level?: LevelInfo;
+  /** Cover illustration URL, once generated (see lib/coverArt.ts). */
+  cover?: string;
 };
 
 export type LevelGroup = LevelInfo & {
@@ -105,6 +107,15 @@ export function modulePlace(levels: Pick<LevelGroup, "modules" | "legacy">[], in
 export function moduleLabel(levels: Pick<LevelGroup, "modules" | "legacy">[], index: number) {
   const p = modulePlace(levels, index);
   return p.legacy ? `Module ${index + 1}` : `Level ${p.level + 1} · Module ${p.number}`;
+}
+
+/**
+ * The label learners see. Lessons are numbered across the whole course, the
+ * same as the course map ("Level 2 · Lesson 4"), or "Lesson 4" without levels.
+ */
+export function lessonLabel(levels: Pick<LevelGroup, "modules" | "legacy">[], index: number) {
+  const p = modulePlace(levels, index);
+  return p.legacy ? `Lesson ${index + 1}` : `Level ${p.level + 1} · Lesson ${index + 1}`;
 }
 
 type LevelLike = Pick<LevelGroup, "id" | "title" | "description" | "objective" | "modules" | "legacy"> & {

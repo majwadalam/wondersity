@@ -37,24 +37,23 @@ export function ActivityFrame({
 }) {
   const meta = ACTIVITY_META[type];
   return (
-    <section className="activity-card relative overflow-hidden rounded-3xl border border-gold/30 bg-paper p-5 sm:p-7" data-type={type} data-done={done || undefined}>
-      <div className="activity-glow" aria-hidden />
+    <section className="activity-card relative" data-type={type} data-done={done || undefined}>
       <div className="relative flex items-center gap-2">
-        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-gold/20 text-sm text-gold" aria-hidden>
+        <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-accent-soft text-sm text-accent" aria-hidden>
           {meta.icon}
         </span>
-        <span className="text-[11px] font-semibold tracking-[0.18em] text-gold uppercase">{meta.label}</span>
+        <span className="text-sm font-semibold text-accent">{meta.label}</span>
         {done && (
-          <span className="activity-done ml-auto rounded-full bg-sage/15 px-2.5 py-0.5 text-[11px] font-semibold text-sage">✓ Done</span>
+          <span className="activity-done ml-auto rounded-full bg-[#e9f8ef] px-2.5 py-0.5 text-xs font-semibold text-good">✓ Done</span>
         )}
       </div>
-      <h3 className="font-display relative mt-3 text-2xl leading-snug text-sand">{title}</h3>
-      {prompt && <p className="relative mt-2 text-[15px] leading-relaxed text-sand/85">{rich(prompt)}</p>}
-      <div className="relative mt-5">{children}</div>
+      <h3 className="font-display relative mt-3 text-2xl leading-snug text-fg sm:text-[28px]">{title}</h3>
+      {prompt && <p className="relative mt-3 text-[17px] leading-relaxed text-fg/80">{rich(prompt)}</p>}
+      <div className="relative mt-6">{children}</div>
       {done && reveal && (
-        <div className="activity-reveal relative mt-5 rounded-2xl border border-gold/30 bg-gold/10 px-4 py-3">
-          <p className="text-[10px] font-semibold tracking-[0.18em] text-gold uppercase">Key insight</p>
-          <p className="mt-1 text-sm leading-relaxed text-sand">{rich(reveal)}</p>
+        <div className="activity-reveal relative mt-6 rounded-2xl border border-[#b6e6c8] bg-[#f1fbf5] px-5 py-4">
+          <p className="text-xs font-semibold text-good">Key insight</p>
+          <p className="mt-1 text-[15px] leading-relaxed text-fg">{rich(reveal)}</p>
         </div>
       )}
     </section>

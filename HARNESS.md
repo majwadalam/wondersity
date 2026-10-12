@@ -300,3 +300,116 @@ parameter k) that the browser plots. Two rules kept that safe and useful:
   validation requires the curve to be defined, not flat, and visibly inside
   that window at the slider's minimum, starting value and maximum. Outside
   the window it is clipped.
+
+## Choosing the models
+
+A model reviewing its own lessons can't be used to compare models: each one
+grades itself. So each candidate wrote the same sample modules through the
+real quality gate, and every lesson was then re-scored by one fixed reviewer
+(`scripts/judge-lessons.ts`). Cost is what OpenRouter reported for each call
+(`withUsage` in `lib/model.ts`), not list prices.
+
+Black holes, Python loops and the French Revolution; 6 lessons per model,
+re-scored by GPT-6 Sol:
+
+| Writer | List price (in / out per 1M) | Cost per lesson | Fixed-reviewer score |
+| --- | --- | --- | --- |
+| GPT-6.1 Sol | $2.00 / $10.00 | ~$0.06 | 7.9 |
+| GPT-6 Sol | $2.00 / $10.00 | ~$0.09 | 7.9 |
+| GPT-6 Luna | $0.10 / $0.50 | ~$0.003 | 7.2 |
+| Claude Haiku 5.5 | $0.10 / $0.50 | ~$0.013 | 6.7 |
+| DeepSeek V4.1 Flash | $0.30 / $1.20 | ~$0.025 | 6.4 |
+| GLM 5.3 Flash | $0.15 / $0.50 | ~$0.006 | 5.5 |
+
+List price misleads: DeepSeek writes 16-21k output tokens per lesson (mostly
+hidden reasoning) against Luna's 4-8k, so it cost seven times as much per
+lesson. GPT-6.1 Sol uses fewer tokens than GPT-6 Sol at the same price.
+
+Then six topics through the new gate (below), each re-checked by DeepSeek as
+a reviewer from another model family:
+
+| Writer, reviewer GPT-6.1 Sol | Passed first draft | Gate's score | DeepSeek's score | Cost per lesson incl. review |
+| --- | --- | --- | --- | --- |
+| GPT-6 Luna | 0 of 6 (1 of 6 after a revision) | 7.2 | 8.0 | ~$0.025 |
+| GPT-6.1 Sol | 6 of 6 | 8.3 | 9.0 | ~$0.042 |
+
+The samples are small (3-6 lessons per model), so these are strong hints, not
+proof; the eval suite in "Limits and next steps" is what should decide.
+
+## Checking facts in code, and a reviewer that isn't the writer
+
+The model comparison showed self-review passing wrong facts. GLM's lesson
+taught "6.75 + 4.75 = 19.00" and its own review scored it 7; DeepSeek's said
+11.5 sous of a 25-sous wage was "over half" and passed with 8-9. The author's
+literature review on agent harnesses (~/Ajwad/research) points the same way:
+a model's check of its own output is noisy and inherits the draft's blind
+spots (AutoMix; the "verification gap" in agent test-time scaling); facts the
+harness can compute should be computed by the harness, not written or checked
+by a model; errors left in context tend to produce more errors
+("self-conditioning", Sinha et al.); and what matters must be placed where it
+can't be missed, not buried in a list.
+
+What changed in the gate (`lib/lessonWriter.ts`):
+
+- **Arithmetic is checked in code** (`lib/factCheck.ts`): explicit equations
+  ("3.50 + 2.00 = 5.50"), running totals (", + 4.75 = 19.00"), fractions
+  ("12/90 = 2/15") and shares stated as percentages ("11.5 out of 25 is 46%")
+  are recomputed with the safe expression parser. Trap feedback is skipped,
+  since it quotes wrong answers on purpose. On 54 sample lessons it found the
+  one real error and no false alarms.
+- **Fail closed on wrong arithmetic, so false alarms matter.** The first
+  version misread correct chains ("0.5 × 0.4 × 0.5 = 0.2 × 0.5 = 0.1",
+  "7200 + 300 + 30 = 7530"), integer division ("400 ÷ 60 = 6 remainder 40")
+  and formulas whose start it couldn't see, and rejected two good lessons; each
+  of those is now a test. Any new pattern should be swept over the saved
+  sample lessons before it can reject anything.
+- **Wrong arithmetic can't pass.** A version with a computed error can't
+  pass, any clean version beats it, and if no version is clean the lesson is
+  not shown (the run fails, rather than teach a wrong sum).
+- **The reviewer is set on its own** (`REVIEW_MODEL`), and its score is
+  bounded 0-10 by the schema. The default is GPT-6.1 Sol for both writing and
+  review: it was the best value measured, and the code checks cover the errors
+  self-review was seen to miss. Pointing `REVIEW_MODEL` at another family
+  gives an independent review for about $0.004 more per lesson (DeepSeek).
+- **Verified errors first.** The reviser gets the computed errors one per
+  line, ahead of the reviewer's notes.
+- **Rewrite rather than patch a bad draft.** Below 5, a fresh lesson is written
+  with the problems to avoid, instead of revising inside the flawed draft.
+- **Every run says what it cost.** The trace ends with `run.cost` (dollars,
+  calls, tokens) as OpenRouter reports it.
+
+## Checking facts against the web
+
+Arithmetic can be computed; dates, names, events and measurements can't. Each
+lesson version is checked online (`lib/factVerify.ts`), at the same time as
+the review:
+
+1. One call lists up to 8 checkable claims, most at risk first, as standalone
+   sentences. Text that is wrong on purpose is never sent: wrong answer
+   options, trap feedback, stated misconceptions. Code is excluded too: it is
+   checked by what it does.
+2. Each claim gets its own web-search call (OpenRouter's web plugin, Exa by
+   default), which returns supported / contradicted / unclear, the URL relied
+   on and a sentence quoted from it.
+3. **The harness decides which verdicts count.** A verdict citing a page the
+   search didn't return, or quoting evidence that isn't on the page, becomes
+   "unclear". This is provenance computed in code rather than asserted by the
+   model, the rule the author's research supports (see "Checking facts in
+   code" above).
+
+Contradicted claims join the arithmetic errors: the reviser gets them first,
+with the source and the correct fact, and a version that still has one is
+never shown. Unconfirmed claims are passed on to be stated more carefully
+("about", "historians estimate") or removed, but don't block a lesson on
+their own. If the claims can't be listed at all (search provider down), the
+lesson is judged on the other checks and the trace records `verify_failed`.
+
+The writing guide now asks for this up front: precise figures only when
+certain, no invented quotations or statistics, disputed views attributed,
+made-up examples clearly marked, and sums written out in full.
+
+Limits: search can't settle contested interpretations, and it inherits
+mistakes from bad pages, so the judge is told to prefer encyclopedias,
+universities and official bodies. Not yet measured live (the OpenRouter key
+was out of credit when this was built): cost per lesson, time added, and how
+often real errors are caught versus false contradictions.

@@ -21,6 +21,7 @@ const level = (title: string, modules: string[]) => ({
 function rawPlan() {
   return {
     title: "Thinking in Systems",
+    cover_url: null,
     description: "From parts and flows to leverage points.",
     levels: [
       level("Seeing the parts", ["Stocks and flows", "Feedback loops"]),
@@ -58,6 +59,7 @@ function courseRow(modules: StoredModule[], currentModule: number, lessons: Less
     topic: "Systems",
     topic_key: "systems",
     title: "Thinking in Systems",
+    cover_url: null,
     description: "d",
     modules,
     current_module: currentModule,
@@ -210,6 +212,14 @@ describe("toCourseView", () => {
     const newer = lessonRow(0, false);
     const view = toCourseView(courseRow(plan().modules, 0, [older, newer]));
     assert.equal(view.modules[0].lesson?.id, newer.id);
+  });
+
+  it("keeps a passed module's completed lesson even if a newer copy was written", () => {
+    const older = lessonRow(0, true);
+    const newer = lessonRow(0, false);
+    const view = toCourseView(courseRow(plan().modules, 1, [older, newer]));
+    assert.equal(view.modules[0].lesson?.id, older.id);
+    assert.equal(view.modules[0].lesson?.completed, true);
   });
 });
 

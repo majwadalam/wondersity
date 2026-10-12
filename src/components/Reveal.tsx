@@ -10,7 +10,7 @@ type Props = RevealOptions & {
   y?: number;
   /** Duration in ms. */
   duration?: number;
-  as?: "div" | "section" | "header";
+  as?: "div" | "section" | "header" | "li";
 };
 
 /** Fades + slides its children in once, when first scrolled into view. */

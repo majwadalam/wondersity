@@ -69,10 +69,10 @@ export function SoundActivity({ a, onDone }: { a: SoundData; onDone: () => void 
 
   return (
     <ActivityFrame type="sound" title={a.title} prompt={a.prompt} reveal={a.reveal} done={played.size > 0}>
-      <div className="relative h-28 overflow-hidden rounded-2xl border border-beige bg-ink/50 p-2" aria-hidden>
+      <div className="relative h-28 overflow-hidden rounded-2xl border border-line bg-canvas p-2" aria-hidden>
         <div className="relative flex h-full">
           {whites.map((k) => (
-            <span key={k} className="piano-white flex-1 rounded-b-md border-r border-ink/40" data-lit={lit.includes(k) || undefined} />
+            <span key={k} className="piano-white flex-1 rounded-b-md border-r border-line" data-lit={lit.includes(k) || undefined} />
           ))}
           {keys.filter(isBlack).map((k) => {
             const leftWhites = whites.filter((w) => w < k).length;
@@ -88,23 +88,23 @@ export function SoundActivity({ a, onDone }: { a: SoundData; onDone: () => void 
         </div>
       </div>
       <div className="mt-3 flex items-center gap-2 text-xs">
-        <span className="text-taupe">Play as</span>
+        <span className="text-muted">Play as</span>
         {(["chord", "arpeggio"] as const).map((m) => (
-          <button key={m} type="button" onClick={() => setMode(m)} className={`rounded-full border px-3 py-1 ${mode === m ? "border-gold bg-gold/15 text-gold" : "border-beige text-sand/80"}`}>
+          <button key={m} type="button" onClick={() => setMode(m)} className={`rounded-full border px-3 py-1 ${mode === m ? "border-accent bg-accent-soft text-accent" : "border-line text-fg/80"}`}>
             {m === "chord" ? "Chord" : "One by one"}
           </button>
         ))}
       </div>
       <div className="mt-4 grid gap-3 sm:grid-cols-2">
         {a.clips.map((c, i) => (
-          <button key={i} type="button" onClick={() => play(i)} className="sound-clip flex items-start gap-3 rounded-2xl border border-beige bg-ink/30 p-4 text-left hover:border-gold/60">
-            <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-gold text-ink">▶</span>
+          <button key={i} type="button" onClick={() => play(i)} className="sound-clip flex items-start gap-3 rounded-2xl border border-line bg-canvas p-4 text-left hover:border-accent/60">
+            <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-accent text-white">▶</span>
             <span>
-              <span className="block font-semibold text-sand">{c.label}</span>
-              <span className="block text-xs text-gold">{c.notes.join(" · ")}</span>
-              {c.detail && <span className="mt-1 block text-xs leading-relaxed text-taupe">{c.detail}</span>}
+              <span className="block font-semibold text-fg">{c.label}</span>
+              <span className="block text-xs text-accent">{c.notes.join(" · ")}</span>
+              {c.detail && <span className="mt-1 block text-xs leading-relaxed text-muted">{c.detail}</span>}
             </span>
-            {played.has(i) && <span className="ml-auto text-xs text-sage">✓</span>}
+            {played.has(i) && <span className="ml-auto text-xs text-good">✓</span>}
           </button>
         ))}
       </div>

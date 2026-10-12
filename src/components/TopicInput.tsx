@@ -1,9 +1,6 @@
 "use client";
 
-/**
- * Topic field: border + glow on focus, underline once typing. `bare` drops the
- * border for use inside a card that provides its own.
- */
+/** Topic field: border + ring on focus. `bare` drops the border for use inside a card that provides its own. */
 export function TopicInput({
   value,
   onChange,
@@ -22,12 +19,11 @@ export function TopicInput({
         id="topic"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        placeholder="What do you want to learn? Try “the French Revolution”…"
+        placeholder="Try “the fall of Rome” or “Stoicism”"
         autoComplete="off"
         maxLength={120}
-        className={`${bare ? "topic-input-bare" : "topic-input"} w-full px-4 py-3.5 text-base text-espresso`}
+        className={`${bare ? "topic-input-bare" : "topic-input"} w-full px-3 py-3.5 text-base text-fg`}
       />
-      <span className="topic-underline" data-on={value.length > 0} aria-hidden />
     </div>
   );
 }

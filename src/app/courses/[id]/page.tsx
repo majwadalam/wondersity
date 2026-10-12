@@ -2,100 +2,80 @@
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useEffect } from "react";
 import { useAppState } from "@/components/app/AppState";
 import { StarButton, courseProgress } from "@/components/app/CourseCards";
-import { CourseMap } from "@/components/app/CourseMap";
-import { TopicArt } from "@/components/app/TopicArt";
-import { ArrowRightIcon } from "@/components/Icons";
-import { levelsOf, moduleLabel } from "@/lib/courseHierarchy";
+import { CourseJourney } from "@/components/app/CourseJourney";
+import { levelsOf } from "@/lib/courseHierarchy";
 
-export default function CourseWelcomePage() {
+export default function CoursePage() {
   const { id } = useParams<{ id: string }>();
-  const { courses, loaded, learn, busy } = useAppState();
+  const { courses, loaded, learn, busy, ensureCovers, painting } = useAppState();
   const course = courses.find((c) => String(c.id) === id);
+
+  // Paint the course's world and lesson covers the first time it's opened.
+  useEffect(() => {
+    if (course) ensureCovers(course);
+  }, [course, ensureCovers]);
 
   if (!course) {
     return (
-      <main className="mx-auto max-w-3xl px-4 py-24 text-center sm:px-6">
+      <main className="mx-auto max-w-3xl px-5 py-24 text-center">
         {loaded ? (
           <>
-            <p className="font-display text-3xl text-sand">We couldn&rsquo;t find that course.</p>
-            <Link href="/courses" className="mt-4 inline-block text-gold underline">
+            <p className="font-display text-2xl text-fg">We couldn&rsquo;t find that course.</p>
+            <Link href="/courses" className="mt-4 inline-block font-medium text-accent hover:underline">
               Back to your courses
             </Link>
           </>
         ) : (
-          <div className="skeleton mx-auto h-64 rounded-3xl" />
+          <div className="skeleton mx-auto h-[420px] rounded-3xl" />
         )}
       </main>
     );
   }
 
   const { total, done, percent } = courseProgress(course);
-  const finished = course.status === "completed";
-  const current = Math.min(course.currentModule, total - 1);
-  const currentReady = !!course.modules[current]?.lesson;
   const minutes = course.modules.reduce((n, m) => n + (m.lesson?.data.estimatedMinutes ?? 8), 0);
-
   const levels = levelsOf(course);
   const hasLevels = !levels.every((l) => l.legacy);
-  const label = (i: number) => moduleLabel(levels, i);
-  const cta = finished
-    ? { label: "Review from the start", href: `/courses/${course.id}/1` }
-    : currentReady
-      ? { label: `${done ? "Continue" : "Start"} ${label(current)}`, href: `/courses/${course.id}/${current + 1}` }
-      : { label: `Start ${label(current)}`, onClick: () => learn(course.topic) };
 
   return (
-    <main className="mx-auto max-w-5xl px-4 pt-8 pb-24 sm:px-6 lg:px-10">
-      <Link href="/courses" className="text-sm text-taupe hover:text-gold">
-        ← All courses
+    <main className="mx-auto max-w-[1080px] px-5 pt-8 pb-24">
+      <Link href="/courses" className="text-sm text-muted hover:text-fg">
+        ← Courses
       </Link>
 
-      {/* Welcome hero */}
-      <section className="course-hero relative mt-5 grid items-center gap-8 overflow-hidden rounded-[2rem] border border-beige bg-gradient-to-br from-violet/70 via-paper to-magenta/60 p-6 sm:p-10 md:grid-cols-[260px_minmax(0,1fr)]">
-        <div className="hero-art relative mx-auto flex h-56 w-56 items-center justify-center rounded-full bg-ink/40">
-          <span className="hero-ring" aria-hidden />
-          <TopicArt topic={course.topic} className="h-40 w-40" />
+      <header className="mt-5 flex flex-wrap items-end justify-between gap-6">
+        <div className="max-w-2xl">
+          <p className="text-sm font-medium text-muted">
+            {hasLevels ? `${levels.length} levels · ` : ""}
+            {total} lessons · about {minutes} min
+          </p>
+          <h1 className="display-xl font-display mt-2 text-4xl text-fg sm:text-5xl">{course.title}</h1>
+          <p className="mt-3 text-lg leading-relaxed text-muted">{course.description}</p>
         </div>
-        <div>
-          <div className="flex items-start justify-between gap-4">
-            <p className="text-xs font-medium tracking-[0.2em] text-gold uppercase">Welcome to your course</p>
-            <StarButton topic={course.topic} />
-          </div>
-          <h1 className="font-display mt-2 text-4xl leading-tight text-sand sm:text-5xl">{course.title}</h1>
-          <p className="mt-4 text-base leading-relaxed text-sand/80">{course.description}</p>
-          <div className="mt-5 flex flex-wrap gap-2 text-xs text-sand">
-            {hasLevels && <span className="rounded-full bg-ink/40 px-3 py-1.5">{levels.length} levels</span>}
-            <span className="rounded-full bg-ink/40 px-3 py-1.5">{total} modules</span>
-            <span className="rounded-full bg-ink/40 px-3 py-1.5">≈ {minutes} min</span>
-            <span className="rounded-full bg-ink/40 px-3 py-1.5">
-              {done} done · {percent}%
-            </span>
-          </div>
-          <div className="mt-7">
-            {"href" in cta ? (
-              <Link href={cta.href!} className="btn-primary inline-flex items-center gap-2 rounded-xl px-6 py-3 font-semibold">
-                {cta.label} <ArrowRightIcon size={16} />
-              </Link>
-            ) : (
-              <button type="button" disabled={!!busy} onClick={cta.onClick} className="btn-primary inline-flex items-center gap-2 rounded-xl px-6 py-3 font-semibold">
-                {cta.label} <ArrowRightIcon size={16} />
-              </button>
-            )}
-          </div>
-        </div>
-      </section>
+        <StarButton topic={course.topic} />
+      </header>
 
-      {/* Module path */}
-      <section className="mt-14" aria-labelledby="modules">
-        <h2 id="modules" className="font-display text-3xl text-sand">
-          Your path
-        </h2>
-        <div className="mt-8">
-          <CourseMap course={course} onStart={() => learn(course.topic)} busy={!!busy} />
-        </div>
-      </section>
+      <div className="mt-4 flex items-center gap-3">
+        <span className="h-1.5 max-w-xs flex-1 overflow-hidden rounded-full bg-line">
+          <span className="course-bar block h-full rounded-full bg-accent" style={{ width: `${Math.max(percent, 2)}%` }} />
+        </span>
+        <span className="text-sm text-muted tabular-nums">
+          {done} of {total} done
+        </span>
+      </div>
+
+      <div className="mt-8">
+        <CourseJourney
+          course={course}
+          onStart={() => learn(course.topic)}
+          busy={!!busy}
+          painting={painting.has(course.id)}
+          writingSince={busy?.courseId === course.id ? busy.startedAt : null}
+        />
+      </div>
     </main>
   );
 }

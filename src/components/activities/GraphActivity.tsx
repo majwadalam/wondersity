@@ -80,7 +80,7 @@ export function GraphActivity({ a, onDone }: { a: GraphData; onDone: () => void 
   return (
     <ActivityFrame type="graph" title={a.title} prompt={a.prompt} reveal={a.reveal} done={done}>
       <figure>
-        <svg viewBox={`0 0 ${W} ${H}`} className="graph-svg w-full rounded-2xl bg-ink/40" role="img" aria-label={`Graph of ${axis.yLabel || "y"} against ${axis.xLabel || "x"} with ${slider.label} at ${fmt(value)}${slider.unit}`}>
+        <svg viewBox={`0 0 ${W} ${H}`} className="graph-svg w-full rounded-2xl bg-canvas" role="img" aria-label={`Graph of ${axis.yLabel || "y"} against ${axis.xLabel || "x"} with ${slider.label} at ${fmt(value)}${slider.unit}`}>
           {/* axes */}
           <line x1={PAD.l} x2={W - PAD.r} y1={zeroY ?? H - PAD.b} y2={zeroY ?? H - PAD.b} className="graph-axis" />
           <line x1={zeroX ?? PAD.l} x2={zeroX ?? PAD.l} y1={PAD.t} y2={H - PAD.b} className="graph-axis" />
@@ -116,9 +116,9 @@ export function GraphActivity({ a, onDone }: { a: GraphData; onDone: () => void 
       </figure>
 
       <label className="mt-4 block">
-        <span className="flex items-baseline justify-between text-sm text-sand">
+        <span className="flex items-baseline justify-between text-sm text-fg">
           <span>{slider.label}</span>
-          <span className="font-mono tabular-nums text-gold">
+          <span className="font-mono tabular-nums text-accent">
             {fmt(value)}
             {slider.unit}
           </span>
@@ -135,14 +135,14 @@ export function GraphActivity({ a, onDone }: { a: GraphData; onDone: () => void 
       </label>
       <motion.div
         key={current.title}
-        className="mt-3 rounded-2xl border border-gold/30 bg-gold/10 px-4 py-3"
+        className="mt-3 rounded-2xl border border-accent/30 bg-accent-soft px-4 py-3"
         initial={{ opacity: 0, y: 6 }}
         animate={{ opacity: 1, y: 0 }}
         transition={spring.gentle}
         aria-live="polite"
       >
-        <p className="text-sm font-semibold text-gold">{current.title}</p>
-        <p className="mt-0.5 text-sm leading-relaxed text-sand/90">{current.detail}</p>
+        <p className="text-sm font-semibold text-accent">{current.title}</p>
+        <p className="mt-0.5 text-sm leading-relaxed text-fg/90">{current.detail}</p>
       </motion.div>
     </ActivityFrame>
   );

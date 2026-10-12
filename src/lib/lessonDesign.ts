@@ -193,6 +193,20 @@ explanation of why it is right.
 ACTIVITIES: 1-4, each placed by one activity block, each a different type that fits the topic.
 ${ACTIVITY_GUIDE}
 
+ACCURACY. Every factual claim is checked against the web before the lesson is shown, and a wrong
+one sends the lesson back. Teach only what is well established:
+- State a precise date, number, name or quotation only when you are sure of it. Otherwise round it
+  and say so ("about 1.4 million km", "in the 1780s"), or leave it out; the lesson rarely needs it.
+- Never invent studies, statistics, quotations or sources. Quote a real person only with words they
+  are documented to have said or written; otherwise describe the idea in your own words.
+- Where experts disagree, say so and attribute the view ("many historians argue", "one common
+  explanation") instead of stating it as settled fact.
+- Made-up examples (a shopping list, a fictional student, invented prices) are fine, but make it
+  obvious they are illustrations, and keep real figures (historical prices, physical constants)
+  real.
+- Do the arithmetic before writing a result, and write sums in full ("3.50 + 2.00 = 5.50") so they
+  can be checked.
+
 Total time: 5-10 minutes; set estimatedMinutes honestly.`;
 
 // ---------- validation ----------

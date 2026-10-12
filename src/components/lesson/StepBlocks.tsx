@@ -22,7 +22,7 @@ export function WorkedBlock({ b, onDone }: { b: Of<"worked">; onDone: () => void
 
   return (
     <BlockFrame kind="worked" icon="∑" label="Worked example" title={b.heading} done={done} takeaway={b.answer ? rich(b.answer) : undefined} takeawayLabel="Result">
-      <div className="rounded-2xl border border-beige bg-ink/40 p-4 text-[15px] leading-relaxed text-sand">
+      <div className="rounded-2xl border border-line bg-canvas p-4 text-[15px] leading-relaxed text-fg">
         <Paragraphs text={b.problem} />
       </div>
       {/* Each step is built onto the last: the newest stands out, earlier ones settle back. */}
@@ -37,7 +37,7 @@ export function WorkedBlock({ b, onDone }: { b: Of<"worked">; onDone: () => void
           >
             {i < shown - 1 && (
               <motion.span
-                className="absolute top-8 bottom-0 left-[13px] w-px origin-top bg-gold/40"
+                className="absolute top-8 bottom-0 left-[13px] w-px origin-top bg-accent/40"
                 initial={{ scaleY: 0 }}
                 animate={{ scaleY: 1 }}
                 transition={{ duration: 0.4 }}
@@ -45,7 +45,7 @@ export function WorkedBlock({ b, onDone }: { b: Of<"worked">; onDone: () => void
               />
             )}
             <motion.span
-              className="relative flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-gold/20 text-xs font-semibold text-gold"
+              className="relative flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-accent-soft text-xs font-semibold text-accent"
               initial={{ scale: 0.4 }}
               animate={{ scale: 1 }}
               transition={spring.bouncy}
@@ -53,9 +53,9 @@ export function WorkedBlock({ b, onDone }: { b: Of<"worked">; onDone: () => void
               {i + 1}
             </motion.span>
             <div className="min-w-0 flex-1">
-              {s.title && <p className="text-sm font-semibold text-sand">{s.title}</p>}
-              <p className="text-[15px] leading-relaxed whitespace-pre-line text-sand/90">{rich(s.text)}</p>
-              {s.why && <p className="mt-1 text-sm leading-relaxed text-taupe">Why: {rich(s.why)}</p>}
+              {s.title && <p className="text-sm font-semibold text-fg">{s.title}</p>}
+              <p className="text-[15px] leading-relaxed whitespace-pre-line text-fg/90">{rich(s.text)}</p>
+              {s.why && <p className="mt-1 text-sm leading-relaxed text-muted">Why: {rich(s.why)}</p>}
             </div>
           </motion.li>
         ))}
@@ -65,7 +65,7 @@ export function WorkedBlock({ b, onDone }: { b: Of<"worked">; onDone: () => void
           <button type="button" onClick={next} className="btn-primary rounded-full px-4 py-2 text-sm font-semibold">
             {shown === 0 ? "Show the first step" : `Show step ${shown + 1}`}
           </button>
-          <span className="text-xs text-taupe">
+          <span className="text-xs text-muted">
             {shown === 0 ? "Try the first move yourself before you look." : "What would you do next? Decide, then check."}
           </span>
         </div>
@@ -91,7 +91,7 @@ export function ReflectBlock({ b, onDone }: { b: Of<"reflect">; onDone: () => vo
         rows={4}
         aria-label={b.prompt}
         placeholder="Write a few sentences. Only you will see this."
-        className="w-full resize-y rounded-2xl border border-beige bg-ink/40 p-4 text-[15px] leading-relaxed text-sand placeholder:text-taupe/70 focus:border-gold/60 focus:outline-none"
+        className="w-full resize-y rounded-2xl border border-line bg-canvas p-4 text-[15px] leading-relaxed text-fg placeholder:text-muted/70 focus:border-accent/60 focus:outline-none"
       />
       {!compared ? (
         <div className="mt-3 flex flex-wrap items-center gap-3">
@@ -106,15 +106,15 @@ export function ReflectBlock({ b, onDone }: { b: Of<"reflect">; onDone: () => vo
           >
             Compare with a model answer
           </button>
-          <span className="text-xs text-taupe">
+          <span className="text-xs text-muted">
             {ready ? "Not saved or graded; it's for your thinking." : `Write at least ${MIN_REFLECTION} characters first.`}
           </span>
         </div>
       ) : (
-        <div className="step-reveal mt-4 rounded-2xl border border-gold/30 bg-gold/10 px-4 py-3">
-          <p className="text-[10px] font-semibold tracking-[0.18em] text-gold uppercase">A model answer</p>
-          <p className="mt-1 text-sm leading-relaxed text-sand">{rich(b.model)}</p>
-          <p className="mt-2 text-xs text-taupe">What did you include that it doesn&rsquo;t, and what did it notice that you didn&rsquo;t?</p>
+        <div className="step-reveal mt-4 rounded-2xl border border-accent/30 bg-accent-soft px-4 py-3">
+          <p className="text-[11px] font-semibold tracking-wide text-accent uppercase">A model answer</p>
+          <p className="mt-1 text-sm leading-relaxed text-fg">{rich(b.model)}</p>
+          <p className="mt-2 text-xs text-muted">What did you include that it doesn&rsquo;t, and what did it notice that you didn&rsquo;t?</p>
         </div>
       )}
     </BlockFrame>
@@ -138,9 +138,9 @@ export function DialogueBlock({ b, onDone }: { b: Of<"dialogue">; onDone: () => 
       <div className="space-y-3" aria-live="polite">
         {b.turns.slice(0, shown).map((t, i) => (
           <div key={i} className={`step-reveal flex ${t.speaker === first ? "justify-start" : "justify-end"}`}>
-            <div className={`dialogue-bubble max-w-[85%] rounded-2xl px-4 py-3 ${t.speaker === first ? "rounded-tl-sm bg-violet/30" : "rounded-tr-sm bg-gold/15"}`}>
-              <p className="text-[10px] font-semibold tracking-[0.16em] text-gold uppercase">{t.speaker}</p>
-              <p className="mt-0.5 text-[15px] leading-relaxed text-sand">{rich(t.text)}</p>
+            <div className={`dialogue-bubble max-w-[85%] rounded-2xl px-4 py-3 ${t.speaker === first ? "rounded-tl-sm bg-canvas ring-1 ring-line" : "rounded-tr-sm bg-accent-soft"}`}>
+              <p className="text-[11px] font-semibold tracking-wide text-accent uppercase">{t.speaker}</p>
+              <p className="mt-0.5 text-[15px] leading-relaxed text-fg">{rich(t.text)}</p>
             </div>
           </div>
         ))}
@@ -150,7 +150,7 @@ export function DialogueBlock({ b, onDone }: { b: Of<"dialogue">; onDone: () => 
           <button type="button" onClick={next} className="btn-primary rounded-full px-4 py-2 text-sm font-semibold">
             Continue
           </button>
-          {b.turns[shown - 1]?.text.trim().endsWith("?") && <span className="text-xs text-taupe">Answer it yourself first.</span>}
+          {b.turns[shown - 1]?.text.trim().endsWith("?") && <span className="text-xs text-muted">Answer it yourself first.</span>}
         </div>
       )}
     </BlockFrame>

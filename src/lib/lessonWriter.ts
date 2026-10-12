@@ -1,17 +1,21 @@
-// The quality gate. Writes one module lesson, scores it with a separate
-// evaluator call, revises once if it falls short, and returns the best
-// *evaluated* version. This is deterministic code: the tutor agent decides
+// The quality gate. Writes one module lesson, checks its arithmetic in code
+// and its factual claims against the web, has a model review it, revises once (or rewrites from scratch if
+// the draft is far off) when it falls short, and returns the best *evaluated*
+// version with no arithmetic or factual errors. This is deterministic code: the tutor agent decides
 // what to write and why, but cannot skip these checks.
 
+import { createHash } from "node:crypto";
 import { z } from "zod";
 import type { Lesson } from "./lessonBlocks";
 import { LESSON_GUIDE, lessonJsonSchema, lintStructure, normalizeLesson, toModelFormat, type NormalizeReport } from "./lessonDesign";
-import { callStructured, type Deadline } from "./model";
+import { checkFacts } from "./factCheck";
+import { verifyEnabled, verifyFacts, type VerifyReport } from "./factVerify";
+import { callStructured, reviewModel, writerModel, type Deadline } from "./model";
 
 export type { Lesson } from "./lessonBlocks";
 
 const EvaluationSchema = z.object({
-  score: z.number(),
+  score: z.number().min(0).max(10),
   approved: z.boolean(),
   problems: z.array(z.string()),
   suggestions: z.array(z.string()),
@@ -107,7 +111,7 @@ async function requestValidLesson(request: () => Promise<unknown>): Promise<Writ
   throw new Error(`Model did not return a valid lesson after ${MAX_LESSON_ATTEMPTS} attempts: ${lastError}`);
 }
 
-function generateLesson(brief: LessonBrief, deadline: Deadline): Promise<Written> {
+function generateLesson(brief: LessonBrief, deadline: Deadline, avoid?: string): Promise<Written> {
   return requestValidLesson(() =>
     callStructured(
       `You are an expert instructional designer writing one module of an interactive course,
@@ -116,7 +120,9 @@ great teacher of THIS subject would teach THIS idea: choose the approach first, 
 Build on earlier modules without repeating them, and don't teach later modules' material.
 
 ${LESSON_REQUIREMENTS}`,
-      `${describeBrief(brief)}\n\nWrite this module's lesson.`,
+      `${describeBrief(brief)}\n\n${
+        avoid ? `An earlier draft of this lesson was rejected. Start over with a fresh design and avoid its problems:\n${avoid}\n\n` : ""
+      }Write this module's lesson.`,
       lessonJsonSchema,
       deadline,
       WRITER_OPTIONS
@@ -124,16 +130,18 @@ ${LESSON_REQUIREMENTS}`,
   );
 }
 
-async function evaluateLesson(brief: LessonBrief, lesson: Lesson, deadline: Deadline): Promise<Evaluation> {
-  // Structural problems code can detect are handed to the evaluator as facts.
-  const issues = lintStructure(lesson);
+export async function evaluateLesson(brief: LessonBrief, lesson: Lesson, deadline: Deadline): Promise<Evaluation> {
+  // Problems code can detect are handed to the evaluator as facts.
+  const issues = [...checkFacts(lesson).map((e) => `Arithmetic error (computed in code): ${e}`), ...lintStructure(lesson)];
   const result = await callStructured(
     `You are a strict educational quality evaluator. Evaluate the lesson on a 0-10 scale.
 Use the FULL range: 3 = poor, 5 = mediocre, 7 = good, 8-9 = excellent, 10 = perfect.
 The lesson is an ordered list of blocks; "activity" and "check" blocks point (by ref) into the
 activities and questions arrays. Evaluate for:
 - accuracy of every fact and number; for code, the stated output, bug fix and trace must be exactly
-  what the code really does
+  what the code really does; precise claims stated with more certainty than the evidence allows,
+  invented quotations or statistics, and disputed interpretations stated as settled fact all count
+  as accuracy problems
 - fit: does the chosen approach suit this subject and idea? Would a great teacher of it teach it this way?
 - structure: a coherent path from exploration to understanding to application, not a generic
   template; knowledge checks right after the ideas they test, getting harder; no filler
@@ -148,15 +156,29 @@ Be critical, but score honestly. Return only JSON.`,
     }`,
     evaluationJsonSchema,
     deadline,
-    EVALUATOR_OPTIONS
+    { ...EVALUATOR_OPTIONS, model: reviewModel() }
   );
   return EvaluationSchema.parse(result);
+}
+
+/**
+ * The reviser's feedback. Errors verified in code come first, one per line:
+ * in a long undifferentiated list, the item that matters gets buried.
+ */
+function feedbackFor(evaluation: Evaluation, factErrors: string[], uncertain: string[] = []) {
+  const verified = factErrors.length
+    ? `Verified errors (computed in code or contradicted by a reliable web source; fix every one, or remove the claim):\n${factErrors.map((e) => `- ${e}`).join("\n")}\n\n`
+    : "";
+  const unconfirmed = uncertain.length
+    ? `Claims a web search couldn't confirm (state each more carefully, e.g. "about", "historians estimate", or remove it if it isn't needed):\n${uncertain.map((e) => `- ${e}`).join("\n")}\n\n`
+    : "";
+  return `${verified}${unconfirmed}Reviewer's feedback:\n${JSON.stringify(evaluation, null, 2)}`;
 }
 
 function reviseLesson(
   brief: LessonBrief,
   lesson: Lesson,
-  evaluation: Evaluation,
+  feedback: string,
   deadline: Deadline
 ): Promise<Written> {
   return requestValidLesson(() =>
@@ -166,11 +188,7 @@ It is shown in the same format you write: keep what works, fix what the feedback
 return the whole lesson.
 
 ${LESSON_REQUIREMENTS}`,
-      `${describeBrief(brief)}\n\nLesson:\n${JSON.stringify(toModelFormat(lesson), null, 2)}\n\nFeedback:\n${JSON.stringify(
-        evaluation,
-        null,
-        2
-      )}`,
+      `${describeBrief(brief)}\n\nLesson:\n${JSON.stringify(toModelFormat(lesson), null, 2)}\n\n${feedback}`,
       lessonJsonSchema,
       deadline,
       WRITER_OPTIONS
@@ -180,15 +198,65 @@ ${LESSON_REQUIREMENTS}`,
 
 // A lesson must score at least this to count as passing evaluation.
 export const PASS_SCORE = 8;
+
+/**
+ * A fingerprint of how lessons are written and checked: the guide and the
+ * writer and reviewer models. A cached lesson 1 carries it, so changing any
+ * of them retires lessons written the old way.
+ */
+export const lessonVersion = () =>
+  createHash("sha256").update(`${LESSON_GUIDE}\n${writerModel()}\n${reviewModel()}`).digest("hex").slice(0, 12);
 // Bounded iteration: at most this many evaluations (so at most one revision).
 const MAX_ITERATIONS = 2;
+// A draft scored below this is rewritten from scratch instead of patched: its
+// errors sit in the reviser's context and tend to carry over.
+const REWRITE_BELOW = 5;
 
 const errorMessage = (e: unknown) => (e instanceof Error ? e.message : String(e));
 
+type Version = { lesson: Lesson; score: number; factErrors: string[]; sources: VerifyReport["sources"] };
+
+/**
+ * Checks the lesson's claims online. Returns null when checking is off or the
+ * claims couldn't be listed (the trace says which); the lesson is then judged
+ * on the other checks alone.
+ */
+async function checkOnline(brief: LessonBrief, lesson: Lesson, deadline: Deadline, trace: TraceEntry[], iteration: number) {
+  if (!verifyEnabled()) return null;
+  const t = Date.now();
+  try {
+    const report = await verifyFacts(brief.topic, lesson, deadline);
+    trace.push({
+      step: "lesson.verify",
+      iteration,
+      ms: Date.now() - t,
+      claims: report.checks.length,
+      supported: report.checks.filter((c) => c.verdict === "supported").length,
+      contradicted: report.errors,
+      unclear: report.uncertain.length,
+      downgraded: report.checks.filter((c) => c.downgraded).map((c) => `${c.claim}: ${c.downgraded}`),
+    });
+    return report;
+  } catch (e) {
+    trace.push({ step: "lesson.verify_failed", iteration, ms: Date.now() - t, error: errorMessage(e) });
+    return null;
+  }
+}
+
+/** A version with no arithmetic errors beats any version with them; then the higher score wins. */
+function better(a: Version, b: Version | null) {
+  if (!b) return true;
+  const aClean = a.factErrors.length === 0;
+  const bClean = b.factErrors.length === 0;
+  return aClean !== bClean ? aClean : a.score > b.score;
+}
+
 /**
  * Writes a lesson for `brief`. Only evaluated versions can be returned; a
- * revision that fails or can't be evaluated is discarded. No revision starts
- * after `reviseDeadline`, and no model call runs past `deadline` (epoch ms).
+ * revision that fails or can't be evaluated is discarded. A version whose
+ * arithmetic is wrong is never returned: if no version is free of such errors,
+ * this throws. No revision starts after `reviseDeadline`, and no model call
+ * runs past `deadline` (epoch ms).
  */
 export async function writeLesson(
   brief: LessonBrief,
@@ -204,19 +272,26 @@ export async function writeLesson(
     ...first.report,
   });
 
-  let best: { lesson: Lesson; score: number } | null = null;
+  let best: Version | null = null;
 
   for (let iteration = 1; iteration <= MAX_ITERATIONS; iteration++) {
-    let evaluation: Evaluation;
     t = Date.now();
-    try {
-      evaluation = await evaluateLesson(brief, candidate, deadline);
-    } catch (e) {
+    // The review and the online check are independent, so they run together.
+    const [reviewed, online] = await Promise.all([
+      evaluateLesson(brief, candidate, deadline).then(
+        (evaluation) => ({ evaluation }),
+        (error: unknown) => ({ error })
+      ),
+      checkOnline(brief, candidate, deadline, trace, iteration),
+    ]);
+    if ("error" in reviewed) {
       // Nothing evaluated yet means nothing we're allowed to show.
-      if (!best) throw e;
-      trace.push({ step: "lesson.evaluate_failed", iteration, error: errorMessage(e) });
+      if (!best) throw reviewed.error;
+      trace.push({ step: "lesson.evaluate_failed", iteration, error: errorMessage(reviewed.error) });
       break;
     }
+    const { evaluation } = reviewed;
+    const factErrors = [...checkFacts(candidate), ...(online?.errors ?? [])];
 
     trace.push({
       step: "lesson.evaluate",
@@ -224,24 +299,27 @@ export async function writeLesson(
       score: evaluation.score,
       ms: Date.now() - t,
       problems: evaluation.problems,
+      factErrors,
       structureIssues: lintStructure(candidate),
     });
-    if (!best || evaluation.score > best.score) {
-      best = { lesson: candidate, score: evaluation.score };
-    }
+    const version = { lesson: candidate, score: evaluation.score, factErrors, sources: online?.sources ?? [] };
+    if (better(version, best)) best = version;
 
-    if (evaluation.score >= PASS_SCORE || iteration === MAX_ITERATIONS) break;
+    const passes = evaluation.score >= PASS_SCORE && factErrors.length === 0;
+    if (passes || iteration === MAX_ITERATIONS) break;
     if (Date.now() > reviseDeadline) {
       trace.push({ step: "lesson.revise_skipped", iteration, reason: "time budget" });
       break;
     }
 
     t = Date.now();
+    const feedback = feedbackFor(evaluation, factErrors, online?.uncertain);
+    const rewrite = evaluation.score < REWRITE_BELOW;
     try {
-      const revised = await reviseLesson(brief, candidate, evaluation, deadline);
+      const revised = rewrite ? await generateLesson(brief, deadline, feedback) : await reviseLesson(brief, candidate, feedback, deadline);
       candidate = revised.lesson;
       trace.push({
-        step: "lesson.revise",
+        step: rewrite ? "lesson.rewrite" : "lesson.revise",
         iteration,
         ms: Date.now() - t,
         ...revised.report,
@@ -253,8 +331,12 @@ export async function writeLesson(
   }
 
   // The loop always evaluates at least once or throws, so best is set.
-  const { lesson, score } = best!;
+  const { lesson, score, factErrors, sources } = best!;
+  if (factErrors.length) {
+    trace.push({ step: "lesson.rejected", reason: "factual errors", factErrors });
+    throw new Error(`Every version of the lesson had factual errors: ${factErrors.join(" ")}`);
+  }
   const passed = score >= PASS_SCORE;
-  trace.push({ step: "lesson.select", score, passed });
-  return { lesson, score, passed };
+  trace.push({ step: "lesson.select", score, passed, sources: sources.length });
+  return { lesson: sources.length ? { ...lesson, sources } : lesson, score, passed };
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion, useReducedMotion, useSpring, useTransform } from "motion/react";
+import { AnimatePresence, animate, motion, useMotionValue, useReducedMotion, useTransform } from "motion/react";
 import { useEffect, useState, type ReactNode } from "react";
 import { EASE_OUT, duration, spring } from "./presets";
 
@@ -34,7 +34,7 @@ export function ProgressFill({ value, className = "", label }: { value: number; 
   const v = Math.max(0, Math.min(1, value));
   return (
     <div
-      className={`h-1.5 overflow-hidden rounded-full bg-sand/15 ${className}`}
+      className={`h-1.5 overflow-hidden rounded-full bg-fg/15 ${className}`}
       role={label ? "progressbar" : undefined}
       aria-label={label}
       aria-valuemin={label ? 0 : undefined}
@@ -42,7 +42,7 @@ export function ProgressFill({ value, className = "", label }: { value: number; 
       aria-valuenow={label ? Math.round(v * 100) : undefined}
     >
       <motion.div
-        className="h-full origin-left rounded-full bg-gold"
+        className="h-full origin-left rounded-full bg-accent"
         initial={{ scaleX: 0 }}
         animate={{ scaleX: v }}
         transition={spring.follow}
@@ -57,11 +57,15 @@ export function ProgressFill({ value, className = "", label }: { value: number; 
  */
 export function CountUp({ value, active, format }: { value: number; active: boolean; format: (n: number) => string }) {
   const reduce = useReducedMotion();
-  const v = useSpring(0, reduce ? { duration: 0 } : { stiffness: 70, damping: 20 });
+  const v = useMotionValue(0);
   const text = useTransform(v, (n) => format(n));
+  // A timed tween, not a spring: a spring only approaches its target, so a
+  // million could settle on "999,999". The tween lands exactly on the value.
   useEffect(() => {
-    if (active) v.set(value);
-  }, [active, value, v]);
+    if (!active) return;
+    const controls = animate(v, value, { duration: reduce ? 0 : 1.1, ease: [0.22, 1, 0.36, 1] });
+    return () => controls.stop();
+  }, [active, value, v, reduce]);
   return <motion.span>{text}</motion.span>;
 }
 
@@ -89,7 +93,7 @@ export function Burst({ trigger, tone = "gold" }: { trigger: unknown; tone?: "go
     return () => clearTimeout(t);
   }, [shots]);
 
-  const color = tone === "gold" ? "var(--gold)" : "var(--sage)";
+  const color = tone === "gold" ? "var(--accent)" : "var(--good)";
   return (
     <span className="pointer-events-none absolute inset-0 z-10 flex items-center justify-center" aria-hidden>
       {shots.map((id) =>

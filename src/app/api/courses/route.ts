@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
+import { asLearner } from "@/lib/auth";
 import { toCourseView } from "@/lib/courseView";
 import { listCourses } from "@/lib/db";
 import {
   clientIp,
-  isValidLearnerId,
   rateLimit,
   serverError,
   tooManyRequests,
@@ -17,15 +17,12 @@ export async function GET(request: Request) {
   const limit = rateLimit(`courses:${clientIp(request)}`, LIMIT_PER_IP, LIMIT_WINDOW_MS);
   if (!limit.ok) return tooManyRequests(limit.retryAfterSec);
 
-  const learnerId = new URL(request.url).searchParams.get("learnerId");
-  if (!isValidLearnerId(learnerId)) {
-    return NextResponse.json({ error: "Valid learnerId required" }, { status: 400 });
-  }
-
-  try {
-    const courses = await listCourses(learnerId);
-    return NextResponse.json({ courses: courses.map(toCourseView) });
-  } catch (error) {
-    return serverError(error, "Failed to load courses.");
-  }
+  return asLearner(async (learnerId) => {
+    try {
+      const courses = await listCourses(learnerId);
+      return NextResponse.json({ courses: courses.map(toCourseView) });
+    } catch (error) {
+      return serverError(error, "Failed to load courses.");
+    }
+  });
 }

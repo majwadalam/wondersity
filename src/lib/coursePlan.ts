@@ -1,3 +1,4 @@
+import { createHash } from "node:crypto";
 // The course plan the tutor agent writes with create_course: levels that are
 // stages of learning, each grouping a few related modules. Validated here,
 // in code, then flattened into the ordered module list that is stored (see
@@ -150,3 +151,9 @@ export const PLANNING_GUIDE = `Plan the course as LEVELS, each grouping a few MO
   topic gets fewer, a broad one more. Don't pad.
 - Pitch the first level to the learner: infer their starting point from how they phrased the topic
   ("for beginners", "advanced", a specific sub-skill) and the topics they've already studied.`;
+
+/**
+ * A fingerprint of the planning guide. Cached plans carry it, so changing how
+ * courses are planned retires every plan made the old way.
+ */
+export const PLANNER_VERSION = createHash("sha256").update(PLANNING_GUIDE).digest("hex").slice(0, 12);

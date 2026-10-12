@@ -16,6 +16,8 @@ export type CourseView = {
   description: string;
   status: "active" | "completed";
   currentModule: number;
+  /** Cover illustration URL, once generated; otherwise the UI picks built-in art. */
+  cover: string | null;
   updatedAt: string;
   levels: {
     id: string;
@@ -38,6 +40,8 @@ export type CourseView = {
     description: string;
     /** Index into `levels`. */
     level: number;
+    /** The lesson's first painted scene (or an older stored cover); null until staged. */
+    cover: string | null;
     lesson: {
       id: number;
       score: number | null;
@@ -54,13 +58,15 @@ export type CourseView = {
 export function toCourseView(course: CourseWithLessons): CourseView {
   const groups = groupLevels(course.modules ?? []);
   const modules: CourseView["modules"] = course.modules.map((m, i) => {
-    const lesson = latestLessonForModule(course, i);
+    const lesson = shownLessonForModule(course, i);
     return {
       id: moduleId(m, i),
       title: m.title,
       goal: m.goal,
       description: typeof m.description === "string" ? m.description : "",
       level: groups.findIndex((g) => g.modules.includes(i)),
+      // Courses painted before lessons shared their scenes kept a separate cover.
+      cover: typeof m.cover === "string" ? m.cover : (lesson?.lesson_data.staging?.images.find((img) => img.url)?.url ?? null),
       lesson: lesson
         ? {
             id: lesson.id,
@@ -84,6 +90,7 @@ export function toCourseView(course: CourseWithLessons): CourseView {
     description: course.description,
     status: course.status,
     currentModule: course.current_module,
+    cover: course.cover_url ?? null,
     updatedAt: course.updated_at,
     levels: groups.map((g, gi) => ({
       id: g.id,
@@ -101,6 +108,17 @@ export function toCourseView(course: CourseWithLessons): CourseView {
     })),
     modules,
   };
+}
+
+/**
+ * The lesson the learner sees for a module: the newest, except for a module
+ * the course has already moved past, where the completed copy wins (so a
+ * finished module stays finished even if a newer copy was written later).
+ */
+export function shownLessonForModule(course: CourseWithLessons, moduleIndex: number) {
+  const forModule = course.lessons.filter((l) => l.module_index === moduleIndex).sort((a, b) => b.id - a.id);
+  const passed = moduleIndex < course.current_module || course.status === "completed";
+  return (passed ? forModule.find((l) => l.completed_at) : undefined) ?? forModule[0] ?? null;
 }
 
 export function latestLessonForModule(course: CourseWithLessons, moduleIndex: number) {

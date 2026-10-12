@@ -12,7 +12,9 @@
 // - Lessons saved before blocks existed have no `blocks`; lessonBlocks()
 //   rebuilds their original order (concepts, activities, quiz at the end).
 
+import type { Resources } from "./enrichment";
 import type { Activity } from "./activities";
+import type { Staging } from "./staging";
 
 export const APPROACHES = {
   mystery: "Mystery first: open with a puzzle or surprising fact, then resolve it",
@@ -107,6 +109,12 @@ export type Lesson = {
   concepts?: { name: string; explanation: string; example: string }[];
   activities?: Activity[];
   questions: Question[];
+  /** Scenes with a guide, added after the lesson is written (lib/staging.ts). */
+  staging?: Staging;
+  /** Web pages that confirmed the lesson's claims (lib/factVerify.ts). */
+  sources?: { url: string; title: string }[];
+  /** "Go deeper": confirmed videos, articles, books and images (lib/enrichment.ts). */
+  resources?: Resources;
 };
 
 /**
@@ -149,13 +157,22 @@ export function parseNumber(input: string): number {
   return n ? Number(n[0]) : NaN;
 }
 
+// Spacing around commas, semicolons and colons doesn't count, nor does one
+// pair of brackets around the whole answer: "(2, 0, 14)" = "2,0,14".
 const normalizeText = (s: string) =>
-  s.trim().toLowerCase().replace(/\s+/g, " ").replace(/[.!]+$/, "").replace(/^["'`]|["'`]$/g, "");
+  s
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .replace(/[.!]+$/, "")
+    .replace(/^["'`]|["'`]$/g, "")
+    .replace(/^[([{]\s*(.*?)\s*[)\]}]$/, "$1")
+    .replace(/\s*([,;:])\s*/g, "$1");
 
 /**
  * Whether `input` matches `expected`. Integers must match exactly; other
  * numbers within 1% (so 3.14 accepts 3.1416); text after normalizing case,
- * spacing and a trailing full stop.
+ * spacing, enclosing brackets and a trailing full stop.
  */
 export function answerMatches(input: string, expected: string): boolean {
   const want = parseNumber(expected);

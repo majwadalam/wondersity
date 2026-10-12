@@ -1,6 +1,8 @@
 "use client";
 
+import { Star } from "lucide-react";
 import Link from "next/link";
+import { HoverArrow } from "@/components/landing/HoverArrow";
 import { useState } from "react";
 import { useAppState } from "@/components/app/AppState";
 import { CATALOG, CatalogTile, CourseTile } from "@/components/app/CourseCards";
@@ -14,20 +16,19 @@ export default function LibraryPage() {
   const [open, setOpen] = useState<LessonRow | null>(null);
 
   return (
-    <main className="mx-auto max-w-6xl px-4 pt-10 pb-24 sm:px-6 lg:px-10">
-      <p className="text-xs font-medium tracking-[0.25em] text-gold uppercase">Library</p>
-      <h1 className="font-display mt-2 text-5xl text-sand sm:text-6xl">Saved courses</h1>
-      <p className="mt-3 text-taupe">Tap the ☆ on any course to keep it here.</p>
+    <main className="mx-auto max-w-[1080px] px-5 pt-12 pb-24">
+      <h1 className="display-xl font-display text-4xl text-fg sm:text-5xl">Library</h1>
+      <p className="mt-3 text-lg text-muted">Courses you&rsquo;ve starred, kept in one place.</p>
 
       {bookmarks.length === 0 ? (
-        <div className="mt-10 flex flex-col items-center rounded-3xl border border-dashed border-beige p-12 text-center">
-          <span className="empty-star text-6xl text-gold" aria-hidden>
-            ☆
+        <div className="mt-10 flex flex-col items-center rounded-3xl bg-white px-6 py-16 text-center ring-1 ring-line">
+          <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-accent-soft text-accent">
+            <Star size={24} strokeWidth={1.75} />
           </span>
-          <p className="font-display mt-4 text-2xl text-sand">Nothing saved yet</p>
-          <p className="mt-2 text-taupe">Star the courses you want to keep close.</p>
-          <Link href="/courses" className="btn-primary mt-6 rounded-xl px-5 py-2.5 text-sm font-semibold">
-            Browse courses
+          <p className="font-display mt-5 text-2xl text-fg">Nothing starred yet</p>
+          <p className="mt-2 max-w-sm text-muted">Tap the star on any course and it will wait for you here.</p>
+          <Link href="/courses" className="btn-pill btn-pill-dark mt-7">
+            Browse courses <HoverArrow />
           </Link>
         </div>
       ) : (
@@ -47,21 +48,21 @@ export default function LibraryPage() {
       {/* Older single lessons, from before courses existed */}
       {loaded && library.length > 0 && (
         <section className="mt-16">
-          <h2 className="font-display text-2xl text-sand">Single lessons</h2>
+          <h2 className="font-display text-2xl text-fg">Single lessons</h2>
           <ul className="mt-4 grid gap-3 sm:grid-cols-2">
             {library.map((row) => (
               <li key={row.id}>
                 <button
                   type="button"
                   onClick={() => setOpen(row)}
-                  className={`flex w-full items-center gap-3 rounded-2xl border p-4 text-left ${open?.id === row.id ? "border-gold/60 bg-paper" : "border-beige bg-paper/60 hover:border-gold/50"}`}
+                  className={`flex w-full items-center gap-3 rounded-2xl border p-4 text-left ${open?.id === row.id ? "border-accent/60 bg-surface" : "border-line bg-surface/60 hover:border-accent/50"}`}
                 >
-                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-gold/15 text-gold">
+                  <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-accent-soft text-accent">
                     <DocIcon size={18} />
                   </span>
                   <span className="min-w-0">
-                    <span className="block truncate font-medium text-sand capitalize">{row.topic}</span>
-                    <span className="block truncate text-xs text-taupe">{row.lesson_data.title}</span>
+                    <span className="block truncate font-medium text-fg capitalize">{row.topic}</span>
+                    <span className="block truncate text-xs text-muted">{row.lesson_data.title}</span>
                   </span>
                 </button>
               </li>

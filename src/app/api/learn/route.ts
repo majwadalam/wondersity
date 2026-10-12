@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
+import { asLearner } from "@/lib/auth";
 import { runTutor } from "@/lib/harness";
 import {
   MAX_TOPIC_LENGTH,
   cleanTopic,
   clientIp,
-  isValidLearnerId,
   rateLimit,
   serverError,
   tooManyRequests,
@@ -28,7 +28,7 @@ export async function POST(request: Request) {
   } catch {
     return NextResponse.json({ error: "Request body must be JSON" }, { status: 400 });
   }
-  const { topic: rawTopic, learnerId } = (body ?? {}) as Record<string, unknown>;
+  const { topic: rawTopic, ahead } = (body ?? {}) as Record<string, unknown>;
 
   const topic = cleanTopic(rawTopic);
   if (!topic) {
@@ -37,14 +37,14 @@ export async function POST(request: Request) {
       { status: 400 }
     );
   }
-  if (!isValidLearnerId(learnerId)) {
-    return NextResponse.json({ error: "Invalid learnerId" }, { status: 400 });
-  }
 
-  try {
-    const result = await runTutor(topic, learnerId);
-    return NextResponse.json(result);
-  } catch (error) {
-    return serverError(error, "Failed to generate lesson. Please try again.");
-  }
+  return asLearner(async (learnerId) => {
+    try {
+      // ahead: write the lesson after the one the learner is taking, so it's ready when they finish.
+      const result = await runTutor(topic, learnerId, { ahead: ahead === true });
+      return NextResponse.json(result);
+    } catch (error) {
+      return serverError(error, "Failed to generate lesson. Please try again.");
+    }
+  });
 }

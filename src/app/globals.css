@@ -1,204 +1,121 @@
 @import "tailwindcss";
 
+/* ======================================================================
+   Wondersity design tokens: white, calm, one accent (Aegean blue).
+   Tailwind classes use these names: bg-canvas, bg-surface, border-line,
+   text-fg, text-muted, bg-accent, bg-accent-soft, text-good, text-bad.
+   ====================================================================== */
 :root {
-  /* Gold & berry palette (dark). Token names are historical; the comment on
-     each line says what it is now. Brand colours: #c88b00 gold (buttons),
-     #e1b983 sand (text), #7a5498 violet and #ad2f70 magenta (gradients).
-     The deep purples are darker shades of the violet, so long text sits on a
-     surface dark enough to read comfortably. */
-  --gold: #c88b00;
-  --sand: #e1b983;
-  --violet: #7a5498;
-  --magenta: #ad2f70;
-  --ink: #150a1e; /* darkest: text on gold, code/trace panels */
+  --canvas: #f6f9fc; /* page background, alternate sections */
+  --surface: #ffffff; /* cards, panels */
+  --line: #e5edf5; /* borders */
+  --line-strong: #d3dde8; /* hovered borders */
+  --fg: #0a2540; /* headings and primary text: deep navy, never black */
+  --muted: #425466; /* body and secondary text */
+  --accent: #635bff; /* buttons, links, focus (blurple) */
+  --accent-strong: #4b45e0; /* hover */
+  --accent-soft: #f0efff; /* accent tints */
+  --navy: #0a2540; /* dark bands */
+  --navy-raised: #10304f; /* panels on navy */
+  --accent-on-dark: #a5a1ff; /* accent text on navy */
+  --good: #15be53; /* correct */
+  --bad: #e5484d; /* wrong */
+  --warn: #ffb86b; /* streaks, "imagined" labels */
 
-  --background: #1d0e29; /* deep base: inputs, chips, page fallback */
-  --paper: #2a1539; /* cards and reading surfaces */
-  --foreground: #e1b983; /* primary text: sand */
-  --espresso: #e1b983; /* (legacy name) primary text */
-  --taupe: #bd9e85; /* muted text: dimmed sand */
-  --beige: #573a6c; /* borders */
-  --peach: #e1b983; /* soft accent / highlight tints: sand */
-  --coffee: #c88b00; /* primary accent: gold */
-  --indigo: #7a5498; /* violet */
-  --amber: #ad2f70; /* magenta: streak / secondary accent */
-  --sage: #6cc08a; /* success (correct answers), lightened for dark */
+  --art-from: #635bff; /* course art fallback panel */
+  --art-to: #4b45e0;
+
+  /* Shadows are tinted blue, like Stripe's, never plain grey. */
+  --shadow-sm: 0 1px 3px rgba(50, 50, 93, 0.08), 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 13px 27px -5px rgba(50, 50, 93, 0.18), 0 8px 16px -8px rgba(0, 0, 0, 0.12);
+  --shadow-lg: 0 30px 45px -30px rgba(50, 50, 93, 0.25), 0 18px 36px -18px rgba(0, 0, 0, 0.1);
+  --shadow-xl: 0 50px 100px -20px rgba(50, 50, 93, 0.25), 0 30px 60px -30px rgba(0, 0, 0, 0.3);
 
   --ease-out-expo: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-cream: var(--background);
-  --color-paper: var(--paper);
-  --color-peach: var(--peach);
-  --color-beige: var(--beige);
-  --color-taupe: var(--taupe);
-  --color-coffee: var(--coffee);
-  --color-espresso: var(--espresso);
-  --color-sage: var(--sage);
-  --color-indigo: var(--indigo);
-  --color-gold: var(--gold);
-  --color-sand: var(--sand);
-  --color-violet: var(--violet);
-  --color-magenta: var(--magenta);
-  --color-ink: var(--ink);
-  --color-amber: var(--amber);
+  --color-canvas: var(--canvas);
+  --color-surface: var(--surface);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-accent-soft: var(--accent-soft);
+  --color-good: var(--good);
+  --color-bad: var(--bad);
+  --color-warn: var(--warn);
+  --color-navy: var(--navy);
+  --color-navy-raised: var(--navy-raised);
+  --color-accent-on-dark: var(--accent-on-dark);
 
-  --font-serif: var(--font-fraunces), ui-serif, Georgia, serif;
-  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: var(--font-jetbrains), ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  --font-serif: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  --font-sans: var(--font-geist), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-/* Flat warm cream; the cursor glow layers on top. */
 body {
-  background-color: var(--background);
-  background-image:
-    radial-gradient(ellipse 70% 60% at 0% 0%, rgba(122, 84, 152, 0.75), transparent 60%),
-    radial-gradient(ellipse 60% 55% at 100% 100%, rgba(173, 47, 112, 0.6), transparent 60%),
-    linear-gradient(150deg, #3a1f52 0%, #2a1236 50%, #3d1430 100%);
-  background-attachment: fixed;
-  color: var(--foreground);
+  /* No animation or wide child may widen the page on a phone. */
+  overflow-x: clip;
+  background: var(--canvas);
+  color: var(--fg);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
 ::selection {
-  background: var(--gold);
-  color: var(--ink);
+  background: #dcd9ff;
+  color: var(--fg);
 }
 
+/* Headings: same family as the body, heavier and tighter. */
 .font-display {
-  font-family: var(--font-serif);
-  font-optical-sizing: auto;
-  font-variation-settings: "SOFT" 30;
-  letter-spacing: -0.015em;
+  font-family: var(--font-sans);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+}
+/* Big marketing headlines: lighter and tighter, the Stripe way. */
+.display-xl {
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.02;
 }
 
 :focus-visible {
-  outline: 2px solid var(--coffee);
+  outline: 2px solid var(--accent);
   outline-offset: 3px;
   border-radius: 6px;
 }
-
-/* ============ 1. Custom cursor ============ */
-@media (hover: hover) and (pointer: fine) {
-  html.custom-cursor,
-  html.custom-cursor * {
-    cursor: none !important;
-  }
+/* An input inside a box that draws its own focus ring. */
+.input-bare:focus-visible {
+  outline: none;
 }
 
-.cursor-dot,
-.cursor-ring,
-.cursor-glow {
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  will-change: transform;
-}
-
-.cursor-dot {
-  z-index: 9999;
-  width: 8px;
-  height: 8px;
-  margin: -4px 0 0 -4px;
-  border-radius: 50%;
-  background: var(--peach);
-  /* Hairline so a peach dot stays findable on cream. */
-  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.45);
-  opacity: 0;
-  transition: opacity 200ms ease;
-}
-
-.cursor-ring {
-  z-index: 9998;
-  width: 40px;
-  height: 40px;
-  margin: -20px 0 0 -20px;
-}
-
-.cursor-ring-inner {
-  display: block;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: rgba(200, 139, 0, 0.55);
-  border: 1.5px solid var(--peach);
-  box-shadow: 0 0 12px 3px var(--peach);
-  filter: blur(1.5px);
-  opacity: 0;
-  transition:
-    transform 260ms var(--ease-spring),
-    opacity 220ms ease;
-}
-
-html.cursor-visible .cursor-dot {
-  opacity: 1;
-}
-html.cursor-visible .cursor-ring[data-state="bg"] .cursor-ring-inner {
-  opacity: 0.2;
-}
-html.cursor-visible .cursor-ring[data-state="content"] .cursor-ring-inner {
-  opacity: 0.3;
-}
-html.cursor-visible .cursor-ring[data-state="hover"] .cursor-ring-inner {
-  opacity: 0.6;
-  transform: scale(1.6); /* 64px */
-}
-html.cursor-visible .cursor-ring[data-pressed] .cursor-ring-inner {
-  transform: scale(0.75); /* 30px */
-}
-
-/* ============ 2. Cursor-reactive background ============ */
-.cursor-glow {
-  z-index: 0;
-  width: 1200px;
-  height: 1200px;
-  margin: -600px 0 0 -600px;
-  background: radial-gradient(circle closest-side, rgba(200, 139, 0, 0.12), rgba(200, 139, 0, 0));
-  opacity: 0;
-  transition: opacity 600ms ease;
-}
-html.cursor-visible .cursor-glow {
-  opacity: 1;
-}
-
-@media (hover: none) {
-  .cursor-dot,
-  .cursor-ring,
-  .cursor-glow {
-    display: none;
-  }
-}
-
-/* ============ 3. Magnetic primary button ============ */
+/* ============ Buttons ============ */
 .btn-primary {
-  background-color: var(--gold);
-  color: var(--ink);
-  box-shadow:
-    0 0 0 1px rgba(225, 185, 131, 0.35) inset,
-    0 0 24px -4px rgba(200, 139, 0, 0.75),
-    0 8px 20px -10px rgba(0, 0, 0, 0.6);
+  background-color: var(--accent);
+  color: #fff;
+  box-shadow: 0 1px 2px rgba(15, 23, 41, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.14);
+  transition: background-color 150ms ease, transform 150ms ease, box-shadow 150ms ease;
 }
 .btn-primary:hover:not(:disabled) {
-  background-color: #d99a0d;
-  box-shadow:
-    0 0 0 1px rgba(225, 185, 131, 0.5) inset,
-    0 0 36px -2px rgba(200, 139, 0, 0.95),
-    0 10px 24px -10px rgba(0, 0, 0, 0.6);
+  background-color: var(--accent-strong);
+}
+.btn-primary:active:not(:disabled) {
+  transform: translateY(1px);
 }
 .btn-primary:disabled {
   cursor: not-allowed;
-  opacity: 0.45;
+  opacity: 0.4;
 }
 .btn-primary .btn-arrow {
   display: inline-block;
@@ -208,97 +125,108 @@ html.cursor-visible .cursor-glow {
   transform: translateX(2px);
 }
 
-.magnetic {
-  transition:
-    translate 400ms ease-out,
-    scale 250ms var(--ease-spring),
-    background-color 200ms ease,
-    box-shadow 200ms ease,
-    opacity 200ms ease;
+.btn-secondary {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--fg);
+  box-shadow: var(--shadow-sm);
+  transition: border-color 150ms ease, background-color 150ms ease;
 }
-.magnetic[data-magnet="active"] {
-  transition:
-    translate 140ms ease-out,
-    scale 250ms var(--ease-spring),
-    background-color 200ms ease,
-    box-shadow 200ms ease,
-    opacity 200ms ease;
+.btn-secondary:hover:not(:disabled) {
+  border-color: var(--line-strong);
+  background: var(--canvas);
 }
-.magnetic:active:not(:disabled) {
-  scale: 0.97;
-  transition:
-    translate 140ms ease-out,
-    scale 80ms ease-out,
-    background-color 200ms ease,
-    box-shadow 200ms ease;
+.btn-secondary:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
-/* ============ 4. Topic input ============ */
+/* The lesson's bottom action: big, full width on phones. */
+.btn-continue {
+  min-height: 3rem;
+  border-radius: 0.875rem;
+  font-weight: 600;
+}
+.btn-continue[data-tone="good"] {
+  background: var(--good);
+}
+.btn-continue[data-tone="good"]:hover:not(:disabled) {
+  background: #0e8a44;
+}
+
+/* ============ Cards ============ */
+.card {
+  border: 1px solid var(--line);
+  background: var(--surface);
+  border-radius: 1rem;
+  box-shadow: var(--shadow-sm);
+}
+.card-hover {
+  transition: border-color 200ms ease, box-shadow 200ms ease, transform 200ms var(--ease-out-expo);
+}
+.card-hover:hover {
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-1px);
+}
+
+/* ============ Topic input ============ */
 .topic-input {
-  border: 1px solid var(--beige);
+  border: 1px solid var(--line);
   border-radius: 14px;
-  background: var(--paper);
-  caret-color: var(--coffee);
+  background: var(--surface);
+  caret-color: var(--accent);
   outline: none;
-  transition:
-    border-color 200ms ease,
-    box-shadow 200ms ease;
+  transition: border-color 200ms ease, box-shadow 200ms ease;
 }
 .topic-input:hover {
-  border-color: #7a5a8f;
+  border-color: var(--line-strong);
 }
 .topic-input:focus,
 .topic-input:focus-visible {
-  border-color: var(--taupe);
-  box-shadow: 0 0 0 4px rgba(200, 139, 0, 0.4);
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(99, 91, 255, 0.15);
   outline: none;
 }
 .topic-input::placeholder {
-  color: var(--taupe);
+  color: var(--muted);
   opacity: 1;
-  transition: opacity 200ms ease;
-}
-.topic-input:focus::placeholder {
-  opacity: 0;
 }
 .topic-underline {
-  position: absolute;
-  left: 16px;
-  right: 16px;
-  bottom: 7px;
-  height: 2px;
-  border-radius: 2px;
-  background: var(--peach);
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 300ms ease-out;
-  pointer-events: none;
+  display: none;
 }
-.topic-underline[data-on="true"] {
-  transform: scaleX(1);
+.topic-input-bare {
+  border: 0;
+  background: transparent;
+  caret-color: var(--accent);
+  outline: none;
 }
-
-/* ============ 5. Page entrance ============ */
-@keyframes char-in {
-  from { opacity: 0; transform: translateY(6px); }
-  to { opacity: 1; transform: translateY(0); }
+.topic-input-bare::placeholder {
+  color: #8a96aa;
+  opacity: 1;
 }
-/* Timing mirrors CHAR_START / CHAR_STAGGER / CHAR_DURATION in page.tsx. */
-.split-char {
-  display: inline-block;
-  animation: char-in 300ms var(--ease-out-expo) both;
-  animation-delay: calc(50ms + var(--ci, 0) * 25ms);
+.topic-input-bare:focus-visible {
+  outline: none;
 }
 
+.ask-card {
+  box-shadow: var(--shadow-md);
+  transition: border-color 200ms ease, box-shadow 200ms ease;
+}
+.ask-card:focus-within {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(99, 91, 255, 0.12), var(--shadow-md);
+}
+
+/* ============ Page entrance ============ */
 @keyframes fade-up {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
 }
 .intro {
-  animation: fade-up 300ms ease-out both;
+  animation: fade-up 400ms var(--ease-out-expo) both;
   animation-delay: var(--intro-delay, 0ms);
 }
-
 @keyframes fade-in {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
@@ -307,7 +235,7 @@ html.cursor-visible .cursor-glow {
   animation: fade-in 350ms ease-out both;
 }
 
-/* ============ 6 + 10. Lesson stagger / scroll reveals ============ */
+/* Scroll reveals (Reveal component). */
 .reveal {
   opacity: 0;
   transform: translateY(var(--reveal-y, 12px));
@@ -320,26 +248,34 @@ html.cursor-visible .cursor-glow {
   transform: none;
 }
 
-.concept-card {
-  transition:
-    border-color 300ms ease,
-    box-shadow 300ms ease;
+/* One lesson step entering. */
+@keyframes step-in {
+  from { opacity: 0; transform: translateX(16px); }
+  to { opacity: 1; transform: none; }
 }
-.concept-card:hover {
-  border-color: var(--beige);
-  box-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.35);
+@keyframes step-in-back {
+  from { opacity: 0; transform: translateX(-16px); }
+  to { opacity: 1; transform: none; }
+}
+.lesson-step[data-dir="forward"] {
+  animation: step-in 320ms var(--ease-out-expo) both;
+}
+.lesson-step[data-dir="back"] {
+  animation: step-in-back 320ms var(--ease-out-expo) both;
 }
 
-/* ============ 7. Loading ============ */
+.concept-card {
+  transition: border-color 300ms ease, box-shadow 300ms ease;
+}
+
+/* ============ Loading ============ */
 @keyframes indeterminate {
   from { transform: translateX(-100%); }
   to { transform: translateX(300%); }
 }
 .progress-indeterminate {
   animation: indeterminate 1.3s ease-in-out infinite alternate;
-  box-shadow: 0 0 6px var(--peach);
 }
-
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
@@ -348,66 +284,63 @@ html.cursor-visible .cursor-glow {
   to { background-position: 400px 0; }
 }
 .skeleton {
-  background: linear-gradient(90deg, #2f1940 0%, #3d2352 50%, #2f1940 100%);
+  background: linear-gradient(90deg, #eef0f4 0%, #f6f7fa 50%, #eef0f4 100%);
   background-size: 800px 100%;
   animation: shimmer 1.6s linear infinite;
   border-radius: 6px;
 }
 
-/* ============ 8. Quiz options ============ */
+/* ============ Quiz options ============ */
 .quiz-option {
-  border-color: var(--beige);
-  background-color: var(--background);
-  color: var(--espresso);
-  transition:
-    border-color 200ms ease,
-    background-color 200ms ease,
-    color 200ms ease,
-    opacity 200ms ease;
+  border-color: var(--line);
+  background-color: var(--surface);
+  color: var(--fg);
+  box-shadow: 0 2px 0 var(--line);
+  transition: border-color 150ms ease, background-color 150ms ease, color 150ms ease, opacity 150ms ease, transform 150ms ease;
 }
 .quiz-letter {
-  border-color: var(--beige);
-  background: var(--paper);
-  color: var(--taupe);
-  transition: all 200ms ease;
+  border-color: var(--line);
+  background: var(--canvas);
+  color: var(--muted);
+  transition: all 150ms ease;
 }
 .quiz-option[data-state="idle"]:hover {
-  border-color: var(--taupe);
-  background-color: rgba(200, 139, 0, 0.2);
+  border-color: var(--accent);
+  background-color: var(--accent-soft);
+}
+.quiz-option[data-state="idle"]:active {
+  transform: translateY(1px);
+  box-shadow: none;
 }
 .quiz-option[data-state="idle"]:hover .quiz-letter {
-  border-color: var(--taupe);
-  color: var(--coffee);
+  border-color: var(--accent);
+  color: var(--accent);
 }
-
 .quiz-option[data-state="correct"] {
-  border-color: var(--sage);
-  background-color: rgba(108, 192, 138, 0.14);
-  color: #c9f0d6;
+  border-color: var(--good);
+  background-color: #e9f8ef;
+  color: #0b5d2f;
+  box-shadow: 0 2px 0 #b6e6c8;
 }
 .quiz-option[data-state="correct"] .quiz-letter {
-  border-color: var(--sage);
-  background: var(--sage);
-  color: var(--ink);
+  border-color: var(--good);
+  background: var(--good);
+  color: #fff;
 }
-.quiz-option[data-state="correct"][data-picked] {
-  animation: pop 250ms ease-out;
-}
-
 .quiz-option[data-state="wrong"] {
-  border-color: #f87171;
-  background-color: rgba(248, 113, 113, 0.12);
-  color: #fecaca;
+  border-color: var(--bad);
+  background-color: #fdeeee;
+  color: #9b1c20;
+  box-shadow: 0 2px 0 #f6c8c9;
   animation: soft-miss 420ms ease-out;
 }
 .quiz-option[data-state="wrong"] .quiz-letter {
-  border-color: #f87171;
-  background: #f87171;
-  color: var(--ink);
+  border-color: var(--bad);
+  background: var(--bad);
+  color: #fff;
 }
-
 .quiz-option[data-state="dimmed"] {
-  opacity: 0.4;
+  opacity: 0.45;
 }
 
 @keyframes pop {
@@ -415,13 +348,6 @@ html.cursor-visible .cursor-glow {
   50% { transform: scale(1.02); }
   100% { transform: scale(1); }
 }
-@keyframes shake {
-  0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-2px); }
-  50% { transform: translateX(2px); }
-  75% { transform: translateX(-2px); }
-}
-
 @keyframes draw {
   to { stroke-dashoffset: 0; }
 }
@@ -430,15 +356,13 @@ html.cursor-visible .cursor-glow {
   stroke-dashoffset: 1;
   animation: draw 350ms ease-out 80ms forwards;
 }
-
 @keyframes explain-in {
   from { opacity: 0; transform: translateY(6px); }
   to { opacity: 1; transform: translateY(0); }
 }
 .quiz-explain {
-  animation: explain-in 300ms ease-out 200ms both;
+  animation: explain-in 300ms ease-out 120ms both;
 }
-
 @keyframes badge-in {
   from { opacity: 0; transform: scale(0.4) rotate(-20deg); }
   to { opacity: 1; transform: scale(1) rotate(0); }
@@ -447,49 +371,7 @@ html.cursor-visible .cursor-glow {
   animation: badge-in 400ms var(--ease-spring) both;
 }
 
-/* ============ 9. Library card lift + tilt ============ */
-.tilt-card {
-  transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg))
-    translateY(var(--lift, 0px));
-  transition:
-    transform 400ms ease-out,
-    border-color 200ms ease,
-    box-shadow 200ms ease;
-}
-.tilt-card[data-tilting] {
-  transition:
-    transform 120ms ease-out,
-    border-color 200ms ease,
-    box-shadow 200ms ease;
-}
-.tilt-card:hover {
-  --lift: -3px;
-  border-color: var(--taupe);
-  box-shadow: 0 16px 30px -18px rgba(0, 0, 0, 0.45);
-}
-.score-pill {
-  transition:
-    transform 200ms ease,
-    box-shadow 200ms ease;
-}
-.tilt-card:hover .score-pill {
-  transform: scale(0.94);
-  box-shadow: 0 0 0 1px rgba(189, 158, 133, 0.55);
-}
-.open-hint {
-  opacity: 0;
-  transform: translateX(-4px);
-  transition:
-    opacity 300ms ease,
-    transform 300ms ease;
-}
-.tilt-card:hover .open-hint,
-.tilt-card:focus-visible .open-hint {
-  opacity: 1;
-  transform: none;
-}
-
-/* ============ 11. Harness trace ============ */
+/* ============ Harness trace ============ */
 .trace-toggle {
   transition: color 200ms ease;
 }
@@ -518,9 +400,6 @@ html.cursor-visible .cursor-glow {
 .copy-btn {
   transition: background-color 200ms ease;
 }
-.copy-btn:hover {
-  background-color: #f0c98f;
-}
 .copy-btn[data-pop] {
   animation: press-pop 220ms var(--ease-spring);
 }
@@ -529,19 +408,14 @@ html.cursor-visible .cursor-glow {
   to { transform: scale(1); }
 }
 
-/* ============ 12. Learner pill + toast ============ */
+/* ============ Learner pill + toast ============ */
 .learner-pill {
-  transition:
-    padding 250ms var(--ease-out-expo),
-    border-color 200ms ease,
-    background-color 200ms ease;
+  transition: padding 250ms var(--ease-out-expo), border-color 200ms ease, background-color 200ms ease;
 }
 .learner-tip {
   opacity: 0;
   transform: translateY(-4px);
-  transition:
-    opacity 200ms ease,
-    transform 200ms ease;
+  transition: opacity 200ms ease, transform 200ms ease;
 }
 .group\/pill:hover .learner-tip,
 .group\/pill:focus-within .learner-tip {
@@ -549,7 +423,6 @@ html.cursor-visible .cursor-glow {
   transform: none;
   transition-delay: 150ms;
 }
-
 @keyframes toast {
   0% { opacity: 0; transform: translate(-50%, 8px); }
   15% { opacity: 1; transform: translate(-50%, 0); }
@@ -560,65 +433,14 @@ html.cursor-visible .cursor-glow {
   animation: toast 1500ms ease forwards;
 }
 
-/* ============ Reduced motion ============ */
-@media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    animation-delay: 0ms !important;
-    transition-duration: 0.01ms !important;
-    transition-delay: 0ms !important;
-  }
-  .reveal {
-    opacity: 1;
-    transform: none;
-  }
-  .tilt-card {
-    transform: none;
-  }
-  .check-draw {
-    stroke-dashoffset: 0;
-  }
-  /* Keyframes whose end state is hidden: show them statically instead. */
-  .toast {
-    animation: none;
-    transform: translateX(-50%);
-  }
-  .progress-indeterminate {
-    animation: none;
-    transform: translateX(100%);
-  }
-}
-
-/* ============ Courses ============ */
-.btn-on-dark {
-  border-radius: 999px;
-  background: var(--peach);
-  color: var(--espresso);
-  padding: 0.45rem 1rem;
-  font-size: 0.875rem;
-  font-weight: 500;
-  transition:
-    background-color 200ms ease,
-    transform 200ms var(--ease-spring);
-}
-.btn-on-dark:hover {
-  background: #f0c98f;
-}
-.btn-on-dark:active {
-  transform: scale(0.97);
-}
-
+/* ============ Shell ============ */
+.nav-link,
+.chip,
 .path-step {
-  transition:
-    border-color 200ms ease,
-    background-color 200ms ease,
-    color 200ms ease;
+  transition: background-color 150ms ease, color 150ms ease, border-color 150ms ease;
+}
+.app-header {
+  background: #fff;
 }
 
 /* Small "working" dots (next module being written). */
@@ -630,149 +452,32 @@ html.cursor-visible .cursor-glow {
 .animate-dot-2 { animation: pulse-dot 1.3s ease-in-out 0.18s infinite; }
 .animate-dot-3 { animation: pulse-dot 1.3s ease-in-out 0.36s infinite; }
 
-/* ============ Dashboard layout ============ */
-.ask-card {
-  box-shadow: 0 18px 40px -24px rgba(0, 0, 0, 0.35), 0 1px 0 rgba(0, 0, 0, 0.03);
-  transition: border-color 200ms ease, box-shadow 200ms ease;
-}
-.ask-card:focus-within {
-  border-color: rgba(200, 139, 0, 0.7);
-  box-shadow: 0 0 0 4px rgba(200, 139, 0, 0.18), 0 0 40px -6px rgba(200, 139, 0, 0.35), 0 24px 50px -24px rgba(0, 0, 0, 0.6);
-}
-.topic-input-bare {
-  border: 0;
-  background: transparent;
-  caret-color: var(--coffee);
-  outline: none;
-}
-.topic-input-bare::placeholder {
-  color: var(--taupe);
-  opacity: 1;
-  transition: opacity 200ms ease;
-}
-.topic-input-bare:focus::placeholder {
-  opacity: 0.45;
-}
-.topic-input-bare:focus-visible {
-  outline: none;
-}
-
-.search-box {
-  transition: border-color 200ms ease, box-shadow 200ms ease;
-}
-.search-box:focus-within {
-  border-color: rgba(0, 0, 0, 0.45);
-  box-shadow: 0 0 0 4px rgba(200, 139, 0, 0.22);
-}
-
-.start-card {
-  transition:
-    transform 250ms var(--ease-out-expo),
-    box-shadow 250ms ease,
-    border-color 200ms ease,
-    background-color 200ms ease;
-}
-/* Peach accent on hover. */
-.start-card:hover:not(:disabled) {
-  transform: translateY(-3px);
-  border-color: var(--peach);
-  background-color: rgba(200, 139, 0, 0.3);
-  box-shadow: 0 14px 28px -20px rgba(0, 0, 0, 0.45);
-}
-.start-icon {
-  transition: background-color 200ms ease, border-color 200ms ease;
-}
-.start-card:hover:not(:disabled) .start-icon {
-  background-color: var(--peach);
-  border-color: var(--peach);
-}
-
-.nav-link,
-.recent-item,
-.library-item,
-.up-next-item,
-.chip {
-  transition: background-color 180ms ease, color 180ms ease, border-color 180ms ease;
-}
-
-.rail-card {
-  transition: box-shadow 250ms ease;
-}
-.rail-card:hover {
-  box-shadow: 0 16px 36px -20px rgba(0, 0, 0, 0.35);
-}
-
-/* Vertical line joining the "Up next" circles. */
-.timeline::before {
-  content: "";
-  position: absolute;
-  top: 20px;
-  bottom: 20px;
-  left: 19px;
-  width: 2px;
-  background: var(--beige);
-}
-
-.progress-ring {
-  transition: stroke-dashoffset 900ms var(--ease-out-expo);
-}
-.course-bar {
-  transition: width 900ms var(--ease-out-expo);
-}
-
-/* "AI is thinking" waveform */
-.thinking-wave span {
-  display: block;
-  width: 3px;
-  height: 14px;
-  border-radius: 2px;
-  background: var(--coffee);
-  opacity: 0.5;
-  animation: wave 1s ease-in-out infinite;
-  transform-origin: bottom;
-}
-@keyframes wave {
-  0%, 100% { transform: scaleY(0.35); }
-  50% { transform: scaleY(1); }
-}
-.thinking-sparkle {
-  animation: twinkle 1.6s ease-in-out infinite;
-}
-
-/* ======================================================================
-   Gold & berry app: shell, pages, illustrations
-   ====================================================================== */
-
-/* ---- logo + nav ---- */
-.logo-mark {
-  filter: drop-shadow(0 0 10px rgba(200, 139, 0, 0.35));
-}
-.nav-link {
-  transition: background-color 200ms ease, color 200ms ease;
-}
-.nav-active {
-  box-shadow: inset 3px 0 0 var(--gold);
-}
-
-/* ---- cards ---- */
+/* ============ Course cards ============ */
 .course-tile,
 .catalog-tile,
 .continue-card {
-  transition:
-    transform 300ms var(--ease-out-expo),
-    border-color 200ms ease,
-    box-shadow 300ms ease;
+  transition: transform 250ms var(--ease-out-expo), border-color 200ms ease, box-shadow 250ms ease;
+}
+/* A catalog tile has no box: on hover its picture lifts, not the whole tile. */
+.catalog-tile .art-zoom {
+  transition: transform 250ms var(--ease-out-expo), box-shadow 250ms ease;
+}
+.catalog-tile:hover:not(:disabled) .art-zoom {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 .course-tile:hover,
-.catalog-tile:hover,
 .continue-card:hover {
-  box-shadow: 0 20px 40px -24px rgba(0, 0, 0, 0.8), 0 0 30px -12px rgba(200, 139, 0, 0.5);
-}
-.catalog-tile:hover:not(:disabled) {
-  transform: translateY(-4px);
+  border-color: var(--line-strong);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
 }
 .art-panel {
-  box-shadow: inset 0 -30px 40px -30px rgba(21, 10, 30, 0.6);
+  background-image: linear-gradient(135deg, var(--art-from), var(--art-to));
+}
+.course-bar,
+.progress-fill {
+  transition: width 900ms var(--ease-out-expo);
 }
 .star-btn {
   transition: transform 200ms var(--ease-spring), background-color 200ms ease, color 200ms ease, border-color 200ms ease;
@@ -781,7 +486,6 @@ html.cursor-visible .cursor-glow {
   transform: scale(0.85);
 }
 .star-btn[data-on] {
-  box-shadow: 0 0 16px -2px rgba(200, 139, 0, 0.9);
   animation: star-pop 350ms var(--ease-spring);
 }
 @keyframes star-pop {
@@ -789,92 +493,16 @@ html.cursor-visible .cursor-glow {
   100% { transform: scale(1) rotate(0); }
 }
 .empty-star {
-  animation: art-pulse 2.4s ease-in-out infinite;
   display: inline-block;
-}
-
-/* ---- course welcome ---- */
-.hero-ring {
-  position: absolute;
-  inset: -6px;
-  border-radius: 50%;
-  border: 2px dashed rgba(200, 139, 0, 0.55);
-  animation: spin 24s linear infinite;
-}
-
-
-/* ---- progress ---- */
-.progress-fill {
-  transition: width 1200ms var(--ease-out-expo);
-  box-shadow: 0 0 14px -2px rgba(200, 139, 0, 0.7);
 }
 .milestone {
   transition: transform 250ms var(--ease-out-expo);
 }
 .milestone.is-on:hover {
-  transform: translateY(-3px) rotate(-1deg);
+  transform: translateY(-2px);
 }
 
-/* ---- knowledge garden ---- */
-.garden-sun {
-  box-shadow: 0 0 60px 10px rgba(200, 139, 0, 0.55);
-  animation: art-pulse 5s ease-in-out infinite;
-}
-.firefly {
-  position: absolute;
-  width: 5px;
-  height: 5px;
-  border-radius: 50%;
-  background: var(--sand);
-  box-shadow: 0 0 10px 2px rgba(225, 185, 131, 0.8);
-  animation: firefly 7s ease-in-out infinite;
-}
-@keyframes firefly {
-  0%, 100% { transform: translate(0, 0); opacity: 0.2; }
-  25% { transform: translate(18px, -14px); opacity: 1; }
-  50% { transform: translate(-10px, -26px); opacity: 0.5; }
-  75% { transform: translate(14px, -8px); opacity: 0.9; }
-}
-.plant-sway {
-  animation: sway 4.5s ease-in-out infinite;
-}
-.plant-link:hover .plant-sway {
-  animation-duration: 1.6s;
-}
-@keyframes sway {
-  0%, 100% { transform: rotate(-2.5deg); }
-  50% { transform: rotate(2.5deg); }
-}
-.leaf-grow,
-.bud-pop {
-  transform-box: fill-box;
-  animation: grow-in 900ms var(--ease-spring) both;
-}
-.bloom {
-  animation: grow-in 1200ms var(--ease-spring) both;
-}
-@keyframes grow-in {
-  from { transform: scale(0); }
-  to { transform: scale(1); }
-}
-.stem-grow {
-  stroke-dasharray: 200;
-  stroke-dashoffset: 200;
-  animation: draw-stem 1100ms ease-out forwards;
-}
-@keyframes draw-stem {
-  to { stroke-dashoffset: 0; }
-}
-.seed-wiggle {
-  animation: wiggle 2.6s ease-in-out infinite;
-}
-@keyframes wiggle {
-  0%, 100% { transform: rotate(0); }
-  20% { transform: rotate(-8deg); }
-  40% { transform: rotate(8deg); }
-}
-
-/* ---- topic art motions ---- */
+/* ============ Topic art motions ============ */
 .art-spin { animation: spin 6s linear infinite; }
 .art-spin-slow { animation: spin 16s linear infinite; }
 .art-pulse { animation: art-pulse 2.4s ease-in-out infinite; }
@@ -892,7 +520,15 @@ html.cursor-visible .cursor-glow {
   transform-origin: center;
   animation: twinkle 2.2s ease-in-out infinite;
 }
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; transform: scale(0.7); }
+  50% { opacity: 1; transform: scale(1.15); }
+}
 .art-sway { animation: sway 3.6s ease-in-out infinite; }
+@keyframes sway {
+  0%, 100% { transform: rotate(-2.5deg); }
+  50% { transform: rotate(2.5deg); }
+}
 .art-rise { animation: rise 3s ease-in infinite; }
 @keyframes rise {
   0% { transform: translateY(8px); opacity: 0; }
@@ -932,88 +568,24 @@ html.cursor-visible .cursor-glow {
 .art-delay-2 { animation-delay: 0.6s; }
 .art-delay-3 { animation-delay: 0.9s; }
 
-/* ---- scrollytelling ---- */
-.story-step {
-  opacity: 0.35;
-  transition: opacity 400ms ease;
-}
-.story-step.is-active {
-  opacity: 1;
-}
-.story-stage .layer {
-  opacity: 0;
-  transition: opacity 600ms ease;
-}
-.story-stage[data-step="0"] .layer-0,
-.story-stage[data-step="1"] .layer-1,
-.story-stage[data-step="2"] .layer-2,
-.story-stage[data-step="3"] .layer-3 {
-  opacity: 1;
-}
-.story-stage .caret { animation: blink-soft 1s steps(1) infinite; }
-.story-stage .path-draw {
-  stroke-dashoffset: 1;
-  transition: stroke-dashoffset 1400ms ease-out;
-}
-.story-stage[data-step="1"] .path-draw,
-.story-stage[data-step="2"] .path-draw { stroke-dashoffset: 0; }
-.story-stage .node-pop {
-  transform: scale(0);
-  transition: transform 500ms var(--ease-spring);
-}
-.story-stage[data-step="1"] .node-pop { transform: scale(1); }
-.story-stage .tick-in {
-  opacity: 0;
-  transform: translateX(-12px);
-  transition: opacity 400ms ease, transform 400ms var(--ease-out-expo);
-}
-.story-stage[data-step="2"] .tick-in { opacity: 1; transform: none; }
-.story-stage .ring-fill {
-  stroke-dashoffset: 1;
-  transition: stroke-dashoffset 1400ms var(--ease-out-expo);
-}
-.story-stage[data-step="3"] .ring-fill { stroke-dashoffset: 0.2; }
-.story-stage .grow {
-  transform: scale(0.2);
-  opacity: 0;
-  transition: transform 1000ms var(--ease-spring), opacity 400ms ease;
-}
-.story-stage[data-step="3"] .grow { transform: scale(1); opacity: 1; }
-
-/* The steps scroll under the sticky stage on phones; lift it off the page. */
-@media (max-width: 1023px) {
-  .scrolly .story-stage { box-shadow: 0 12px 30px -12px rgba(0, 0, 0, 0.8); }
-}
-
-@keyframes twinkle {
-  0%, 100% { opacity: 0.3; transform: scale(0.7); }
-  50% { opacity: 1; transform: scale(1.15); }
-}
-
 /* ======================================================================
    Interactive lesson activities
    ====================================================================== */
+/* Activities sit flat on the lesson step, like everything else on it: an
+   earlier design framed them as padded cards, and a shadow left over from it
+   drew a faint outline tight around the content. */
 .activity-card {
-  box-shadow: 0 20px 50px -30px rgba(0, 0, 0, 0.8);
-  transition: border-color 300ms ease;
-}
-.activity-card[data-done] {
-  border-color: rgba(200, 139, 0, 0.6);
+  box-shadow: none;
 }
 .activity-glow {
-  position: absolute;
-  inset: -40% -20% auto auto;
-  width: 60%;
-  height: 80%;
-  background: radial-gradient(circle, rgba(173, 47, 112, 0.25), transparent 70%);
-  pointer-events: none;
+  display: none;
 }
 .activity-reveal,
 .activity-feedback,
 .diagram-panel,
 .sim-outcome,
 .story-beat {
-  animation: activity-in 450ms var(--ease-out-expo) both;
+  animation: activity-in 400ms var(--ease-out-expo) both;
 }
 @keyframes activity-in {
   from { opacity: 0; transform: translateY(8px); }
@@ -1022,32 +594,29 @@ html.cursor-visible .cursor-glow {
 .activity-done {
   animation: star-pop 400ms var(--ease-spring);
 }
-.activity-progress {
-  box-shadow: 0 10px 30px -16px rgba(0, 0, 0, 0.9);
-}
 
 /* choices (predict / scenario) */
 .choice-option {
-  border-color: var(--beige);
-  background: rgba(21, 10, 30, 0.35);
-  color: var(--sand);
-  transition: border-color 200ms ease, background-color 200ms ease, transform 200ms var(--ease-out-expo);
+  border-color: var(--line);
+  background: var(--surface);
+  color: var(--fg);
+  box-shadow: 0 2px 0 var(--line);
+  transition: border-color 150ms ease, background-color 150ms ease, transform 150ms ease;
 }
 .choice-option[data-state="idle"]:not(:disabled):hover {
-  border-color: var(--gold);
-  background: rgba(200, 139, 0, 0.1);
-  transform: translateY(-2px);
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }
 .choice-option[data-state="good"],
 .choice-option[data-state="answer"] {
-  border-color: var(--sage);
-  background: rgba(108, 192, 138, 0.14);
-  color: #c9f0d6;
+  border-color: var(--good);
+  background: #e9f8ef;
+  color: #0b5d2f;
 }
 .choice-option[data-state="bad"] {
-  border-color: #f87171;
-  background: rgba(248, 113, 113, 0.12);
-  color: #fecaca;
+  border-color: var(--bad);
+  background: #fdeeee;
+  color: #9b1c20;
   animation: soft-miss 420ms ease-out;
 }
 .choice-option:disabled[data-state="idle"] {
@@ -1056,80 +625,88 @@ html.cursor-visible .cursor-glow {
 
 /* sort */
 .sort-chip {
-  border-color: var(--beige);
-  background: var(--paper);
-  color: var(--sand);
+  border-color: var(--line);
+  background: var(--surface);
+  color: var(--fg);
+  box-shadow: 0 2px 0 var(--line);
   cursor: grab;
-  transition: border-color 200ms ease, background-color 200ms ease, transform 200ms var(--ease-spring);
+  /* No transform transition: cards slide with motion layout animations, which
+     set transform themselves. Selection grows with `scale` instead. */
+  transition: border-color 150ms ease, background-color 150ms ease, scale 200ms var(--ease-spring);
 }
 .sort-chip:hover {
-  border-color: var(--gold);
+  border-color: var(--accent);
 }
 .sort-chip[data-state="selected"] {
-  border-color: var(--gold);
-  background: rgba(200, 139, 0, 0.18);
-  transform: scale(1.04);
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  scale: 1.04;
 }
 .sort-chip[data-state="good"] {
-  border-color: var(--sage);
-  background: rgba(108, 192, 138, 0.16);
+  border-color: var(--good);
+  background: #e9f8ef;
 }
 .sort-chip[data-state="bad"] {
-  border-color: #f87171;
-  background: rgba(248, 113, 113, 0.14);
+  border-color: var(--bad);
+  background: #fdeeee;
   animation: soft-miss 420ms ease-out;
 }
 .sort-bucket {
   transition: border-color 200ms ease, background-color 200ms ease;
 }
+/* The group a dragged card would land in. */
+.sort-bucket[data-over] {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+}
+/* The card under the pointer (dnd-kit's DragOverlay moves its wrapper; the
+   tilt uses `rotate`, which doesn't fight that transform). */
 .sort-ghost {
-  transform: rotate(-3deg) scale(1.05);
-  box-shadow: 0 0 30px -6px rgba(200, 139, 0, 0.8);
+  box-shadow: var(--shadow-lg);
+  cursor: grabbing;
+  rotate: -2deg;
 }
 
 /* order */
 .order-row {
-  border-color: var(--beige);
-  background: rgba(21, 10, 30, 0.35);
-  transition: border-color 200ms ease, background-color 200ms ease, transform 200ms ease;
+  border-color: var(--line);
+  background: var(--surface);
+  box-shadow: 0 2px 0 var(--line);
+  transition: border-color 150ms ease, background-color 150ms ease, transform 150ms ease;
 }
 .order-row[data-state="dragging"] {
-  border-color: var(--gold);
-  background: rgba(200, 139, 0, 0.12);
+  border-color: var(--accent);
+  background: var(--accent-soft);
   transform: scale(1.02);
+  box-shadow: var(--shadow-lg);
 }
 .order-row[data-state="good"] {
-  border-color: var(--sage);
-  background: rgba(108, 192, 138, 0.12);
+  border-color: var(--good);
+  background: #e9f8ef;
 }
 .order-row[data-state="bad"] {
-  border-color: #f87171;
-  background: rgba(248, 113, 113, 0.1);
+  border-color: var(--bad);
+  background: #fdeeee;
 }
 
 /* timeline */
-.timeline-fill {
-  box-shadow: 0 0 12px rgba(200, 139, 0, 0.6);
-}
 .timeline-dot {
   position: relative;
   z-index: 1;
-  border-color: var(--beige);
-  background: var(--paper);
+  border-color: var(--line-strong);
+  background: var(--surface);
   transition: transform 300ms var(--ease-spring), background-color 300ms ease, border-color 300ms ease;
 }
 .timeline-dot[data-state="seen"] {
-  border-color: var(--gold);
-  background: rgba(200, 139, 0, 0.35);
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }
 .timeline-dot[data-state="active"] {
-  border-color: var(--gold);
-  background: var(--gold);
+  border-color: var(--accent);
+  background: var(--accent);
   transform: scale(1.2);
-  box-shadow: 0 0 20px rgba(200, 139, 0, 0.8);
+  box-shadow: 0 0 0 4px rgba(99, 91, 255, 0.15);
 }
-
-/* chart */
 
 /* simulation */
 .sim-needle {
@@ -1142,37 +719,37 @@ html.cursor-visible .cursor-glow {
   appearance: none;
   height: 8px;
   border-radius: 999px;
-  background: linear-gradient(90deg, var(--violet), var(--magenta), var(--gold));
+  background: linear-gradient(90deg, #cfccff, var(--accent));
   outline: none;
 }
 .sim-range::-webkit-slider-thumb {
   appearance: none;
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  background: var(--sand);
-  border: 3px solid var(--gold);
-  box-shadow: 0 0 14px rgba(200, 139, 0, 0.9);
+  background: #fff;
+  border: 3px solid var(--accent);
+  box-shadow: var(--shadow-md);
   cursor: grab;
 }
 .sim-range::-moz-range-thumb {
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
   border-radius: 50%;
-  background: var(--sand);
-  border: 3px solid var(--gold);
+  background: #fff;
+  border: 3px solid var(--accent);
   cursor: grab;
 }
 
 /* diagram */
 .diagram-node circle {
-  fill: var(--paper);
-  stroke: var(--violet);
+  fill: var(--surface);
+  stroke: #a9a4ff;
   stroke-width: 2;
   transition: fill 250ms ease, stroke 250ms ease;
 }
 .diagram-node div {
-  color: var(--sand);
+  color: var(--fg);
 }
 .diagram-node {
   transition: transform 300ms var(--ease-spring);
@@ -1181,18 +758,15 @@ html.cursor-visible .cursor-glow {
   transform: scale(1.08);
 }
 .diagram-node[data-state="seen"] circle {
-  stroke: var(--gold);
+  stroke: var(--accent);
 }
 .diagram-node[data-state="near"] circle {
-  fill: rgba(173, 47, 112, 0.35);
-  stroke: var(--magenta);
+  fill: var(--accent-soft);
+  stroke: #7a4cf0;
 }
 .diagram-node[data-state="active"] circle {
-  fill: var(--gold);
-  stroke: var(--sand);
-}
-.diagram-node[data-state="active"] div {
-  color: var(--ink);
+  fill: var(--accent);
+  stroke: var(--accent-strong);
 }
 .diagram-node[data-state="active"] {
   transform: scale(1.12);
@@ -1202,42 +776,56 @@ html.cursor-visible .cursor-glow {
 }
 .diagram-label {
   paint-order: stroke;
-  stroke: var(--ink);
+  stroke: #fff;
   stroke-width: 4px;
+}
+.diagram-flow {
+  stroke: var(--accent);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 8 92;
+  animation: diagram-flow 1.4s linear infinite;
+  pointer-events: none;
+}
+@keyframes diagram-flow {
+  from { stroke-dashoffset: 100; }
+  to { stroke-dashoffset: 0; }
 }
 
 /* listen */
 .listen-wave span {
   flex: 1;
   border-radius: 2px;
-  background: var(--gold);
-  opacity: 0.35;
+  background: var(--accent);
+  opacity: 0.3;
   transform: scaleY(0.25);
   transform-origin: center;
   transition: opacity 300ms ease, transform 300ms ease;
 }
 .listen-wave[data-playing] span {
-  opacity: 0.9;
+  opacity: 0.85;
   animation: wave 900ms ease-in-out infinite;
+}
+@keyframes wave {
+  0%, 100% { transform: scaleY(0.35); }
+  50% { transform: scaleY(1); }
 }
 
 /* sound: mini piano */
 .piano-white {
-  background: linear-gradient(#f3e6d0, #e1b983);
+  background: linear-gradient(#ffffff, #f1f3f7);
   transition: background 120ms ease, box-shadow 120ms ease;
 }
 .piano-black {
   z-index: 1;
-  background: linear-gradient(#2a1539, #150a1e);
+  background: linear-gradient(#2b3548, #0f1729);
   transition: background 120ms ease, box-shadow 120ms ease;
 }
 .piano-white[data-lit] {
-  background: linear-gradient(#ffe2a6, #c88b00);
-  box-shadow: inset 0 -8px 16px rgba(173, 47, 112, 0.5);
+  background: linear-gradient(#e6e4ff, #c9c5ff);
 }
 .piano-black[data-lit] {
-  background: linear-gradient(#ad2f70, #7a5498);
-  box-shadow: 0 0 14px rgba(173, 47, 112, 0.9);
+  background: linear-gradient(#7d77ff, var(--accent));
 }
 .sound-clip {
   transition: border-color 200ms ease, transform 200ms var(--ease-out-expo);
@@ -1255,30 +843,31 @@ html.cursor-visible .cursor-glow {
 /* code window */
 .code-window {
   overflow: hidden;
-  border: 1px solid var(--beige);
-  border-radius: 1rem;
-  background: #10081a;
+  border: 1px solid var(--line);
+  border-radius: 0.875rem;
+  background: #fbfcfd;
 }
 .code-bar {
   display: flex;
   align-items: center;
   gap: 6px;
   padding: 8px 12px;
-  border-bottom: 1px solid rgba(87, 58, 108, 0.6);
+  border-bottom: 1px solid var(--line);
+  background: var(--canvas);
 }
 .code-bar span {
   width: 9px;
   height: 9px;
   border-radius: 999px;
-  background: rgba(225, 185, 131, 0.25);
+  background: #d5dae3;
 }
 .code-bar em {
   margin-left: auto;
   font-style: normal;
   font-size: 11px;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--taupe);
+  color: var(--muted);
 }
 .code-window pre {
   margin: 0;
@@ -1286,53 +875,51 @@ html.cursor-visible .cursor-glow {
   overflow-x: auto;
   font-size: 13.5px;
   line-height: 1.7;
-  color: #eadcc8;
+  color: #1e293b;
 }
 .code-line {
+  position: relative;
   display: flex;
   min-width: max-content;
   padding-right: 16px;
   border-left: 3px solid transparent;
   transition: background-color 250ms ease, border-color 250ms ease;
 }
-.code-line {
-  position: relative;
-}
 /* The trace highlight glides between lines (a Motion layout animation). */
 .code-highlight {
   position: absolute;
   inset: 0 0 0 -3px;
-  background: rgba(200, 139, 0, 0.16);
-  border-left: 3px solid var(--gold);
+  background: rgba(99, 91, 255, 0.08);
+  border-left: 3px solid var(--accent);
   pointer-events: none;
 }
 .code-line > :not(.code-highlight) {
   position: relative;
 }
 .trace-var {
-  border-color: rgba(87, 58, 108, 0.8);
-  background: rgba(21, 10, 30, 0.45);
+  border-color: var(--line);
+  background: var(--canvas);
   transition: border-color 300ms ease, background-color 300ms ease;
 }
 .trace-var[data-changed] {
-  border-color: rgba(200, 139, 0, 0.6);
-  background: rgba(200, 139, 0, 0.12);
+  border-color: var(--accent);
+  background: var(--accent-soft);
 }
 .code-no {
   width: 2.75rem;
   flex-shrink: 0;
   padding-right: 12px;
   text-align: right;
-  color: rgba(189, 158, 133, 0.5);
+  color: #a3adbd;
   user-select: none;
 }
 .code-line code {
   white-space: pre;
 }
-.tok-kw { color: #d79bd0; }
-.tok-str { color: #e9c46a; }
-.tok-num { color: #8fd3a8; }
-.tok-com { color: rgba(189, 158, 133, 0.7); font-style: italic; }
+.tok-kw { color: #7c3aed; }
+.tok-str { color: #b45309; }
+.tok-num { color: #0f8a4b; }
+.tok-com { color: #8a96aa; font-style: italic; }
 
 /* compare */
 .compare-grid {
@@ -1349,27 +936,27 @@ html.cursor-visible .cursor-glow {
   padding: 0 12px;
   font-size: 11px;
   font-weight: 600;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
 }
-.compare-col-a { color: var(--gold); }
-.compare-col-b { color: #d79bd0; }
+.compare-col-a { color: var(--accent); }
+.compare-col-b { color: #7a4cf0; }
 .compare-label {
   padding: 10px 12px;
   font-size: 13px;
   font-weight: 600;
-  color: var(--sand);
+  color: var(--fg);
 }
 .compare-cell {
   padding: 10px 12px;
   border-radius: 12px;
-  background: rgba(21, 10, 30, 0.4);
+  background: var(--canvas);
   font-size: 14px;
   line-height: 1.55;
-  color: rgba(225, 185, 131, 0.92);
+  color: #273449;
 }
-.compare-row .compare-cell:nth-child(2) { box-shadow: inset 3px 0 0 rgba(200, 139, 0, 0.6); }
-.compare-row .compare-cell:nth-child(3) { box-shadow: inset 3px 0 0 rgba(215, 155, 208, 0.6); }
+.compare-row .compare-cell:nth-child(2) { box-shadow: inset 3px 0 0 var(--accent); }
+.compare-row .compare-cell:nth-child(3) { box-shadow: inset 3px 0 0 #7a4cf0; }
 @media (max-width: 639px) {
   .compare-head { display: none; }
   .compare-row { grid-template-columns: 1fr; gap: 6px; padding-bottom: 6px; }
@@ -1380,9 +967,9 @@ html.cursor-visible .cursor-glow {
     margin-bottom: 2px;
     font-size: 10px;
     font-weight: 600;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--taupe);
+    color: var(--muted);
   }
 }
 
@@ -1390,133 +977,92 @@ html.cursor-visible .cursor-glow {
 .inline-code {
   padding: 0.05em 0.35em;
   border-radius: 0.35em;
-  background: rgba(21, 10, 30, 0.55);
-  border: 1px solid rgba(87, 58, 108, 0.7);
+  background: #f1f3f7;
+  border: 1px solid var(--line);
   font-size: 0.88em;
   font-style: normal;
-  color: #f0d9a8;
+  color: #3730a3;
 }
 
 /* ============ Answer feedback ============ */
-/* A miss gets a soft red ring that fades: clear, but no shaking. */
 @keyframes soft-miss {
-  from { box-shadow: 0 0 0 0 rgba(248, 113, 113, 0.5); }
-  to { box-shadow: 0 0 0 7px rgba(248, 113, 113, 0); }
+  from { box-shadow: 0 0 0 0 rgba(229, 72, 77, 0.35); }
+  to { box-shadow: 0 0 0 7px rgba(229, 72, 77, 0); }
 }
-/* A right answer glows once. */
 @keyframes right-glow {
-  0% { box-shadow: 0 0 0 0 rgba(108, 192, 138, 0.55); }
-  60% { box-shadow: 0 0 22px 2px rgba(108, 192, 138, 0.28); }
-  100% { box-shadow: 0 0 0 0 rgba(108, 192, 138, 0); }
+  0% { box-shadow: 0 0 0 0 rgba(18, 161, 80, 0.4); }
+  100% { box-shadow: 0 0 0 8px rgba(18, 161, 80, 0); }
 }
 .quiz-option[data-state="correct"][data-picked] {
-  animation: pop 250ms ease-out, right-glow 900ms ease-out;
+  animation: pop 250ms ease-out, right-glow 700ms ease-out;
 }
 .choice-option[data-state="good"] {
-  animation: right-glow 900ms ease-out;
+  animation: right-glow 700ms ease-out;
 }
 
-/* ============ Woven threads (hero, loading) ============ */
-.woven { overflow: visible; }
-.woven-warp {
-  stroke: rgba(225, 185, 131, 0.12);
-  stroke-width: 1;
+/* Feedback sheet that rises at the bottom of a lesson step. */
+@keyframes sheet-up {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
 }
-.woven-weft {
-  fill: none;
-  stroke-linecap: round;
-  opacity: 0.55;
-}
-.woven-strand {
-  animation: woven-drift var(--strand-speed, 8s) ease-in-out var(--strand-delay, 0s) infinite alternate;
-}
-@keyframes woven-drift {
-  from { transform: translateY(-3px); }
-  to { transform: translateY(3px); }
-}
-.woven-shuttle {
-  fill: none;
-  stroke-linecap: round;
-  stroke-dasharray: 9 91;
-  filter: drop-shadow(0 0 4px rgba(200, 139, 0, 0.8));
-  animation: woven-shuttle var(--shuttle-speed, 6s) linear var(--shuttle-delay, 0s) infinite;
-}
-@keyframes woven-shuttle {
-  from { stroke-dashoffset: 100; }
-  to { stroke-dashoffset: 0; }
-}
-.woven-glow {
-  transform-origin: center;
-  transform-box: fill-box;
-  animation: woven-breathe 6s ease-in-out infinite alternate;
-}
-@keyframes woven-breathe {
-  from { opacity: 0.7; transform: scale(0.96); }
-  to { opacity: 1; transform: scale(1.04); }
-}
-@media (prefers-reduced-motion: reduce) {
-  .woven-shuttle { stroke-dasharray: none; opacity: 0; }
+.step-sheet {
+  animation: sheet-up 280ms var(--ease-out-expo) both;
 }
 
 /* ============ Course journey map ============ */
-.level-section[data-tone="violet"] {
-  background: radial-gradient(120% 70% at 0% 0%, rgba(122, 84, 152, 0.28), transparent 60%), rgba(42, 21, 57, 0.45);
-}
-.level-section[data-tone="magenta"] {
-  background: radial-gradient(120% 70% at 100% 0%, rgba(173, 47, 112, 0.22), transparent 60%), rgba(42, 21, 57, 0.45);
+.level-section {
+  background: var(--surface);
 }
 .level-section[data-level-status="done"] {
-  border-color: rgba(200, 139, 0, 0.45);
+  border-color: #b6e6c8;
 }
 .map-trail {
   fill: none;
-  stroke: rgba(225, 185, 131, 0.28);
-  stroke-width: 3;
+  stroke: #dfe3ea;
+  stroke-width: 4;
   stroke-linecap: round;
 }
 .map-trail-done {
   fill: none;
-  stroke: var(--gold);
+  stroke: var(--accent);
   stroke-width: 4;
   stroke-linecap: round;
-  filter: drop-shadow(0 0 5px rgba(200, 139, 0, 0.55));
 }
 .map-node {
-  border: 2px solid var(--beige);
-  background: var(--paper);
-  color: var(--taupe);
-  box-shadow: 0 6px 0 rgba(21, 10, 30, 0.6);
+  border: 2px solid var(--line-strong);
+  background: var(--surface);
+  color: var(--muted);
+  box-shadow: 0 4px 0 var(--line-strong);
   transition: box-shadow 200ms ease, border-color 200ms ease;
 }
 .map-node[data-state="done"] {
-  border-color: var(--gold);
-  background: var(--gold);
-  color: var(--ink);
-  box-shadow: 0 6px 0 #8a5f00;
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 4px 0 var(--accent-strong);
 }
 .map-node[data-state="current"] {
-  border-color: var(--gold);
-  background: radial-gradient(circle at 35% 30%, #3b2050, var(--paper));
-  color: var(--gold);
-  box-shadow: 0 6px 0 rgba(200, 139, 0, 0.35), 0 0 24px rgba(200, 139, 0, 0.25);
+  border-color: var(--accent);
+  background: var(--surface);
+  color: var(--accent);
+  box-shadow: 0 4px 0 #c9c5ff, 0 0 0 6px rgba(99, 91, 255, 0.1);
 }
 .map-node[data-state="locked"] {
-  border-style: dashed;
-  opacity: 0.75;
+  background: var(--canvas);
+  opacity: 0.85;
 }
 .map-node[data-selected] {
-  border-color: var(--sand);
+  border-color: var(--fg);
 }
 .map-node:focus-visible {
-  outline: 3px solid var(--sand);
+  outline: 3px solid var(--accent);
   outline-offset: 4px;
 }
-/* The one ambient motion on the map: the module you're on breathes. */
 .map-node-ring {
   position: absolute;
   inset: -7px;
   border-radius: 999px;
-  border: 2px solid rgba(200, 139, 0, 0.55);
+  border: 2px solid rgba(99, 91, 255, 0.45);
   animation: node-breathe 2.4s ease-in-out infinite;
 }
 @keyframes node-breathe {
@@ -1524,48 +1070,353 @@ html.cursor-visible .cursor-glow {
   50% { transform: scale(1.08); opacity: 0.25; }
 }
 
-/* Diagram: a pulse runs along a selected node's links, from cause to effect. */
-.diagram-flow {
-  stroke: #ffd36b;
-  stroke-width: 3;
-  stroke-linecap: round;
-  stroke-dasharray: 8 92;
-  filter: drop-shadow(0 0 3px rgba(255, 211, 107, 0.9));
-  animation: diagram-flow 1.4s linear infinite;
-  pointer-events: none;
-}
-@keyframes diagram-flow {
-  from { stroke-dashoffset: 100; }
-  to { stroke-dashoffset: 0; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .diagram-flow { display: none; }
-}
-
 /* ============ Graph activity ============ */
-.graph-axis { stroke: rgba(225, 185, 131, 0.3); stroke-width: 1; }
-.graph-tick { fill: var(--taupe); font-size: 10px; font-family: var(--font-mono); }
-.graph-label { fill: var(--sand); font-size: 11px; }
+.graph-axis { stroke: #cfd5df; stroke-width: 1; }
+.graph-tick { fill: var(--muted); font-size: 10px; font-family: var(--font-mono); }
+.graph-label { fill: var(--fg); font-size: 11px; }
 .graph-ghost {
   fill: none;
-  stroke: rgba(215, 155, 208, 0.45);
+  stroke: #b8a6f5;
   stroke-width: 1.5;
   stroke-dasharray: 4 5;
 }
 .graph-curve {
   fill: none;
-  stroke: var(--gold);
+  stroke: var(--accent);
   stroke-width: 2.6;
   stroke-linecap: round;
   stroke-linejoin: round;
-  filter: drop-shadow(0 0 6px rgba(200, 139, 0, 0.45));
 }
 
-/* Home backdrop: threads fade out toward the text and the bottom (masks, not
-   painted overlays, so the page gradient shows through). */
-.loom-hero {
-  -webkit-mask-image: linear-gradient(to right, transparent 20%, #000 70%), linear-gradient(to bottom, #000 55%, transparent);
-  -webkit-mask-composite: source-in;
-  mask-image: linear-gradient(to right, transparent 20%, #000 70%), linear-gradient(to bottom, #000 55%, transparent);
-  mask-composite: intersect;
+/* ============ Reduced motion ============ */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  .check-draw {
+    stroke-dashoffset: 0;
+  }
+  /* Keyframes whose end state is hidden: show them statically instead. */
+  .toast {
+    animation: none;
+    transform: translateX(-50%);
+  }
+  .progress-indeterminate {
+    animation: none;
+    transform: translateX(100%);
+  }
+  .diagram-flow {
+    display: none;
+  }
+}
+
+/* Course cover images ease in a little on hover. */
+.art-zoom img {
+  transition: transform 600ms var(--ease-out-expo);
+}
+.group:hover .art-zoom img {
+  transform: scale(1.04);
+}
+
+/* ============ Stripe-style pieces ============ */
+.btn-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 999px;
+  padding: 0.6rem 1rem 0.6rem 1.15rem;
+  font-size: 15px;
+  font-weight: 500;
+  transition: background-color 150ms cubic-bezier(0.215, 0.61, 0.355, 1), opacity 150ms ease;
+}
+.btn-pill-dark {
+  background: var(--navy);
+  color: #fff;
+}
+.btn-pill-dark:hover:not(:disabled) {
+  background: #1a3a5c;
+}
+.btn-pill-accent {
+  background: var(--accent);
+  color: #fff;
+}
+.btn-pill-accent:hover:not(:disabled) {
+  background: var(--accent-strong);
+}
+.btn-pill:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+/* The arrow: its stem fades in and its head slides right on hover. */
+.hover-arrow .stem {
+  opacity: 0;
+  transition: opacity 150ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.hover-arrow .head {
+  transition: transform 150ms cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+.btn-pill:hover:not(:disabled) .hover-arrow .stem,
+a:hover > .hover-arrow .stem {
+  opacity: 1;
+}
+.btn-pill:hover:not(:disabled) .hover-arrow .head,
+a:hover > .hover-arrow .head {
+  transform: translateX(3px);
+}
+
+.shadow-float {
+  box-shadow: var(--shadow-xl);
+}
+.shadow-card {
+  box-shadow: var(--shadow-lg);
+}
+
+/* A slow push-in on lesson scenes, so the painting feels alive. */
+@keyframes scene-pan {
+  from { transform: scale(1.02); }
+  to { transform: scale(1.1); }
+}
+.scene-pan {
+  animation: scene-pan 24s ease-out both;
+}
+
+/* Diagram nodes: a numbered dot with its label underneath. */
+.diagram-index {
+  fill: var(--accent);
+  font-size: 11px;
+  font-weight: 700;
+}
+.diagram-node[data-state="active"] .diagram-index {
+  fill: #fff;
+}
+.diagram-caption {
+  color: var(--fg);
+}
+
+/* A switch, from a plain checkbox (role="switch"). */
+.toggle {
+  appearance: none;
+  position: relative;
+  width: 44px;
+  height: 26px;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: var(--line-strong);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.toggle::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(10, 37, 64, 0.25);
+  transition: transform 0.2s;
+}
+.toggle:checked {
+  background: var(--accent);
+}
+.toggle:checked::after {
+  transform: translateX(18px);
+}
+.toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* A scene whose painting isn't there: a slow, calm gradient, never an empty box. */
+.scene-placeholder {
+  background:
+    radial-gradient(120% 90% at 85% 110%, rgba(110, 195, 244, 0.55), transparent 60%),
+    radial-gradient(90% 80% at 0% 0%, rgba(122, 92, 255, 0.75), transparent 60%),
+    linear-gradient(160deg, #1b1f5e, #0a2540 70%);
+  background-size: 140% 140%;
+  animation: scene-drift 18s ease-in-out infinite alternate;
+}
+@keyframes scene-drift {
+  from { background-position: 0% 0%; }
+  to { background-position: 100% 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scene-placeholder { animation: none; }
+}
+
+/* A course's world before (or without) its painting: a soft map-like field. */
+.world-placeholder {
+  background:
+    radial-gradient(60% 80% at 15% 85%, rgba(99, 91, 255, 0.22), transparent 70%),
+    radial-gradient(50% 70% at 85% 20%, rgba(110, 195, 244, 0.3), transparent 70%),
+    radial-gradient(40% 50% at 55% 60%, rgba(255, 184, 107, 0.18), transparent 70%),
+    repeating-radial-gradient(circle at 30% 120%, transparent 0 22px, rgba(10, 37, 64, 0.045) 22px 23px),
+    #eef2fb;
+}
+
+/* ============ Landing page: headings, hero world, marquee ============ */
+/* A heading revealed line by line: each line rises out of its own clipped box. */
+.line-clip {
+  display: block;
+  overflow: hidden;
+  padding: 0.06em 0 0.14em;
+  margin: -0.06em 0 -0.14em;
+}
+.line {
+  display: block;
+  opacity: 0;
+  transform: translateY(105%);
+  transition:
+    transform 900ms var(--ease-out-expo),
+    opacity 500ms ease;
+}
+.lines[data-revealed] .line {
+  opacity: 1;
+  transform: none;
+}
+/* The world the hero scrolls across: moved by transform only. */
+.scroll-tick {
+  transform-origin: top;
+  animation: scroll-tick 1.6s var(--ease-out-expo) infinite;
+}
+@keyframes scroll-tick {
+  0% { transform: scaleY(0); }
+  50% { transform: scaleY(1); }
+  100% { transform: scaleY(0); transform-origin: bottom; }
+}
+/* Topics drifting across the page; pauses under the pointer or keyboard focus. */
+.marquee {
+  mask-image: linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee var(--marquee-dur, 60s) linear infinite;
+}
+.marquee-track[data-reverse] {
+  animation-direction: reverse;
+}
+.marquee:hover .marquee-track,
+.marquee:focus-within .marquee-track {
+  animation-play-state: paused;
+}
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .line {
+    opacity: 1;
+    transform: none;
+  }
+  .marquee-track {
+    animation: none;
+    width: 100%;
+    flex-wrap: wrap;
+  }
+  .marquee-track > [aria-hidden] {
+    display: none;
+  }
+  .marquee-track > div {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .scroll-tick {
+    animation: none;
+  }
+}
+
+/* The product window on the landing page. */
+.product-window {
+  box-shadow:
+    0 0 0 1px rgba(10, 37, 64, 0.06),
+    0 2px 4px rgba(10, 37, 64, 0.04),
+    0 30px 60px -20px rgba(50, 50, 93, 0.3);
+}
+/* A blinking text caret for mock inputs. */
+.caret {
+  display: inline-block;
+  width: 1.5px;
+  height: 1.05em;
+  margin-left: 2px;
+  vertical-align: -0.15em;
+  background: var(--accent);
+  animation: caret-blink 1.1s steps(1) infinite;
+}
+@keyframes caret-blink {
+  50% { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .caret { animation: none; }
+}
+
+/* A text input. */
+.field {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid var(--line);
+  background: #fff;
+  padding: 0.625rem 0.875rem;
+  font-size: 15px;
+  color: var(--fg);
+  outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.field:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(99, 91, 255, 0.15);
+}
+
+/* ============ Landing page ============ */
+/* The main call to action on navy: a blurple pill with a soft glow. */
+.btn-glow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  box-shadow: 0 10px 30px -10px rgba(99, 91, 255, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: transform 200ms var(--ease-out-expo), box-shadow 200ms ease, background-color 200ms ease;
+}
+.btn-glow:hover:not(:disabled) {
+  background: var(--accent-strong);
+  transform: translateY(-1px);
+}
+.btn-glow:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+.btn-glow:hover:not(:disabled) .hover-arrow .stem,
+.btn-glow:hover:not(:disabled) .hover-arrow .head {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+/* A wrong pick in a landing demo shakes once. */
+@keyframes nudge {
+  0%, 100% { transform: none; }
+  25% { transform: translateX(-3px); }
+  75% { transform: translateX(3px); }
+}
+.nudge {
+  animation: nudge 220ms ease-in-out 2;
+}
+@media (prefers-reduced-motion: reduce) {
+  .nudge { animation: none; }
 }

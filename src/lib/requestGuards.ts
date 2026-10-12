@@ -62,9 +62,8 @@ export function tooManyRequests(retryAfterSec: number) {
 }
 
 /**
- * A short, safe description of what failed, shown even in production. It names
- * the failing part (config, AI provider, database) without leaking internals,
- * so a deployment problem can be diagnosed from the page itself.
+ * A short description of what failed for whoever runs the server (config, AI
+ * provider, database). Logged with the error; never sent to the browser.
  */
 export function errorHint(error: unknown): string | undefined {
   if (error instanceof ConfigError) return `Server setup is incomplete: ${error.message}.`;
@@ -82,11 +81,11 @@ export function errorHint(error: unknown): string | undefined {
   if (/without writing a module/.test(message)) return "The tutor didn't finish the module. Try again.";
   if (/^Error: (get|list|create|update|insert|mark)\w*:/.test(message)) {
     if (/schema cache|does not exist|column/i.test(message))
-      return "A database table or column is missing (run the Supabase migration).";
+      return "A database table or column is missing (run the Supabase migrations).";
     if (/fetch failed|ENOTFOUND|Invalid URL|getaddrinfo/i.test(message))
-      return "Couldn't reach the database (check SUPABASE_URL).";
+      return "Couldn't reach the database (check NEXT_PUBLIC_SUPABASE_URL).";
     if (/JWT|api ?key|401|unauthori[sz]ed/i.test(message))
-      return "The database rejected the key (check SUPABASE_ANON_KEY).";
+      return "The database rejected the key (check NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY).";
     if (/row-level security|permission denied/i.test(message))
       return "A database security policy blocked the request (check RLS policies).";
     return "The database request failed.";
@@ -94,17 +93,44 @@ export function errorHint(error: unknown): string | undefined {
   return undefined;
 }
 
-/** Logs the real error server-side; returns a safe hint, plus full details outside production. */
-export function serverError(error: unknown, publicMessage: string) {
-  console.error(error);
-  const details =
-    process.env.NODE_ENV === "production"
-      ? undefined
-      : error instanceof Error
-        ? error.message
-        : String(error);
+/** What kind of failure it was, as far as a learner needs to know. */
+export type FailureKind = "busy" | "unavailable" | "quality" | "server";
+
+/** Classifies an error for the learner. Internal details never go into this. */
+export function failureKind(error: unknown): FailureKind {
+  if (error instanceof ConfigError) return "unavailable";
+  if (error instanceof ModelHttpError) {
+    // Our key, credit or model settings: nothing the learner can fix by retrying now.
+    if ([400, 401, 402, 403, 404].includes(error.status)) return "unavailable";
+    return "busy";
+  }
+  const message = error instanceof Error ? `${error.name}: ${error.message}` : String(error);
+  if (/TimeoutError|Out of time|fetch failed|ECONNRESET/.test(message)) return "busy";
+  if (/valid lesson|factual errors|arithmetic errors|without writing a module/.test(message)) return "quality";
+  return "server";
+}
+
+/** What the learner is told for each kind of failure: plain, calm, and true. */
+export const FAILURE_COPY: Record<FailureKind, string> = {
+  busy: "Our tutor is busy right now. Please try again in a minute.",
+  unavailable: "Lessons can't be written right now. Please try again a little later.",
+  quality: "This lesson didn't pass our checks, so we didn't show it. Trying again usually works.",
+  server: "Something went wrong on our side. Please try again.",
+};
+
+/**
+ * Logs the real error on the server with a short reference, and returns only
+ * a plain message for the learner: never the error itself, provider responses,
+ * keys, limits or setup hints (those are in the log, under the reference).
+ * `fallback` is used for failures that aren't about writing lessons.
+ */
+export function serverError(error: unknown, fallback: string) {
+  const ref = crypto.randomUUID().slice(0, 8);
+  const kind = failureKind(error);
+  console.error(`[${ref}] ${kind}${errorHint(error) ? ` (${errorHint(error)})` : ""}:`, error);
+  const message = kind === "server" ? fallback : FAILURE_COPY[kind];
   return NextResponse.json(
-    { error: publicMessage, hint: errorHint(error), details },
-    { status: 500 }
+    { error: message, code: kind, ref, retryable: kind !== "unavailable" },
+    { status: kind === "busy" || kind === "unavailable" ? 503 : 500 }
   );
 }

@@ -58,7 +58,7 @@ export function OrderActivity({ a, onDone }: { a: OrderData; onDone: () => void 
 
   return (
     <ActivityFrame type="order" title={a.title} prompt={a.prompt} reveal={a.reveal} done={solved}>
-      <p className="mb-3 text-xs text-taupe">Drag the handle (⋮⋮) or use the arrows to reorder.</p>
+      <p className="mb-3 text-xs text-muted">Drag the handle (⋮⋮) or use the arrows to reorder.</p>
       <ol ref={list} className="space-y-2">
         {order.map((step, pos) => {
           const state = checked ? (step === pos ? "good" : "bad") : dragging === pos ? "dragging" : "idle";
@@ -68,18 +68,20 @@ export function OrderActivity({ a, onDone }: { a: OrderData; onDone: () => void 
                 onPointerDown={(e) => onPointerDown(e, pos)}
                 onPointerMove={onPointerMove}
                 onPointerUp={() => setDragging(null)}
-                className="order-handle cursor-grab touch-none px-1 text-lg text-taupe select-none active:cursor-grabbing"
+                // A touch the browser turns into a scroll ends the drag too.
+                onPointerCancel={() => setDragging(null)}
+                className="order-handle cursor-grab touch-none px-1 text-lg text-muted select-none active:cursor-grabbing"
                 aria-hidden
               >
                 ⋮⋮
               </span>
-              <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-gold/15 text-xs font-bold text-gold">{pos + 1}</span>
-              <span className="flex-1 text-sm leading-snug text-sand">{a.steps[step]}</span>
+              <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-accent-soft text-xs font-bold text-accent">{pos + 1}</span>
+              <span className="flex-1 text-sm leading-snug text-fg">{a.steps[step]}</span>
               <span className="flex flex-col">
-                <button type="button" aria-label="Move up" disabled={pos === 0 || solved} onClick={() => move(pos, pos - 1)} className="px-2 text-taupe hover:text-gold disabled:opacity-30">
+                <button type="button" aria-label="Move up" disabled={pos === 0 || solved} onClick={() => move(pos, pos - 1)} className="px-2 text-muted hover:text-accent disabled:opacity-30">
                   ▲
                 </button>
-                <button type="button" aria-label="Move down" disabled={pos === order.length - 1 || solved} onClick={() => move(pos, pos + 1)} className="px-2 text-taupe hover:text-gold disabled:opacity-30">
+                <button type="button" aria-label="Move down" disabled={pos === order.length - 1 || solved} onClick={() => move(pos, pos + 1)} className="px-2 text-muted hover:text-accent disabled:opacity-30">
                   ▼
                 </button>
               </span>
@@ -95,7 +97,7 @@ export function OrderActivity({ a, onDone }: { a: OrderData; onDone: () => void 
         )}
         {checked && !solved && (
           <>
-            <span className="text-sm text-sand">
+            <span className="text-sm text-fg">
               {rightCount} of {order.length} in the right place.
             </span>
             <button
@@ -105,13 +107,13 @@ export function OrderActivity({ a, onDone }: { a: OrderData; onDone: () => void 
                 setChecked(true);
                 onDone();
               }}
-              className="text-sm text-gold underline"
+              className="text-sm text-accent underline"
             >
               Show me
             </button>
           </>
         )}
-        {solved && <span className="text-sm font-semibold text-sage">Perfect sequence!</span>}
+        {solved && <span className="text-sm font-semibold text-good">Perfect sequence!</span>}
       </div>
     </ActivityFrame>
   );

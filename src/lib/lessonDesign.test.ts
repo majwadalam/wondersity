@@ -260,6 +260,11 @@ describe("typed answers", () => {
     assert.ok(answerMatches("3/4", "0.75"));
     assert.ok(answerMatches(" Photosynthesis. ", "photosynthesis"));
     assert.ok(!answerMatches("respiration", "photosynthesis"));
+    assert.ok(answerMatches("2, 0, 14", "(2,0,14)"), "spacing and enclosing brackets don't count");
+    assert.ok(answerMatches("(2,0,14)", "(2, 0, 14)"));
+    assert.ok(answerMatches("[a; b]", "a;b"));
+    assert.ok(!answerMatches("2, 14", "(2,0,14)"));
+    assert.ok(!answerMatches("f(x)", "f"), "only brackets around the whole answer are dropped");
   });
 
   it("validates a problem block and drops traps that contradict the answer", () => {

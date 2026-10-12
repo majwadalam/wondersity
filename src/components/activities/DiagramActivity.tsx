@@ -46,14 +46,14 @@ export function DiagramActivity({ a, onDone }: { a: DiagramData; onDone: () => v
       <div className="grid gap-5 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
         <motion.svg
           viewBox="0 0 400 300"
-          className="diagram-svg w-full rounded-2xl bg-ink/40"
+          className="diagram-svg w-full rounded-2xl bg-canvas"
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, amount: 0.4 }}
         >
           <defs>
             <marker id={`arrow-${a.title.length}`} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M0 0 L10 5 L0 10z" fill="#c88b00" />
+              <path d="M0 0 L10 5 L0 10z" fill="var(--accent)" />
             </marker>
           </defs>
           {a.edges.map((e, i) => {
@@ -63,16 +63,19 @@ export function DiagramActivity({ a, onDone }: { a: DiagramData; onDone: () => v
             const dx = q.x - p.x;
             const dy = q.y - p.y;
             const len = Math.hypot(dx, dy) || 1;
-            const r = 30;
+            // Captions sit under each node, so lines leaving downward or arriving
+            // from below stop further out, clear of the text.
+            const r = 20 + 32 * Math.max(0, dy / len);
+            const rEnd = 22 + 34 * Math.max(0, -dy / len);
             const on = linked(e);
             return (
               <g key={i} className="diagram-edge" data-on={on || undefined} opacity={active === null || on ? 1 : 0.18}>
                 <motion.line
                   x1={p.x + (dx / len) * r}
                   y1={p.y + (dy / len) * r}
-                  x2={q.x - (dx / len) * (r + 4)}
-                  y2={q.y - (dy / len) * (r + 4)}
-                  stroke={on ? "#c88b00" : "#7a5498"}
+                  x2={q.x - (dx / len) * rEnd}
+                  y2={q.y - (dy / len) * rEnd}
+                  stroke={on ? "var(--accent)" : "#c3cbe0"}
                   strokeWidth={on ? 2.5 : 1.6}
                   markerEnd={`url(#arrow-${a.title.length})`}
                   variants={{
@@ -85,17 +88,13 @@ export function DiagramActivity({ a, onDone }: { a: DiagramData; onDone: () => v
                   <line
                     x1={p.x + (dx / len) * r}
                     y1={p.y + (dy / len) * r}
-                    x2={q.x - (dx / len) * (r + 4)}
-                    y2={q.y - (dy / len) * (r + 4)}
+                    x2={q.x - (dx / len) * rEnd}
+                    y2={q.y - (dy / len) * rEnd}
                     pathLength={100}
                     className="diagram-flow"
                   />
                 )}
-                {on && e.label && (
-                  <text x={(p.x + q.x) / 2} y={(p.y + q.y) / 2 - 6} textAnchor="middle" fill="#e1b983" fontSize="11" className="diagram-label">
-                    {e.label}
-                  </text>
-                )}
+                {/* Relationship labels live in the side panel; on the canvas they collided with node captions. */}
               </g>
             );
           })}
@@ -118,30 +117,34 @@ export function DiagramActivity({ a, onDone }: { a: DiagramData; onDone: () => v
                 data-state={on ? "active" : near ? "near" : visited.has(i) ? "seen" : "idle"}
                 style={{ transformOrigin: `${pos[i].x}px ${pos[i].y}px` }}
               >
-                <circle cx={pos[i].x} cy={pos[i].y} r="30" />
-                <foreignObject x={pos[i].x - 34} y={pos[i].y - 16} width="68" height="32" pointerEvents="none">
-                  <div className="flex h-full items-center justify-center text-center text-[10px] leading-tight font-semibold">{node.label}</div>
+                <circle cx={pos[i].x} cy={pos[i].y} r="16" />
+                <text x={pos[i].x} y={pos[i].y + 4} textAnchor="middle" className="diagram-index" pointerEvents="none">
+                  {i + 1}
+                </text>
+                {/* The label sits under its node, so it never spills over the circle. */}
+                <foreignObject x={pos[i].x - 55} y={pos[i].y + 19} width="110" height="34" pointerEvents="none">
+                  <div className="diagram-caption text-center text-[10.5px] leading-[1.2] font-semibold">{node.label}</div>
                 </foreignObject>
               </motion.g>
             );
           })}
         </motion.svg>
-        <div className="rounded-2xl border border-beige bg-ink/30 p-4">
+        <div className="rounded-2xl border border-line bg-canvas p-4">
           {active === null ? (
-            <p className="text-sm text-taupe">Tap any node to see what it is and how it connects.</p>
+            <p className="text-sm text-muted">Tap any node to see what it is and how it connects.</p>
           ) : (
             <div key={active} className="diagram-panel">
-              <p className="font-display text-xl text-gold">{a.nodes[active].label}</p>
-              <p className="mt-1 text-sm leading-relaxed text-sand/90">{a.nodes[active].detail}</p>
+              <p className="font-display text-xl text-accent">{a.nodes[active].label}</p>
+              <p className="mt-1 text-sm leading-relaxed text-fg/90">{a.nodes[active].detail}</p>
               {neighbours.length > 0 && (
                 <ul className="mt-3 space-y-1.5">
                   {neighbours.map((e, i) => {
                     const other = e.from === active ? e.to : e.from;
                     return (
                       <li key={i}>
-                        <button type="button" onClick={() => open(other)} className="text-left text-sm text-sand hover:text-gold">
+                        <button type="button" onClick={() => open(other)} className="text-left text-sm text-fg hover:text-accent">
                           {e.from === active ? "→ " : "← "}
-                          <span className="text-taupe">{e.label || "links to"}</span> <b>{a.nodes[other].label}</b>
+                          <span className="text-muted">{e.label || "links to"}</span> <b>{a.nodes[other].label}</b>
                         </button>
                       </li>
                     );
@@ -150,7 +153,7 @@ export function DiagramActivity({ a, onDone }: { a: DiagramData; onDone: () => v
               )}
             </div>
           )}
-          <p className="mt-4 text-xs text-taupe tabular-nums">
+          <p className="mt-4 text-xs text-muted tabular-nums">
             Explored {visited.size}/{a.nodes.length}
           </p>
         </div>

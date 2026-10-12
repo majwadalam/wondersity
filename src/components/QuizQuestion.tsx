@@ -63,30 +63,37 @@ export function QuizQuestion({
   const badge = first === null ? "idle" : firstCorrect ? "right" : "wrong";
 
   return (
-    <div className="rounded-3xl border border-beige/80 bg-paper p-5 sm:p-7">
-      {label && <p className="mb-3 text-[11px] font-semibold tracking-[0.18em] text-gold uppercase">{label}</p>}
+    <div>
+      {label && (
+        <p className="mb-3 flex items-center gap-2 text-sm font-semibold text-accent">
+          <span className="flex h-7 w-7 items-center justify-center rounded-lg bg-accent-soft text-sm" aria-hidden>
+            ?
+          </span>
+          {label}
+        </p>
+      )}
       <div className="flex items-start gap-3">
-        <span className="relative flex-shrink-0">
+        <span className={`relative flex-shrink-0 ${badge === "idle" ? "hidden" : ""}`}>
           {/* Celebrates the server-graded first answer; a softer one for finding it on a retry. */}
           <Burst trigger={firstCorrect ? "first" : foundIt ? "retry" : null} tone={firstCorrect ? "gold" : "sage"} />
           <span
             className={`flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full text-xs font-semibold ${
-              badge === "idle" ? "bg-gold/20 text-gold" : badge === "right" ? "animate-badge bg-sage text-ink" : "animate-badge bg-red-400 text-ink"
+              badge === "idle" ? "bg-accent-soft text-accent" : badge === "right" ? "animate-badge bg-good text-white" : "animate-badge bg-bad text-white"
             }`}
           >
             {badge === "idle" ? index + 1 : badge === "right" ? "✓" : "✗"}
           </span>
         </span>
-        <p className="pt-0.5 text-[15.5px] leading-snug font-medium text-espresso">
+        <p className="pt-0.5 text-xl leading-snug font-semibold text-fg sm:text-2xl">
           {rich(question.question)}
         </p>
       </div>
 
       {!resolved && hints.length > 0 && (
-        <div className="mt-4 space-y-2 sm:pl-10">
+        <div className="mt-4 space-y-2">
           {hints.slice(0, hintsShown).map((h, i) => (
-            <p key={i} className="hint-reveal rounded-xl border border-gold/25 bg-gold/10 px-4 py-2.5 text-sm leading-relaxed text-sand">
-              <span className="mr-2 text-[10px] font-semibold tracking-[0.16em] text-gold uppercase">Hint {i + 1}</span>
+            <p key={i} className="hint-reveal rounded-xl border border-accent/25 bg-accent-soft px-4 py-2.5 text-sm leading-relaxed text-fg">
+              <span className="mr-2 text-[11px] font-semibold tracking-wide text-accent uppercase">Hint {i + 1}</span>
               {rich(h)}
             </p>
           ))}
@@ -94,7 +101,7 @@ export function QuizQuestion({
             <button
               type="button"
               onClick={() => setHintsShown((n) => n + 1)}
-              className="rounded-full border border-gold/40 px-3 py-1 text-xs font-medium text-gold hover:bg-gold/10"
+              className="rounded-full border border-accent/40 px-3 py-1 text-xs font-medium text-accent hover:bg-accent-soft"
             >
               {hintsShown === 0 ? "Need a hint?" : "Another hint"}
             </button>
@@ -102,7 +109,7 @@ export function QuizQuestion({
         </div>
       )}
 
-      <div className="mt-5 space-y-2 sm:pl-10">
+      <div className="mt-6 space-y-2.5">
         {question.options.map((o, oi) => {
           const wasTried = tried.includes(o);
           const isCorrect = o === question.correctAnswer;
@@ -123,7 +130,7 @@ export function QuizQuestion({
               onClick={() => pick(o)}
               data-state={state}
               data-picked={wasTried || undefined}
-              className="quiz-option group/opt flex w-full items-center gap-3 rounded-xl border px-4 py-3 text-left text-sm"
+              className="quiz-option group/opt flex w-full items-center gap-3 rounded-xl border-2 px-4 py-3.5 text-left text-[15px]"
             >
               <span className="quiz-letter flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-md border text-[11px] font-semibold">
                 {String.fromCharCode(65 + oi)}
@@ -136,22 +143,22 @@ export function QuizQuestion({
       </div>
 
       {retrying && (
-        <div role="status" className="quiz-explain mt-4 rounded-xl border border-red-400/40 bg-red-500/10 p-4 text-sm sm:ml-10">
-          <div className="font-semibold text-red-300">✗ Not quite{tried.length > 1 ? `, and not that one either` : ""}</div>
+        <div role="status" className="quiz-explain mt-4 rounded-xl border border-bad/25 bg-[#fdeeee] p-4 text-sm">
+          <div className="font-semibold text-bad">✗ Not quite{tried.length > 1 ? `, and not that one either` : ""}</div>
           {retry ? (
             <div className="mt-2">
-              <p className="text-[10px] font-semibold tracking-[0.16em] text-gold uppercase">Another way to see it</p>
-              <p className="mt-1 leading-relaxed text-espresso/90">{rich(retry)}</p>
+              <p className="text-[11px] font-semibold tracking-wide text-accent uppercase">Another way to see it</p>
+              <p className="mt-1 leading-relaxed text-fg/90">{rich(retry)}</p>
             </div>
           ) : (
-            <p className="mt-1 leading-relaxed text-espresso/85">Think it through once more and pick again.</p>
+            <p className="mt-1 leading-relaxed text-fg/85">Think it through once more and pick again.</p>
           )}
           <div className="mt-3 flex flex-wrap items-center gap-3">
-            <span className="text-xs text-taupe">Have another go: your first answer is the one that counts.</span>
+            <span className="text-xs text-muted">Have another go: your first answer is the one that counts.</span>
             <button
               type="button"
               onClick={() => setRevealed(true)}
-              className="rounded-full border border-beige px-3 py-1 text-xs font-medium text-sand/80 hover:border-gold/60 hover:text-gold"
+              className="rounded-full border border-line px-3 py-1 text-xs font-medium text-fg/80 hover:border-accent/60 hover:text-accent"
             >
               Show the answer
             </button>
@@ -162,11 +169,11 @@ export function QuizQuestion({
       {resolved && (
         <div
           role="status"
-          className={`quiz-explain mt-4 rounded-xl border p-4 text-sm sm:ml-10 ${
-            firstCorrect ? "border-sage/30 bg-sage/10" : "border-gold/30 bg-gold/10"
+          className={`quiz-explain mt-4 rounded-xl border p-4 text-sm ${
+            firstCorrect ? "border-good/30 bg-good/10" : "border-accent/30 bg-accent-soft"
           }`}
         >
-          <div className={`font-semibold ${firstCorrect ? "text-sage" : "text-gold"}`}>
+          <div className={`font-semibold ${firstCorrect ? "text-good" : "text-accent"}`}>
             {firstCorrect
               ? hintsShown > 0
                 ? "✓ Correct, with a hint"
@@ -175,8 +182,8 @@ export function QuizQuestion({
                 ? `✓ Got it on try ${tried.length}`
                 : "Here's the answer"}
           </div>
-          <p className="mt-1 leading-relaxed text-espresso/85">{rich(question.explanation)}</p>
-          {!firstCorrect && <p className="mt-2 text-xs text-taupe">Your first answer is what counts toward this module.</p>}
+          <p className="mt-1 leading-relaxed text-fg/85">{rich(question.explanation)}</p>
+          {!firstCorrect && <p className="mt-2 text-xs text-muted">Your first answer is what counts toward this module.</p>}
         </div>
       )}
     </div>

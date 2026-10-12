@@ -10,6 +10,8 @@ const securityHeaders = [
 const nextConfig: NextConfig = {
   reactCompiler: true,
   poweredByHeader: false,
+  // Generated covers live in Supabase Storage.
+  images: { remotePatterns: [{ protocol: "https", hostname: "*.supabase.co", pathname: "/storage/v1/object/public/**" }] },
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
   },

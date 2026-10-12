@@ -1,36 +1,41 @@
 import type { Metadata } from "next";
-import { Fraunces, Inter, JetBrains_Mono } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import { AppShell } from "@/components/app/AppShell";
 import "./globals.css";
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
-  subsets: ["latin"],
-  axes: ["SOFT", "opsz"],
-  style: ["normal", "italic"],
-});
-
-const inter = Inter({
-  variable: "--font-inter",
+const geist = Geist({
+  variable: "--font-geist",
   subsets: ["latin"],
 });
 
-const mono = JetBrains_Mono({
-  variable: "--font-jetbrains",
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
 });
+
+// Share images and other URL fields need an absolute base: the site's own address,
+// else the production address Vercel provides, else the local dev server.
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "http://localhost:3000");
+
+const DESCRIPTION = "Courses for what nobody teaches: too niche, too new or too scattered. Name a topic, for work or for curiosity; Wondersity plans a course, teaches it hands-on, and remembers where you left off.";
 
 export const metadata: Metadata = {
-  title: "Weavr — an AI tutor with a memory",
-  description: "An agentic tutor that writes, checks, and remembers your lessons.",
+  metadataBase: new URL(SITE_URL),
+  title: "Wondersity — courses for what nobody teaches",
+  description: DESCRIPTION,
+  // The images come from app/opengraph-image.jpg and app/twitter-image.jpg.
+  openGraph: { type: "website", siteName: "Wondersity", title: "Wondersity — courses for what nobody teaches", description: DESCRIPTION },
+  twitter: { card: "summary_large_image", title: "Wondersity — courses for what nobody teaches", description: DESCRIPTION },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html
       lang="en"
-      style={{ colorScheme: "dark" }}
-      className={`${fraunces.variable} ${inter.variable} ${mono.variable} h-full antialiased dark`}
+      style={{ colorScheme: "light" }}
+      className={`${geist.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full">
         <AppShell>{children}</AppShell>

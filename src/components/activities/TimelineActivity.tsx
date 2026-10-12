@@ -42,9 +42,9 @@ export function TimelineActivity({ a, onDone }: { a: TimelineData; onDone: () =>
     <ActivityFrame type="timeline" title={a.title} prompt={a.prompt} reveal={a.reveal} done={allSeen}>
       <div className="overflow-x-auto pb-2">
         <div className="relative min-w-[480px] px-4 pt-2">
-          <div className="absolute top-[26px] right-6 left-6 h-1 rounded-full bg-sand/15" />
+          <div className="absolute top-[26px] right-6 left-6 h-1 rounded-full bg-fg/15" />
           <motion.div
-            className="timeline-fill absolute top-[26px] right-6 left-6 h-1 origin-left rounded-full bg-gradient-to-r from-violet via-magenta to-gold"
+            className="timeline-fill absolute top-[26px] right-6 left-6 h-1 origin-left rounded-full bg-accent"
             initial={false}
             animate={{ scaleX: progress / 100 }}
             transition={spring.gentle}
@@ -62,7 +62,7 @@ export function TimelineActivity({ a, onDone }: { a: TimelineData; onDone: () =>
                 >
                   <span className="sr-only">{ev.title}</span>
                 </button>
-                <span className={`mt-2 text-center text-xs font-semibold ${i === active ? "text-gold" : "text-taupe"}`}>{ev.marker}</span>
+                <span className={`mt-2 text-center text-xs font-semibold ${i === active ? "text-accent" : "text-muted"}`}>{ev.marker}</span>
               </li>
             ))}
           </ol>
@@ -73,7 +73,7 @@ export function TimelineActivity({ a, onDone }: { a: TimelineData; onDone: () =>
           <motion.div
             key={active}
             custom={direction}
-            className="rounded-2xl border border-beige bg-ink/40 p-5"
+            className="rounded-2xl border border-line bg-canvas p-5"
             variants={{
               enter: (d: number) => ({ x: d * 48, opacity: 0 }),
               center: { x: 0, opacity: 1 },
@@ -84,23 +84,23 @@ export function TimelineActivity({ a, onDone }: { a: TimelineData; onDone: () =>
             exit="leave"
             transition={spring.gentle}
           >
-            <p className="text-xs font-semibold tracking-[0.14em] text-gold uppercase">{e.marker}</p>
-            <p className="font-display mt-1 text-xl text-sand">{e.title}</p>
-            {e.detail && <p className="mt-2 text-sm leading-relaxed text-sand/85">{e.detail}</p>}
+            <p className="text-xs font-semibold tracking-wide text-accent uppercase">{e.marker}</p>
+            <p className="font-display mt-1 text-xl text-fg">{e.title}</p>
+            {e.detail && <p className="mt-2 text-sm leading-relaxed text-fg/85">{e.detail}</p>}
           </motion.div>
         </AnimatePresence>
       </div>
       <div className="mt-4 flex items-center gap-3">
-        <button type="button" onClick={() => go(Math.max(0, active - 1))} disabled={active === 0} className="rounded-xl border border-beige px-3 py-2 text-sm text-sand disabled:opacity-30">
+        <button type="button" onClick={() => go(Math.max(0, active - 1))} disabled={active === 0} className="rounded-xl border border-line px-3 py-2 text-sm text-fg disabled:opacity-30">
           ←
         </button>
         <button type="button" onClick={() => (active === a.events.length - 1 ? go(0) : setPlaying((p) => !p))} className="btn-primary rounded-xl px-5 py-2 text-sm font-semibold">
           {playing ? "Pause" : active === a.events.length - 1 ? "Replay" : "▶ Play"}
         </button>
-        <button type="button" onClick={() => go(Math.min(a.events.length - 1, active + 1))} disabled={active === a.events.length - 1} className="rounded-xl border border-beige px-3 py-2 text-sm text-sand disabled:opacity-30">
+        <button type="button" onClick={() => go(Math.min(a.events.length - 1, active + 1))} disabled={active === a.events.length - 1} className="rounded-xl border border-line px-3 py-2 text-sm text-fg disabled:opacity-30">
           →
         </button>
-        <span className="ml-auto text-xs text-taupe tabular-nums">
+        <span className="ml-auto text-xs text-muted tabular-nums">
           {seen.size}/{a.events.length} explored
         </span>
       </div>

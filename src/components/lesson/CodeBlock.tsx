@@ -102,7 +102,7 @@ function ChoiceCode({ b, onDone }: { b: CodeData; onDone: () => void }) {
               data-state={state}
               className={`choice-option rounded-2xl border px-4 py-3 text-left text-sm leading-snug ${b.mode === "predict" ? "font-mono whitespace-pre-wrap" : ""}`}
             >
-              <span className="mr-2 font-sans font-semibold text-gold">{String.fromCharCode(65 + i)}</span>
+              <span className="mr-2 font-sans font-semibold text-accent">{String.fromCharCode(65 + i)}</span>
               {o.text}
               {chosen && <span className="ml-1 font-sans">{o.correct ? " ✓" : " ✗"}</span>}
             </button>
@@ -110,24 +110,24 @@ function ChoiceCode({ b, onDone }: { b: CodeData; onDone: () => void }) {
         })}
       </div>
       {last !== undefined && (
-        <div key={last} role="status" className="activity-feedback mt-4 rounded-2xl border border-beige bg-ink/40 p-4">
-          <p className={`text-xs font-semibold tracking-[0.14em] uppercase ${b.options[last].correct ? "text-sage" : "text-red-300"}`}>
+        <div key={last} role="status" className="activity-feedback mt-4 rounded-2xl border border-line bg-canvas p-4">
+          <p className={`text-xs font-semibold tracking-wide uppercase ${b.options[last].correct ? "text-good" : "text-bad"}`}>
             {b.options[last].correct ? (tried.length === 1 ? "Exactly right" : "Got it") : "Not this one"}
           </p>
-          <p className="mt-1 text-sm leading-relaxed text-sand/90">{rich(b.options[last].feedback)}</p>
-          {!b.options[last].correct && <p className="mt-2 text-xs text-taupe">Read the code again and try another answer.</p>}
+          <p className="mt-1 text-sm leading-relaxed text-fg/90">{rich(b.options[last].feedback)}</p>
+          {!b.options[last].correct && <p className="mt-2 text-xs text-muted">Read the code again and try another answer.</p>}
         </div>
       )}
       {!solved && b.hints.length > 0 && (
         <div className="mt-4 space-y-2">
           {b.hints.slice(0, hints).map((h, i) => (
-            <p key={i} className="hint-reveal rounded-xl border border-gold/25 bg-gold/10 px-4 py-2.5 text-sm text-sand">
-              <span className="mr-2 text-[10px] font-semibold tracking-[0.16em] text-gold uppercase">Hint {i + 1}</span>
+            <p key={i} className="hint-reveal rounded-xl border border-accent/25 bg-accent-soft px-4 py-2.5 text-sm text-fg">
+              <span className="mr-2 text-[11px] font-semibold tracking-wide text-accent uppercase">Hint {i + 1}</span>
               {rich(h)}
             </p>
           ))}
           {hints < b.hints.length && (
-            <button type="button" onClick={() => setHints((n) => n + 1)} className="rounded-full border border-gold/40 px-3 py-1 text-xs font-medium text-gold hover:bg-gold/10">
+            <button type="button" onClick={() => setHints((n) => n + 1)} className="rounded-full border border-accent/40 px-3 py-1 text-xs font-medium text-accent hover:bg-accent-soft">
               {hints === 0 ? "Need a hint?" : "Another hint"}
             </button>
           )}
@@ -164,28 +164,28 @@ function TraceCode({ b, onDone }: { b: CodeData; onDone: () => void }) {
       takeawayLabel="What happened"
     >
       <CodeWindow code={b.code} language={b.language} active={current?.line} />
-      <div className="trace-panel mt-4 rounded-2xl border border-beige bg-ink/40 p-4" aria-live="polite">
+      <div className="trace-panel mt-4 rounded-2xl border border-line bg-canvas p-4" aria-live="polite">
         {current ? (
           <>
-            <p className="text-xs font-semibold tracking-[0.14em] text-gold uppercase">
+            <p className="text-xs font-semibold tracking-wide text-accent uppercase">
               Step {step + 1} of {b.trace.length} · line {current.line}
             </p>
-            <p className="mt-1 text-sm leading-relaxed text-sand">{rich(current.note)}</p>
+            <p className="mt-1 text-sm leading-relaxed text-fg">{rich(current.note)}</p>
             {current.state && <TraceState trace={b.trace} step={step} />}
           </>
         ) : (
-          <p className="text-sm text-taupe">Before you start: what do you expect each variable to be at the end? Then step through and check.</p>
+          <p className="text-sm text-muted">Before you start: what do you expect each variable to be at the end? Then step through and check.</p>
         )}
       </div>
       <div className="mt-4 flex flex-wrap items-center gap-2">
-        <button type="button" onClick={() => go(step - 1)} disabled={step < 0} className="rounded-full border border-beige px-4 py-2 text-sm text-sand hover:border-gold/60 disabled:opacity-40">
+        <button type="button" onClick={() => go(step - 1)} disabled={step < 0} className="rounded-full border border-line px-4 py-2 text-sm text-fg hover:border-accent/60 disabled:opacity-40">
           ◀ Back
         </button>
         <button type="button" onClick={() => go(step + 1)} disabled={step === b.trace.length - 1} className="btn-primary rounded-full px-4 py-2 text-sm font-semibold disabled:opacity-40">
           {step < 0 ? "Run line by line ▶" : "Next step ▶"}
         </button>
         {step >= 0 && (
-          <button type="button" onClick={() => setStep(-1)} className="ml-auto text-xs text-taupe underline-offset-2 hover:text-gold hover:underline">
+          <button type="button" onClick={() => setStep(-1)} className="ml-auto text-xs text-muted underline-offset-2 hover:text-accent hover:underline">
             Restart
           </button>
         )}
@@ -252,7 +252,7 @@ function TraceState({ trace, step }: { trace: TraceStep[]; step: number }) {
   const raw = trace[step].state;
   if (!parseBindings(raw)) {
     // Free-text state ("names is unchanged"): show it as written.
-    return <p className="font-mono mt-3 rounded-lg border border-gold/30 bg-gold/10 px-2.5 py-1.5 text-xs text-sand">{raw}</p>;
+    return <p className="font-mono mt-3 rounded-lg border border-accent/30 bg-accent-soft px-2.5 py-1.5 text-xs text-fg">{raw}</p>;
   }
   return (
     <dl className="mt-3 grid grid-cols-[repeat(auto-fill,minmax(8.5rem,1fr))] gap-2" aria-label="Variables">
@@ -264,8 +264,8 @@ function TraceState({ trace, step }: { trace: TraceStep[]; step: number }) {
           data-changed={v.changed || undefined}
           transition={spring.gentle}
         >
-          <dt className="font-mono text-[11px] text-taupe">{v.name}</dt>
-          <dd className="font-mono relative h-5 overflow-hidden text-sm text-sand">
+          <dt className="font-mono text-[11px] text-muted">{v.name}</dt>
+          <dd className="font-mono relative h-5 overflow-hidden text-sm text-fg">
             <AnimatePresence mode="popLayout" initial={false}>
               <motion.span
                 key={v.value}

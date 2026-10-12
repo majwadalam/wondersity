@@ -44,18 +44,18 @@ export function LearnerPill({
         type="button"
         onClick={copy}
         aria-describedby={tipId}
-        className={`learner-pill animate-fade-in flex items-center gap-3 rounded-2xl border border-beige bg-paper py-1.5 text-left shadow-sm hover:border-coffee/40 ${
-          compact ? "px-1.5" : "pr-3 pl-1.5 hover:pr-4 hover:pl-2"
+        className={`learner-pill animate-fade-in flex items-center gap-3 text-left ${
+          compact ? "rounded-full" : "rounded-2xl border border-line bg-surface py-1.5 pr-3 pl-1.5 shadow-sm hover:border-accent/40 hover:pr-4 hover:pl-2"
         } ${
           wide ? "w-full" : ""
         }`}
       >
-        <span className="font-display flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-xl bg-gold text-base text-ink italic">
+        <span className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-accent text-sm font-semibold text-white">
           L
         </span>
         <span className={`min-w-0 leading-tight ${compact ? "sr-only" : ""}`}>
-          <span className="block text-[13px] font-semibold text-espresso">Learner</span>
-          <span className="block text-xs text-taupe">
+          <span className="block text-[13px] font-semibold text-fg">Learner</span>
+          <span className="block text-xs text-muted">
             {lessonCount ? `${lessonCount} lesson${lessonCount === 1 ? "" : "s"} saved` : "No lessons saved yet"}
           </span>
         </span>
@@ -63,12 +63,12 @@ export function LearnerPill({
       <span
         id={tipId}
         role="tooltip"
-        className={`learner-tip pointer-events-none absolute z-30 w-max max-w-[15rem] rounded-lg border border-beige bg-ink px-3 py-1.5 text-xs text-sand shadow-md ${
+        className={`learner-tip pointer-events-none absolute z-30 w-max max-w-[15rem] rounded-lg border border-line bg-surface px-3 py-1.5 text-xs text-fg shadow-md ${
           tipPlacement === "above" ? "bottom-full left-0 mb-2" : "top-full right-0 mt-2"
         }`}
       >
         Your browser identity, stored locally. Click to copy.
-        <span className="mt-1 block font-mono text-[10px] break-all text-gold/80">{learnerId}</span>
+        <span className="mt-1 block font-mono text-[10px] break-all text-accent/80">{learnerId}</span>
       </span>
       {toast && <Toast key={toast.id} message={toast.message} />}
     </div>

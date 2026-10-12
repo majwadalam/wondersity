@@ -25,7 +25,7 @@ export function ChoiceActivity({ a, onDone }: { a: ChoiceActivityData; onDone: (
 
   return (
     <ActivityFrame type={a.type} title={a.title} prompt={a.prompt} reveal={a.reveal} done={picked.length > 0}>
-      {isPredict && picked.length === 0 && <p className="mb-3 text-xs text-taupe">Make your prediction before reading on.</p>}
+      {isPredict && picked.length === 0 && <p className="mb-3 text-xs text-muted">Make your prediction before reading on.</p>}
       <div className="grid gap-2.5 sm:grid-cols-2">
         {a.options.map((o, i) => {
           const chosen = picked.includes(i);
@@ -39,7 +39,7 @@ export function ChoiceActivity({ a, onDone }: { a: ChoiceActivityData; onDone: (
               data-state={state}
               className="choice-option rounded-2xl border px-4 py-3 text-left text-sm leading-snug"
             >
-              <span className="mr-2 font-semibold text-gold">{String.fromCharCode(65 + i)}</span>
+              <span className="mr-2 font-semibold text-accent">{String.fromCharCode(65 + i)}</span>
               {rich(o.text)}
               {chosen && <span className="ml-1">{o.correct ? " ✓" : " ✗"}</span>}
             </button>
@@ -47,8 +47,8 @@ export function ChoiceActivity({ a, onDone }: { a: ChoiceActivityData; onDone: (
         })}
       </div>
       {last !== undefined && (
-        <div key={last} className="activity-feedback mt-4 rounded-2xl border border-beige bg-ink/40 p-4">
-          <p className={`text-xs font-semibold tracking-[0.14em] uppercase ${a.options[last].correct ? "text-sage" : "text-red-300"}`}>
+        <div key={last} className="activity-feedback mt-4 rounded-2xl border border-line bg-canvas p-4">
+          <p className={`text-xs font-semibold tracking-wide uppercase ${a.options[last].correct ? "text-good" : "text-bad"}`}>
             {isPredict
               ? a.options[last].correct
                 ? "Good instinct"
@@ -57,9 +57,9 @@ export function ChoiceActivity({ a, onDone }: { a: ChoiceActivityData; onDone: (
                 ? "Best move"
                 : "What happens next"}
           </p>
-          <p className="mt-1 text-sm leading-relaxed text-sand/90">{rich(a.options[last].feedback)}</p>
+          <p className="mt-1 text-sm leading-relaxed text-fg/90">{rich(a.options[last].feedback)}</p>
           {!isPredict && picked.length < a.options.length && (
-            <p className="mt-2 text-xs text-taupe">Curious? Try another choice to see where it leads.</p>
+            <p className="mt-2 text-xs text-muted">Curious? Try another choice to see where it leads.</p>
           )}
         </div>
       )}

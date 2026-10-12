@@ -65,7 +65,7 @@ export function ProblemBlock({ b, onDone }: { b: ProblemData; onDone: () => void
         <label htmlFor={inputId} className="sr-only">
           Your answer
         </label>
-        <div className="flex min-w-0 flex-1 items-center gap-2 rounded-xl border border-beige bg-ink/40 px-4 focus-within:border-gold/60">
+        <div className="flex min-w-0 flex-1 items-center gap-2 rounded-xl border border-line bg-canvas px-4 focus-within:border-accent/60">
           <input
             id={inputId}
             value={value}
@@ -74,9 +74,9 @@ export function ProblemBlock({ b, onDone }: { b: ProblemData; onDone: () => void
             inputMode={numeric ? "decimal" : "text"}
             autoComplete="off"
             placeholder="Your answer"
-            className="min-w-0 flex-1 bg-transparent py-3 font-mono text-[15px] text-sand placeholder:text-taupe/60 focus:outline-none"
+            className="min-w-0 flex-1 bg-transparent py-3 font-mono text-[15px] text-fg placeholder:text-muted/60 focus:outline-none"
           />
-          {b.unit && <span className="text-sm text-taupe">{b.unit}</span>}
+          {b.unit && <span className="text-sm text-muted">{b.unit}</span>}
         </div>
         <span className="relative">
           <Burst trigger={solved ? "solved" : null} />
@@ -90,16 +90,16 @@ export function ProblemBlock({ b, onDone }: { b: ProblemData; onDone: () => void
 
       <div aria-live="polite">
         {solved && (
-          <p className="step-reveal mt-4 text-sm font-semibold text-sage">
+          <p className="step-reveal mt-4 text-sm font-semibold text-good">
             ✓ Correct{tries.length > 0 ? ` after ${tries.length + 1} tries` : ""}{hints > 0 ? `, with ${hints === 1 ? "a hint" : "hints"}` : ""}.
           </p>
         )}
         {!finished && last && (
-          <div key={tries.length} className="activity-feedback mt-4 rounded-2xl border border-red-400/30 bg-red-500/10 p-4">
-            <p className="text-xs font-semibold tracking-[0.14em] text-red-300 uppercase">
+          <div key={tries.length} className="activity-feedback mt-4 rounded-2xl border border-bad/25 bg-[#fdeeee] p-4">
+            <p className="text-xs font-semibold tracking-wide text-bad uppercase">
               {last.input} isn&rsquo;t it{tries.length > 1 ? ` (try ${tries.length})` : ""}
             </p>
-            <p className="mt-1 text-sm leading-relaxed text-sand/90">
+            <p className="mt-1 text-sm leading-relaxed text-fg/90">
               {last.feedback ? rich(last.feedback) : "Check your working and try again."}
             </p>
           </div>
@@ -109,19 +109,19 @@ export function ProblemBlock({ b, onDone }: { b: ProblemData; onDone: () => void
       {!finished && (
         <div className="mt-4 space-y-2">
           {b.hints.slice(0, hints).map((h, i) => (
-            <p key={i} className="hint-reveal rounded-xl border border-gold/25 bg-gold/10 px-4 py-2.5 text-sm text-sand">
-              <span className="mr-2 text-[10px] font-semibold tracking-[0.16em] text-gold uppercase">Hint {i + 1}</span>
+            <p key={i} className="hint-reveal rounded-xl border border-accent/25 bg-accent-soft px-4 py-2.5 text-sm text-fg">
+              <span className="mr-2 text-[11px] font-semibold tracking-wide text-accent uppercase">Hint {i + 1}</span>
               {rich(h)}
             </p>
           ))}
           <div className="flex flex-wrap gap-2">
             {hints < b.hints.length && (
-              <button type="button" onClick={() => setHints((n) => n + 1)} className="rounded-full border border-gold/40 px-3 py-1 text-xs font-medium text-gold hover:bg-gold/10">
+              <button type="button" onClick={() => setHints((n) => n + 1)} className="rounded-full border border-accent/40 px-3 py-1 text-xs font-medium text-accent hover:bg-accent-soft">
                 {hints === 0 ? "Need a hint?" : "Another hint"}
               </button>
             )}
             {tries.length >= SOLUTION_AFTER && (
-              <button type="button" onClick={reveal} className="rounded-full border border-beige px-3 py-1 text-xs font-medium text-sand/80 hover:border-gold/60 hover:text-gold">
+              <button type="button" onClick={reveal} className="rounded-full border border-line px-3 py-1 text-xs font-medium text-fg/80 hover:border-accent/60 hover:text-accent">
                 Show the solution
               </button>
             )}

@@ -9,7 +9,12 @@ import { clientIp, rateLimit, tooManyRequests } from "@/lib/requestGuards";
 
 const LIMIT_PER_IP = 10;
 const LIMIT_WINDOW_MS = 60 * 1000;
-const VARS = ["OPENROUTER_API_KEY", "OPENROUTER_MODEL", "SUPABASE_URL", "SUPABASE_ANON_KEY"];
+const VARS = [
+  "OPENROUTER_API_KEY",
+  "OPENROUTER_MODEL",
+  "NEXT_PUBLIC_SUPABASE_URL",
+  "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
+];
 
 export const dynamic = "force-dynamic";
 
@@ -31,9 +36,9 @@ export async function GET(request: Request) {
 
   let database: Record<string, string> | string;
   try {
-    const url = env("SUPABASE_URL");
+    const url = env("NEXT_PUBLIC_SUPABASE_URL");
     if (url && !/^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/i.test(url)) {
-      database = "SUPABASE_URL doesn't look like https://<project>.supabase.co";
+      database = "NEXT_PUBLIC_SUPABASE_URL doesn't look like https://<project>.supabase.co";
     } else {
       database = await checkTables();
     }

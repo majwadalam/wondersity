@@ -52,7 +52,7 @@ describe("LessonView", () => {
       "Find the fix",
       "Check 2 of 2",
       "Put it in order",
-      "Finish the module",
+      "Finish the lesson",
     ]);
     assert.deepEqual([...at].sort((a, b) => a - b), at, "blocks render in lesson order");
     assert.ok(html.includes("total += i"), "code is shown");

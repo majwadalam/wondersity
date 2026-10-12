@@ -1,15 +1,31 @@
+import { AsyncLocalStorage } from "node:async_hooks";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-import { requireEnv } from "./env";
+import { env, requireEnv } from "./env";
 import type { StoredModule } from "./courseHierarchy";
 import type { Lesson } from "./lessonWriter";
+import type { Staging } from "./staging";
 
+// A request from a signed-in learner runs inside withDb(), so every query
+// here goes out as that learner and the row rules keep them to their own data.
+const requestClient = new AsyncLocalStorage<SupabaseClient>();
+
+export function withDb<T>(db: SupabaseClient, fn: () => Promise<T>) {
+  return requestClient.run(db, fn);
+}
+
+// Outside a request (scripts, the health check) queries go out signed out.
 // Created on first use, not at import: `next build` loads route modules, and
 // the build must not need (or crash without) runtime secrets.
 let client: SupabaseClient | null = null;
 
 function supabase(): SupabaseClient {
+  const scoped = requestClient.getStore();
+  if (scoped) return scoped;
   if (client) return client;
-  client = createClient(requireEnv("SUPABASE_URL"), requireEnv("SUPABASE_ANON_KEY"));
+  client = createClient(
+    requireEnv("NEXT_PUBLIC_SUPABASE_URL"),
+    requireEnv("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY")
+  );
   return client;
 }
 
@@ -28,6 +44,9 @@ export type CourseRow = {
   modules: ModulePlan[];
   current_module: number;
   status: "active" | "completed";
+  cover_url: string | null;
+  /** The shared plan this course was made from or seeded (course_plans.topic_key). */
+  plan_key?: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -128,6 +147,10 @@ export async function createCourse(course: {
   title: string;
   description: string;
   modules: ModulePlan[];
+  /** A world already painted for this plan (from the plan cache). */
+  coverUrl?: string | null;
+  /** The shared plan this course comes from or seeds. */
+  planKey?: string | null;
 }) {
   const { data, error } = await supabase()
     .from("courses")
@@ -138,6 +161,8 @@ export async function createCourse(course: {
       title: course.title,
       description: course.description,
       modules: course.modules,
+      ...(course.coverUrl ? { cover_url: course.coverUrl } : {}),
+      ...(course.planKey ? { plan_key: course.planKey } : {}),
     })
     .select("*")
     .single();
@@ -154,6 +179,41 @@ export async function updateCourse(
     .update({ ...patch, updated_at: new Date().toISOString() })
     .eq("id", id);
   if (error) throw new Error(`updateCourse: ${error.message}`);
+}
+
+// ---------- Covers ----------
+
+/** Stores a file in the public "covers" bucket and returns its URL. */
+export async function uploadCover(path: string, bytes: Buffer, contentType: string) {
+  const bucket = supabase().storage.from("covers");
+  const { error } = await bucket.upload(path, bytes, { contentType, cacheControl: "31536000" });
+  if (error) throw new Error(`uploadCover: ${error.message}`);
+  return bucket.getPublicUrl(path).data.publicUrl;
+}
+
+/**
+ * Stores a generated image, resized to `maxWidth` and saved as WebP (a ~1 MB
+ * render becomes ~60-150 KB), so pages load fast without an image optimizer.
+ */
+export async function uploadImage(path: string, bytes: Buffer, maxWidth: number) {
+  const { default: sharp } = await import("sharp");
+  const webp = await sharp(bytes).resize({ width: maxWidth, withoutEnlargement: true }).webp({ quality: 80 }).toBuffer();
+  return uploadCover(path.replace(/\.(png|jpe?g|webp)$/i, "") + ".webp", webp, "image/webp");
+}
+
+/**
+ * Saves cover URLs onto a course without touching anything else: re-reads the
+ * modules first so a concurrent change isn't lost, and leaves updated_at alone
+ * (covers don't count as activity).
+ */
+export async function saveCovers(courseId: number, courseCover: string | null, moduleCovers: Record<number, string>) {
+  const { data, error } = await supabase().from("courses").select("modules, cover_url").eq("id", courseId).single();
+  if (error) throw new Error(`saveCovers: ${error.message}`);
+  const modules = (data.modules as ModulePlan[]).map((m, i) => (moduleCovers[i] && !m.cover ? { ...m, cover: moduleCovers[i] } : m));
+  const patch: { modules: ModulePlan[]; cover_url?: string } = { modules };
+  if (courseCover && !data.cover_url) patch.cover_url = courseCover;
+  const { error: updateError } = await supabase().from("courses").update(patch).eq("id", courseId);
+  if (updateError) throw new Error(`saveCovers: ${updateError.message}`);
 }
 
 /** Every course lesson with its recorded quiz answers. */
@@ -277,4 +337,315 @@ export async function getLearnerLessons(learnerId: string) {
     return [];
   }
   return data ?? [];
+}
+
+/** Replaces a lesson's stored content (used to add its staging). */
+export async function updateLessonData(lessonId: number, lesson: unknown) {
+  const { error } = await supabase().from("lessons").update({ lesson_data: lesson }).eq("id", lessonId);
+  if (error) throw new Error(`updateLessonData: ${error.message}`);
+}
+
+/** Guides already cast in a course's lessons, newest first (so a course keeps one guide and one portrait). */
+export async function getCourseGuides(courseId: number, learnerId: string) {
+  const { data, error } = await supabase()
+    .from("lessons")
+    .select("lesson_data")
+    .eq("course_id", courseId)
+    .eq("learner_id", learnerId)
+    .order("id", { ascending: false });
+  if (error) throw new Error(`getCourseGuides: ${error.message}`);
+  return (data ?? []).flatMap((r) => {
+    const guide = (r.lesson_data as { staging?: Staging } | null)?.staging?.guide;
+    return guide ? [guide] : [];
+  });
+}
+
+/** Records that a learner reached a step of a lesson (0 = opened it). Only their own lessons. */
+export async function recordLessonView(learnerId: string, lessonId: number, step: number, stepCount: number) {
+  const { data: lesson, error: findError } = await supabase()
+    .from("lessons")
+    .select("id")
+    .eq("id", lessonId)
+    .eq("learner_id", learnerId)
+    .maybeSingle();
+  if (findError) throw new Error(`recordLessonView: ${findError.message}`);
+  if (!lesson) return false;
+  const { error } = await supabase()
+    .from("lesson_views")
+    .insert({ learner_id: learnerId, lesson_id: lessonId, step, step_count: stepCount });
+  if (error) throw new Error(`recordLessonView: ${error.message}`);
+  return true;
+}
+
+// ---------- Plans, usage and reports ----------
+
+export type SubscriptionRow = {
+  learner_id: string;
+  paddle_customer_id: string;
+  paddle_subscription_id: string;
+  status: "active" | "trialing" | "past_due" | "paused" | "canceled";
+  price_id: string;
+  plan: "monthly" | "yearly";
+  current_period_end: string | null;
+  canceled_at: string | null;
+  /** The partner whose link the learner bought through, from the checkout. */
+  referred_by?: string | null;
+};
+
+/** The learner's subscription, if they ever had one (rows are written by the Paddle webhook). */
+export async function getSubscription(learnerId: string) {
+  const { data, error } = await supabase().from("subscriptions").select("*").eq("learner_id", learnerId).maybeSingle();
+  if (error) throw new Error(`getSubscription: ${error.message}`);
+  return data as SubscriptionRow | null;
+}
+
+/** What the learner has used since `since`: lessons written, lessons painted, courses started. */
+export async function getUsageSince(learnerId: string, since: Date) {
+  const iso = since.toISOString();
+  const count = async (table: "lessons" | "courses", painted = false) => {
+    let q = supabase().from(table).select("id", { count: "exact", head: true }).eq("learner_id", learnerId).gte("created_at", iso);
+    if (painted) q = q.not("lesson_data->staging", "is", null);
+    const { count: n, error } = await q;
+    if (error) throw new Error(`getUsageSince(${table}): ${error.message}`);
+    return n ?? 0;
+  };
+  const [lessons, painted, courses] = await Promise.all([count("lessons"), count("lessons", true), count("courses")]);
+  return { lessons, painted, courses };
+}
+
+/** Saves a learner's report of a mistake in one of their lessons. */
+export async function insertLessonReport(
+  learnerId: string,
+  report: { lessonId: number; step: number; kind: "wrong_fact" | "confusing" | "broken" | "other"; message: string }
+) {
+  const owned = await getLessonForLearner(report.lessonId, learnerId);
+  if (!owned) return false;
+  const { error } = await supabase().from("lesson_reports").insert({
+    learner_id: learnerId,
+    lesson_id: report.lessonId,
+    step: report.step,
+    kind: report.kind,
+    message: report.message,
+  });
+  if (error) throw new Error(`insertLessonReport: ${error.message}`);
+  return true;
+}
+
+// Billing events arrive from Paddle with no signed-in learner, so they are
+// written with the server's secret key. Only the webhook uses this client.
+let admin: SupabaseClient | null = null;
+
+function adminSupabase(): SupabaseClient {
+  admin ??= createClient(requireEnv("NEXT_PUBLIC_SUPABASE_URL"), requireEnv("SUPABASE_SECRET_KEY"), {
+    auth: { persistSession: false },
+  });
+  return admin;
+}
+
+/** Mirrors a subscription Paddle reported. Only the verified Paddle webhook calls this. */
+export async function upsertSubscription(row: SubscriptionRow) {
+  const { error } = await adminSupabase()
+    .from("subscriptions")
+    .upsert({ ...row, updated_at: new Date().toISOString() }, { onConflict: "learner_id" });
+  if (error) throw new Error(`upsertSubscription: ${error.message}`);
+}
+
+// ---------- Creator partners (docs/CREATORS.md) ----------
+
+export type Partner = { code: string; name: string; url: string | null; discount_code: string | null };
+export type Companion = { slug: string; topic: string; title: string; blurb: string; video_url: string | null; partner: Partner };
+
+const PARTNER_COLUMNS = "code, name, url, discount_code";
+
+/** An active partner by referral code, or null. Readable signed out (only public columns). */
+export async function getPartner(code: string) {
+  const { data, error } = await supabase().from("partners").select(PARTNER_COLUMNS).eq("code", code).eq("active", true).maybeSingle();
+  if (error) throw new Error(`getPartner: ${error.message}`);
+  return data as Partner | null;
+}
+
+/** An active companion page with its partner, or null. Readable signed out. */
+export async function getCompanion(slug: string) {
+  const { data, error } = await supabase()
+    .from("companions")
+    .select(`slug, topic, title, blurb, video_url, partner:partners!inner(${PARTNER_COLUMNS})`)
+    .eq("slug", slug)
+    .eq("active", true)
+    .maybeSingle();
+  if (error) throw new Error(`getCompanion: ${error.message}`);
+  return data as unknown as Companion | null;
+}
+
+/** The partner who referred the learner, if any (the first referral is kept). */
+export async function getReferral(learnerId: string) {
+  const { data, error } = await supabase().from("profiles").select("referred_by").eq("id", learnerId).maybeSingle();
+  if (error) throw new Error(`getReferral: ${error.message}`);
+  return (data?.referred_by as string | null | undefined) ?? null;
+}
+
+// ---------- Shared course plans (the plan cache) ----------
+
+export type CachedPlan = {
+  topic_key: string;
+  topic: string;
+  title: string;
+  description: string;
+  modules: ModulePlan[];
+  cover_url: string | null;
+};
+
+const PLAN_COLUMNS = "topic_key, topic, title, description, modules, cover_url";
+
+/** The cached plan for a topic, if one was made with the current planning guide. */
+export async function getCachedPlan(topicKey: string, plannerVersion: string) {
+  const { data, error } = await supabase()
+    .from("course_plans")
+    .select(PLAN_COLUMNS)
+    .eq("topic_key", topicKey)
+    .eq("planner_version", plannerVersion)
+    .maybeSingle();
+  if (error) throw new Error(`getCachedPlan: ${error.message}`);
+  return data as CachedPlan | null;
+}
+
+/** An embedding as pgvector text, "[0.1,0.2,…]". */
+const asVector = (v: number[]) => `[${v.join(",")}]`;
+
+/** The cached plans whose topics are closest in meaning, closest first. */
+export async function matchCoursePlans(embedding: number[], plannerVersion: string, count = 3) {
+  const { data, error } = await supabase().rpc("match_course_plans", { query: asVector(embedding), version: plannerVersion, max_results: count });
+  if (error) throw new Error(`matchCoursePlans: ${error.message}`);
+  return (data ?? []) as { topic_key: string; topic: string; title: string; description: string; similarity: number }[];
+}
+
+/** Whether the server can write shared rows (the plan cache, subscriptions). */
+export const canWriteShared = () => !!env("SUPABASE_SECRET_KEY");
+
+/** Caches a plan for its topic (server key only). An existing plan for the topic is kept. */
+export async function cachePlan(plan: {
+  topicKey: string;
+  topic: string;
+  title: string;
+  description: string;
+  modules: ModulePlan[];
+  plannerVersion: string;
+  embedding: number[] | null;
+}) {
+  const { error } = await adminSupabase().from("course_plans").upsert(
+    {
+      topic_key: plan.topicKey,
+      topic: plan.topic,
+      title: plan.title,
+      description: plan.description,
+      modules: plan.modules,
+      planner_version: plan.plannerVersion,
+      ...(plan.embedding ? { embedding: asVector(plan.embedding) } : {}),
+    },
+    { onConflict: "topic_key", ignoreDuplicates: true }
+  );
+  if (error) throw new Error(`cachePlan: ${error.message}`);
+}
+
+/** Saves a course world onto the shared plan the course came from, if it has none (server key only). */
+export async function cachePlanCover(planKey: string, coverUrl: string) {
+  const { error } = await adminSupabase()
+    .from("course_plans")
+    .update({ cover_url: coverUrl, updated_at: new Date().toISOString() })
+    .eq("topic_key", planKey)
+    .is("cover_url", null);
+  if (error) throw new Error(`cachePlanCover: ${error.message}`);
+}
+
+/** Lesson 1 of a shared plan, if cached by the current lesson writer. */
+export async function getCachedFirstLesson(planKey: string, lessonVersion: string) {
+  const { data, error } = await supabase()
+    .from("course_plans")
+    .select("first_lesson, first_lesson_score")
+    .eq("topic_key", planKey)
+    .eq("lesson_version", lessonVersion)
+    .not("first_lesson", "is", null)
+    .maybeSingle();
+  if (error) throw new Error(`getCachedFirstLesson: ${error.message}`);
+  return data ? { lesson: data.first_lesson as Lesson, score: Number(data.first_lesson_score) } : null;
+}
+
+/** Caches lesson 1 for a shared plan, unless one by the current writer is already there (server key only). */
+export async function cacheFirstLesson(planKey: string, lesson: Lesson, score: number, lessonVersion: string) {
+  const { error } = await adminSupabase()
+    .from("course_plans")
+    .update({ first_lesson: lesson, first_lesson_score: score, lesson_version: lessonVersion, updated_at: new Date().toISOString() })
+    .eq("topic_key", planKey)
+    .or(`first_lesson.is.null,lesson_version.neq.${lessonVersion}`);
+  if (error) throw new Error(`cacheFirstLesson: ${error.message}`);
+}
+
+/**
+ * Adds a staged lesson 1's scenes and "Go deeper" to the shared copy, so later
+ * learners get them without painting again (server key only). Only fills a
+ * copy by the same writer that has no scenes yet.
+ */
+export async function cacheFirstLessonStaging(planKey: string, lessonVersion: string, extras: Pick<Lesson, "staging" | "resources">) {
+  const db = adminSupabase();
+  const { data, error } = await db
+    .from("course_plans")
+    .select("first_lesson")
+    .eq("topic_key", planKey)
+    .eq("lesson_version", lessonVersion)
+    .maybeSingle();
+  if (error) throw new Error(`cacheFirstLessonStaging: ${error.message}`);
+  const cached = data?.first_lesson as Lesson | null | undefined;
+  if (!cached || cached.staging) return;
+  const { error: updateError } = await db
+    .from("course_plans")
+    .update({ first_lesson: { ...cached, ...extras }, updated_at: new Date().toISOString() })
+    .eq("topic_key", planKey)
+    .eq("lesson_version", lessonVersion);
+  if (updateError) throw new Error(`cacheFirstLessonStaging: ${updateError.message}`);
+}
+
+/** The shared plan a course belongs to, if any. */
+export async function getCoursePlanKey(courseId: number) {
+  const { data, error } = await supabase().from("courses").select("plan_key").eq("id", courseId).maybeSingle();
+  if (error) throw new Error(`getCoursePlanKey: ${error.message}`);
+  return (data?.plan_key as string | null | undefined) ?? null;
+}
+
+// ---------- Runs (traces and costs) ----------
+
+export type RunRecord = {
+  kind: "learn" | "stage" | "cover";
+  topic?: string | null;
+  lessonId?: number | null;
+  outcome?: string | null;
+  ok: boolean;
+  error?: string | null;
+  ms: number;
+  usage: { cost: number; calls: number; promptTokens: number; completionTokens: number };
+  trace?: unknown[];
+};
+
+/** Records a run's trace, time and cost as the learner. Never throws: a run isn't failed by its log. */
+export async function recordRun(learnerId: string, run: RunRecord) {
+  try {
+    const { error } = await supabase()
+      .from("runs")
+      .insert({
+        learner_id: learnerId,
+        kind: run.kind,
+        topic: run.topic ?? null,
+        lesson_id: run.lessonId ?? null,
+        outcome: run.outcome ?? null,
+        ok: run.ok,
+        error: run.error ? run.error.slice(0, 2000) : null,
+        ms: Math.round(run.ms),
+        cost_usd: Number(run.usage.cost.toFixed(5)),
+        calls: run.usage.calls,
+        tokens_in: run.usage.promptTokens,
+        tokens_out: run.usage.completionTokens,
+        trace: run.trace ?? [],
+      });
+    if (error) console.error("recordRun:", error.message);
+  } catch (e) {
+    console.error("recordRun:", e);
+  }
 }

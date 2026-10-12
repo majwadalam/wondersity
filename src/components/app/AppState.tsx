@@ -15,38 +15,74 @@ import {
   useSyncExternalStore,
   type ReactNode,
 } from "react";
+import type { Resources } from "@/lib/enrichment";
+import type { Staging } from "@/lib/staging";
 import type { Answer, Course, Lesson, LessonRow, LessonStatus, PrefetchState, QuizResult, TraceStep } from "../types";
 import { levelsOf, moduleLabel } from "@/lib/courseHierarchy";
+import { browserSupabase } from "@/lib/supabase/browser";
 
-// ---------- learner identity (browser-local) ----------
+// ---------- learner identity ----------
 
-// 128 random bits. getRandomValues works on plain-HTTP origins too, unlike
-// crypto.randomUUID, which needs a secure context.
-function newLearnerId() {
-  const bytes = crypto.getRandomValues(new Uint8Array(16));
-  return "learner-" + Array.from(bytes, (b) => b.toString(16).padStart(2, "0")).join("");
-}
+// The learner is the signed-in Supabase user. Before accounts, a learner was
+// a random id kept in this browser's localStorage. On sign-in the app checks
+// what that id holds and asks before moving it into the account (see
+// /api/account/claim): moving it silently put an old course into a brand-new
+// account, and on a shared computer would hand one person's progress to another.
+const BROWSER_ID_KEY = "learner_id";
 
-// Cached so useSyncExternalStore always sees the same value, and so the app
-// still works (for this tab) if localStorage is blocked.
-let cachedLearnerId: string | null = null;
+export type Profile = {
+  email: string | null;
+  displayName: string | null;
+  avatarUrl: string | null;
+  reason: string | null;
+  dailyGoalMinutes: number;
+  voiceOn: boolean;
+  onboarded: boolean;
+};
 
-function getOrCreateLearnerId(): string {
-  if (cachedLearnerId) return cachedLearnerId;
-  let id: string | null = null;
+function readBrowserId() {
   try {
-    id = localStorage.getItem("learner_id");
-    if (!id) {
-      id = newLearnerId();
-      localStorage.setItem("learner_id", id);
-    }
+    return localStorage.getItem(BROWSER_ID_KEY);
   } catch {
-    id ??= newLearnerId();
+    return null;
   }
-  cachedLearnerId = id;
-  return id;
 }
-const noSubscribe = () => () => {};
+
+/** Forgets this browser's pre-account id (its progress stays where it is). */
+function forgetBrowserId() {
+  try {
+    localStorage.removeItem(BROWSER_ID_KEY);
+  } catch {
+    /* storage blocked */
+  }
+}
+
+/** The courses this browser's pre-account id holds, without moving them. */
+async function previewBrowserProgress(oldId: string): Promise<{ topic: string; title: string }[]> {
+  const res = await fetch(`/api/account/claim?browserId=${encodeURIComponent(oldId)}`).catch(() => null);
+  if (!res?.ok) return [];
+  return ((await res.json().catch(() => null))?.courses as { topic: string; title: string }[] | undefined) ?? [];
+}
+
+/** Moves this browser's pre-account progress into the account; only after the learner agrees. */
+async function claimBrowserProgress(userId: string, oldId: string) {
+  const res = await fetch("/api/account/claim", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ browserId: oldId }),
+  }).catch(() => null);
+  if (!res?.ok) return false;
+  try {
+    // Bookmarks were stored per learner id: carry them over too.
+    const marks = localStorage.getItem(bookmarkStorageKey(oldId));
+    if (marks && !localStorage.getItem(bookmarkStorageKey(userId))) localStorage.setItem(bookmarkStorageKey(userId), marks);
+    localStorage.removeItem(bookmarkStorageKey(oldId));
+    localStorage.removeItem(BROWSER_ID_KEY);
+  } catch {
+    /* storage blocked */
+  }
+  return true;
+}
 
 /** Same normalization as the server's topicKey, so prefetches and bookmarks match. */
 export const topicKey = (topic: string) => topic.trim().replace(/\s+/g, " ").toLowerCase();
@@ -68,7 +104,9 @@ export type LearnResponse =
       tutorNote: string | null;
       trace: TraceStep[];
     }
-  | { kind: "course_complete"; course: Course; trace: TraceStep[] };
+  | { kind: "course_complete"; course: Course; trace: TraceStep[] }
+  | { kind: "nothing_ahead"; trace: TraceStep[] }
+  | { kind: "upgrade_required"; course: Course | null; reason: string; message: string; trace: TraceStep[] };
 
 /** What the last tutor run said about a module (shown on its page). */
 export type ModuleRun = {
@@ -80,24 +118,34 @@ export type ModuleRun = {
   trace: TraceStep[];
 };
 
+/**
+ * A failure the learner sees: a plain message (the server never sends internal
+ * details), a reference to quote to support, and whether trying again can help.
+ */
+export class AppError extends Error {
+  constructor(message: string, readonly ref?: string, readonly retryable = true) {
+    super(message);
+  }
+}
+export type ShownError = { message: string; ref?: string; retryable: boolean };
+
 /** Reads an API response, turning non-JSON failures (e.g. a gateway timeout page) into readable errors. */
 async function readJson(response: Response) {
   try {
     return await response.json();
   } catch {
-    throw new Error(
+    throw new AppError(
       response.ok
-        ? "The server sent an unreadable response. Please try again."
-        : `The server didn't respond in time (HTTP ${response.status}). Please try again.`
+        ? "Something went wrong on our side. Please try again."
+        : "This is taking longer than it should. Please try again."
     );
   }
 }
 
 /** The learner's courses and single lessons. A failed half comes back undefined. */
-async function fetchLibrary(learnerId: string): Promise<{ courses?: Course[]; lessons?: LessonRow[] }> {
-  const q = `learnerId=${encodeURIComponent(learnerId)}`;
+async function fetchLibrary(): Promise<{ courses?: Course[]; lessons?: LessonRow[] }> {
   try {
-    const [coursesRes, lessonsRes] = await Promise.all([fetch(`/api/courses?${q}`), fetch(`/api/lessons?${q}`)]);
+    const [coursesRes, lessonsRes] = await Promise.all([fetch("/api/courses"), fetch("/api/lessons")]);
     const [coursesData, lessonsData] = await Promise.all([readJson(coursesRes), readJson(lessonsRes)]);
     return {
       courses: coursesRes.ok ? (coursesData.courses ?? []) : undefined,
@@ -140,7 +188,36 @@ function readBookmarksRaw(learnerId: string) {
  * A tutor run in progress. The API reports nothing until it finishes, so the
  * UI knows only what kind of run it is and how long it has taken: no stages.
  */
-type Busy = { topic: string; label: string; kind: "plan" | "module"; startedAt: number };
+type Busy = {
+  topic: string;
+  label: string;
+  kind: "plan" | "module";
+  startedAt: number;
+  /** A new course, once its plan is saved: the learner is moved to its page while lesson 1 is written. */
+  courseId?: number;
+};
+
+// Staging (guide, scenes, lines, and the "Go deeper" resources) per lesson,
+// shared by everything that asks, so a lesson is never staged twice at once.
+export type Staged = { staging: Staging; resources: Resources | null };
+const stagings = new Map<number, Promise<Staged | null>>();
+
+/** Stages a lesson (or repairs its missing paintings); resolves to the staging, or null on failure. */
+export function stageLesson(lessonId: number, topic: string): Promise<Staged | null> {
+  const pending = stagings.get(lessonId);
+  if (pending) return pending;
+  const request = fetch("/api/stage", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ lessonId, topic }),
+  })
+    .then((r) => (r.ok ? r.json() : null))
+    .then((d) => (d?.staging ? { staging: d.staging as Staging, resources: (d.resources as Resources | null) ?? null } : null))
+    .catch(() => null)
+    .finally(() => stagings.delete(lessonId));
+  stagings.set(lessonId, request);
+  return request;
+}
 
 /** Rejects with an AbortError when `signal` aborts, without cancelling `promise` itself. */
 function untilAborted<T>(promise: Promise<T>, signal: AbortSignal): Promise<T> {
@@ -152,15 +229,30 @@ function untilAborted<T>(promise: Promise<T>, signal: AbortSignal): Promise<T> {
   });
 }
 
+export type EarlierProgress = { browserId: string; courses: { topic: string; title: string }[] };
+
 type AppStateValue = {
+  /** The signed-in user's id; empty while signed out or still checking. */
   learnerId: string;
+  /** null until the session check finishes. */
+  signedIn: boolean | null;
+  profile: Profile | null;
+  updateProfile: (patch: Partial<Omit<Profile, "email" | "avatarUrl" | "onboarded">> & { onboarded?: true; ageConfirmed?: true }) => Promise<void>;
+  signOut: () => Promise<void>;
   loaded: boolean;
   courses: Course[];
   library: LessonRow[];
   refresh: () => Promise<void>;
   busy: Busy | null;
-  error: string;
+  error: ShownError | null;
   clearError: () => void;
+  /** Courses this browser made before accounts existed, waiting for the learner to add them or not. */
+  earlierProgress: EarlierProgress | null;
+  /** Adds (true) or forgets (false) the earlier progress. */
+  resolveEarlierProgress: (add: boolean) => Promise<void>;
+  /** Set when the learner's plan doesn't cover the lesson they asked for. */
+  upgrade: string | null;
+  clearUpgrade: () => void;
   /** Stops waiting for the current tutor run (the server may still finish it). */
   cancelLearn: () => void;
   /** Re-runs the request that last failed, if any. */
@@ -176,9 +268,29 @@ type AppStateValue = {
   isBookmarked: (topic: string) => boolean;
   toggleBookmark: (topic: string) => void;
   courseFor: (topic: string) => Course | undefined;
+  /** Writes the lesson after the one being taken, in the background, so it's ready on finishing. */
+  prepareAhead: (course: Course) => void;
+  /** Paints a course's missing world map (once per course per visit). */
+  ensureCovers: (course: Course) => void;
+  /** Courses whose covers are being painted right now. */
+  painting: Set<number>;
 };
 
 const AppStateContext = createContext<AppStateValue | null>(null);
+
+/**
+ * Starts a course from anywhere: signed in, it plans it right away; signed
+ * out, it goes to sign-up first and the topic comes along.
+ */
+export function useStartCourse() {
+  const { signedIn, learn } = useAppState();
+  const router = useRouter();
+  return (topic: string) => {
+    if (!topic.trim()) return;
+    if (signedIn) learn(topic, "course");
+    else router.push(`/login?mode=signup&topic=${encodeURIComponent(topic.trim())}`);
+  };
+}
 
 export function useAppState() {
   const value = useContext(AppStateContext);
@@ -188,13 +300,17 @@ export function useAppState() {
 
 export function AppStateProvider({ children }: { children: ReactNode }) {
   const router = useRouter();
-  // localStorage-backed; empty during SSR, filled in on hydration.
-  const learnerId = useSyncExternalStore(noSubscribe, getOrCreateLearnerId, () => "");
+  const [learnerId, setLearnerId] = useState("");
+  const [signedIn, setSignedIn] = useState<boolean | null>(null);
+  const [profile, setProfile] = useState<Profile | null>(null);
+  const [earlierProgress, setEarlierProgress] = useState<EarlierProgress | null>(null);
+
   const [courses, setCourses] = useState<Course[]>([]);
   const [library, setLibrary] = useState<LessonRow[]>([]);
   const [loaded, setLoaded] = useState(false);
   const [busy, setBusy] = useState<Busy | null>(null);
-  const [error, setError] = useState("");
+  const [error, setError] = useState<ShownError | null>(null);
+  const [upgrade, setUpgrade] = useState<string | null>(null);
   const [failed, setFailed] = useState<{ topic: string; landing: "module" | "course" } | null>(null);
   const runAbort = useRef<AbortController | null>(null);
   const [runs, setRuns] = useState<Record<string, ModuleRun>>({});
@@ -203,45 +319,136 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   const prefetches = useRef(new Map<string, Promise<LearnResponse>>());
   const [prefetching, setPrefetching] = useState<Record<string, PrefetchState>>({});
 
+  // Who's signed in, kept current as they sign in and out.
+  useEffect(() => {
+    const auth = browserSupabase().auth;
+    const apply = (id: string | null) => {
+      setSignedIn(!!id);
+      setLearnerId(id ?? "");
+      if (!id) {
+        setCourses([]);
+        setLibrary([]);
+        setProfile(null);
+      }
+    };
+    auth.getUser().then(({ data }) => apply(data.user?.id ?? null));
+    const { data } = auth.onAuthStateChange((_event, session) => apply(session?.user.id ?? null));
+    return () => data.subscription.unsubscribe();
+  }, []);
+
   const applyLibrary = useCallback((data: Awaited<ReturnType<typeof fetchLibrary>>) => {
     if (data.courses) setCourses(data.courses);
     if (data.lessons) setLibrary(data.lessons);
     setLoaded(true);
   }, []);
 
+  const [painting, setPainting] = useState<Set<number>>(() => new Set());
+  const paintRequested = useRef(new Set<number>());
+  const ensureCovers = useCallback(
+    (course: Course) => {
+      const missing = !course.cover;
+      if (!missing || !learnerId || paintRequested.current.has(course.id)) return;
+      paintRequested.current.add(course.id);
+      setPainting((p) => new Set(p).add(course.id));
+      fetch("/api/covers", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ courseId: course.id }),
+      })
+        .then((r) => (r.ok ? r.json() : null))
+        .then((data) => {
+          const fresh: Course | null = data?.course ?? null;
+          if (fresh) setCourses((cs) => cs.map((c) => (c.id === fresh.id ? fresh : c)));
+        })
+        .catch(() => {})
+        .finally(() =>
+          setPainting((p) => {
+            const next = new Set(p);
+            next.delete(course.id);
+            return next;
+          })
+        );
+    },
+    [learnerId]
+  );
+
   const refresh = useCallback(async () => {
-    if (learnerId) applyLibrary(await fetchLibrary(learnerId));
+    if (learnerId) applyLibrary(await fetchLibrary());
   }, [learnerId, applyLibrary]);
 
-  // Initial load; state is set only once the fetch resolves.
+  // On sign-in: see whether this browser holds progress from before accounts
+  // (the learner is asked before it moves), then load everything.
   useEffect(() => {
     if (!learnerId) return;
     let cancelled = false;
-    fetchLibrary(learnerId).then((data) => {
-      if (!cancelled) applyLibrary(data);
-    });
+    (async () => {
+      const oldId = readBrowserId();
+      if (oldId) {
+        const found = await previewBrowserProgress(oldId);
+        if (!cancelled) {
+          if (found.length) setEarlierProgress({ browserId: oldId, courses: found });
+          else forgetBrowserId();
+        }
+      }
+      const [data, prof] = await Promise.all([
+        fetchLibrary(),
+        fetch("/api/profile")
+          .then((r) => (r.ok ? r.json() : null))
+          .catch(() => null),
+      ]);
+      if (cancelled) return;
+      applyLibrary(data);
+      if (prof?.profile) {
+        setProfile(prof.profile);
+        // The account's voice choice wins on a new device (the lesson player reads it from here).
+        try {
+          if (localStorage.getItem("agora:voice") === null) localStorage.setItem("agora:voice", prof.profile.voiceOn ? "on" : "off");
+        } catch {
+          /* storage blocked */
+        }
+      }
+    })();
     return () => {
       cancelled = true;
     };
   }, [learnerId, applyLibrary]);
+
+  const updateProfile = useCallback(async (patch: Parameters<AppStateValue["updateProfile"]>[0]) => {
+    setProfile((p) => (p ? { ...p, ...patch, onboarded: patch.onboarded ?? p.onboarded } : p));
+    const res = await fetch("/api/profile", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(patch),
+    });
+    const data = await res.json().catch(() => null);
+    if (!res.ok) throw new Error(data?.error ?? "Couldn't save your settings.");
+    setProfile(data.profile);
+  }, []);
+
+  const signOut = useCallback(async () => {
+    await browserSupabase().auth.signOut();
+    router.push("/");
+  }, [router]);
 
   const requestLearn = useCallback(
     async (topic: string): Promise<LearnResponse> => {
       const response = await fetch("/api/learn", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ topic, learnerId }),
+        body: JSON.stringify({ topic }),
       });
       const data = await readJson(response);
-      if (!response.ok) {
-        const extra = data.details ?? data.hint;
-        throw new Error(extra ? `${data.error} ${extra}` : data.error);
-      }
+      // Only the server's plain message is shown; it never includes internals.
+      if (!response.ok) throw new AppError(data.error ?? "Something went wrong on our side. Please try again.", data.ref, data.retryable !== false);
       return data;
     },
-    [learnerId]
+    []
   );
 
+  // Lessons being written ahead, by topic. learn() waits for one before
+  // asking for the next lesson, so the same lesson is never written twice.
+  const aheadRuns = useRef(new Map<string, Promise<unknown>>());
+  const aheadTried = useRef(new Set<string>());
   const setPrefetch = (key: string, state: PrefetchState | null) =>
     setPrefetching((s) => {
       const next = { ...s };
@@ -269,7 +476,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   const prefetchNext = (courseTopic: string) => {
     const key = topicKey(courseTopic);
     if (prefetches.current.has(key)) return;
-    const request = requestLearn(courseTopic);
+    // If it's already being written ahead, that run finishes first and this one just picks it up.
+    const request = (aheadRuns.current.get(key) ?? Promise.resolve()).then(() => requestLearn(courseTopic));
     prefetches.current.set(key, request);
     setPrefetch(key, "pending");
     request.then(
@@ -286,6 +494,30 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     );
   };
 
+  const prepareAhead = (course: Course) => {
+    const key = topicKey(course.topic);
+    const next = course.modules[course.currentModule + 1];
+    const attempt = `${course.id}:${course.currentModule}`;
+    if (course.status !== "active" || !course.modules[course.currentModule]?.lesson || !next || next.lesson || aheadTried.current.has(attempt)) return;
+    aheadTried.current.add(attempt); // once per lesson per visit, even if it fails
+    const run = fetch("/api/learn", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ topic: course.topic, ahead: true }),
+    })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data: LearnResponse | null) => {
+        if (data?.kind !== "lesson") return;
+        rememberRun(data);
+        // Set its scene too, so opening it is instant.
+        if (data.lessonId && !data.lesson.staging) stageLesson(data.lessonId, course.topic);
+        refresh();
+      })
+      .catch(() => {})
+      .finally(() => aheadRuns.current.delete(key));
+    aheadRuns.current.set(key, run);
+  };
+
   const courseFor = (topic: string) => courses.find((c) => topicKey(c.topic) === topicKey(topic));
 
   const learn = async (topic: string, landing: "module" | "course" = "module") => {
@@ -300,19 +532,41 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         ? `Preparing ${moduleLabel(levelsOf(existing), Math.min(existing.currentModule, existing.modules.length - 1))} of ${existing.title}`
         : `Planning a course on ${topic.trim()}`,
     });
-    setError("");
+    setError(null);
     setFailed(null);
     const abort = new AbortController();
     runAbort.current = abort;
     const prefetched = prefetches.current.get(key);
     prefetches.current.delete(key);
     setPrefetch(key, null);
+    // A new course: as soon as its plan is saved, show it, and write lesson 1 there.
+    let landed: number | null = null;
+    const watch = existing
+      ? null
+      : setInterval(async () => {
+          const found = (await fetchLibrary()).courses?.find((c) => topicKey(c.topic) === key);
+          if (!found || landed !== null || abort.signal.aborted) return;
+          landed = found.id;
+          setCourses((cs) => [found, ...cs.filter((c) => c.id !== found.id)]);
+          setBusy((b) => (b ? { ...b, courseId: found.id, label: `Writing lesson 1 of ${found.title}` } : b));
+          router.push(`/courses/${found.id}`);
+        }, 3000);
     try {
+      await aheadRuns.current.get(key);
       const request = prefetched ? prefetched.catch(() => requestLearn(topic)) : requestLearn(topic);
       const data = await untilAborted(request, abort.signal);
+      if (data.kind === "nothing_ahead") throw new AppError("Something went wrong on our side. Please try again.");
+      if (data.kind === "upgrade_required") {
+        setUpgrade(data.message);
+        if (data.course && landed === null) router.push(`/courses/${data.course.id}`);
+        return;
+      }
       rememberRun(data);
       await refresh();
-      if (data.kind === "course_complete" || landing === "course") {
+      if (data.kind === "lesson" && data.lessonId && !data.lesson.staging) stageLesson(data.lessonId, data.course.topic);
+      if (landed !== null) {
+        // Already on the course page, which now offers lesson 1.
+      } else if (data.kind === "course_complete" || landing === "course") {
         router.push(`/courses/${data.course.id}`);
       } else {
         router.push(`/courses/${data.course.id}/${data.moduleIndex + 1}`);
@@ -323,10 +577,16 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         // on the next visit (an unfinished module resumes without new work).
         setTimeout(() => refresh(), 30_000);
       } else {
-        setError(err instanceof Error ? err.message : "Something went wrong");
+        setError(
+          err instanceof AppError
+            ? { message: err.message, ref: err.ref, retryable: err.retryable }
+            : // A network failure or anything unexpected: never show its raw text.
+              { message: "We couldn't reach Wondersity. Check your connection and try again.", retryable: true }
+        );
         setFailed({ topic, landing });
       }
     } finally {
+      if (watch) clearInterval(watch);
       runAbort.current = null;
       setBusy(null);
     }
@@ -336,10 +596,10 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     const response = await fetch("/api/attempts", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ learnerId, lessonId, answers }),
+      body: JSON.stringify({ lessonId, answers }),
     });
     const data = await readJson(response);
-    if (!response.ok) throw new Error(data.error ?? "Couldn't save your quiz.");
+    if (!response.ok) throw new AppError(data.error ?? "Couldn't save your answers. Please try again.", data.ref);
     const result = data as QuizResult;
     // If finishing this quiz unlocked a module that isn't written yet, start
     // writing it now; the tutor already sees these answers.
@@ -381,15 +641,36 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   const pendingKey = Object.entries(prefetching).find(([, s]) => s === "pending")?.[0];
 
   const value: AppStateValue = {
+    prepareAhead,
+    signedIn,
+    profile,
+    updateProfile,
+    signOut,
+    ensureCovers,
+    painting,
     learnerId,
-    loaded,
+    // Signed out there is nothing to load.
+    loaded: loaded || signedIn === false,
     courses,
     library,
     refresh,
     busy,
     error,
+    earlierProgress,
+    resolveEarlierProgress: async (add) => {
+      const pending = earlierProgress;
+      setEarlierProgress(null);
+      if (!pending) return;
+      if (add && learnerId) {
+        if (await claimBrowserProgress(learnerId, pending.browserId)) await refresh();
+      } else {
+        forgetBrowserId();
+      }
+    },
+    upgrade,
+    clearUpgrade: () => setUpgrade(null),
     clearError: () => {
-      setError("");
+      setError(null);
       setFailed(null);
     },
     cancelLearn: () => runAbort.current?.abort(),

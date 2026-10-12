@@ -45,7 +45,7 @@ export function ListenActivity({ a, onDone }: { a: ListenData; onDone: () => voi
 
   return (
     <ActivityFrame type="listen" title={a.title} prompt={a.prompt} reveal={a.reveal} done={heard}>
-      <div className="flex items-center gap-4 rounded-2xl border border-beige bg-ink/40 p-4">
+      <div className="flex items-center gap-4 rounded-2xl border border-line bg-canvas p-4">
         {supported ? (
           <button
             type="button"
@@ -56,7 +56,7 @@ export function ListenActivity({ a, onDone }: { a: ListenData; onDone: () => voi
             {state === "playing" ? "❚❚" : "▶"}
           </button>
         ) : (
-          <span className="text-xs text-taupe">Audio isn&rsquo;t available in this browser, so here&rsquo;s the transcript.</span>
+          <span className="text-xs text-muted">Audio isn&rsquo;t available in this browser, so here&rsquo;s the transcript.</span>
         )}
         <div className="listen-wave flex h-12 flex-1 items-center gap-[3px]" data-playing={state === "playing" || undefined} aria-hidden>
           {Array.from({ length: 36 }).map((_, i) => (
@@ -73,11 +73,11 @@ export function ListenActivity({ a, onDone }: { a: ListenData; onDone: () => voi
             onDone();
           }
         }}
-        className="mt-3 text-xs text-gold underline"
+        className="mt-3 text-xs text-accent underline"
       >
         {transcript ? "Hide transcript" : "Read the transcript"}
       </button>
-      {transcript && <p className="font-display mt-2 text-lg leading-relaxed text-sand/90 italic">&ldquo;{a.script}&rdquo;</p>}
+      {transcript && <p className="font-display mt-2 text-lg leading-relaxed text-fg/90 italic">&ldquo;{a.script}&rdquo;</p>}
     </ActivityFrame>
   );
 }
