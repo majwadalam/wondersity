@@ -408,8 +408,8 @@ not in Supabase yet.
     OPENROUTER_API_KEY=...
     OPENROUTER_MODEL=openai/gpt-6.1-sol    # writes lessons, runs the tutor agent
     REVIEW_MODEL=openai/gpt-6.1-sol        # reviews lessons; another family is more independent
-    # optional: VERIFY_FACTS=off, VERIFY_MODEL (default the writer),
-    #           VERIFY_SEARCH_ENGINE (default exa)
+    # optional: VERIFY_FACTS=off, VERIFY_MODEL (default openai/gpt-6-luna),
+    #           VERIFY_SEARCH_ENGINE (default parallel, fast mode)
     NEXT_PUBLIC_SUPABASE_URL=...
     NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=...
     # optional: ART_MODEL (default google/gemini-nano-banana-2.1),

@@ -71,7 +71,9 @@ export const verifyEnabled = () => env("VERIFY_FACTS") !== "off";
 // it, and the harness still checks that the quoted evidence is on that page.
 // With GPT-6.1 Sol reading every result set, checking cost as much as writing.
 const verifyModel = () => env("VERIFY_MODEL") ?? "openai/gpt-6-luna";
-const searchEngine = () => env("VERIFY_SEARCH_ENGINE") ?? "exa";
+// Parallel's fast search ($0.001); VERIFY_SEARCH_ENGINE=exa ($0.007) or native
+// (the model's own search, e.g. Google for Gemini at $0.014) override it.
+const searchEngine = () => env("VERIFY_SEARCH_ENGINE") ?? "parallel";
 
 // ---------- 1. What the lesson claims ----------
 

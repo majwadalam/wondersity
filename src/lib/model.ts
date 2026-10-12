@@ -176,7 +176,7 @@ type StructuredOptions = {
    */
   maxTokens?: number;
   /** OpenRouter's web search plugin: search before answering. */
-  webSearch?: { maxResults?: number; engine?: string; includeDomains?: string[]; excludeDomains?: string[] };
+  webSearch?: { maxResults?: number; engine?: string; mode?: string; includeDomains?: string[]; excludeDomains?: string[] };
 };
 
 /** Returns parsed JSON constrained by `schema`. Callers must still validate it. */
@@ -233,8 +233,11 @@ async function structuredCall(
             {
               id: "web",
               max_results: webSearch.maxResults ?? 5,
-              // Exa is the default: it takes both domain lists (other engines take one).
-              engine: webSearch.engine ?? "exa",
+              // Parallel's fast search: $0.001 a search, against Exa's $0.007 and
+              // Google's (Gemini native) $0.014. It takes one domain list per
+              // search, never both, which is how every caller uses them.
+              engine: webSearch.engine ?? "parallel",
+              ...((webSearch.engine ?? "parallel") === "parallel" ? { mode: webSearch.mode ?? "fast" } : webSearch.mode ? { mode: webSearch.mode } : {}),
               ...(webSearch.includeDomains ? { include_domains: webSearch.includeDomains } : {}),
               ...(webSearch.excludeDomains ? { exclude_domains: webSearch.excludeDomains } : {}),
             },

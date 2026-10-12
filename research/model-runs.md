@@ -312,3 +312,15 @@ Both learners and their data are deleted afterwards.
 - **The 402 refusals have one cause: an empty account.** OpenRouter's messages were "requires at least $1.00 in balance for image or video output" and "at least $0.50 in balance for audio output". The account balance (`/api/v1/credits`) was **$0.15** ($80 bought, $79.85 used), while the key's own limit still showed $2.66: a key's limit is only a cap, and it spends the account's money. This also explains the in-flight refusals in runs 07-10. Earlier sections called it an account-level allowance; it was simply an empty account.
 
 **Data:** `runs/11-server-jobs/report.json`, `runs/11-server-jobs.log`.
+
+
+## Changes since run 11 (not yet measured live)
+
+The account had $0.15 left, so these are untested:
+- **Fact check:** GPT-6 Luna reads the results (was GPT-6.1 Sol), 5 claims (was 8), Parallel's fast search at $0.001 (was Exa at $0.007). Expected cost: about $0.01 a lesson, down from $0.05-0.15. Google search through Gemini was priced and rejected: $0.014 a search.
+- **To check in the next run:**
+  - whether Luna's verdicts hold up
+  - whether Parallel's results come with page text: without it, the harness can only check that a cited page was returned, not that the quote is on it
+  - cost per lesson, from query 11 in `supabase/queries/metrics.sql`
+- **Paintings:** at most 2 per lesson.
+- **Shared lessons:** every lesson of a shared course is reused by learners who haven't answered a check wrong (migration 012).

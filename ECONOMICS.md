@@ -149,13 +149,13 @@ What a new lesson costs now (2026-10-12), against before. "Measured" figures com
 | Part of a lesson | Before | Now | Basis |
 | --- | --- | --- | --- |
 | Writing and review (GPT-6.1 Sol) | ~$0.04-0.05 | same | measured (run 05) |
-| Online fact check | up to 8 claims, GPT-6.1 Sol reading results: ~$0.05-0.15 | 5 claims, GPT-6 Luna reading: ~$0.04 (mostly the searches, ~$0.007 each) | estimate |
+| Online fact check | up to 8 claims, Exa search, GPT-6.1 Sol reading: ~$0.05-0.15 | 5 claims, Parallel fast search ($0.001 each), GPT-6 Luna reading: ~$0.01 | estimate |
 | Guide's script and "Go deeper" (GPT-6 Luna) | ~$0.024 | same | measured (run 10) |
 | Scene paintings | up to 3: ~$0.105 | at most 2: ~$0.07 | list price |
 | Voice | ~$0.01 | same | estimate |
-| **A new lesson** | **~$0.25-0.31** | **~$0.19** | |
+| **A new lesson** | **~$0.25-0.31** | **~$0.16** | |
 
-**A new 8-lesson course: about $1.60** (was about $2.00), plus about $0.06 once for its plan and world. With the fact check off (`VERIFY_FACTS=off`), about $1.30.
+**A new 8-lesson course: about $1.35** (was about $2.00), plus about $0.06 once for its plan and world. With the fact check off (`VERIFY_FACTS=off`), about $1.25: the check now costs about a cent a lesson.
 
 **Repeat courses cost far less.**
 - **Shared plans:** a new learner who asks for a course someone already started gets its plan and painted world, with no planning call and no new painting. Topics are matched by meaning ("Stoicism" = "stoic philosophy"), with a small model confirming it's the same course (~$0.001). Plans tailored to a learner's other courses aren't shared.
@@ -166,9 +166,8 @@ What a new lesson costs now (2026-10-12), against before. "Measured" figures com
 So a popular course's cost falls with each learner who takes it, roughly in proportion to how many learners stay on the path. The cache is built in `lib/planCache.ts` and the `shared_lessons` table (migration 012).
 
 **Further levers, not yet done:**
-- **A cheaper search engine for the fact check:** Parallel at $0.001 a search instead of Exa at $0.007 (`VERIFY_SEARCH_ENGINE=parallel`). That would bring the fact check to about $0.01 a lesson, but its results aren't tested.
 - **Prompt caching:** every lesson call opens with the same writing guide. OpenAI models bill a repeated opening at a lower rate, and runs now record cached tokens (`tokensCached` in `run.cost`) to show whether that's happening.
-- **Turning the fact check off,** if the next runs show it still confirms little (research/model-runs.md, "Where things stand").
+- **Google search for the fact check was considered and rejected on cost.** Gemini's native Google search is $0.014 a search on OpenRouter, 14 times Parallel's fast mode, even with the cheapest Gemini model.
 
 ## Risks in these numbers
 
