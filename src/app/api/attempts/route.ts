@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { asLearner } from "@/lib/auth";
+import { startLessonJob } from "@/lib/jobs";
 import { QuizError, recordQuiz } from "@/lib/progress";
 import {
   clientIp,
@@ -8,6 +9,9 @@ import {
   serverError,
   tooManyRequests,
 } from "@/lib/requestGuards";
+
+// Finishing a quiz can start the next lesson's job, which runs after the response.
+export const maxDuration = 300;
 
 const LIMIT_PER_IP = 60;
 const LIMIT_WINDOW_MS = 60 * 1000;
@@ -39,7 +43,15 @@ export async function POST(request: Request) {
   const { lessonId, answers } = parsed.data;
   return asLearner(async (learnerId) => {
     try {
-      return NextResponse.json(await recordQuiz(learnerId, lessonId, answers));
+      const result = await recordQuiz(learnerId, lessonId, answers);
+      // If this quiz unlocked a lesson that isn't written yet, write it now on
+      // the server (it sees these answers), whether or not the browser stays open.
+      const course = result.course;
+      const next = course?.status === "active" ? course.modules[course.currentModule] : null;
+      if (course && next && !next.lesson) {
+        await startLessonJob(learnerId, course.topic, "learn").catch((e) => console.error("couldn't start the next lesson", e));
+      }
+      return NextResponse.json(result);
     } catch (error) {
       if (error instanceof QuizError) {
         return NextResponse.json({ error: error.message }, { status: error.status });

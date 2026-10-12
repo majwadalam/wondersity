@@ -1,0 +1,74 @@
+{
+  "a": {
+    "topic": "Stoicism",
+    "onboarding": 200,
+    "learn": {
+      "started": 202,
+      "startSeconds": 1,
+      "job": "done",
+      "seconds": 64,
+      "watched": "database only (browser closed)",
+      "kind": "lesson"
+    },
+    "course": {
+      "title": "Stoicism: Clear Thinking and Everyday Practice",
+      "levels": 3,
+      "lessons": 8
+    },
+    "lesson1": {
+      "title": "What Stoicism Is—and Is Not",
+      "score": 8.5,
+      "passed": true,
+      "approach": "misconception",
+      "blocks": "activity > explain > check > activity > explain > check > reflect > explain > check",
+      "sources": 3,
+      "stagedInResult": true
+    },
+    "stagedByServer": {
+      "guide": "Epictetus",
+      "scenes": 3,
+      "painted": 0,
+      "portrait": false,
+      "goDeeper": {
+        "videos": 2,
+        "articles": 3,
+        "books": 3,
+        "images": 3
+      }
+    },
+    "worldPaintedByServer": false,
+    "voice": {
+      "status": 503,
+      "seconds": 2,
+      "url": false
+    },
+    "costUsd": 0.02438
+  },
+  "b": {
+    "topic": "stoic philosophy",
+    "onboarding": 200,
+    "learn": {
+      "started": 202,
+      "startSeconds": 1,
+      "job": "done",
+      "seconds": 67,
+      "watched": "the app's job API",
+      "kind": "lesson"
+    },
+    "course": {
+      "title": "Stoicism: Clear Thinking and Everyday Practice",
+      "levels": 3,
+      "lessons": 8
+    },
+    "lesson1": {
+      "title": "What Stoicism Is—and Is Not",
+      "score": 8.5,
+      "passed": true,
+      "approach": "misconception",
+      "blocks": "activity > explain > check > activity > explain > check > reflect > explain > check",
+      "sources": 3,
+      "stagedInResult": true
+    },
+    "costUsd": 0.02413
+  }
+}

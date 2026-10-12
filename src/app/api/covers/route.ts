@@ -1,11 +1,8 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { asLearner } from "@/lib/auth";
-import { generateImage, worldPrompt } from "@/lib/coverArt";
-import { groupLevels } from "@/lib/courseHierarchy";
 import { toCourseView } from "@/lib/courseView";
-import { cachePlanCover, canWriteShared, getCourseById, recordRun, saveCovers, uploadImage } from "@/lib/db";
-import { emptyUsage, withUsage } from "@/lib/model";
+import { paintCourseWorld } from "@/lib/courseWorld";
 import { clientIp, rateLimit, serverError, tooManyRequests } from "@/lib/requestGuards";
 
 // Paints a course's world: one wide landscape the journey is drawn across,
@@ -34,25 +31,11 @@ export async function POST(request: Request) {
 }
 
 async function paint(learnerId: string, courseId: number) {
-  const started = Date.now();
-  const usage = emptyUsage();
   try {
-    const course = await getCourseById(courseId, learnerId);
+    const course = await paintCourseWorld(learnerId, courseId);
     if (!course) return NextResponse.json({ error: "Course not found" }, { status: 404 });
-
-    if (!course.cover_url) {
-      const regions = groupLevels(course.modules).map((g) => (g.legacy ? course.title : `${g.title}: ${g.description || g.objective}`));
-      const img = await withUsage(() => generateImage(worldPrompt(course.topic, regions), "21:9"), usage).then((r) => r.result);
-      const world = await uploadImage(`course-${course.id}/world-${Date.now()}`, img.bytes, 2000);
-      await saveCovers(course.id, world, {});
-      // The next learner given this course's shared plan gets this world too (no-op if it has one).
-      if (course.plan_key && canWriteShared()) await cachePlanCover(course.plan_key, world).catch((e) => console.error("cachePlanCover:", e));
-      await recordRun(learnerId, { kind: "cover", topic: course.topic, outcome: "painted", ok: true, ms: Date.now() - started, usage });
-    }
-    const fresh = await getCourseById(courseId, learnerId);
-    return NextResponse.json({ course: fresh ? toCourseView(fresh) : null });
+    return NextResponse.json({ course: toCourseView(course) });
   } catch (error) {
-    await recordRun(learnerId, { kind: "cover", outcome: "failed", ok: false, error: String(error), ms: Date.now() - started, usage });
     return serverError(error, "Couldn't make the course covers.");
   }
 }

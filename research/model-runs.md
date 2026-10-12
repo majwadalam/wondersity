@@ -282,4 +282,33 @@ Both learners and their data are deleted afterwards.
 - **Cost per new lesson:** about $0.06-0.19 with the online fact check, $0.04 without it, and under $0.01 for a cached lesson 1.
 - **The arithmetic checker:** reliable. It caught the one real error, and its false alarms are now tests.
 - **The online fact check isn't earning its cost yet.** It confirms few claims, has never contradicted one, and doubles a lesson's cost. The next run, with quotes now logged, should show why quotes fail to match. If it can't be made to work, turning it off (`VERIFY_FACTS=off`) halves the cost of a lesson.
-- **Biggest risk for launch:** the OpenRouter key's in-flight credit allowance. It refused calls with $2.90 still on the key, and it hits paintings and voice as well as lessons.
+- **The 402 refusals were an empty account, not a small allowance** (see run 11). The OpenRouter account had $0.15 left while the key's own limit still showed $2.90. Keep the account topped up, above $1 at all times so paintings and voice work, and watch it, since other keys on the account draw from the same balance.
+
+
+## Run 11: lessons as server-side jobs
+
+**Question:** does a lesson get finished, staged and painted when the browser is closed?
+
+**Change tested:** the tutor now runs as a job on the server (`lib/jobs.ts`):
+- `POST /api/learn` starts the job and answers within about a second.
+- The job writes the lesson, then stages it and paints a new course's world.
+- The browser only watches the job (`/api/jobs`).
+
+**Method:** `scripts/e2e-course.ts` again, with the cached Stoicism course.
+- **Learner A** started its lesson and then behaved like a closed browser: the script never called the app again and only watched the database.
+- **Learner B** watched its job through the app's job API, as the app does.
+
+| | Learner A (browser closed) | Learner B (watching) |
+| --- | --- | --- |
+| Start request | answered in 1s (202) | answered in 1s (202) |
+| Job | done in 64s, on its own | done in 67s |
+| Lesson 1 | 8.5, 3 confirmed sources | the same |
+| Staged by the server | guide Epictetus, 3 scenes written, "Go deeper": 2 videos, 3 articles, 3 books, 3 images | – |
+| Paintings, world, voice | refused (402) | – |
+| Cost | $0.024 | $0.024 |
+
+**Findings:**
+- **Server-side jobs work.** Nothing the browser does is needed for the lesson to be written, checked, saved and staged.
+- **The 402 refusals have one cause: an empty account.** OpenRouter's messages were "requires at least $1.00 in balance for image or video output" and "at least $0.50 in balance for audio output". The account balance (`/api/v1/credits`) was **$0.15** ($80 bought, $79.85 used), while the key's own limit still showed $2.66: a key's limit is only a cap, and it spends the account's money. This also explains the in-flight refusals in runs 07-10. Earlier sections called it an account-level allowance; it was simply an empty account.
+
+**Data:** `runs/11-server-jobs/report.json`, `runs/11-server-jobs.log`.

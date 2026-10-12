@@ -125,12 +125,17 @@ export const FAILURE_COPY: Record<FailureKind, string> = {
  * `fallback` is used for failures that aren't about writing lessons.
  */
 export function serverError(error: unknown, fallback: string) {
+  const failure = describeFailure(error, fallback);
+  return NextResponse.json(
+    { error: failure.message, code: failure.kind, ref: failure.ref, retryable: failure.retryable },
+    { status: failure.kind === "busy" || failure.kind === "unavailable" ? 503 : 500 }
+  );
+}
+
+/** Logs an error under a new reference and returns what the learner may see (used by serverError and lesson jobs). */
+export function describeFailure(error: unknown, fallback: string) {
   const ref = crypto.randomUUID().slice(0, 8);
   const kind = failureKind(error);
   console.error(`[${ref}] ${kind}${errorHint(error) ? ` (${errorHint(error)})` : ""}:`, error);
-  const message = kind === "server" ? fallback : FAILURE_COPY[kind];
-  return NextResponse.json(
-    { error: message, code: kind, ref, retryable: kind !== "unavailable" },
-    { status: kind === "busy" || kind === "unavailable" ? 503 : 500 }
-  );
+  return { kind, ref, message: kind === "server" ? fallback : FAILURE_COPY[kind], retryable: kind !== "unavailable" };
 }

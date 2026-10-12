@@ -24,6 +24,7 @@ cost, what it showed, and what was decided. The product's current choices
 | `runs/08-gate-after-fixes` | Same, after capping output tokens and relaxing the evidence rule (still in parallel) |
 | `runs/09-gate-one-at-a-time` | Same 10 topics one at a time, after the second round of fixes |
 | `runs/10-end-to-end` | A real course through the app's HTTP API: two learners, shared plan and lesson 1 |
+| `runs/11-server-jobs` | The same, with lessons as server-side jobs and one learner acting as a closed browser |
 
 ## Reproducing a run
 

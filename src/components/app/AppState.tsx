@@ -142,6 +142,58 @@ async function readJson(response: Response) {
   }
 }
 
+// ---------- lesson jobs ----------
+
+/** A lesson job as /api/jobs reports it (lib/jobs.ts). */
+type LessonJob = {
+  id: string;
+  kind: "learn" | "ahead";
+  topic: string;
+  status: "running" | "done" | "failed";
+  result?: LearnResponse;
+  error?: string;
+  ref?: string;
+  retryable?: boolean;
+};
+
+const POLL_MS = 1500;
+// Longer than a job can run (the route's 5 minutes) plus slack.
+const JOB_WAIT_MS = 7 * 60 * 1000;
+
+/**
+ * Waits for a lesson job on the server. The job runs whether or not this page
+ * stays open; this only watches it. A brief network failure is retried.
+ */
+async function waitForJob(id: string): Promise<LearnResponse> {
+  const until = Date.now() + JOB_WAIT_MS;
+  while (Date.now() < until) {
+    await new Promise((r) => setTimeout(r, POLL_MS));
+    const res = await fetch(`/api/jobs/${id}`).catch(() => null);
+    if (!res) continue; // offline for a moment
+    const data = await res.json().catch(() => null);
+    if (res.status === 404) throw new AppError("We couldn't find that lesson. Please try again.");
+    if (!res.ok || !data?.job) continue;
+    const job = data.job as LessonJob;
+    if (job.status === "running") continue;
+    if (job.status === "failed") throw new AppError(job.error ?? "Something went wrong on our side. Please try again.", job.ref, job.retryable !== false);
+    if (job.result) return job.result;
+  }
+  throw new AppError("This is taking longer than it should. Please try again.");
+}
+
+/** Starts (or joins) the server's lesson job for a topic and waits for its result. */
+async function runLessonJob(topic: string, ahead = false): Promise<LearnResponse> {
+  const response = await fetch("/api/learn", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ topic, ...(ahead ? { ahead: true } : {}) }),
+  });
+  const data = await readJson(response);
+  // Only the server's plain message is shown; it never includes internals.
+  if (!response.ok || !data?.job) throw new AppError(data.error ?? "Something went wrong on our side. Please try again.", data.ref, data.retryable !== false);
+  return waitForJob((data.job as LessonJob).id);
+}
+
 /** The learner's courses and single lessons. A failed half comes back undefined. */
 async function fetchLibrary(): Promise<{ courses?: Course[]; lessons?: LessonRow[] }> {
   try {
@@ -430,20 +482,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     router.push("/");
   }, [router]);
 
-  const requestLearn = useCallback(
-    async (topic: string): Promise<LearnResponse> => {
-      const response = await fetch("/api/learn", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ topic }),
-      });
-      const data = await readJson(response);
-      // Only the server's plain message is shown; it never includes internals.
-      if (!response.ok) throw new AppError(data.error ?? "Something went wrong on our side. Please try again.", data.ref, data.retryable !== false);
-      return data;
-    },
-    []
-  );
+  // The tutor runs on the server as a job (it finishes even if this page closes); this waits for it.
+  const requestLearn = useCallback((topic: string): Promise<LearnResponse> => runLessonJob(topic), []);
 
   // Lessons being written ahead, by topic. learn() waits for one before
   // asking for the next lesson, so the same lesson is never written twice.
@@ -500,14 +540,9 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     const attempt = `${course.id}:${course.currentModule}`;
     if (course.status !== "active" || !course.modules[course.currentModule]?.lesson || !next || next.lesson || aheadTried.current.has(attempt)) return;
     aheadTried.current.add(attempt); // once per lesson per visit, even if it fails
-    const run = fetch("/api/learn", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ topic: course.topic, ahead: true }),
-    })
-      .then((r) => (r.ok ? r.json() : null))
-      .then((data: LearnResponse | null) => {
-        if (data?.kind !== "lesson") return;
+    const run = runLessonJob(course.topic, true)
+      .then((data) => {
+        if (data.kind !== "lesson") return;
         rememberRun(data);
         // Set its scene too, so opening it is instant.
         if (data.lessonId && !data.lesson.staging) stageLesson(data.lessonId, course.topic);
@@ -517,6 +552,47 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       .finally(() => aheadRuns.current.delete(key));
     aheadRuns.current.set(key, run);
   };
+
+  // Jobs still running on the server from an earlier visit (or a closed tab):
+  // follow them, so the course shows the lesson being written and updates when
+  // it's done. They'd finish anyway; this only shows it.
+  useEffect(() => {
+    if (!learnerId) return;
+    let stopped = false;
+    fetch("/api/jobs")
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data: { jobs?: LessonJob[] } | null) => {
+        for (const job of data?.jobs ?? []) {
+          if (stopped) return;
+          const key = topicKey(job.topic);
+          const follow = waitForJob(job.id);
+          if (job.kind === "ahead") {
+            aheadRuns.current.set(key, follow.then(() => refresh()).catch(() => {}).finally(() => aheadRuns.current.delete(key)));
+            continue;
+          }
+          if (prefetches.current.has(key)) continue;
+          prefetches.current.set(key, follow);
+          setPrefetch(key, "pending");
+          follow.then(
+            (result) => {
+              rememberRun(result);
+              setPrefetch(key, "ready");
+              refresh();
+            },
+            () => {
+              prefetches.current.delete(key);
+              setPrefetch(key, null);
+            }
+          );
+        }
+      })
+      .catch(() => {});
+    return () => {
+      stopped = true;
+    };
+    // Once per sign-in; the helpers it calls only read refs and set state.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [learnerId]);
 
   const courseFor = (topic: string) => courses.find((c) => topicKey(c.topic) === topicKey(topic));
 

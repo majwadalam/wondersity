@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { asLearner } from "@/lib/auth";
-import { runTutor } from "@/lib/harness";
+import { startLessonJob } from "@/lib/jobs";
 import {
   MAX_TOPIC_LENGTH,
   cleanTopic,
@@ -10,7 +10,8 @@ import {
   tooManyRequests,
 } from "@/lib/requestGuards";
 
-// The tutor agent makes several model calls; give it up to 5 minutes.
+// The tutor runs as a background job after this responds (lib/jobs.ts), within
+// the route's 5 minutes, so the lesson is finished even if the browser closes.
 export const maxDuration = 300;
 
 // Each new module costs several model calls, so keep this tight (resuming an
@@ -41,10 +42,10 @@ export async function POST(request: Request) {
   return asLearner(async (learnerId) => {
     try {
       // ahead: write the lesson after the one the learner is taking, so it's ready when they finish.
-      const result = await runTutor(topic, learnerId, { ahead: ahead === true });
-      return NextResponse.json(result);
+      const job = await startLessonJob(learnerId, topic, ahead === true ? "ahead" : "learn");
+      return NextResponse.json({ job }, { status: 202 });
     } catch (error) {
-      return serverError(error, "Failed to generate lesson. Please try again.");
+      return serverError(error, "Failed to start your lesson. Please try again.");
     }
   });
 }

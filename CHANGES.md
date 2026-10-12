@@ -47,6 +47,9 @@ listed. For the full design, read AGENTS.md (how it works) and HARNESS.md
 - Every model call sets a maximum output length: without one, OpenRouter reserves the model's largest possible reply against the key's credit, and parallel calls are refused (402).
 - The online fact check runs at most 4 searches at a time, and accepts a quote when its meaningful words are on the returned page, so short exact quotes count. It still confirms few claims and roughly doubles a lesson's cost, which is under review (research/model-runs.md, "Where things stand").
 - Once a lesson is saved, a failure in the tutor's closing note no longer throws the lesson away. An end-to-end test caught this.
+- Lessons are server-side jobs (`lib/jobs.ts`, migration 011). Starting a lesson answers at once; the server writes it, stages it and paints a new course's world, even if the browser is closed. The browser only watches the job, and a reload picks up jobs still running. Finishing a quiz starts the next lesson on the server. Before, scenes, the world and writing ahead all depended on the browser staying open.
+- Staging and world painting live in `lib/lessonStaging.ts` and `lib/courseWorld.ts`, shared by the API routes and the jobs.
+- OpenRouter's 402 errors in testing were an empty account ($0.15 left), not our code or the key's limit. A key's limit only caps what it may spend from the account. Paintings need at least $1 in the account and voice $0.50.
 - `scripts/e2e-course.ts` runs a real course through the app, as two throwaway learners, and cleans up afterwards.
 
 ## Accounts and data

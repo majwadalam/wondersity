@@ -15,9 +15,11 @@ See [HARNESS.md](HARNESS.md) for the design rationale and research notes.
 
     Browser (page.tsx)
        │
-       │ POST /api/learn  { topic, learnerId }
+       │ POST /api/learn  { topic }  → 202 { job }   (then GET /api/jobs/<id> until done)
        ▼
-    Tutor harness (lib/harness.ts → runTutor)
+    Lesson job on the server (lib/jobs.ts, runs after the response; survives a closed browser)
+       ▼
+    Tutor harness (lib/harness.ts → runTutor), then staging and the course world
        │
        ├─ load_course   → Supabase: courses (+ lessons)
        ├─ fast paths    → course finished: overview; module unfinished: resume
@@ -300,6 +302,18 @@ site header's links sit in a menu. Shared links show `app/opengraph-image.jpg`
 (the hero painting with the headline); `metadataBase` comes from
 `NEXT_PUBLIC_SITE_URL`, else Vercel's production URL.
 
+**Lesson jobs.** The tutor runs on the server as a job (`lib/jobs.ts`,
+`jobs` table, migration 011): `POST /api/learn` starts it, or joins the one
+already running for that topic, and answers at once. The work runs in
+Next.js `after()` within the route's 5 minutes: the tutor, then staging the
+new lesson (`lib/lessonStaging.ts`) and painting a new course's world
+(`lib/courseWorld.ts`) while time is left. The browser only watches
+(`GET /api/jobs/<id>`); on load it follows any jobs still running
+(`GET /api/jobs`). A job of the other kind on the same course waits for the
+earlier one, so two jobs never write at once. A job untouched for 6 minutes is
+shown as failed. Finishing a quiz starts the next lesson's job in
+`/api/attempts`. A lesson the job couldn't stage in time is staged when opened.
+
 **No waiting.** A new course opens as soon as its plan is saved (the client
 polls for it) and lesson 1 is written while the learner looks at it. While a
 lesson is taken, the next one is written ahead (`runTutor(..., { ahead: true
@@ -338,7 +352,9 @@ staged, so it opens instantly.
 - `src/app/welcome` — onboarding; `src/app/home` — the signed-in home; `src/app/settings` — account settings
 - `src/app/api/profile`, `src/app/api/account/claim` — profile; moving pre-account progress in, deleting all data
 - `src/app/pricing`, `src/app/privacy`, `src/app/terms` — marketing and legal pages
-- `src/app/api/learn/route.ts` — runs the tutor
+- `src/app/api/learn/route.ts` — starts (or joins) a lesson job
+- `src/lib/jobs.ts`, `src/app/api/jobs/` — lesson jobs on the server; the browser watches them
+- `src/lib/lessonStaging.ts`, `src/lib/courseWorld.ts` — staging a lesson and painting a course's world, shared by routes and jobs
 - `src/app/api/attempts/route.ts` — records a finished quiz
 - `src/app/api/views/route.ts` — records how far a learner got in a lesson (each new furthest step)
 - `supabase/queries/metrics.sql` — funnel, lesson drop-off, return rate, hardest checks; run in the Supabase SQL editor
@@ -366,7 +382,7 @@ staged, so it opens instantly.
 
 Bookmarks are stored in the browser (localStorage, per learner id); they are
 not in Supabase yet.
-- `supabase/migrations/` — SQL migrations (001 lessons and progress, 002 courses and attempts, 003 covers, 004 accounts: own-rows rules, profiles, claiming old progress, 005 lesson views, 006 subscriptions, lesson reports, age confirmation, 007 creator partners and companion pages, referrals, 008 shared course plans and run logs, 009 matching plans by meaning and sharing lesson 1, 010 asking before claiming pre-account progress); apply with `pnpm db:push`
+- `supabase/migrations/` — SQL migrations (001 lessons and progress, 002 courses and attempts, 003 covers, 004 accounts: own-rows rules, profiles, claiming old progress, 005 lesson views, 006 subscriptions, lesson reports, age confirmation, 007 creator partners and companion pages, referrals, 008 shared course plans and run logs, 009 matching plans by meaning and sharing lesson 1, 010 asking before claiming pre-account progress, 011 lesson jobs); apply with `pnpm db:push`
 - `src/lib/plans.ts` — what each plan allows; `src/lib/billing.ts` — Paddle webhook checks and portal links
 - `src/app/api/billing/` — the learner's plan, the Paddle webhook, the customer portal
 - `src/components/billing/` — checkout button, Settings plan section
@@ -438,6 +454,10 @@ modules, cover_url, planner_version, embedding (vector 1536), first_lesson,
 first_lesson_score, lesson_version, created_at, updated_at. **courses** also
 has plan_key. Readable by
 signed-in learners; written only with the server key.
+
+**jobs** — id (uuid), learner_id, kind (learn, ahead), topic, topic_key,
+status (running, done, failed), result (the tutor's result), error, ref,
+retryable, created_at, updated_at. Learners read and write their own.
 
 **runs** — id, learner_id, kind (learn, stage, cover), topic, lesson_id,
 outcome, ok, error, ms, cost_usd, calls, tokens_in, tokens_out, trace,

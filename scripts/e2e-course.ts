@@ -1,9 +1,11 @@
 // End-to-end course test through the app's real HTTP API, as a browser would
 // use it: two throwaway learners, one course each, every step timed and costed.
 //
-//   Learner A starts topic A: onboarding, plan + lesson 1 (/api/learn),
-//   staging with scenes and "Go deeper" (/api/stage), one voiced line
-//   (/api/voice), the course world (/api/covers).
+//   Learner A starts topic A (/api/learn) and then behaves like a closed
+//   browser: it never calls the app again while the lesson is made, and the
+//   script only watches the database to see the server finish the job on its
+//   own: plan, lesson 1, scenes and "Go deeper", the course world. Then one
+//   voiced line (/api/voice).
 //   Learner B starts topic B, worded differently for the same course: it should
 //   reuse A's shared plan (matched by meaning) and cached lesson 1.
 //
@@ -11,7 +13,7 @@
 // both learners and their data are deleted at the end.
 //
 //   pnpm dev   # in another terminal
-//   node --env-file=.env.local --import tsx scripts/e2e-course.ts research/runs/10-end-to-end [topicA] [topicB]
+//   node --env-file=.env.local --import tsx scripts/e2e-course.ts research/runs/11-server-jobs [topicA] [topicB]
 //
 // Needs SUPABASE_SECRET_KEY (to create confirmed test users) and OpenRouter credit.
 
@@ -19,7 +21,7 @@ import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { createClient, type Session } from "@supabase/supabase-js";
 
-const [outDir = "research/runs/10-end-to-end", topicA = "Stoicism", topicB = "stoic philosophy"] = process.argv.slice(2);
+const [outDir = "research/runs/11-server-jobs", topicA = "Stoicism", topicB = "stoic philosophy"] = process.argv.slice(2);
 const BASE = process.env.E2E_BASE_URL ?? "http://localhost:3000";
 const url = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const publishable = process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!;
@@ -63,12 +65,35 @@ async function call(learner: Learner, method: string, path: string, body?: unkno
 const runs = async (learnerId: string) =>
   (await admin.from("runs").select("kind, outcome, ok, ms, cost_usd, calls, tokens_in, tokens_out, error").eq("learner_id", learnerId).order("created_at")).data ?? [];
 
+/** Watches a lesson job, either as the app does (its API) or only in the database (a closed browser). */
+async function waitForJob(learner: Learner, id: string, browserClosed: boolean) {
+  for (const until = Date.now() + 7 * 60_000; Date.now() < until; ) {
+    await new Promise((r) => setTimeout(r, 3000));
+    const job = browserClosed
+      ? (await admin.from("jobs").select("status, result, error, ref").eq("id", id).single()).data
+      : (await call(learner, "GET", `/api/jobs/${id}`)).data?.job;
+    if (job && job.status !== "running") return job;
+  }
+  return { status: "timeout" };
+}
+
 async function course(learner: Learner, topic: string, report: Record<string, unknown>, full: boolean) {
   report.onboarding = (await call(learner, "PATCH", "/api/profile", { onboarded: true, ageConfirmed: true, dailyGoalMinutes: 10 })).status;
-  const learn = await call(learner, "POST", "/api/learn", { topic });
-  report.learn = { status: learn.status, seconds: Math.round(learn.ms / 1000), kind: learn.data?.kind, error: learn.data?.error, ref: learn.data?.ref };
-  if (learn.data?.kind !== "lesson") return;
-  const { course: c, lesson, lessonId, score, passed } = learn.data;
+  const t = Date.now();
+  const start = await call(learner, "POST", "/api/learn", { topic });
+  const job = start.data?.job?.id ? await waitForJob(learner, start.data.job.id, full) : null;
+  report.learn = {
+    started: start.status,
+    startSeconds: Math.round(start.ms / 1000),
+    job: job?.status,
+    seconds: Math.round((Date.now() - t) / 1000),
+    watched: full ? "database only (browser closed)" : "the app's job API",
+    kind: job?.result?.kind,
+    error: job?.error ?? start.data?.error,
+    ref: job?.ref ?? start.data?.ref,
+  };
+  if (job?.result?.kind !== "lesson") return;
+  const { course: c, lesson, lessonId, score, passed } = job.result;
   report.course = { title: c.title, levels: c.levels?.length, lessons: c.modules?.length };
   report.lesson1 = {
     title: lesson.title,
@@ -77,30 +102,28 @@ async function course(learner: Learner, topic: string, report: Record<string, un
     approach: lesson.approach,
     blocks: lesson.blocks?.map((b: { kind: string }) => b.kind).join(" > "),
     sources: lesson.sources?.length ?? 0,
-    cachedCopy: !!lesson.staging, // a cached lesson 1 arrives already staged
+    stagedInResult: !!lesson.staging, // the job stages a new lesson before it finishes
   };
-  report.trace = learn.data.trace;
+  report.trace = job.result.trace;
   if (!full) return;
-  const stage = await call(learner, "POST", "/api/stage", { lessonId, topic });
-  report.stage = {
-    status: stage.status,
-    seconds: Math.round(stage.ms / 1000),
-    guide: stage.data?.staging?.guide?.name,
-    scenes: stage.data?.staging?.images?.length,
-    painted: stage.data?.staging?.images?.filter((i: { url?: string }) => i.url).length,
-    portrait: !!stage.data?.staging?.guide?.portrait,
-    goDeeper: stage.data?.resources
-      ? Object.fromEntries(["videos", "articles", "books", "images"].map((k) => [k, stage.data.resources[k]?.length ?? 0]))
-      : null,
+  // What the server did on its own, read from the database (nothing asked the app to stage or paint).
+  const saved = (await admin.from("lessons").select("lesson_data").eq("id", lessonId).single()).data?.lesson_data;
+  const staging = saved?.staging;
+  report.stagedByServer = {
+    guide: staging?.guide?.name ?? null,
+    scenes: staging?.images?.length ?? 0,
+    painted: staging?.images?.filter((i: { url?: string }) => i.url).length ?? 0,
+    portrait: !!staging?.guide?.portrait,
+    goDeeper: saved?.resources ? Object.fromEntries(["videos", "articles", "books", "images"].map((k) => [k, saved.resources[k]?.length ?? 0])) : null,
   };
+  const world = (await admin.from("courses").select("cover_url").eq("id", c.id).single()).data?.cover_url;
+  report.worldPaintedByServer = !!world;
   const voice = await call(learner, "GET", `/api/voice?lessonId=${lessonId}&step=0`);
   report.voice = { status: voice.status, seconds: Math.round(voice.ms / 1000), url: !!voice.data?.url };
-  const covers = await call(learner, "POST", "/api/covers", { courseId: c.id });
-  report.world = { status: covers.status, seconds: Math.round(covers.ms / 1000), painted: !!covers.data?.course?.cover };
 }
 
 async function cleanUp(learner: Learner) {
-  for (const table of ["attempts", "progress", "lesson_views", "lesson_reports", "runs", "lessons", "courses"]) {
+  for (const table of ["attempts", "progress", "lesson_views", "lesson_reports", "runs", "jobs", "lessons", "courses"]) {
     await admin.from(table).delete().eq("learner_id", learner.id);
   }
   await admin.from("profiles").delete().eq("id", learner.id);

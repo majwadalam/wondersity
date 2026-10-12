@@ -1,0 +1,258 @@
+{
+  "a": {
+    "topic": "Stoicism",
+    "onboarding": 200,
+    "learn": {
+      "started": 202,
+      "startSeconds": 1,
+      "job": "done",
+      "seconds": 64,
+      "watched": "database only (browser closed)",
+      "kind": "lesson"
+    },
+    "course": {
+      "title": "Stoicism: Clear Thinking and Everyday Practice",
+      "levels": 3,
+      "lessons": 8
+    },
+    "lesson1": {
+      "title": "What Stoicism Is—and Is Not",
+      "score": 8.5,
+      "passed": true,
+      "approach": "misconception",
+      "blocks": "activity > explain > check > activity > explain > check > reflect > explain > check",
+      "sources": 3,
+      "stagedInResult": true
+    },
+    "trace": [
+      {
+        "step": "load_course",
+        "found": false,
+        "currentModule": null
+      },
+      {
+        "ms": 322,
+        "hit": true,
+        "via": "exact",
+        "step": "plan_cache"
+      },
+      {
+        "ms": 6129,
+        "step": "agent.turn",
+        "turn": 1,
+        "toolCalls": [
+          "write_module"
+        ]
+      },
+      {
+        "hit": true,
+        "step": "lesson_cache"
+      },
+      {
+        "step": "save_lesson",
+        "lessonId": 13
+      },
+      {
+        "step": "save_progress",
+        "saved": true
+      },
+      {
+        "ok": true,
+        "step": "agent.tool",
+        "tool": "write_module",
+        "turn": 1
+      },
+      {
+        "ms": 4436,
+        "step": "agent.turn",
+        "turn": 2,
+        "toolCalls": []
+      },
+      {
+        "step": "agent.finish",
+        "turn": 2
+      },
+      {
+        "usd": 0.00664,
+        "step": "run.cost",
+        "calls": 2,
+        "tokensIn": 2191,
+        "tokensOut": 167
+      }
+    ],
+    "stagedByServer": {
+      "guide": "Epictetus",
+      "scenes": 3,
+      "painted": 0,
+      "portrait": false,
+      "goDeeper": {
+        "videos": 2,
+        "articles": 3,
+        "books": 3,
+        "images": 3
+      }
+    },
+    "worldPaintedByServer": false,
+    "voice": {
+      "status": 503,
+      "seconds": 2,
+      "url": false
+    },
+    "runs": [
+      {
+        "kind": "learn",
+        "outcome": "lesson",
+        "ok": true,
+        "ms": 14829,
+        "cost_usd": 0.00664,
+        "calls": 2,
+        "tokens_in": 2191,
+        "tokens_out": 167,
+        "error": null
+      },
+      {
+        "kind": "stage",
+        "outcome": "staged",
+        "ok": true,
+        "ms": 42978,
+        "cost_usd": 0.01774,
+        "calls": 4,
+        "tokens_in": 6891,
+        "tokens_out": 5772,
+        "error": null
+      },
+      {
+        "kind": "cover",
+        "outcome": "failed",
+        "ok": false,
+        "ms": 908,
+        "cost_usd": 0,
+        "calls": 0,
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "error": "Error: OpenRouter 402: image: {\"error\":{\"message\":\"This request requires at least $1.00 in balance for image or video output\",\"code\":402,\"metadata\":{\"limit_source\":\"openrouter_credits\",\"remedy_hint\":\"Add credits at https://openrouter.ai/settings/credits, or lower max_tokens / prompt size to fit your remaining balance.\",\"provider"
+      }
+    ]
+  },
+  "b": {
+    "topic": "stoic philosophy",
+    "onboarding": 200,
+    "learn": {
+      "started": 202,
+      "startSeconds": 1,
+      "job": "done",
+      "seconds": 67,
+      "watched": "the app's job API",
+      "kind": "lesson"
+    },
+    "course": {
+      "title": "Stoicism: Clear Thinking and Everyday Practice",
+      "levels": 3,
+      "lessons": 8
+    },
+    "lesson1": {
+      "title": "What Stoicism Is—and Is Not",
+      "score": 8.5,
+      "passed": true,
+      "approach": "misconception",
+      "blocks": "activity > explain > check > activity > explain > check > reflect > explain > check",
+      "sources": 3,
+      "stagedInResult": true
+    },
+    "trace": [
+      {
+        "step": "load_course",
+        "found": false,
+        "currentModule": null
+      },
+      {
+        "ms": 12999,
+        "hit": true,
+        "via": "similar",
+        "step": "plan_cache",
+        "matched": "stoicism",
+        "nearest": [
+          "Stoicism (0.79)"
+        ]
+      },
+      {
+        "ms": 5026,
+        "step": "agent.turn",
+        "turn": 1,
+        "toolCalls": [
+          "write_module"
+        ]
+      },
+      {
+        "hit": true,
+        "step": "lesson_cache"
+      },
+      {
+        "step": "save_lesson",
+        "lessonId": 14
+      },
+      {
+        "step": "save_progress",
+        "saved": true
+      },
+      {
+        "ok": true,
+        "step": "agent.tool",
+        "tool": "write_module",
+        "turn": 1
+      },
+      {
+        "ms": 3032,
+        "step": "agent.turn",
+        "turn": 2,
+        "toolCalls": []
+      },
+      {
+        "step": "agent.finish",
+        "turn": 2
+      },
+      {
+        "usd": 0.00672,
+        "step": "run.cost",
+        "calls": 4,
+        "tokensIn": 2433,
+        "tokensOut": 564
+      }
+    ],
+    "runs": [
+      {
+        "kind": "learn",
+        "outcome": "lesson",
+        "ok": true,
+        "ms": 24007,
+        "cost_usd": 0.00672,
+        "calls": 4,
+        "tokens_in": 2433,
+        "tokens_out": 564,
+        "error": null
+      },
+      {
+        "kind": "stage",
+        "outcome": "staged",
+        "ok": true,
+        "ms": 36509,
+        "cost_usd": 0.01741,
+        "calls": 4,
+        "tokens_in": 7153,
+        "tokens_out": 5047,
+        "error": null
+      },
+      {
+        "kind": "cover",
+        "outcome": "failed",
+        "ok": false,
+        "ms": 840,
+        "cost_usd": 0,
+        "calls": 0,
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "error": "Error: OpenRouter 402: image: {\"error\":{\"message\":\"This request requires at least $1.00 in balance for image or video output\",\"code\":402,\"metadata\":{\"limit_source\":\"openrouter_credits\",\"remedy_hint\":\"Add credits at https://openrouter.ai/settings/credits, or lower max_tokens / prompt size to fit your remaining balance.\",\"provider"
+      }
+    ]
+  }
+}

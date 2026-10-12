@@ -98,6 +98,10 @@ export type Database = {
           cover_url: string | null
           created_at: string
           description: string
+          embedding: string | null
+          first_lesson: Json | null
+          first_lesson_score: number | null
+          lesson_version: string | null
           modules: Json
           planner_version: string
           title: string
@@ -109,6 +113,10 @@ export type Database = {
           cover_url?: string | null
           created_at?: string
           description: string
+          embedding?: string | null
+          first_lesson?: Json | null
+          first_lesson_score?: number | null
+          lesson_version?: string | null
           modules: Json
           planner_version: string
           title: string
@@ -120,6 +128,10 @@ export type Database = {
           cover_url?: string | null
           created_at?: string
           description?: string
+          embedding?: string | null
+          first_lesson?: Json | null
+          first_lesson_score?: number | null
+          lesson_version?: string | null
           modules?: Json
           planner_version?: string
           title?: string
@@ -138,6 +150,7 @@ export type Database = {
           id: number
           learner_id: string
           modules: Json
+          plan_key: string | null
           status: string
           title: string
           topic: string
@@ -152,6 +165,7 @@ export type Database = {
           id?: never
           learner_id: string
           modules: Json
+          plan_key?: string | null
           status?: string
           title: string
           topic: string
@@ -166,8 +180,54 @@ export type Database = {
           id?: never
           learner_id?: string
           modules?: Json
+          plan_key?: string | null
           status?: string
           title?: string
+          topic?: string
+          topic_key?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      jobs: {
+        Row: {
+          created_at: string
+          error: string | null
+          id: string
+          kind: string
+          learner_id: string
+          ref: string | null
+          result: Json | null
+          retryable: boolean | null
+          status: string
+          topic: string
+          topic_key: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          error?: string | null
+          id?: string
+          kind: string
+          learner_id: string
+          ref?: string | null
+          result?: Json | null
+          retryable?: boolean | null
+          status?: string
+          topic: string
+          topic_key: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          error?: string | null
+          id?: string
+          kind?: string
+          learner_id?: string
+          ref?: string | null
+          result?: Json | null
+          retryable?: boolean | null
+          status?: string
           topic?: string
           topic_key?: string
           updated_at?: string
@@ -530,6 +590,23 @@ export type Database = {
     }
     Functions: {
       claim_browser_learner: { Args: { old_id: string }; Returns: number }
+      match_course_plans: {
+        Args: { max_results?: number; query: string; version: string }
+        Returns: {
+          description: string
+          similarity: number
+          title: string
+          topic: string
+          topic_key: string
+        }[]
+      }
+      preview_browser_learner: {
+        Args: { old_id: string }
+        Returns: {
+          title: string
+          topic: string
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never

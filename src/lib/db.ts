@@ -13,6 +13,11 @@ export function withDb<T>(db: SupabaseClient, fn: () => Promise<T>) {
   return requestClient.run(db, fn);
 }
 
+/** The signed-in learner's client for this request, so background work (lib/jobs.ts) can keep using it. */
+export function currentDb() {
+  return requestClient.getStore() ?? null;
+}
+
 // Outside a request (scripts, the health check) queries go out signed out.
 // Created on first use, not at import: `next build` loads route modules, and
 // the build must not need (or crash without) runtime secrets.
@@ -648,4 +653,51 @@ export async function recordRun(learnerId: string, run: RunRecord) {
   } catch (e) {
     console.error("recordRun:", e);
   }
+}
+
+// ---------- Lesson jobs (lib/jobs.ts) ----------
+
+export type JobRow = {
+  id: string;
+  learner_id: string;
+  kind: "learn" | "ahead";
+  topic: string;
+  topic_key: string;
+  status: "running" | "done" | "failed";
+  result: unknown;
+  error: string | null;
+  ref: string | null;
+  retryable: boolean | null;
+  created_at: string;
+  updated_at: string;
+};
+
+export async function insertJob(job: { learnerId: string; kind: JobRow["kind"]; topic: string; topicKey: string }) {
+  const { data, error } = await supabase()
+    .from("jobs")
+    .insert({ learner_id: job.learnerId, kind: job.kind, topic: job.topic, topic_key: job.topicKey })
+    .select("*")
+    .single();
+  if (error) throw new Error(`insertJob: ${error.message}`);
+  return data as JobRow;
+}
+
+export async function getJob(id: string, learnerId: string) {
+  const { data, error } = await supabase().from("jobs").select("*").eq("id", id).eq("learner_id", learnerId).maybeSingle();
+  if (error) throw new Error(`getJob: ${error.message}`);
+  return data as JobRow | null;
+}
+
+/** The learner's running jobs, newest first (optionally for one topic). */
+export async function runningJobs(learnerId: string, topicKey?: string) {
+  let q = supabase().from("jobs").select("*").eq("learner_id", learnerId).eq("status", "running").order("created_at", { ascending: false }).limit(20);
+  if (topicKey) q = q.eq("topic_key", topicKey);
+  const { data, error } = await q;
+  if (error) throw new Error(`runningJobs: ${error.message}`);
+  return (data ?? []) as JobRow[];
+}
+
+export async function updateJob(id: string, patch: Partial<Pick<JobRow, "status" | "result" | "error" | "ref" | "retryable">>) {
+  const { error } = await supabase().from("jobs").update({ ...patch, updated_at: new Date().toISOString() }).eq("id", id);
+  if (error) throw new Error(`updateJob: ${error.message}`);
 }
