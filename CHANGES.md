@@ -52,6 +52,8 @@ listed. For the full design, read AGENTS.md (how it works) and HARNESS.md
 - OpenRouter's 402 errors in testing were an empty account ($0.15 left), not our code or the key's limit. A key's limit only caps what it may spend from the account. Paintings need at least $1 in the account and voice $0.50.
 - `scripts/e2e-course.ts` runs a real course through the app, as two throwaway learners, and cleans up afterwards.
 
+- The app ships as a Docker image (`Dockerfile`, Next.js standalone output) for Coolify. It runs as one long-lived container, because lesson jobs run inside the server process. `NEXT_PUBLIC_*` variables must be build variables; the README has the steps.
+
 ## Accounts and data
 
 - Sign-in is email and password or Google (Supabase Auth). Emailed codes broke when opened in another browser, so they were dropped.

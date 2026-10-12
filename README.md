@@ -49,26 +49,53 @@ pnpm lint
 pnpm build
 ```
 
-## Deploy (Vercel)
+## Deploy with Docker (Coolify)
 
-1. Push the repo to GitHub and import it in Vercel.
-2. Add the four environment variables above under
-   **Project → Settings → Environment Variables**.
-3. Deploy. `/api/learn` declares `maxDuration = 300` because one lesson can
-   take several model calls; this fits Vercel's default function limit.
+The `Dockerfile` builds a small production image from Next.js's standalone
+output. Run it as one long-lived container: lessons are background jobs
+inside the server process (`lib/jobs.ts`), so a serverless host that stops
+after each response would cut them off.
+
+In Coolify:
+
+1. New resource → your Git repository → build pack **Dockerfile**, port **3000**.
+2. Environment variables. Tick **Build Variable** for every `NEXT_PUBLIC_*`
+   one, because Next.js bakes those into the build:
+   - `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
+   - `NEXT_PUBLIC_SITE_URL` (your domain, for share images)
+   - `NEXT_PUBLIC_PADDLE_*` once billing is set up
+
+   The rest are only needed when the container runs:
+   - `OPENROUTER_API_KEY`, `OPENROUTER_MODEL`, `REVIEW_MODEL`
+   - `SUPABASE_SECRET_KEY`
+   - `PADDLE_API_KEY`, `PADDLE_WEBHOOK_SECRET` once billing is set up
+
+   `.env.example` lists them all.
+3. Add your domain and deploy. The image's health check loads the landing
+   page. `/api/health` also reports the AI provider's credit, so it fails when
+   the OpenRouter account is empty, and isn't used to restart the container.
+4. In Supabase → Authentication → URL configuration, add the domain to the
+   site URL and redirect URLs, so sign-in links and Google sign-in return to it.
+
+Database migrations are applied separately, from a developer machine, with
+`pnpm db:push`.
+
+Without Coolify:
+
+    docker build -t wondersity \
+      --build-arg NEXT_PUBLIC_SUPABASE_URL=... \
+      --build-arg NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=... \
+      --build-arg NEXT_PUBLIC_SITE_URL=https://your-domain .
+    docker run -p 3000:3000 --env-file .env.production wondersity
 
 ### Production checklist
 
-- **Rate limiting.** The API routes include a per-IP limiter (6 lessons per
-  10 minutes; 60 library reads per minute), but it is in-memory, so each
-  serverless instance counts separately. For a public deployment, also add a
-  rate-limit rule in Vercel Firewall for `/api/learn`, and set a spending limit
-  on your OpenRouter key.
-- **Supabase access.** The server uses the publishable key (the `anon` role).
-  The migrations turn on Row Level Security for every table, with policies for
-  what the app does. Anyone with the key can still read every learner's rows;
-  see "No accounts" below.
-- **No accounts.** Learners are identified by a random 128-bit ID stored in
-  the browser. It is unguessable, but anyone who has a learner's ID can read
-  that learner's lessons, and clearing browser storage loses the library.
-  Add real authentication before storing anything sensitive.
+- **OpenRouter credit.** Keys spend the account's balance; a key's limit is
+  only a cap. Keep the account well above $1: below that, paintings and voice
+  are refused, and lessons fail too when calls can't reserve credit (see
+  `research/model-runs.md`, runs 07-11).
+- **Rate limiting** is per process and in memory. Fine for one container; put
+  a rate limit at the proxy (Coolify/Traefik) for `/api/learn` if you scale out.
+- **Accounts and data.** Learners are Supabase Auth users, and row-level
+  security keeps each to their own rows (migration 004). The secret key is
+  used only on the server, for shared caches, subscriptions and test users.

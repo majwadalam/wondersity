@@ -352,6 +352,7 @@ staged, so it opens instantly.
 - `src/app/welcome` — onboarding; `src/app/home` — the signed-in home; `src/app/settings` — account settings
 - `src/app/api/profile`, `src/app/api/account/claim` — profile; moving pre-account progress in, deleting all data
 - `src/app/pricing`, `src/app/privacy`, `src/app/terms` — marketing and legal pages
+- `Dockerfile`, `.dockerignore` — the production image (Next.js standalone output), deployed on Coolify; README has the steps
 - `src/app/api/learn/route.ts` — starts (or joins) a lesson job
 - `src/lib/jobs.ts`, `src/app/api/jobs/` — lesson jobs on the server; the browser watches them
 - `src/lib/lessonStaging.ts`, `src/lib/courseWorld.ts` — staging a lesson and painting a course's world, shared by routes and jobs

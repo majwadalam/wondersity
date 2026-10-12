@@ -1,0 +1,22 @@
+# Never send secrets or local state into the image.
+.env*
+!.env.example
+.git
+.gitignore
+node_modules
+.next
+.vercel
+*.tsbuildinfo
+next-env.d.ts
+
+# Not needed to build or run the app.
+.review-shots
+research
+docs
+sample-lessons
+scripts
+supabase
+*.md
+!README.md
+Dockerfile
+.dockerignore
