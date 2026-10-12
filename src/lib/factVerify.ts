@@ -15,11 +15,12 @@
 
 import { z } from "zod";
 import type { Lesson } from "./lessonBlocks";
-import { callStructured, callStructuredWithSources, writerModel, type Deadline, type Source } from "./model";
+import { callStructured, callStructuredWithSources, type Deadline, type Source } from "./model";
 import { env } from "./env";
 
 /** At most this many claims are searched per lesson version (cost and time). */
-export const MAX_CLAIMS = 8;
+// The claims most at risk; each costs a web search (~$0.007) and a read of its results.
+export const MAX_CLAIMS = 5;
 const SEARCH_CONCURRENCY = 4;
 
 /** Maps over items with at most `limit` running at once, keeping the input order. */
@@ -66,7 +67,10 @@ export type VerifyReport = {
 /** Whether online checking is on (VERIFY_FACTS=off turns it off). */
 export const verifyEnabled = () => env("VERIFY_FACTS") !== "off";
 /** The model that lists claims and judges them against search results. */
-const verifyModel = () => env("VERIFY_MODEL") ?? writerModel();
+// A small model is enough: it lists claims and judges a page that's in front of
+// it, and the harness still checks that the quoted evidence is on that page.
+// With GPT-6.1 Sol reading every result set, checking cost as much as writing.
+const verifyModel = () => env("VERIFY_MODEL") ?? "openai/gpt-6-luna";
 const searchEngine = () => env("VERIFY_SEARCH_ENGINE") ?? "exa";
 
 // ---------- 1. What the lesson claims ----------

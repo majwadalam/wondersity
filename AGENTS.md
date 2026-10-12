@@ -186,7 +186,7 @@ alternate white, canvas and navy (`bg-navy`, `navy-raised`,
 (`lib/staging.ts`, `POST /api/stage`, once per lesson): one model call casts a
 guide (a historical figure for history or philosophy, never a living person;
 an invented expert otherwise) and writes, for the intro and every block, a
-setting, the scene it shows (at most 3 shared paintings, about $0.035 each)
+setting, the scene it shows (at most 2 shared paintings, about $0.035 each)
 and the guide's spoken line, which must not give away any answer. A course
 keeps the guide earlier lessons used when it still fits, and reuses its
 portrait instead of painting a new one. The paintings and the guide's
@@ -269,10 +269,14 @@ the planning guide, `PLANNER_VERSION`), with its painted world. Matching
 (`lib/planCache.ts`): an exact topic match first; otherwise the topic's
 embedding finds the closest cached topics (pgvector, `match_course_plans`)
 and a small model confirms one is the same course, not a related one. The
-course keeps the learner's own wording and records its `plan_key`. Lesson 1
-of a shared plan is cached once it passes every check (`lessonVersion()`
-fingerprints the guide and models) and its scenes and "Go deeper" are added
-once painted, so the next learners get it instantly at no cost. A plan made
+course keeps the learner's own wording and records its `plan_key`. Every
+lesson of a shared plan is cached (`shared_lessons`) once it passes every
+check, when written for a learner who hasn't answered any check wrong in that
+course (`onSharedPath` in lib/harness.ts); such learners get the cached lesson
+instead of a new one, and a mistake makes their next lessons their own. A
+shared lesson carries `sharedFrom`, so its scenes and "Go deeper" are added to
+the shared copy once painted. `lessonVersion()` fingerprints the guide and
+models and retires cached lessons when they change. A plan made
 for such a learner is cached for the next one. Learners
 with other courses get a fresh plan, tailored to their history, that isn't
 cached. Only the server writes the cache (`SUPABASE_SECRET_KEY`), so no
@@ -383,7 +387,7 @@ staged, so it opens instantly.
 
 Bookmarks are stored in the browser (localStorage, per learner id); they are
 not in Supabase yet.
-- `supabase/migrations/` — SQL migrations (001 lessons and progress, 002 courses and attempts, 003 covers, 004 accounts: own-rows rules, profiles, claiming old progress, 005 lesson views, 006 subscriptions, lesson reports, age confirmation, 007 creator partners and companion pages, referrals, 008 shared course plans and run logs, 009 matching plans by meaning and sharing lesson 1, 010 asking before claiming pre-account progress, 011 lesson jobs); apply with `pnpm db:push`
+- `supabase/migrations/` — SQL migrations (001 lessons and progress, 002 courses and attempts, 003 covers, 004 accounts: own-rows rules, profiles, claiming old progress, 005 lesson views, 006 subscriptions, lesson reports, age confirmation, 007 creator partners and companion pages, referrals, 008 shared course plans and run logs, 009 matching plans by meaning and sharing lesson 1, 010 asking before claiming pre-account progress, 011 lesson jobs, 012 shared lessons beyond lesson 1); apply with `pnpm db:push`
 - `src/lib/plans.ts` — what each plan allows; `src/lib/billing.ts` — Paddle webhook checks and portal links
 - `src/app/api/billing/` — the learner's plan, the Paddle webhook, the customer portal
 - `src/components/billing/` — checkout button, Settings plan section
@@ -455,6 +459,11 @@ modules, cover_url, planner_version, embedding (vector 1536), first_lesson,
 first_lesson_score, lesson_version, created_at, updated_at. **courses** also
 has plan_key. Readable by
 signed-in learners; written only with the server key.
+
+**shared_lessons** — plan_key, module_index, lesson_version (primary key
+together), lesson, score, created_at, updated_at. Readable by signed-in
+learners; written only with the server key. (course_plans.first_lesson is no
+longer read; its lessons were copied here.)
 
 **jobs** — id (uuid), learner_id, kind (learn, ahead), topic, topic_key,
 status (running, done, failed), result (the tutor's result), error, ref,

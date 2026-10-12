@@ -52,6 +52,11 @@ listed. For the full design, read AGENTS.md (how it works) and HARNESS.md
 - OpenRouter's 402 errors in testing were an empty account ($0.15 left), not our code or the key's limit. A key's limit only caps what it may spend from the account. Paintings need at least $1 in the account and voice $0.50.
 - `scripts/e2e-course.ts` runs a real course through the app, as two throwaway learners, and cleans up afterwards.
 
+- Cheaper lessons, from about $0.25-0.31 to about $0.19 each (about $1.60 for a new 8-lesson course; ECONOMICS.md has the table):
+  - The fact check now uses GPT-6 Luna to read search results and checks the 5 most important claims, not 8.
+  - A lesson has at most 2 paintings instead of 3.
+- Every lesson of a shared course is now cached, not just lesson 1 (`shared_lessons`, migration 012). Learners who haven't answered any check wrong get the same, already-checked lessons as others on that path, for under a cent each. A mistake makes their next lessons their own.
+- Each run's cost now records how many prompt tokens the provider served from its cache (`tokensCached`).
 - The app ships as a Docker image (`Dockerfile`, Next.js standalone output) for Coolify. It runs as one long-lived container, because lesson jobs run inside the server process. `NEXT_PUBLIC_*` variables must be build variables; the README has the steps.
 
 ## Accounts and data

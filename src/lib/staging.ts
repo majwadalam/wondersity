@@ -33,7 +33,9 @@ export type Staging = {
 };
 
 // Each painting is about $0.035, so a lesson gets a few that its steps share.
-const MAX_IMAGES = 3;
+// Paintings are the largest cost of a lesson after writing it (~$0.035 each), so
+// a lesson gets at most 2, which its steps share (ECONOMICS.md, "Making lessons cheaper").
+const MAX_IMAGES = 2;
 
 export const STAGING_SCHEMA = {
   type: "object",
@@ -96,7 +98,7 @@ The guide:
 - manner: three or four words for how they sound. voice: pick the one that fits (cedar/ash/verse: deeper male; marin/coral/ballad: female; sage/echo: neutral).
 - portraitPrompt: a stylised soft 3D clay bust of the character (or a fitting object for an invented expert), for a small round avatar. Never a photoreal face.
 
-The images (${MAX_IMAGES} at most, usually 2-3): the main places and moments the lesson moves through. Each one is expensive, so choose the few that matter most.
+The images (${MAX_IMAGES} at most; 1 when one place carries the whole lesson): the main places and moments the lesson moves through. Each one is expensive, so choose the few that matter most.
 - setting: the caption for that picture, a short place and time like "Antioch, Roman Syria · 380s" or "Inside a leaf · morning".
 - prompt: what the picture shows, concretely, and it must actually depict that setting (an Antioch scene shows Antioch, not an Italian farm). Describe the scene only, not the style.
 - Be historically accurate and specific, as a museum curator would: name the real architecture, materials, clothing and landscape of that place and time, and say what must NOT appear when a model might get it wrong (e.g. Hadrian's Wall: "a low, straight stone wall with turf ramparts and small milecastles across bare northern English moorland; not a crenellated wall with towers, nothing like the Great Wall of China"). Never mix symbols of different cultures or religions unless the lesson is about that.

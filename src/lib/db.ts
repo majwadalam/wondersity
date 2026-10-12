@@ -561,51 +561,57 @@ export async function cachePlanCover(planKey: string, coverUrl: string) {
   if (error) throw new Error(`cachePlanCover: ${error.message}`);
 }
 
-/** Lesson 1 of a shared plan, if cached by the current lesson writer. */
-export async function getCachedFirstLesson(planKey: string, lessonVersion: string) {
+/** A shared plan's lesson (any lesson number), if one was cached by the current lesson writer. */
+export async function getSharedLesson(planKey: string, moduleIndex: number, lessonVersion: string) {
   const { data, error } = await supabase()
-    .from("course_plans")
-    .select("first_lesson, first_lesson_score")
-    .eq("topic_key", planKey)
+    .from("shared_lessons")
+    .select("lesson, score")
+    .eq("plan_key", planKey)
+    .eq("module_index", moduleIndex)
     .eq("lesson_version", lessonVersion)
-    .not("first_lesson", "is", null)
     .maybeSingle();
-  if (error) throw new Error(`getCachedFirstLesson: ${error.message}`);
-  return data ? { lesson: data.first_lesson as Lesson, score: Number(data.first_lesson_score) } : null;
+  if (error) throw new Error(`getSharedLesson: ${error.message}`);
+  return data ? { lesson: data.lesson as Lesson, score: Number(data.score) } : null;
 }
 
-/** Caches lesson 1 for a shared plan, unless one by the current writer is already there (server key only). */
-export async function cacheFirstLesson(planKey: string, lesson: Lesson, score: number, lessonVersion: string) {
+/** Caches a lesson for a shared plan; an existing one for that lesson and writer is kept (server key only). */
+export async function cacheSharedLesson(planKey: string, moduleIndex: number, lesson: Lesson, score: number, lessonVersion: string) {
   const { error } = await adminSupabase()
-    .from("course_plans")
-    .update({ first_lesson: lesson, first_lesson_score: score, lesson_version: lessonVersion, updated_at: new Date().toISOString() })
-    .eq("topic_key", planKey)
-    .or(`first_lesson.is.null,lesson_version.neq.${lessonVersion}`);
-  if (error) throw new Error(`cacheFirstLesson: ${error.message}`);
+    .from("shared_lessons")
+    .upsert(
+      { plan_key: planKey, module_index: moduleIndex, lesson_version: lessonVersion, lesson, score },
+      { onConflict: "plan_key,module_index,lesson_version", ignoreDuplicates: true }
+    );
+  if (error) throw new Error(`cacheSharedLesson: ${error.message}`);
 }
 
 /**
- * Adds a staged lesson 1's scenes and "Go deeper" to the shared copy, so later
- * learners get them without painting again (server key only). Only fills a
- * copy by the same writer that has no scenes yet.
+ * Adds a staged shared lesson's scenes and "Go deeper" to the shared copy, so
+ * later learners don't pay to paint them (server key only). Only fills a copy
+ * that has no scenes yet.
  */
-export async function cacheFirstLessonStaging(planKey: string, lessonVersion: string, extras: Pick<Lesson, "staging" | "resources">) {
+export async function addSharedLessonStaging(
+  shared: { planKey: string; moduleIndex: number; version: string },
+  extras: Pick<Lesson, "staging" | "resources">
+) {
   const db = adminSupabase();
   const { data, error } = await db
-    .from("course_plans")
-    .select("first_lesson")
-    .eq("topic_key", planKey)
-    .eq("lesson_version", lessonVersion)
+    .from("shared_lessons")
+    .select("lesson")
+    .eq("plan_key", shared.planKey)
+    .eq("module_index", shared.moduleIndex)
+    .eq("lesson_version", shared.version)
     .maybeSingle();
-  if (error) throw new Error(`cacheFirstLessonStaging: ${error.message}`);
-  const cached = data?.first_lesson as Lesson | null | undefined;
+  if (error) throw new Error(`addSharedLessonStaging: ${error.message}`);
+  const cached = (data as { lesson?: Lesson } | null)?.lesson;
   if (!cached || cached.staging) return;
   const { error: updateError } = await db
-    .from("course_plans")
-    .update({ first_lesson: { ...cached, ...extras }, updated_at: new Date().toISOString() })
-    .eq("topic_key", planKey)
-    .eq("lesson_version", lessonVersion);
-  if (updateError) throw new Error(`cacheFirstLessonStaging: ${updateError.message}`);
+    .from("shared_lessons")
+    .update({ lesson: { ...cached, ...extras }, updated_at: new Date().toISOString() })
+    .eq("plan_key", shared.planKey)
+    .eq("module_index", shared.moduleIndex)
+    .eq("lesson_version", shared.version);
+  if (updateError) throw new Error(`addSharedLessonStaging: ${updateError.message}`);
 }
 
 /** The shared plan a course belongs to, if any. */

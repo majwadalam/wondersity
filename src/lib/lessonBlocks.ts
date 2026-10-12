@@ -115,6 +115,8 @@ export type Lesson = {
   sources?: { url: string; title: string }[];
   /** "Go deeper": confirmed videos, articles, books and images (lib/enrichment.ts). */
   resources?: Resources;
+  /** Set when this lesson is (or seeded) a shared plan's cached lesson, so its scenes can be shared too. */
+  sharedFrom?: { planKey: string; moduleIndex: number; version: string };
 };
 
 /**

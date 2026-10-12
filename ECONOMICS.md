@@ -144,19 +144,31 @@ lessons a day, once the runs table shows how many there are.
 
 ## Making lessons cheaper
 
-- **Course plans are cached per topic** (`course_plans`): a learner with no
-  other courses who asks for a topic someone else already started gets the
-  same plan and the same painted world, with no planning call and no new
-  painting (about $0.04-0.06 saved per course, and the course appears at
-  once). Plans made for learners with history aren't cached, because they're
-  tailored to it. Needs `SUPABASE_SECRET_KEY` on the server to fill the cache.
-- **Matched by meaning, not wording** ("Stoicism" = "stoic philosophy"), with
-  a small model confirming it's the same course (~$0.001 per new course).
-- **Lesson 1 is cached per shared plan** once it passes every check, with its
-  scenes and "Go deeper" once painted: a new learner on a repeat topic gets
-  lesson 1 at ~$0 instead of ~$0.28. Since every free signup takes lesson 1,
-  this is the biggest saving on the free tier.
-- Staging on GPT-6 Luna (done) and fewer scenes per lesson (not yet).
+What a new lesson costs now (2026-10-12), against before. "Measured" figures come from the live runs in `research/model-runs.md`; the rest are estimates from list prices until the account has credit again.
+
+| Part of a lesson | Before | Now | Basis |
+| --- | --- | --- | --- |
+| Writing and review (GPT-6.1 Sol) | ~$0.04-0.05 | same | measured (run 05) |
+| Online fact check | up to 8 claims, GPT-6.1 Sol reading results: ~$0.05-0.15 | 5 claims, GPT-6 Luna reading: ~$0.04 (mostly the searches, ~$0.007 each) | estimate |
+| Guide's script and "Go deeper" (GPT-6 Luna) | ~$0.024 | same | measured (run 10) |
+| Scene paintings | up to 3: ~$0.105 | at most 2: ~$0.07 | list price |
+| Voice | ~$0.01 | same | estimate |
+| **A new lesson** | **~$0.25-0.31** | **~$0.19** | |
+
+**A new 8-lesson course: about $1.60** (was about $2.00), plus about $0.06 once for its plan and world. With the fact check off (`VERIFY_FACTS=off`), about $1.30.
+
+**Repeat courses cost far less.**
+- **Shared plans:** a new learner who asks for a course someone already started gets its plan and painted world, with no planning call and no new painting. Topics are matched by meaning ("Stoicism" = "stoic philosophy"), with a small model confirming it's the same course (~$0.001). Plans tailored to a learner's other courses aren't shared.
+- **Shared lessons:** every lesson of a shared course is cached, not just lesson 1:
+  - **On the shared path:** while a learner hasn't answered any check wrong, they get the same lessons as everyone else on that path, already written, checked and painted. Each costs under a cent.
+  - **Off the path:** once a mistake gives them something to adapt to, their next lessons are written for them as usual.
+
+So a popular course's cost falls with each learner who takes it, roughly in proportion to how many learners stay on the path. The cache is built in `lib/planCache.ts` and the `shared_lessons` table (migration 012).
+
+**Further levers, not yet done:**
+- **A cheaper search engine for the fact check:** Parallel at $0.001 a search instead of Exa at $0.007 (`VERIFY_SEARCH_ENGINE=parallel`). That would bring the fact check to about $0.01 a lesson, but its results aren't tested.
+- **Prompt caching:** every lesson call opens with the same writing guide. OpenAI models bill a repeated opening at a lower rate, and runs now record cached tokens (`tokensCached` in `run.cost`) to show whether that's happening.
+- **Turning the fact check off,** if the next runs show it still confirms little (research/model-runs.md, "Where things stand").
 
 ## Risks in these numbers
 

@@ -8,10 +8,9 @@
 
 import { generateImage, scenePrompt } from "./coverArt";
 import {
-  cacheFirstLessonStaging,
+  addSharedLessonStaging,
   canWriteShared,
   getCourseGuides,
-  getCoursePlanKey,
   getLessonForLearner,
   getSubscription,
   getUsageSince,
@@ -22,7 +21,6 @@ import {
 import { enrichLesson, type Resources } from "./enrichment";
 import { env } from "./env";
 import { lessonBlocks, type Lesson } from "./lessonBlocks";
-import { lessonVersion } from "./lessonWriter";
 import { callStructured, emptyUsage, withUsage } from "./model";
 import { billingEnabled, canPaint, planFrom, windowStart } from "./plans";
 import { STAGING_SCHEMA, STAGING_SYSTEM, normalizeStaging, stagingInput, type Staging } from "./staging";
@@ -119,15 +117,12 @@ export async function stageSavedLesson(learnerId: string, lessonId: number, topi
 
   const found = await resources;
   await updateLessonData(lessonId, { ...lesson, staging: s, ...(found ? { resources: found } : {}) });
-  // Lesson 1 of a shared plan: once fully painted, its scenes and "Go deeper"
+  // A shared plan's lesson: once fully painted, its scenes and "Go deeper"
   // go into the shared copy, so the next learners don't pay to paint them.
-  if (row.module_index === 0 && row.course_id && complete(s) && canWriteShared()) {
-    const planKey = await getCoursePlanKey(row.course_id).catch(() => null);
-    if (planKey) {
-      await cacheFirstLessonStaging(planKey, lessonVersion(), { staging: s, ...(found ? { resources: found } : {}) }).catch((e) =>
-        console.error("cacheFirstLessonStaging:", e)
-      );
-    }
+  if (lesson.sharedFrom && complete(s) && canWriteShared()) {
+    await addSharedLessonStaging(lesson.sharedFrom, { staging: s, ...(found ? { resources: found } : {}) }).catch((e) =>
+      console.error("addSharedLessonStaging:", e)
+    );
   }
   return { ok: true, staging: s, resources: found };
 }

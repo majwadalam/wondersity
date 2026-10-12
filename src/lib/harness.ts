@@ -227,13 +227,16 @@ async function runTool(call: ToolCall, state: RunState): Promise<ToolResult> {
       const levels = groupLevels(course.modules);
       const place = modulePlace(levels, moduleIndex);
       const level = place.legacy ? null : levels[place.level];
-      // Lesson 1 of a shared plan is the same for every new learner (no
-      // mistakes to adapt to yet), so a copy that passed every check is reused.
-      const sharedPlan = moduleIndex === 0 ? course.plan_key ?? null : null;
+      // On a shared plan, a learner who hasn't answered any check wrong gets
+      // the same lesson as anyone else on that path (nothing of theirs to adapt
+      // to), so a copy that passed every check is reused. Learners whose
+      // mistakes shape the next lesson get one written for them.
+      const sharedPlan = course.plan_key ? await sharedPathFor(course) : null;
       const version = sharedPlan ? lessonVersion() : "";
-      const cachedLesson = sharedPlan ? await db.getCachedFirstLesson(sharedPlan, version).catch(() => null) : null;
-      if (sharedPlan) state.trace.push({ step: "lesson_cache", hit: !!cachedLesson });
-      const { lesson, score, passed } = cachedLesson
+      const cachedLesson = sharedPlan ? await db.getSharedLesson(sharedPlan, moduleIndex, version).catch(() => null) : null;
+      if (course.plan_key) state.trace.push({ step: "lesson_cache", module: moduleIndex + 1, eligible: !!sharedPlan, hit: !!cachedLesson });
+      const shared = sharedPlan ? { planKey: sharedPlan, moduleIndex, version } : null;
+      const written = cachedLesson
         ? { lesson: cachedLesson.lesson, score: cachedLesson.score, passed: true }
         : await writeLesson(
         {
@@ -266,15 +269,18 @@ async function runTool(call: ToolCall, state: RunState): Promise<ToolResult> {
         }
       );
 
+      // A shared lesson remembers where it's shared from, so its scenes can be shared once painted.
+      const lesson = shared && (cachedLesson || written.passed) ? { ...written.lesson, sharedFrom: shared } : written.lesson;
+      const { score, passed } = written;
       const lessonId = await db.saveLesson(state.learnerId, course.topic, lesson, score, {
         courseId: course.id,
         moduleIndex,
       });
       state.trace.push({ step: "save_lesson", lessonId });
-      // A freshly written lesson 1 that passed is shared with the plan's next learners.
-      if (sharedPlan && !cachedLesson && passed && db.canWriteShared()) {
+      // A freshly written lesson on the shared path that passed is shared with the plan's next learners.
+      if (shared && !cachedLesson && passed && db.canWriteShared()) {
         await db
-          .cacheFirstLesson(sharedPlan, lesson, score, version)
+          .cacheSharedLesson(shared.planKey, moduleIndex, lesson, score, version)
           .then(() => state.trace.push({ step: "lesson_cached" }))
           .catch((e) => state.trace.push({ step: "lesson_cache_failed", error: e instanceof Error ? e.message : String(e) }));
       }
@@ -289,6 +295,21 @@ async function runTool(call: ToolCall, state: RunState): Promise<ToolResult> {
     default:
       return { error: `Unknown tool: ${call.function.name}` };
   }
+}
+
+/**
+ * The shared plan a learner's next lesson can come from: the course's plan, if
+ * the learner hasn't answered any check wrong in this course (a mistake makes
+ * their next lessons their own).
+ */
+async function sharedPathFor(course: db.CourseWithLessons) {
+  if (!course.plan_key) return null;
+  return onSharedPath(await db.getCourseAttempts(course.id)) ? course.plan_key : null;
+}
+
+/** True while every check answered in the course was answered right first time. */
+export function onSharedPath(lessons: { attempts: { correct: boolean }[] }[]) {
+  return !lessons.some((l) => l.attempts.some((a) => !a.correct));
 }
 
 // ---------- Context the agent starts with ----------
@@ -404,6 +425,7 @@ const costEntry = (u: Usage): TraceEntry => ({
   calls: u.calls,
   tokensIn: u.promptTokens,
   tokensOut: u.completionTokens,
+  tokensCached: u.cachedTokens ?? 0,
 });
 
 async function run(state: RunState): Promise<TutorResult> {

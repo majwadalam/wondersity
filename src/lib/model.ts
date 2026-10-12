@@ -55,7 +55,7 @@ export type ToolDefinition = {
 };
 
 /** Tokens and dollars spent by the model calls inside one `withUsage` scope. */
-export type Usage = { calls: number; promptTokens: number; completionTokens: number; cost: number };
+export type Usage = { calls: number; promptTokens: number; completionTokens: number; cost: number; cachedTokens?: number };
 
 // Scoped per run, so concurrent requests on one server don't mix their totals.
 const usageScope = new AsyncLocalStorage<Usage>();
@@ -72,13 +72,18 @@ export async function withUsage<T>(fn: () => Promise<T>, usage = emptyUsage()): 
 }
 
 /** Adds one call's usage to the current withUsage scope (for calls made outside this client, e.g. images). */
-export function recordUsage(u: { prompt_tokens?: number; completion_tokens?: number; cost?: number } | undefined) {
+export function recordUsage(
+  u: { prompt_tokens?: number; completion_tokens?: number; cost?: number; prompt_tokens_details?: { cached_tokens?: number } } | undefined
+) {
   const total = usageScope.getStore();
   if (!total || !u) return;
   total.calls++;
   total.promptTokens += u.prompt_tokens ?? 0;
   total.completionTokens += u.completion_tokens ?? 0;
   total.cost += u.cost ?? 0;
+  // Prompt tokens the provider served from its cache (cheaper): the writing
+  // guide opens every lesson call unchanged, so it should be cached.
+  total.cachedTokens = (total.cachedTokens ?? 0) + (u.prompt_tokens_details?.cached_tokens ?? 0);
 }
 
 /** A web page a search-backed reply was given, as OpenRouter reports it. */
