@@ -1,0 +1,259 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Why 1789?",
+    "objective": "Explain how state debt, rising food prices and new political ideas combined to start the French Revolution in 1789.",
+    "estimatedMinutes": 10,
+    "approach": "mystery",
+    "approachReason": "The puzzle of why France's monarchy fell in 1789, rather than in earlier crises, makes learners test each suspect cause against the evidence and see how the three pressures interacted.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "The puzzle",
+        "body": "France had suffered crises before. It had lost wars, endured poor harvests and carried heavy debts for generations. Yet in 1788 the monarchy still seemed sturdy, and nobody expected it to fall within a year.\n\nSo what changed? By 1789 three pressures had met at the same moment: a state that could not pay its bills, a population that could not afford bread, and a public that had learned to question the whole system. Your job is to find out how these pressures combined.",
+        "example": ""
+      },
+      {
+        "kind": "explain",
+        "heading": "Pressure one: a state that could not pay",
+        "body": "The French crown borrowed heavily to fight wars, including the costly intervention in the American War of Independence. By the late 1780s, a large share of the annual budget went to paying interest on this debt, leaving little room for anything else.\n\nThe obvious fix was to tax more widely. But the clergy and nobility enjoyed long-standing exemptions from many taxes, and the main direct tax fell mostly on commoners. Ministers who proposed taxing privileged landowners ran into fierce resistance from the Assembly of Notables in 1787 and from the parlements, the high courts.",
+        "example": "Think of a household whose monthly interest payments swallow most of its income, while the wealthiest relatives refuse to contribute. The household cannot easily escape the crisis, and everyone starts asking who should pay."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Ask who was legally exempt from the taxes the minister wanted to raise.",
+          "Think about why taxing only commoners would not close the gap in the budget."
+        ],
+        "retry": "The core problem was not simply that France was in debt. Debts were manageable only if the state could raise new revenue, and the privileged orders blocked the most obvious route to it."
+      },
+      {
+        "kind": "explain",
+        "heading": "Pressure two: bread",
+        "body": "In eighteenth-century France, ordinary families spent a very large part of their income on bread, so the price of grain shaped daily life. A hailstorm in July 1788 flattened crops across large areas, and the harvest that followed was poor.\n\nThe winter of 1788 to 1789 was severe. Grain prices climbed through the spring of 1789, and in towns, especially Paris, labourers who earned fixed wages found that their money bought less and less. Hunger turned resentment into street anger, and crowds began to blame those in power.",
+        "example": "A 1775 crisis, the Flour War, also involved bread riots. It shook the government but did not topple the monarchy. Bread alone rarely caused a revolution; the question is what else was happening at the same time."
+      },
+      {
+        "kind": "explain",
+        "heading": "Pressure three: new ideas and a public voice",
+        "body": "Through the eighteenth century, writers such as Montesquieu, Voltaire and Rousseau challenged the idea that power should rest on birth and tradition alone. Their works, along with newspapers, cheap pamphlets and salon debates, created a public that discussed politics openly.\n\nIn 1789 this public found its moment. As the king called the Estates-General to meet for the first time since 1614, people wrote cahiers de doléances listing their grievances. In January 1789 the abbé Sieyès published a pamphlet arguing that the Third Estate was the nation itself, and that it had been denied its proper place.",
+        "example": "Ideas gave the crowd a vocabulary: privilege, nation and rights. Hunger explained why people were angry; the ideas explained who was to blame and what should replace the old order."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Consider what the state needed from its subjects in 1789.",
+          "Think about what hungry people were likely to do when they heard new arguments."
+        ],
+        "retry": "Each pressure alone was survivable in earlier decades. The revolution came when a fiscal crisis forced the call for new taxes, bad bread made people desperate, and ideas gave that desperation a target and a language."
+      },
+      {
+        "kind": "activity",
+        "ref": 2
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Compare what the state needed from its subjects in 1775 and in 1789.",
+          "Ask whether anyone was publicly arguing about who should govern and who should pay."
+        ],
+        "retry": "The 1775 Flour War showed that bread riots could frighten the government. What made 1789 different was that the state was asking for new taxes, and a public primed by new ideas was ready to contest the answer."
+      },
+      {
+        "kind": "summary",
+        "heading": "Solving the puzzle",
+        "points": [
+          "Debt forced the crown to seek new taxes, and the privileged orders' resistance turned a money problem into a political crisis.",
+          "Bad harvests and rising bread prices gave ordinary people a powerful grievance and a reason to take to the streets.",
+          "New ideas about privilege and the nation gave that anger a target and a language, so the pressures reinforced one another in 1789."
+        ]
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Why call the Estates-General?",
+        "prompt": "You have just seen the fiscal crisis: the debt is crushing and the Notables refused new taxes on the privileged. Before reading on, which pressure do you think most directly forced the king to call the Estates-General in 1788?",
+        "reveal": "The crown needed the nation's consent for new taxes, because the privileged orders and the Notables had refused to accept them. Calling the Estates-General was an admission that the old system could no longer settle its own money problems.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "The fiscal crisis: the crown needed consent for new taxes that the Notables had refused",
+            "correct": true,
+            "feedback": "Correct. Money was the central problem, and the crown turned to a national assembly because the normal channels for approving taxes had failed."
+          },
+          {
+            "text": "A shortage of bread that the crown could not feed",
+            "correct": false,
+            "feedback": "Bread mattered, but it was not the reason for the summons. The crown's decision in 1788 was framed around money; the hunger came to a head later."
+          },
+          {
+            "text": "Demands from philosophers for a written constitution",
+            "correct": false,
+            "feedback": "Ideas were circulating, but no one in the crown was planning a constitution in 1788. The ideas shaped what happened once the assembly met."
+          },
+          {
+            "text": "A new war with a neighbouring kingdom",
+            "correct": false,
+            "feedback": "There was no major new war in 1788. The debt came from earlier conflicts, including the American War of Independence."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Build the road to 1789",
+        "prompt": "Put these steps in the order they happened, from the earliest to the latest.",
+        "reveal": "The pressures built on each other. A failed tax reform led to the summons of the Estates-General, which was then overtaken by a hungry winter and a national demand to be heard.",
+        "type": "order",
+        "steps": [
+          "Calonne's proposal to tax the privileged orders meets resistance (1786)",
+          "The Assembly of Notables refuses the new taxes (1787)",
+          "A hailstorm destroys crops and bread prices climb (July 1788)",
+          "The crown announces the Estates-General (August 1788)",
+          "The Estates-General opens and the Third Estate declares itself the National Assembly (May to June 1789)"
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Sort the evidence",
+        "prompt": "Now that all three pressures have been introduced, drag each fact into the pressure it best explains.",
+        "reveal": "Money, bread and ideas each supplied a different kind of pressure. The revolution needed all three to arrive together.",
+        "type": "sort",
+        "buckets": [
+          "Money",
+          "Bread",
+          "Ideas"
+        ],
+        "items": [
+          {
+            "text": "Interest on royal debt absorbed a large share of the annual budget by the late 1780s",
+            "bucket": "Money"
+          },
+          {
+            "text": "Clergy and nobility were largely exempt from the main direct taxes",
+            "bucket": "Money"
+          },
+          {
+            "text": "A hailstorm in July 1788 destroyed large areas of crops",
+            "bucket": "Bread"
+          },
+          {
+            "text": "Bread prices rose sharply through the winter of 1788 to 1789",
+            "bucket": "Bread"
+          },
+          {
+            "text": "Sieyès asked in print, 'What is the Third Estate?'",
+            "bucket": "Ideas"
+          },
+          {
+            "text": "Montesquieu and Rousseau were widely read and debated in salons and print",
+            "bucket": "Ideas"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "You are a royal finance minister in 1787. Interest payments on the debt take up most of the budget, and a new tax is needed. Which proposal would most directly address the revenue problem?",
+        "options": [
+          "Borrow more money at high interest to cover the shortfall",
+          "Cut all royal spending by a fixed percentage",
+          "Extend a land tax to privileged landowners who are currently exempt",
+          "Raise the tax on bread so that the poorest pay for the debt"
+        ],
+        "correctAnswer": "Extend a land tax to privileged landowners who are currently exempt",
+        "explanation": "The crown's main problem was that its usual sources of revenue were insufficient and privileged groups were exempt. Taxing those groups addressed the shortfall directly, though the Notables and parlements resisted it."
+      },
+      {
+        "question": "In the winter of 1788 to 1789, Paris bread prices rose sharply while day labourers' wages stayed the same. Pamphlets blaming privilege also circulated widely in the same months. Why did these two developments combine to produce unrest that could become political?",
+        "options": [
+          "The pamphlets made bread cheaper, which calmed the crowds",
+          "Hunger created anger, and the pamphlets gave that anger a target and a political vocabulary",
+          "Wages rose at the same time, so workers had more money to spend on politics",
+          "The king used the pamphlets to distribute free grain to the poor"
+        ],
+        "correctAnswer": "Hunger created anger, and the pamphlets gave that anger a target and a political vocabulary",
+        "explanation": "Economic hardship supplied the anger and the urgency, while the new ideas explained who was responsible and what should change. Together they turned bread riots into political demands."
+      },
+      {
+        "question": "In 1775, bread riots in France (the Flour War) frightened the government but did not bring down the monarchy. Historians ask what made 1789 different. Which answer best explains the difference?",
+        "options": [
+          "Bread prices were lower in 1789, so the crowds were less hungry",
+          "The king had abolished all taxes by 1789",
+          "In 1789 the state needed new taxes from its subjects, and a public primed by new ideas was ready to contest who should pay",
+          "The Estates-General had been meeting every year since 1775"
+        ],
+        "correctAnswer": "In 1789 the state needed new taxes from its subjects, and a public primed by new ideas was ready to contest who should pay",
+        "explanation": "Bread riots alone were usually contained. In 1789 the fiscal crisis forced the crown to ask for consent to new taxes, and the political debate over privilege and the nation gave the unrest a direction."
+      }
+    ]
+  },
+  "score": 7,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 45403,
+      "approach": "mystery",
+      "blocks": "explain > activity > explain > check > explain > activity > explain > check > activity > check > summary",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 6.5,
+      "ms": 9117,
+      "problems": [
+        "Every activity has afterConcept set to 0, but the lesson places them after different sections. The 'Sort the evidence' activity sits after the money section yet asks learners to sort bread and ideas facts that have not been taught yet, so it works as a spoiler rather than a test.",
+        "The 'Build the road to 1789' activity is placed after the ideas section, but its metadata says afterConcept 0. The metadata does not match the actual flow.",
+        "The first check's second hint ('Look for the group that the Assembly of Notables refused to tax') almost gives away the answer.",
+        "The 'Why call the Estates-General?' predict question depends on the fiscal crisis, which is only explained later in the lesson. Learners are asked to predict before they have the pressure that explains it, so the question tests guessing rather than reasoning.",
+        "Estimated time of 8 minutes is tight for three explanations, three activities and three checks. This is more likely 10 to 12 minutes, which is over the 5-10 minute range."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 30063,
+      "approach": "mystery",
+      "blocks": "explain > explain > activity > check > explain > explain > activity > check > activity > check > summary",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 7,
+      "ms": 9281,
+      "problems": [
+        "Every activity has afterConcept set to 0, even though the blocks place them after different concepts. The sort activity's prompt says 'Now that all three pressures have been introduced', which only holds at its block position, so the metadata is inconsistent with the lesson's sequence.",
+        "Three activities and three checks in an estimated 10 minutes is tight. The order and sort activities together with the checks may push past the 5-10 minute window.",
+        "The 1775 Flour War appears only in an example box and then as the basis for check 2. The contrast with 1789 is asserted rather than worked through, so the final check tests a point the lesson has not fully built.",
+        "The predict activity's wrong options are weakly distinguished. The bread option is a partial truth, and the 'new war' option is easy to rule out, so the question tests little beyond the earlier text."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 7,
+      "passed": false
+    }
+  ]
+}

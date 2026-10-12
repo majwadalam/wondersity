@@ -1,0 +1,5 @@
+■ history: The French Revolution (73s, score 8, $0.0292, 4 calls, 17315 in / 21062 out tokens)
+  approach: mystery (The module's real question is a puzzle — how did Europe's most powerful monarchy collapse in months? — so the lesson poses that puzzle up front, resolves one cause at a time (bread, debt, ideas), and closes by answering it.)
+  blocks:   explain > activity:simulation > check > explain > problem > check > explain > activity:sort > check > explain
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=7, lesson.revise, lesson.evaluate=8, lesson.select=8

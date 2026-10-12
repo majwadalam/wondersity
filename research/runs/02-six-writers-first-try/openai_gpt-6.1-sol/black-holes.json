@@ -1,0 +1,197 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The Event Horizon: When Outward No Longer Leads Out",
+    "objective": "Explain why the event horizon is a boundary beyond which no future path—including a light beam’s—can lead back outside.",
+    "estimatedMinutes": 7,
+    "approach": "discovery",
+    "approachReason": "The learner predicts what an outward-pointing laser will do, then explores light paths to discover why escape is about possible futures rather than engine power.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "A boundary, not a wall",
+        "body": "The event horizon is the boundary separating events that can send a signal to the distant outside universe from events that cannot. Once you are inside it, even an outward-aimed light beam cannot escape.\n\nThe horizon is not a solid shell that blocks the beam. It marks a change in which future paths are possible.",
+        "example": "Think of a boundary marked on a map, not a surface made of material. Crossing it changes your escape possibilities without requiring you to hit anything."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Separate a physical obstacle from a boundary between different possible paths.",
+          "Would the absence of a solid surface create an escape route?"
+        ],
+        "retry": "A wall stops light by interacting with it. An event horizon needs no material barrier: a light signal emitted inside simply has no future route to the distant outside universe."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "Why a stronger engine cannot help",
+        "body": "For the simple, nonrotating black hole we are considering, every possible future path inside the horizon leads toward smaller radius—closer to the center. Even the outward-aimed light path does so; aiming outward no longer provides a route outward.\n\nLight still moves at the usual speed of light when measured locally. The problem is not that light becomes slow: the geometry of spacetime leaves no future path back across the horizon. A rocket or message must also follow a possible future path, so extra engine power cannot create an escape route.",
+        "example": "“Outward” describes where you aim. “Escape” describes where your path eventually reaches. Inside the horizon, those are no longer the same thing."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Repair the explanation",
+        "prompt": "A friend says, “Light cannot escape because it gets slowed to a stop at the horizon. A stronger rocket might still get out.” Replace this with a two-sentence explanation using what you learned from the two light paths.",
+        "model": "Light still travels at its usual speed when measured locally; the horizon is not a wall that stops it. Inside the horizon, no possible future path leads back outside, so neither an outward light beam nor a stronger rocket can escape."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Locate the probe when each flash is emitted, rather than when the receiver detects it.",
+          "Compare the two branches of the light-path diagram."
+        ],
+        "retry": "Treat each flash according to where it was emitted. Crossing later does not pull an already escaping flash back, and aiming outward does not give a flash emitted inside an escape route."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "An outward-pointing laser",
+        "prompt": "A probe has just crossed inside the event horizon of a simple, nonrotating black hole. It fires a laser directly away from the center. What happens to the beam?",
+        "reveal": "Even an outward-aimed beam cannot escape from inside the horizon. To understand why, we need to examine the paths light can take—not imagine a wall stopping it.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "It escapes because it is aimed outward.",
+            "correct": false,
+            "feedback": "Aiming outward is not enough. Inside the horizon, even this light path cannot reach the outside universe."
+          },
+          {
+            "text": "It hits a solid shell at the horizon.",
+            "correct": false,
+            "feedback": "The horizon is not made of material. No collision with a shell is needed."
+          },
+          {
+            "text": "It keeps moving locally at light speed, but cannot escape.",
+            "correct": true,
+            "feedback": "Yes. Light retains its locally measured speed, but its future path cannot lead outside."
+          },
+          {
+            "text": "It stops moving as soon as the probe fires it.",
+            "correct": false,
+            "feedback": "A nearby observer still measures the beam moving at light speed. Failure to escape does not mean failure to move."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Same light speed, different destinations",
+        "prompt": "Tap the nodes and trace both branches. Each beam is aimed directly outward and moves at the usual locally measured speed of light. Which branch can reach a distant receiver? These arrows show future paths, not a picture drawn to scale.",
+        "reveal": "Outside the horizon, a directly outward beam can reach a distant receiver. Inside it, even the outward-aimed beam proceeds toward smaller radius: escape is no longer among its possible futures.",
+        "type": "diagram",
+        "nodes": [
+          {
+            "label": "Emission outside",
+            "detail": "The probe fires while still outside the horizon of our isolated, nonrotating black hole."
+          },
+          {
+            "label": "Outward beam outside",
+            "detail": "This directly outward beam travels toward larger radius. It has a route away from the black hole."
+          },
+          {
+            "label": "Distant receiver",
+            "detail": "The escaping beam can reach a receiver far from the black hole."
+          },
+          {
+            "label": "Emission inside",
+            "detail": "The probe fires after crossing the horizon. There is no solid surface blocking its laser."
+          },
+          {
+            "label": "Outward beam inside",
+            "detail": "The beam moves locally at light speed, yet its future path does not take it back across the horizon."
+          },
+          {
+            "label": "Smaller radius",
+            "detail": "Even this outward-aimed beam proceeds closer to the center. All possible future paths inside this simple black hole lead toward smaller radius."
+          }
+        ],
+        "edges": [
+          {
+            "from": 0,
+            "to": 1,
+            "label": "fires directly outward"
+          },
+          {
+            "from": 1,
+            "to": 2,
+            "label": "can escape to"
+          },
+          {
+            "from": 3,
+            "to": 4,
+            "label": "fires directly outward"
+          },
+          {
+            "from": 4,
+            "to": 5,
+            "label": "must proceed toward"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A mission designer says, “There is no solid surface at the event horizon, so a laser fired from inside should pass through it and escape.” What is the best correction?",
+        "options": [
+          "The horizon contains an invisible material that absorbs every laser.",
+          "The absence of a solid surface does not create a future path from inside to outside.",
+          "The laser can escape if its beam is narrow enough.",
+          "Only rockets are trapped; light can always leave."
+        ],
+        "correctAnswer": "The absence of a solid surface does not create a future path from inside to outside.",
+        "explanation": "The event horizon is a boundary of escape possibilities, not a material barrier. A signal emitted inside has no future path to the distant outside universe."
+      },
+      {
+        "question": "A falling probe sends flash A directly outward just before crossing the horizon, then sends flash B directly outward just after crossing. A receiver waits far away. For our isolated, nonrotating black hole, which statement is correct?",
+        "options": [
+          "Both flashes can reach the receiver because both were aimed outward.",
+          "Neither flash can reach the receiver because the probe eventually crosses the horizon.",
+          "Flash A can reach the receiver, but flash B cannot, even though both move locally at light speed.",
+          "Flash B can reach the receiver if it is brighter than flash A."
+        ],
+        "correctAnswer": "Flash A can reach the receiver, but flash B cannot, even though both move locally at light speed.",
+        "explanation": "Flash A is emitted outside and has an outward escape path; the probe’s later crossing does not remove that path. Flash B is emitted inside, where no future light path leads back outside."
+      }
+    ]
+  },
+  "score": 8.3,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 51266,
+      "approach": "discovery",
+      "blocks": "activity > explain > check > activity > explain > reflect > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8.3,
+      "ms": 8926,
+      "problems": [
+        "The discovery activity supplies the destinations through node labels and details, so tracing the branches mostly confirms a stated conclusion rather than letting learners discover it.",
+        "The central explanation accurately states that all future paths lead inward, but offers limited intuition for why spacetime geometry imposes this restriction.",
+        "The retry explanations largely restate the original explanation rather than providing a genuinely different explanatory route."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8.3,
+      "passed": true
+    }
+  ]
+}

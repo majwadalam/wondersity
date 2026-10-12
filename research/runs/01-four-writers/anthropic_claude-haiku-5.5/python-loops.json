@@ -1,0 +1,388 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "For loops and accumulators",
+    "objective": "Read, predict and write for loops that build up a result using an accumulator variable.",
+    "estimatedMinutes": 9,
+    "approach": "discovery",
+    "approachReason": "The learner predicts, sorts and traces real loop code before the accumulator pattern is named, so the idea is worked out from the evidence first and explained afterwards.",
+    "blocks": [
+      {
+        "kind": "code",
+        "heading": "Predict the output",
+        "prompt": "Before reading on, predict exactly what this program prints.",
+        "language": "python",
+        "code": "total = 0\nfor n in [3, 5, 2]:\n    total = total + n\n    print(total)",
+        "explanation": "Each time the loop runs, total grows by the current item. Printing inside the loop shows every step, not just the end.",
+        "hints": [
+          "Follow total: what is it before the first loop step?",
+          "Ask how many times the print line runs."
+        ],
+        "mode": "predict",
+        "options": [
+          {
+            "text": "3\n8\n10",
+            "correct": true,
+            "feedback": "Correct. total starts at 0, then becomes 3, 8 and 10, and print runs once per loop step."
+          },
+          {
+            "text": "10",
+            "correct": false,
+            "feedback": "Close, but print is inside the loop, so it runs three times, not once at the end."
+          },
+          {
+            "text": "3\n5\n2",
+            "correct": false,
+            "feedback": "These are the items, not the running total. The line total = total + n changes total, and print shows total."
+          },
+          {
+            "text": "0\n3\n8\n10",
+            "correct": false,
+            "feedback": "total starts at 0, but nothing prints before the loop starts, so 0 never appears."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "code",
+        "heading": "Trace a list accumulator",
+        "prompt": "Step through this program. Each step shows what runs and the state afterwards.",
+        "language": "python",
+        "code": "squares = []\nfor n in range(1, 4):\n    squares.append(n * n)\nprint(squares)",
+        "explanation": "The accumulator here is a list, not a number. append adds one item per loop step, so the list grows the same way a total does.",
+        "hints": [],
+        "mode": "trace",
+        "options": [],
+        "trace": [
+          {
+            "line": 1,
+            "note": "Create an empty list called squares.",
+            "state": "squares = []"
+          },
+          {
+            "line": 2,
+            "note": "The loop starts with n = 1.",
+            "state": "n = 1, squares = []"
+          },
+          {
+            "line": 3,
+            "note": "Append 1 * 1 to squares.",
+            "state": "n = 1, squares = [1]"
+          },
+          {
+            "line": 2,
+            "note": "The next item is n = 2.",
+            "state": "n = 2, squares = [1]"
+          },
+          {
+            "line": 3,
+            "note": "Append 2 * 2 to squares.",
+            "state": "n = 2, squares = [1, 4]"
+          },
+          {
+            "line": 2,
+            "note": "The next item is n = 3.",
+            "state": "n = 3, squares = [1, 4]"
+          },
+          {
+            "line": 3,
+            "note": "Append 3 * 3 to squares.",
+            "state": "n = 3, squares = [1, 4, 9]"
+          },
+          {
+            "line": 4,
+            "note": "The loop has finished. Print the list.",
+            "state": "Output: [1, 4, 9]"
+          }
+        ]
+      },
+      {
+        "kind": "explain",
+        "heading": "The accumulator pattern",
+        "body": "In the programs you just predicted and traced, one variable kept a result from one loop step to the next. That variable is an accumulator. A for loop runs its body once for each item, with n taking each item in turn, and the body updates the accumulator on every pass. Set it before the loop to a start value meaning 'nothing added yet': 0 for a sum, 1 for a product, an empty list for collected items. Use the finished value after the loop ends.",
+        "example": "total = 0 is like an empty shopping basket with a total of zero."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Which line must come before the loop?",
+          "What should the body do to total each time?"
+        ],
+        "retry": "Start the accumulator with 0, loop over every price, and add each one to it. Printing or resetting inside the loop breaks the total."
+      },
+      {
+        "kind": "code",
+        "heading": "Find the bug",
+        "prompt": "This program should print 20, the sum of the prices, but it prints 10. Which fix makes it print 20?",
+        "language": "python",
+        "code": "prices = [4, 6, 10]\ntotal = 0\nfor p in prices:\n    total = p\nprint(total)",
+        "explanation": "total = p overwrites total on every step, so only the last price survives. total = total + p keeps the running sum.",
+        "hints": [],
+        "mode": "bug",
+        "options": [
+          {
+            "text": "Change the body to total = total + p",
+            "correct": true,
+            "feedback": "Correct. Each step adds the current price to the running total, giving 4, 10, then 20."
+          },
+          {
+            "text": "Move total = 0 inside the loop",
+            "correct": false,
+            "feedback": "This makes the body run total = 0 and then total = p on each step. The final total is the last price, so the program still prints 10."
+          },
+          {
+            "text": "Change print(total) to print(prices)",
+            "correct": false,
+            "feedback": "That prints the list [4, 6, 10], not the sum."
+          },
+          {
+            "text": "Change total = p to total = 0",
+            "correct": false,
+            "feedback": "The body would set total to 0 on every step, so the program prints 0."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "worked",
+        "heading": "Worked example: add only the big values",
+        "problem": "Find the total of the values greater than 10 in nums = [4, 12, 7, 15].",
+        "steps": [
+          {
+            "title": "Start",
+            "text": "Set total = 0 before the loop.",
+            "why": "The accumulator must exist before the first step, or the first addition fails."
+          },
+          {
+            "title": "Step 1",
+            "text": "n = 4. Since 4 is not greater than 10, skip it. total is still 0.",
+            "why": "The if test decides whether the body adds this item."
+          },
+          {
+            "title": "Step 2",
+            "text": "n = 12. It passes the test, so total = 0 + 12 = 12.",
+            "why": "Only passing items change the accumulator."
+          },
+          {
+            "title": "Step 3",
+            "text": "n = 7 fails the test, and n = 15 passes: total = 12 + 15 = 27.",
+            "why": "The loop keeps the running total across all items, not just the last one."
+          },
+          {
+            "title": "End",
+            "text": "After the loop, total is 27.",
+            "why": "Use the accumulator only after the loop has finished."
+          }
+        ],
+        "answer": "Final answer: 27"
+      },
+      {
+        "kind": "problem",
+        "heading": "Write the accumulating line",
+        "prompt": "Complete the program so it adds every price to total. The loop body needs one line, and the blank marks where it goes:\n\ntotal = 0\nfor p in prices:\n    ___\nprint(total)\n\nType the line that goes in the blank.",
+        "answers": [
+          "total = total + p",
+          "total += p"
+        ],
+        "unit": "",
+        "traps": [
+          {
+            "answer": "total = p",
+            "feedback": "This overwrites total on every step, so only the last price survives."
+          },
+          {
+            "answer": "total = 0",
+            "feedback": "This resets total on every step, so nothing accumulates and the program prints 0."
+          }
+        ],
+        "hints": [
+          "The new total must use the old total.",
+          "Put total on both sides of the equals sign, and add p."
+        ],
+        "solution": "total = total + p reads the old total, adds p, and stores the new total. total += p is shorthand for the same step."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Which values should the count go up for?",
+          "Do you add the order amount, or just 1?"
+        ],
+        "retry": "A counter is an accumulator that adds 1 instead of the item's value. The if test decides when to add."
+      },
+      {
+        "kind": "problem",
+        "heading": "Multiply instead of add",
+        "prompt": "A loop builds a running product. Start with product = 1. For each n in [2, 3, 4], multiply product by n. What is product after the loop finishes? Type the number.",
+        "answers": [
+          "24"
+        ],
+        "unit": "",
+        "traps": [
+          {
+            "answer": "9",
+            "feedback": "9 is the sum 2 + 3 + 4. The body must multiply, not add: product = product * n."
+          },
+          {
+            "answer": "2",
+            "feedback": "That is only the first item. The accumulator must be updated on every pass."
+          }
+        ],
+        "hints": [
+          "Each pass replaces product with product times n.",
+          "Track product after each item: 1, then 2, then 6, then ..."
+        ],
+        "solution": "product = 1; n = 2 gives 2; n = 3 gives 6; n = 4 gives 24. The start value 1 is the identity for multiplication, just as 0 is for addition."
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Which value does the average need, the sum or the count?",
+          "Where does the division belong, inside or after the loop?"
+        ],
+        "retry": "The loop only builds the sum. Divide by the count after the loop, once the total is final."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Sort the jobs in a totalling program",
+        "prompt": "Each line below belongs to one of three jobs in a program that totals prices. Drag each line into the job it does.",
+        "reveal": "Every accumulator follows the same shape: set it up before the loop, update it inside the loop, and use it after the loop.",
+        "type": "sort",
+        "buckets": [
+          "Set up start value",
+          "Repeat for each item",
+          "Use the result"
+        ],
+        "items": [
+          {
+            "text": "total = 0",
+            "bucket": "Set up start value"
+          },
+          {
+            "text": "for p in prices:",
+            "bucket": "Repeat for each item"
+          },
+          {
+            "text": "total = total + p",
+            "bucket": "Repeat for each item"
+          },
+          {
+            "text": "print(total)",
+            "bucket": "Use the result"
+          },
+          {
+            "text": "count = 0",
+            "bucket": "Set up start value"
+          },
+          {
+            "text": "count = count + 1",
+            "bucket": "Repeat for each item"
+          },
+          {
+            "text": "avg = total / count",
+            "bucket": "Use the result"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A shopping app needs the total of a list called prices. Which code is correct?",
+        "options": [
+          "total = 0\nfor p in prices:\n    total = total + p",
+          "for p in prices:\n    total = 0\n    total = total + p",
+          "for p in prices:\n    total = p",
+          "total = prices\nfor p in prices:\n    total = p"
+        ],
+        "correctAnswer": "total = 0\nfor p in prices:\n    total = total + p",
+        "explanation": "The accumulator starts at 0 before the loop and grows by each price inside the loop. Resetting it inside the loop or overwriting it with p throws away earlier items."
+      },
+      {
+        "question": "A website wants to count how many orders in a list are worth more than $20. Which code is correct?",
+        "options": [
+          "count = 0\nfor amt in orders:\n    if amt > 20:\n        count = count + 1",
+          "count = 0\nfor amt in orders:\n    count = count + amt",
+          "for amt in orders:\n    if amt > 20:\n        count = 1",
+          "count = []\nfor amt in orders:\n    count = count + 1"
+        ],
+        "correctAnswer": "count = 0\nfor amt in orders:\n    if amt > 20:\n        count = count + 1",
+        "explanation": "A counter starts at 0 and adds 1 only when the condition is true. Adding amt counts dollars, not orders, and setting count = 1 never accumulates."
+      },
+      {
+        "question": "A teacher has a list of quiz scores and wants the average. Which code gives the correct average in avg?",
+        "options": [
+          "total = 0\nfor s in scores:\n    total = total + s\navg = total / len(scores)",
+          "total = 0\nfor s in scores:\n    total = s\navg = total / len(scores)",
+          "count = 0\nfor s in scores:\n    count = count + 1\navg = count / len(scores)",
+          "total = 1\nfor s in scores:\n    total = total * s\navg = total"
+        ],
+        "correctAnswer": "total = 0\nfor s in scores:\n    total = total + s\navg = total / len(scores)",
+        "explanation": "The loop builds the sum, and dividing by the number of scores after the loop gives the average. The other options either overwrite the total, count instead of summing, or multiply instead of adding."
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 42183,
+      "approach": "discovery",
+      "blocks": "code > explain > activity > check > worked > code > check > code > problem > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 6.5,
+      "ms": 8532,
+      "problems": [
+        "Bug-fix block, option 'Move total = 0 inside the loop': the feedback says this makes the program print 0. It doesn't. The body becomes total = 0 then total = p, so the final total is the last price, 10. The feedback states a wrong output, which is a factual error in a block about tracing exactly what code does.",
+        "The explanation says the wrong accumulator behaviour is caused by overwriting, which is correct, but the distractor feedback for the same option contradicts the code, so a learner who checks by running the code will lose trust in the lesson.",
+        "The approach is labelled 'discovery', but the explain block states the accumulator pattern directly before the learner has been asked to work it out. The discovery framing is only partly honoured.",
+        "The worked example and trace blocks are useful, but the module has no block that asks the learner to write a loop from scratch in an interactive way. Writing is only tested through multiple-choice questions and a number-entry problem."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 34263,
+      "approach": "discovery",
+      "blocks": "code > activity > code > explain > check > code > worked > problem > check > problem > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 8,
+      "ms": 8046,
+      "problems": [
+        "The 'Trace a list accumulator' block is passive. The learner only reads the states, with no prediction step, so it adds little beyond the earlier predict block.",
+        "The 'Worked example' and 'The accumulator pattern' explanation are text-heavy and come close to giving the whole idea away before the learner has been asked to name it, which weakens the discovery approach stated in the lesson.",
+        "Several code blocks have empty hints arrays ('Trace' and 'Find the bug'), so learners who get stuck there have no support.",
+        "The 'Find the bug' feedback for 'Move total = 0 inside the loop' repeats the explanation's point almost word for word, so the block gives little new reasoning."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true
+    }
+  ]
+}

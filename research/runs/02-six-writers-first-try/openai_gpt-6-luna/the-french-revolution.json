@@ -1,0 +1,203 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Why 1789? Three pressures, one crisis",
+    "objective": "Explain how royal debt, rising bread prices, and new political ideas combined to help start the French Revolution.",
+    "estimatedMinutes": 7,
+    "approach": "mystery",
+    "approachReason": "A puzzle about why Louis XVI called the Estates-General lets learners uncover each pressure before combining them to resolve the mystery.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "The puzzle: why call a meeting?",
+        "body": "In 1789, King Louis XVI called the Estates-General—a meeting of representatives of the clergy, nobility, and common people. France had not held one for 175 years. Why would a king share a national problem with representatives, and why did this decision help set a revolution in motion?",
+        "example": "Keep the question in mind: the meeting was a response to pressure, not the original cause of every problem."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "The crown was short of money",
+        "body": "The French monarchy had accumulated heavy debts, including from wars such as the American Revolution. It needed new revenue, but attempts to reform taxes ran into resistance from privileged groups, especially the clergy and nobility, who had important tax exemptions. The crown's financial crisis made it difficult to govern without confronting who should pay.",
+        "example": "Debt was not just a large bill: it created a political problem because raising money meant challenging privileges."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Who was resisting the changes the crown needed?",
+          "Connect the tax exemptions to the question of who would bear the burden."
+        ],
+        "retry": "Think of the difference between needing more money and being able to collect it. Privileges shaped who could be asked to pay."
+      },
+      {
+        "kind": "explain",
+        "heading": "Bread hardship met new political ideas",
+        "body": "A poor harvest in 1788 helped push up grain and bread prices. Since bread was a staple, high prices made daily life harder for many ordinary people and sharpened anger at the authorities. At the same time, Enlightenment ideas—including popular sovereignty and individual rights—gave people ways to question absolute monarchy and argue that political power should answer to the nation.",
+        "example": "Ideas did not cause the poor harvest, and hunger did not automatically produce a revolution. Together with the monarchy's financial and political crisis, they intensified pressure for change."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Which pressure made everyday life especially difficult?",
+          "Which pressures made the issue of raising taxes harder to resolve?"
+        ],
+        "retry": "The pressures worked together: the crown needed money, hardship raised public anger, and new ideas helped people question who should rule and decide."
+      },
+      {
+        "kind": "explain",
+        "heading": "The mystery solved",
+        "body": "Louis XVI called the Estates-General because the monarchy urgently needed money and could not settle the tax crisis on its own. But the meeting brought representatives into a moment already charged by bread hardship and arguments about rights, representation, and political authority. Debt pushed the crown to call the meeting; food prices and new ideas helped turn that meeting into a much bigger challenge to the old order.",
+        "example": "No single cause explains 1789. The financial crisis opened the door; social hardship and political ideas helped determine what happened next."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "What could push a king to call representatives?",
+        "prompt": "Imagine France in 1788: the crown needs money, many people struggle to afford bread, and reform is contested. Which explanation best accounts for Louis XVI calling the Estates-General?",
+        "reveal": "The meeting was called in response to a financial crisis, but the crisis unfolded alongside food hardship and changing political expectations. Those other pressures made the meeting far more consequential than a discussion about revenue alone.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "The crown needed a way to address its financial crisis, and its efforts to raise revenue faced resistance.",
+            "correct": true,
+            "feedback": "Correct. The crown's need for money and difficulty changing taxes were the immediate reasons for calling the Estates-General."
+          },
+          {
+            "text": "The king wanted to celebrate a successful harvest and share the surplus.",
+            "correct": false,
+            "feedback": "The harvest was poor, helping to raise grain and bread prices."
+          },
+          {
+            "text": "Enlightenment writers had already replaced the monarchy with a republic.",
+            "correct": false,
+            "feedback": "Enlightenment ideas challenged political authority, but they had not already replaced the monarchy."
+          },
+          {
+            "text": "France had held the Estates-General every year and was continuing a routine.",
+            "correct": false,
+            "feedback": "The Estates-General had not met for 175 years; calling it was an unusual response to a crisis."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Build the chain of causes",
+        "prompt": "Tap each node and trace its connections. How do financial strain, hardship, and new political ideas converge on the Estates-General?",
+        "reveal": "The causes connect rather than compete: debt and tax resistance pushed the crown toward a meeting, while food hardship and political ideas raised the stakes for the people represented there.",
+        "type": "diagram",
+        "nodes": [
+          {
+            "label": "Royal debt",
+            "detail": "War and other costs left the monarchy needing more revenue."
+          },
+          {
+            "label": "Tax privileges",
+            "detail": "Exemptions and resistance to reform made it difficult to decide how the financial burden should be shared."
+          },
+          {
+            "label": "Poor harvest, 1788",
+            "detail": "A poor harvest helped raise grain and bread prices, worsening hardship."
+          },
+          {
+            "label": "Enlightenment ideas",
+            "detail": "Ideas about rights and popular sovereignty offered arguments for questioning absolute rule."
+          },
+          {
+            "label": "Estates-General called, 1789",
+            "detail": "The crown called representatives to address its crisis, bringing political disagreements into a national forum."
+          }
+        ],
+        "edges": [
+          {
+            "from": 0,
+            "to": 1,
+            "label": "made tax reform urgent"
+          },
+          {
+            "from": 1,
+            "to": 4,
+            "label": "made agreement on revenue difficult"
+          },
+          {
+            "from": 0,
+            "to": 4,
+            "label": "pushed the crown to seek a solution"
+          },
+          {
+            "from": 2,
+            "to": 4,
+            "label": "raised hardship and public pressure"
+          },
+          {
+            "from": 3,
+            "to": 4,
+            "label": "shaped demands and expectations"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A royal adviser says France can solve its debt simply by asking the privileged estates to pay more tax. Which response best explains why this was politically difficult?",
+        "options": [
+          "The clergy and nobility had important tax exemptions and resisted reforms that challenged their privileges.",
+          "France had no system for collecting any taxes.",
+          "The harvest had been so large that tax revenue was unnecessary.",
+          "Enlightenment thinkers had already abolished all royal authority."
+        ],
+        "correctAnswer": "The clergy and nobility had important tax exemptions and resisted reforms that challenged their privileges.",
+        "explanation": "The crown needed revenue, but changing who paid threatened existing privileges and met resistance. That made the debt crisis a political conflict, not just an accounting problem."
+      },
+      {
+        "question": "You are explaining the Estates-General to a classmate. Which account best connects the pressures behind its calling in 1789?",
+        "options": [
+          "Royal debt and resistance to tax reform pushed the crown to call a meeting; bread hardship and political ideas made the meeting more charged.",
+          "A good harvest created a surplus, so the king called a meeting to distribute it.",
+          "Enlightenment ideas alone forced the king to call the meeting, while debt and food prices played no role.",
+          "The Estates-General was a routine annual meeting unrelated to any crisis."
+        ],
+        "correctAnswer": "Royal debt and resistance to tax reform pushed the crown to call a meeting; bread hardship and political ideas made the meeting more charged.",
+        "explanation": "The crown's financial crisis was the immediate reason to seek a way forward, while food hardship and new political expectations raised the stakes. This combined explanation avoids treating any one factor as the sole cause."
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 35163,
+      "approach": "mystery",
+      "blocks": "explain > activity > explain > check > explain > activity > check > explain",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8,
+      "ms": 2032,
+      "problems": [
+        "The opening says the Estates-General included representatives of the “common people,” which is a simplified description; the Third Estate represented commoners, not all ordinary people directly.",
+        "The lesson links the poor harvest and bread hardship to the meeting’s wider political stakes, but could clarify that these pressures helped intensify the crisis rather than directly causing the Estates-General to be called."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true
+    }
+  ]
+}

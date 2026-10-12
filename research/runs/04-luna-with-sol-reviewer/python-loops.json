@@ -1,0 +1,227 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "For Loops and Accumulators",
+    "objective": "Read, predict, and write a for loop that builds a result by updating an accumulator.",
+    "estimatedMinutes": 7,
+    "approach": "worked_example",
+    "approachReason": "A loop that adds values is easiest to learn by tracing a complete example, then applying the same pattern with less support.",
+    "blocks": [
+      {
+        "kind": "worked",
+        "heading": "Watch a total grow",
+        "problem": "Suppose we want to add every number in `[2, 5, 1]`. We start with `total = 0`, then the loop adds each number to `total` in turn.",
+        "steps": [
+          {
+            "title": "Start",
+            "text": "Set `total` to 0 before the loop begins.",
+            "why": "There is nothing to add yet, so the running total starts at zero."
+          },
+          {
+            "title": "First number",
+            "text": "The loop sets `n` to 2. Update `total` to `0 + 2`, which is 2.",
+            "why": "The loop body runs once for this value."
+          },
+          {
+            "title": "Next numbers",
+            "text": "For 5, `total` becomes 2 + 5 = 7. For 1, it becomes 7 + 1 = 8.",
+            "why": "Each update uses the total saved from the previous iteration."
+          },
+          {
+            "title": "Finish",
+            "text": "After the loop has used every number, `total` is 8.",
+            "why": "The loop stops when there are no more values in the list."
+          }
+        ],
+        "answer": "The final total is 8."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "The line should change `bill` on every pass through the loop.",
+          "Use the current value of `bill` and add the current `price`."
+        ],
+        "retry": "Think of the variable as a saved total: each iteration must add the new price to the value already stored."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "code",
+        "heading": "Predict the final total",
+        "prompt": "Before running this code, predict what it prints. Follow the value of `total` as the loop goes through the list.",
+        "language": "python",
+        "code": "total = 0\nfor n in [3, 1, 4]:\n    total += n\nprint(total)",
+        "explanation": "It prints `8`: the updates are 0 → 3 → 4 → 8.",
+        "hints": [
+          "Track `total` after each number, not just the last number."
+        ],
+        "mode": "predict",
+        "options": [
+          {
+            "text": "8",
+            "correct": true,
+            "feedback": "Correct. Each number is added to the running total."
+          },
+          {
+            "text": "3",
+            "correct": false,
+            "feedback": "That is only the first value; the loop keeps going."
+          },
+          {
+            "text": "4",
+            "correct": false,
+            "feedback": "The last value is 4, but `total` keeps the earlier additions too."
+          },
+          {
+            "text": "9",
+            "correct": false,
+            "feedback": "Check the addition: 3 + 1 + 4 equals 8."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "explain",
+        "heading": "The accumulator pattern",
+        "body": "A variable that stores a result as a loop builds it is called an accumulator. For a sum, initialize it before the loop—usually with `0`—and update it inside the loop with a line like `total += n`.\n\nThe loop variable changes to the next item each iteration; the accumulator keeps the result so far. Put code that uses the completed result, such as `print(total)`, after the loop.",
+        "example": "In Python, `total += n` means the same as `total = total + n`."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Write down the accumulator after each value.",
+          "The final update adds 5 to the total after adding 4 and 2."
+        ],
+        "retry": "Add each value to the saved result: start at 0, then add 4, 2, and 5."
+      },
+      {
+        "kind": "problem",
+        "heading": "Write the loop update",
+        "prompt": "Complete the loop so `total` adds every price. Type the missing loop-body line.\n\n```python\nprices = [4, 7, 2]\ntotal = 0\nfor price in prices:\n    # write the missing line here\n```",
+        "answers": [
+          "total += price",
+          "total = total + price"
+        ],
+        "unit": "",
+        "traps": [
+          {
+            "answer": "total = price",
+            "feedback": "This replaces the saved total each time, so only the last price remains."
+          },
+          {
+            "answer": "total + price",
+            "feedback": "This calculates a sum but does not save the result back into `total`."
+          }
+        ],
+        "hints": [
+          "The update needs to both add the current price and save the new result.",
+          "Use the accumulator variable on both sides of the update."
+        ],
+        "solution": "Use `total += price` to add the current price to the value already stored in `total`."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "What happens during a loop pass?",
+        "prompt": "Put these actions in order for a loop that adds each number to a running total.",
+        "reveal": "For each item, Python assigns the loop variable, runs the loop body, and then moves to the next item. The accumulator carries its updated value into the next pass.",
+        "type": "order",
+        "steps": [
+          "Set `total` to 0 before the loop.",
+          "Take the next number from the list and assign it to `n`.",
+          "Add `n` to the current value of `total`.",
+          "Move to the next number and repeat the loop body.",
+          "After the list is finished, use or print `total`."
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A café program starts `bill = 0` and loops over the prices of items a customer ordered. Which loop-body line adds each current `price` to the running bill?",
+        "options": [
+          "bill += price",
+          "bill = price",
+          "bill + price",
+          "price += bill"
+        ],
+        "correctAnswer": "bill += price",
+        "explanation": "`bill += price` adds the current price to the saved bill and stores the new total. Replacing the bill with `price` would lose the earlier items."
+      },
+      {
+        "question": "A garden app uses this loop to find the total number of seedlings planted each day: `count = 0; for planted in [4, 2, 5]: count += planted`. What value does `count` have after the loop?",
+        "options": [
+          "5",
+          "9",
+          "11",
+          "0"
+        ],
+        "correctAnswer": "11",
+        "explanation": "The accumulator starts at 0 and adds each value: 0 + 4 + 2 + 5 = 11. The final value is the sum of all the days, not just the last one."
+      }
+    ]
+  },
+  "score": 6.8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 29818,
+      "approach": "worked_example",
+      "blocks": "worked > check > activity > code > explain > check > problem",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 6.8,
+      "ms": 11033,
+      "problems": [
+        "Question 1 contains invalid Python: `count = 0; for planted in [4, 2, 5]: count += planted`. A compound `for` statement cannot follow a semicolon this way. The intended total is correctly calculated as 11, but the displayed code will not run.",
+        "The first check asks learners to recognize `bill += price` before either accumulator-update syntax or a complete Python for loop has been shown. The opening worked example explains arithmetic but omits the code learners need to connect that arithmetic to Python.",
+        "The checks do not consistently become harder: the later seedling-total question repeats the earlier final-total prediction at essentially the same difficulty.",
+        "Retry explanations mostly repeat the original running-total explanation rather than offering a genuinely different representation or explanation.",
+        "The writing task requires only an update line. Learners never write a complete loop, choose where initialization belongs, or demonstrate that they can place final-result code outside the loop."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 33497,
+      "approach": "worked_example",
+      "blocks": "worked > explain > check > activity > code > check > explain > check > problem",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 6.5,
+      "ms": 8472,
+      "problems": [
+        "The final writing problem has a truncated, invalid accepted answer: `prices = [4, 7, 2]\\ntotal = 0\\nfor price i`. Although its displayed solution is correct, the answer key could reject correct learner programs or reward an incomplete one.",
+        "The reset-bug exercise and the immediately following check test essentially the same repair with the same numbers. The next check again uses nearly identical code options, so difficulty and reasoning demands barely increase.",
+        "The objective includes predicting loop behavior, but learners are never required to independently predict an output or supply intermediate accumulator values; the initial trace is fully provided.",
+        "Several hints strongly identify the correct option, and most retry explanations repeat the original explanation rather than offering a genuinely different representation."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 6.8,
+      "passed": false
+    }
+  ]
+}

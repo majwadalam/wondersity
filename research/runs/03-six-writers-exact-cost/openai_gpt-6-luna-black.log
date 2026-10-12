@@ -1,0 +1,5 @@
+■ conceptual science: Black holes (61s, score 8, $0.0049, 4 calls, 14636 in / 7924 out tokens)
+  approach: misconception (The lesson opens with the tempting idea that a black hole slows or catches light, then tests that belief and replaces it with a model based on which future paths are possible.)
+  blocks:   explain > activity:predict > explain > check > activity:scenario > explain > check
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=7, lesson.revise, lesson.evaluate=8, lesson.select=8

@@ -1,0 +1,243 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Why 1789?",
+    "objective": "Explain how debt, food prices and new ideas combined to start the revolution.",
+    "estimatedMinutes": 11,
+    "approach": "mystery",
+    "approachReason": "The module is built around one puzzle, why a strong absolute monarchy collapsed in 1789, so each block resolves part of it and the last block gives the answer.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "A monarchy that should have survived",
+        "body": "In 1788 France was the most populous kingdom in Europe, and its king, Louis XVI, ruled by divine right with no elected parliament to check him. Yet within about eighteen months, the king had lost his power, and armed crowds had stormed the Bastille.\n\nSo what changed? The answer is not one event. Three pressures built on each other: a state that could not pay its bills, bread that many people could not afford, and ideas that made the old order look illegitimate.",
+        "example": ""
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Pressure one: a state that could not pay",
+        "body": "France had spent heavily on wars, including support for the American colonists in the 1770s and 1780s, and it financed this mostly by borrowing. By the late 1780s, a very large share of the royal budget went to interest payments on that debt, leaving little for anything else.\n\nThe tax system made the problem worse. Nobles and clergy enjoyed many exemptions, so the burden fell heavily on the Third Estate, the commoners who made up the vast majority of the population. Any reform that reached the privileged met fierce resistance.",
+        "example": "Think of a household that borrows to pay off earlier loans. Each year more of its income goes to interest, and it has less left for food and rent."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Ask who was exempt from the new taxes, and what the state did when its income fell short.",
+          "Focus on what happens to the state's money once interest payments grow."
+        ],
+        "retry": "Privileged groups kept their exemptions, so the state had to borrow to cover shortfalls. The more it borrowed, the larger the interest bill became, which left even less room to act."
+      },
+      {
+        "kind": "explain",
+        "heading": "Pressure two: bread",
+        "body": "Bread was the core of the diet for most French people, and in cities many working families spent most of their income on it. In 1788 a severe hailstorm and poor harvest drove grain prices sharply higher. Bread prices stayed high into 1789, and the rising cost of food hit the poorest hardest.\n\nHunger made people angry and mobile. Rumours, riots and crowds gathered at bakeries and markets, and they expected authorities to keep prices down.",
+        "example": ""
+      },
+      {
+        "kind": "problem",
+        "heading": "How much of the wage went to bread?",
+        "prompt": "A day labourer in a French city earns 25 sous a day. A loaf of bread costs 10 sous, and his family needs 2 loaves a day. What percentage of his daily wage goes on bread? Type the number only.",
+        "answers": [
+          "80",
+          "80%"
+        ],
+        "unit": "%",
+        "traps": [
+          {
+            "answer": "10",
+            "feedback": "You used the price of one loaf, but the family needs two loaves a day."
+          },
+          {
+            "answer": "125",
+            "feedback": "You divided the wage by the bread cost (25 ÷ 20 = 1.25). The share is the bread cost divided by the wage."
+          }
+        ],
+        "hints": [
+          "First work out the total cost of bread per day for the family.",
+          "Divide the bread cost by the wage, then multiply by 100 to get a percentage."
+        ],
+        "solution": "Bread costs 2 × 10 = 20 sous a day. The share is 20 ÷ 25 = 0.8, which is 80%. That leaves only 5 sous for rent, fuel and clothing, so even a small rise in the price of bread could push such a family into a crowd at the bakery."
+      },
+      {
+        "kind": "explain",
+        "heading": "Pressure three: new ideas",
+        "body": "Enlightenment writers such as Voltaire, Rousseau and Montesquieu had questioned privilege, arbitrary power and the church's authority. Their ideas spread through books, cheap pamphlets and cafés. Many educated people came to see the monarchy as something that should be justified by reason and the public good, not by birth alone.\n\nThe ideas mattered most when the crisis made them urgent. In 1789 the Third Estate began calling itself the voice of the nation, and that claim only made sense if the people, not the king and nobles, were sovereign.",
+        "example": "The American Revolution had already shown that colonists could overthrow a distant government and write a constitution. Many French officers and officials had fought in America and brought those ideas home."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Ask what the pamphlets could achieve in a calm market, and what the crowd could achieve without a political argument.",
+          "Consider which factor gave people both urgency and a language for their demands."
+        ],
+        "retry": "Ideas gave people a way to frame their grievances and a claim to power, but the bread shortage gave them a reason to act now. Neither factor produces the moment alone."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "The answer to the mystery",
+        "body": "The revolution began when the state's debt crisis forced the king to summon the Estates-General, the first national assembly since 1614. Once it met, the Third Estate used Enlightenment ideas to claim it spoke for the nation, and it was supported by the Parisian crowds, who were angry about bread prices.\n\nNo single factor explains 1789. Debt made the state unable to govern as before, bread prices turned discontent into desperation, and new ideas gave that anger a political purpose.",
+        "example": ""
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "What would you do with an empty treasury?",
+        "prompt": "In 1788 the royal government is nearly bankrupt and its tax attempts have been blocked by privileged groups. Before reading on, which option do you think the king's ministers chose?",
+        "reveal": "The crown turned to a national assembly to approve new taxes, a step that opened the door to demands for political change.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "Borrow more from Paris bankers at lower interest",
+            "correct": false,
+            "feedback": "Borrowing had already been the main tool, and the interest bill was growing. Borrowing more without fixing the tax system only postponed the crisis."
+          },
+          {
+            "text": "Summon the Estates-General, the first national assembly since 1614, to approve new taxes",
+            "correct": true,
+            "feedback": "Correct. The king had to call the Estates-General because only it could consent to new taxes. Calling it meant inviting the nation to debate its own grievances."
+          },
+          {
+            "text": "Cut the army's pay to balance the budget",
+            "correct": false,
+            "feedback": "Cutting the army would have been risky in a crisis, and it would not have solved the tax exemptions. The government's real problem was the lack of revenue."
+          },
+          {
+            "text": "Abolish the nobility's tax exemptions by royal decree",
+            "correct": false,
+            "feedback": "The crown tried to push reforms through the Assembly of Notables, which refused to accept new taxes. Privileged groups had enough power to block a decree like this."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Eleven months that changed France",
+        "prompt": "Put these events from 1788 and 1789 in the order they happened. Notice how each step depends on the one before.",
+        "reveal": "The debt crisis led to the Estates-General, the Third Estate's claim to speak for the nation turned the Estates into a new assembly, and the crowd's action in Paris made the revolution impossible to reverse.",
+        "type": "timeline",
+        "events": [
+          {
+            "marker": "August 1788",
+            "title": "The king announces the Estates-General",
+            "detail": "Faced with a bankrupt treasury and blocked reforms, the crown agrees to call the Estates-General for May 1789."
+          },
+          {
+            "marker": "Early 1789",
+            "title": "Cahiers de doléances are drafted",
+            "detail": "Across France, assemblies draw up lists of grievances, and many complaints centre on taxes, bread and privilege."
+          },
+          {
+            "marker": "5 May 1789",
+            "title": "The Estates-General opens at Versailles",
+            "detail": "Deputies meet, but they dispute how to vote, with the Third Estate pressing for votes by head rather than by order."
+          },
+          {
+            "marker": "17 June 1789",
+            "title": "The Third Estate declares the National Assembly",
+            "detail": "Claiming to speak for the nation, the Third Estate declares itself the National Assembly, a bold challenge to royal authority."
+          },
+          {
+            "marker": "20 June 1789",
+            "title": "The Tennis Court Oath",
+            "detail": "Deputies barred from their meeting hall swear not to separate until France has a constitution."
+          },
+          {
+            "marker": "14 July 1789",
+            "title": "The storming of the Bastille",
+            "detail": "Parisian crowds, many of them hungry and armed, seize the fortress, which becomes a powerful symbol of the revolution."
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "In 1787 the finance minister proposes a land tax that applies to everyone, including nobles and clergy who have long been exempt. The Assembly of Notables refuses to approve it. Which statement best explains why the king's finances became harder to fix?",
+        "options": [
+          "The king had too little military power to enforce any tax.",
+          "Privileged groups blocked taxes on themselves, so the state kept borrowing and interest swallowed more of its income.",
+          "Bread prices rose so sharply that the government could not collect any revenue.",
+          "The Enlightenment had convinced the nobility to refuse all taxes on principle."
+        ],
+        "correctAnswer": "Privileged groups blocked taxes on themselves, so the state kept borrowing and interest swallowed more of its income.",
+        "explanation": "The debt crisis was driven by the tax exemptions of the privileged, which forced borrowing and raised interest costs. Bread prices and ideas mattered too, but they are not the direct cause of the budget problem."
+      },
+      {
+        "question": "In spring 1789, a Paris bakery is surrounded by hungry crowds, while pamphlets arguing that the nation is sovereign circulate in cafés nearby. A deputy of the Third Estate wants to explain why this moment feels decisive. Which explanation fits best?",
+        "options": [
+          "The pamphlets alone would have overthrown the monarchy, whatever the price of bread.",
+          "The bread shortage gave the sovereignty argument urgency, and the pamphlets gave the crowd and the deputies a language for their demands.",
+          "The bakery crowds were unaffected by ideas, so the pamphlets had no role in what followed.",
+          "The debt crisis had been solved by spring 1789, so only the ideas remained to drive events."
+        ],
+        "correctAnswer": "The bread shortage gave the sovereignty argument urgency, and the pamphlets gave the crowd and the deputies a language for their demands.",
+        "explanation": "The three pressures worked together: the bread shortage supplied urgency, while the ideas gave the anger a political purpose. Treating any one factor as sufficient on its own, or assuming the debt crisis had ended, misses this combination."
+      }
+    ]
+  },
+  "score": 7.5,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 36765,
+      "approach": "mystery",
+      "blocks": "explain > activity > explain > check > explain > problem > explain > check > activity > explain",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 6.5,
+      "ms": 11326,
+      "problems": [
+        "The timeline activity is titled 'Six months that changed France', but its events span August 1788 to July 1789, nearly a year. The title is factually wrong.",
+        "The timeline activity has afterConcept 0, which ties it to the first concept, yet it appears after the Pressure three (ideas) section. The metadata and placement disagree.",
+        "The estimated time of 8 minutes is too short for four explain blocks, a problem, two checks and two activities, including a timeline with six events. A realistic time is closer to 10-12 minutes.",
+        "The two knowledge checks are mostly recall or near-obvious conceptual choices. The second question's correct answer is the most reasonable option by elimination, so it does little to test deeper understanding.",
+        "The bread problem is a single calculation in a block that otherwise asks for interpretation. It works as a quick numeric check but does not connect to the 'mystery' framing."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 128648,
+      "approach": "mystery",
+      "blocks": "explain > activity > explain > check > explain > problem > explain > check > activity > explain",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 7.5,
+      "ms": 10352,
+      "problems": [
+        "The timeline activity is tagged afterConcept 0 (debt), but it is placed after the pressure-three and check blocks, so its tag does not match its position in the lesson.",
+        "The predict activity's wrong-option feedback says the Assembly of Notables refused new taxes, but the question never frames that history, so learners may not connect it to the prediction.",
+        "The closing explanation says the Third Estate was 'supported by the Parisian crowds, who were angry about bread prices' at the Estates-General stage. The crowd's role mostly came later, so this compresses the sequence the timeline shows."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 7.5,
+      "passed": false
+    }
+  ]
+}

@@ -1,0 +1,189 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The Prisoner’s Dilemma: A Better Choice, a Worse Result",
+    "objective": "Use a simple prisoner's dilemma to explain why choices that benefit each individual can leave both people worse off.",
+    "estimatedMinutes": 7,
+    "approach": "scenario",
+    "approachReason": "One fictional interrogation lets the learner make an individual decision, anticipate the other person's decision, and confront the worse result those choices produce together.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "Two rooms, one decision each",
+        "body": "You are Lea, one of two suspects in a fictional case; the other suspect, Noor, is being questioned in a separate room. Each of you must choose either to stay silent or to confess, without seeing the other's choice.\n\nIf both stay silent, each serves 1 year in prison. If you confess while Noor stays silent, you serve 0 years and Noor serves 3; if Noor confesses while you stay silent, those sentences reverse. If both confess, each serves 2 years. For this exercise, each person cares only about minimizing their own prison sentence.",
+        "example": "These are the fixed rules of our fictional game, not a description of how real legal systems work."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "compare",
+        "heading": "Now remove the guesswork",
+        "intro": "Compare your sentence under each possible choice Noor could make.",
+        "columns": [
+          "Noor stays silent",
+          "Noor confesses"
+        ],
+        "rows": [
+          {
+            "label": "You stay silent",
+            "a": "You serve 1 year.",
+            "b": "You serve 3 years."
+          },
+          {
+            "label": "You confess",
+            "a": "You serve 0 years.",
+            "b": "You serve 2 years."
+          },
+          {
+            "label": "Your shorter sentence",
+            "a": "Confess: 0 rather than 1.",
+            "b": "Confess: 2 rather than 3."
+          }
+        ]
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Look only at the column where Noor confesses.",
+          "Which of your two choices gives you the shorter sentence in that column?"
+        ],
+        "retry": "Hold Noor's choice fixed. You are comparing your 3-year sentence for silence with your 2-year sentence for confession—not with the 1-year sentence that requires both people to stay silent."
+      },
+      {
+        "kind": "problem",
+        "heading": "There is someone reasoning in the other room",
+        "prompt": "Noor faces exactly the same incentives as you. Both of you independently choose the option that gives you a shorter sentence whichever choice the other person makes.\n\nWhen those choices are revealed, how many years does EACH of you serve?",
+        "answers": [
+          "2",
+          "two"
+        ],
+        "unit": "years",
+        "traps": [
+          {
+            "answer": "1",
+            "feedback": "One year each requires both people to stay silent. But each can reduce their own sentence by choosing confession instead."
+          },
+          {
+            "answer": "0",
+            "feedback": "A zero-year sentence requires confessing while the other person stays silent. Both people cannot get that outcome together."
+          },
+          {
+            "answer": "4",
+            "feedback": "Four years is the combined sentence. The question asks for each person's sentence."
+          }
+        ],
+        "hints": [
+          "Apply the same comparison to Noor that you applied to yourself.",
+          "Find the outcome when both choose confession."
+        ],
+        "solution": "Each person chooses to confess because it gives them a shorter sentence for either choice by the other person. Both therefore confess, so each serves 2 years."
+      },
+      {
+        "kind": "explain",
+        "heading": "The dilemma is not a mistake in arithmetic",
+        "body": "Both of you serve 2 years, even though both staying silent would have meant just 1 year each. Neither person made a mistake when comparing their own options: confessing gives each a shorter sentence, holding the other person's choice fixed.\n\nThis is the prisoner's dilemma: individually rational choices lead to an outcome that is worse for both people than mutual cooperation. Here, staying silent is the cooperative choice, while confessing is the self-serving choice. The key is that your choice affects Noor's sentence as well as your own.",
+        "example": "“Rational” here means pursuing the stated goal of a shorter personal sentence. It does not mean morally right or best for the pair."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Keep Noor's choice at silence and change only your choice.",
+          "Compare the effect on your sentence with the effect on Noor's."
+        ],
+        "retry": "A better shared outcome is not necessarily an individually attractive choice. With Noor staying silent, switching to confession lowers your sentence from 1 year to 0, while raising Noor's from 1 to 3."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Explain the result to Noor",
+        "prompt": "The decisions are revealed: both of you confessed. Noor says, “If we both wanted shorter sentences, how did we end up with longer ones?”\n\nAnswer in two or three sentences. Explain why confession made sense for each person separately, and identify the outcome that would have been better for both.",
+        "model": "Confessing cut my sentence by 1 year whichever choice you made, and the same was true for you. But when we both followed that incentive, we each got 2 years instead of the 1 year we could each have received by both staying silent. What was better for each of us as an individual decision produced a worse result for us together."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Suppose Noor stays silent",
+        "prompt": "You are choosing your response in the interrogation room. For this first comparison, suppose Noor stays silent: your silence means 1 year for you, while your confession means 0 years for you and 3 for Noor. Which choice best serves your stated goal of minimizing your own sentence?",
+        "reveal": "If Noor stays silent, confessing is better for you personally: it reduces your sentence from 1 year to 0. That personal improvement makes Noor's outcome worse.",
+        "type": "scenario",
+        "options": [
+          {
+            "text": "Confess to receive 0 years.",
+            "correct": true,
+            "feedback": "You receive the shortest personal sentence, while Noor receives 3 years."
+          },
+          {
+            "text": "Stay silent so each of you receives 1 year.",
+            "correct": false,
+            "feedback": "This is better for Noor and gives a smaller combined sentence, but it is not your shortest personal sentence."
+          },
+          {
+            "text": "Either choice gives you the same sentence.",
+            "correct": false,
+            "feedback": "With Noor silent, your choice changes your sentence: silence gives you 1 year; confession gives you 0."
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "You now consider the possibility that Noor confesses. If your only goal is to minimize your own sentence, what should you choose?",
+        "options": [
+          "Confess: you serve 2 years rather than 3.",
+          "Stay silent: you serve 1 year rather than 2.",
+          "Stay silent: you serve 0 years rather than 2.",
+          "Either choice: you serve 2 years regardless."
+        ],
+        "correctAnswer": "Confess: you serve 2 years rather than 3.",
+        "explanation": "When Noor confesses, your silence gives you 3 years and your confession gives you 2. Confession is better for you in this case too."
+      },
+      {
+        "question": "Imagine you and Noor had agreed to stay silent, but nothing enforces that agreement and the sentences remain unchanged. If you expect Noor to keep the agreement, why is there still a temptation for you to confess?",
+        "options": [
+          "You could reduce your sentence from 1 year to 0, while Noor's rises from 1 to 3.",
+          "You could reduce both sentences from 1 year to 0.",
+          "You could keep your sentence at 1 year while reducing Noor's to 0.",
+          "You could reduce your sentence from 2 years to 1, while Noor's stays at 2."
+        ],
+        "correctAnswer": "You could reduce your sentence from 1 year to 0, while Noor's rises from 1 to 3.",
+        "explanation": "Even at the outcome that is better for both, each person has a personal incentive to switch to confession. Merely recognizing the better shared outcome does not remove that incentive."
+      }
+    ]
+  },
+  "score": 8.5,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 56237,
+      "approach": "scenario",
+      "blocks": "explain > activity > compare > check > problem > explain > check > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8.5,
+      "ms": 6736,
+      "problems": [
+        "The second hint for the numerical problem directly supplies the key inference—both choose confession—rather than helping the learner derive it.",
+        "Retry explanations largely repeat the original sentence comparisons rather than offering genuinely different explanatory models.",
+        "All practice stays within the same interrogation scenario. The final reflection checks explanation well, but does not establish whether learners can recognize the dilemma in a new setting."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8.5,
+      "passed": true
+    }
+  ]
+}

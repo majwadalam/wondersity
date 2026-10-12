@@ -1,0 +1,301 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Why 1789?",
+    "objective": "Explain how royal debt, rising bread prices, and new political ideas converged to start the French Revolution.",
+    "estimatedMinutes": 8,
+    "approach": "mystery",
+    "approachReason": "The puzzle of why longstanding grievances became a revolution in 1789 lets learners uncover how three pressures came together at one moment.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "Why then?",
+        "body": "Many French people had lived with unfair taxes and unequal privileges for years. Yet the revolution began in 1789, not a decade earlier. What changed? Follow the clues, then decide why this particular year became a turning point.",
+        "example": ""
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Clue 1: The king needed money",
+        "body": "France had borrowed heavily to pay for wars, including its support for the American colonists. By the late 1780s, the crown struggled to pay its debts. Attempts to raise more revenue ran into resistance from privileged groups.\n\nTo get agreement on taxes, Louis XVI called the Estates-General, a gathering of representatives that had not met since 1614. A financial emergency had opened a political meeting.",
+        "example": ""
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Focus on what the king needed other people to approve.",
+          "Which choice creates a place for representatives to make demands?"
+        ],
+        "retry": "Debt did not automatically cause a revolution. It pushed the king to seek help with taxes, giving representatives a rare chance to challenge how decisions were made."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "Hardship gained urgency",
+        "body": "A poor grain harvest in 1788 helped drive bread prices higher. Because bread was a staple food, a price rise took a larger share of many families’ money. This did not create the crown’s debt; it made daily life more difficult just as the king was asking the country to confront his financial crisis.",
+        "example": ""
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Separate the king’s shortage of funds from families’ difficulty buying food.",
+          "How might daily hardship affect the mood when representatives meet?"
+        ],
+        "retry": "The treasury’s problem and a household’s problem were different. Their timing mattered: political debate opened while many people were under immediate strain."
+      },
+      {
+        "kind": "activity",
+        "ref": 2
+      },
+      {
+        "kind": "explain",
+        "heading": "Ideas gave grievances a direction",
+        "body": "Writers and pamphlets argued about rights, representation, and whether the king alone should hold political authority. These ideas did not cause the poor harvest or pay the crown’s debts. They gave people ways to argue that, if representatives were being asked to solve the crisis, they should also have a stronger voice in government.",
+        "example": ""
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Look for an answer that gives debt, bread prices, and ideas different roles.",
+          "A cause of the meeting is not necessarily a cause of the harvest."
+        ],
+        "retry": "Ask three separate questions: What forced a political meeting? What made the moment painful for households? What helped people argue for political change?"
+      },
+      {
+        "kind": "explain",
+        "heading": "The answer: a crisis became an opening",
+        "body": "The grievances were older than 1789, but three developments converged: debt pushed the king to summon representatives, expensive bread sharpened public anger, and new ideas helped people demand a political voice. The Estates-General gave those demands a place to be heard. That combination helps explain why a financial crisis became the start of a revolution.",
+        "example": ""
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Four clues to 1789",
+        "prompt": "Put these events in order. As you reveal them, look for the event that brought representatives together.",
+        "reveal": "War debts and resistance to tax changes led toward a political meeting. The poor harvest added pressure before that meeting began.",
+        "type": "timeline",
+        "events": [
+          {
+            "marker": "1778–1783",
+            "title": "France supports the American colonists",
+            "detail": "France borrows heavily to help fund its part in the war."
+          },
+          {
+            "marker": "1787–1788",
+            "title": "Tax changes meet resistance",
+            "detail": "The crown struggles to win support for plans to raise more revenue."
+          },
+          {
+            "marker": "1788",
+            "title": "A poor grain harvest",
+            "detail": "The harvest contributes to higher bread prices."
+          },
+          {
+            "marker": "May 1789",
+            "title": "The Estates-General meets",
+            "detail": "The king brings representatives together amid the financial crisis."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "What does dearer bread change?",
+        "prompt": "It is early 1789. You hear that bread costs more after a poor harvest, while the king is calling representatives to discuss the country’s finances. What effect is the bread price most likely to have?",
+        "reveal": "High bread prices made the crisis urgent for ordinary households. They increased discontent at the same time a political meeting offered a way to voice it.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "It makes everyday hardship more severe, increasing anger as representatives gather.",
+            "correct": true,
+            "feedback": "Yes. Families struggling to afford a staple food have an immediate reason to press for change."
+          },
+          {
+            "text": "It pays off the crown’s war debts.",
+            "correct": false,
+            "feedback": "A higher price paid for bread does not settle the government’s debts."
+          },
+          {
+            "text": "It removes the need for a meeting about taxes.",
+            "correct": false,
+            "feedback": "The crown still needs a solution to its financial problems."
+          },
+          {
+            "text": "It proves that new political ideas caused the poor harvest.",
+            "correct": false,
+            "feedback": "Ideas could shape people’s demands, but they did not cause the harvest to fail."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "How do the clues meet?",
+        "prompt": "Tap each clue, then trace its links toward demands for a political voice. Do all three pressures work in the same way?",
+        "reveal": "No single clue explains the turning point. Debt opened a meeting, dear bread intensified hardship, and ideas supplied arguments for changing who had a say.",
+        "type": "diagram",
+        "nodes": [
+          {
+            "label": "Royal debt",
+            "detail": "The crown needs more revenue but faces resistance to tax changes."
+          },
+          {
+            "label": "Estates-General",
+            "detail": "Representatives meet in May 1789 to address the crisis."
+          },
+          {
+            "label": "Poor harvest",
+            "detail": "The 1788 grain harvest is poor."
+          },
+          {
+            "label": "Higher bread prices",
+            "detail": "A staple food takes more of many families’ money."
+          },
+          {
+            "label": "Political ideas",
+            "detail": "Arguments about rights and representation offer ways to challenge existing authority."
+          },
+          {
+            "label": "Public anger",
+            "detail": "Immediate hardship makes grievances feel more urgent."
+          },
+          {
+            "label": "Demands for a voice",
+            "detail": "People press for a greater say in decisions affecting the country."
+          }
+        ],
+        "edges": [
+          {
+            "from": 0,
+            "to": 1,
+            "label": "pushes the king to convene"
+          },
+          {
+            "from": 2,
+            "to": 3,
+            "label": "helps drive up"
+          },
+          {
+            "from": 3,
+            "to": 5,
+            "label": "intensifies"
+          },
+          {
+            "from": 4,
+            "to": 6,
+            "label": "provides arguments for"
+          },
+          {
+            "from": 1,
+            "to": 6,
+            "label": "offers an opening for"
+          },
+          {
+            "from": 5,
+            "to": 6,
+            "label": "adds urgency to"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "In the late 1780s, Louis XVI’s treasury is short of money, and influential groups resist his tax plans. Which next step is most likely to turn this financial problem into a political confrontation?",
+        "options": [
+          "He calls representatives together to seek support for dealing with the crisis.",
+          "He announces that the poor harvest has ended.",
+          "He stops needing tax revenue because bread costs more.",
+          "He gives up all authority without calling a meeting."
+        ],
+        "correctAnswer": "He calls representatives together to seek support for dealing with the crisis.",
+        "explanation": "Calling the Estates-General brought representatives into the financial dispute. The meeting gave them an opportunity to make political demands."
+      },
+      {
+        "question": "A family in 1789 is spending more of its money on bread just as representatives gather to discuss the crown’s finances. Why might the timing increase tension?",
+        "options": [
+          "Higher bread prices automatically erase the crown’s debts.",
+          "The family’s immediate hardship makes grievances more urgent while a political forum is opening.",
+          "The meeting guarantees that the next harvest will be good.",
+          "The family’s food costs prove that representatives caused the war debts."
+        ],
+        "correctAnswer": "The family’s immediate hardship makes grievances more urgent while a political forum is opening.",
+        "explanation": "Dearer bread strained households, while the Estates-General created a moment for grievances to be raised. These pressures coincided, even though they had different causes."
+      },
+      {
+        "question": "In May 1789, a pamphlet argues for greater representation. At the same time, bread is expensive and the king has summoned representatives because of a financial crisis. Which account best explains why this moment could become revolutionary?",
+        "options": [
+          "Political ideas caused the harvest to fail, which made the king borrow money.",
+          "The harvest alone forced the king to grant everyone a vote.",
+          "Debt opened a political meeting, costly bread heightened anger, and ideas helped people argue for a greater voice.",
+          "War debts and food prices mattered only after the revolution had begun."
+        ],
+        "correctAnswer": "Debt opened a political meeting, costly bread heightened anger, and ideas helped people argue for a greater voice.",
+        "explanation": "Each pressure played a different part: debt created the opening, food prices added urgency, and political ideas shaped demands for change."
+      }
+    ]
+  },
+  "score": 7.5,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 48723,
+      "approach": "mystery",
+      "blocks": "explain > activity > explain > check > activity > explain > check > activity > explain > check > explain",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 7.5,
+      "ms": 5474,
+      "problems": [
+        "The timeline asks learners to put events in order, but the events are already presented chronologically.",
+        "The bread-price prediction activity and the following check test nearly the same inference.",
+        "The lesson explains why representatives met but stops short of showing how their demands turned that meeting into a revolutionary confrontation.",
+        "The retry explanations restate the original causal account rather than offering a genuinely different way to understand it."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 35895,
+      "approach": "mystery",
+      "blocks": "explain > activity > explain > check > explain > check > explain > activity > explain > check > explain",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 7,
+      "ms": 5347,
+      "problems": [
+        "The ordering activity says the clues are shuffled, but they are already in chronological order, so it requires little reasoning.",
+        "The checks use several implausible distractors, making them easier than their scenarios suggest.",
+        "The diagram asks learners to test paths, but its node details offer limited feedback on whether a predicted connection is sound.",
+        "The lesson mentions new political ideas without giving a concrete example of an argument about representation."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 7.5,
+      "passed": false
+    }
+  ]
+}

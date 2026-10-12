@@ -1,0 +1,260 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The Prisoner's Dilemma: When Smart Choices Backfire",
+    "objective": "Explain why two players who each choose their best option can both end up worse off, and spot a dominant strategy in a payoff table.",
+    "estimatedMinutes": 8,
+    "approach": "scenario",
+    "approachReason": "The dilemma is a tension between incentives and outcomes, and that tension is easiest to feel when you are one of two rivals making real pricing decisions week after week.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "Your café, his café, one street",
+        "body": "You own a café on Elm Street. Directly across the road, Leo owns the only other café. Every Monday, each of you posts your coffee price for the week without knowing what the other will post.\n\nYou each have two choices: keep the normal price, or cut it to steal customers. The table in the aside shows each café's weekly profit for every combination. Study it for a moment. Everything in this lesson comes back to these four boxes.",
+        "example": "Weekly profit (You, Leo):\n• You keep, Leo keeps → You $500, Leo $500\n• You keep, Leo cuts → You $200, Leo $700\n• You cut, Leo keeps → You $700, Leo $200\n• You cut, Leo cuts → You $300, Leo $300"
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "problem",
+        "heading": "Monday morning: Leo has cut",
+        "prompt": "You hear a rumor that Leo has already printed a sign with a cut price. Use the table. If Leo cuts, keeping your price earns you $200, and cutting earns you $300. How many dollars more per week do you earn by cutting too instead of keeping?",
+        "answers": [
+          "100",
+          "$100"
+        ],
+        "unit": "dollars",
+        "traps": [
+          {
+            "answer": "200",
+            "feedback": "$200 is what you earn if you keep your price. The question asks for the difference between cutting and keeping."
+          },
+          {
+            "answer": "-100",
+            "feedback": "You subtracted the wrong way round. Cutting ($300) earns more than keeping ($200), so the difference is positive."
+          },
+          {
+            "answer": "400",
+            "feedback": "You may have used the 'Leo keeps' column. Stay in the column where Leo cuts: $200 vs $300."
+          }
+        ],
+        "hints": [
+          "Only look at the outcomes where Leo cuts.",
+          "Subtract your 'keep' profit from your 'cut' profit."
+        ],
+        "solution": "If Leo cuts: keep → $200, cut → $300. Cutting earns you $300 − $200 = $100 more. Matching his cut is the less painful response."
+      },
+      {
+        "kind": "explain",
+        "heading": "Cutting wins either way",
+        "body": "Now check the other case. If Leo keeps his price, keeping earns you $500, but cutting earns you $700. So cutting is better by $200 when he keeps, and better by $100 when he cuts. You don't need to guess what Leo will do, because cutting pays more no matter what.\n\nA choice that is better for you whatever the other player does is called a dominant strategy. Here's the catch: Leo's numbers are a mirror image of yours, so cutting is his dominant strategy too.",
+        "example": "Quick test for a dominant strategy: cover one of the rival's columns, pick your best row, then do the same for the other column. If you pick the same row both times, that row is dominant."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Compare your two choices when Leo keeps, then again when Leo cuts.",
+          "Does the same choice come out on top both times?"
+        ],
+        "retry": "A strategy is only dominant if it wins in EVERY column. If keeping wins in one column and cutting wins in the other, your best move depends on your rival, so neither choice is dominant."
+      },
+      {
+        "kind": "compare",
+        "heading": "Two ways to read the same table",
+        "intro": "Back to the original numbers. Watch what happens when you look at the outcome from one café versus from the whole street.",
+        "columns": [
+          "Each owner, thinking alone",
+          "Both owners together"
+        ],
+        "rows": [
+          {
+            "label": "Question asked",
+            "a": "What's best for me, given what he might do?",
+            "b": "Which outcome gives us the most in total?"
+          },
+          {
+            "label": "Best choice",
+            "a": "Cut, because it wins in both columns",
+            "b": "Both keep, worth $500 + $500 = $1,000"
+          },
+          {
+            "label": "Where it leads",
+            "a": "Both cut: $300 each, $600 in total",
+            "b": "Both keep: $500 each, $1,000 in total"
+          },
+          {
+            "label": "Is it stable?",
+            "a": "Yes. Neither owner gains by switching alone",
+            "b": "No. Each owner is tempted to cut and grab $700"
+          }
+        ]
+      },
+      {
+        "kind": "explain",
+        "heading": "This trap has a name",
+        "body": "You and Leo are stuck in a prisoner's dilemma. It's named after a story about two suspects held in separate rooms. Each is offered a lighter sentence for betraying the other. Betraying is each suspect's dominant strategy, so both betray and both get long sentences. If both had stayed silent, both would have walked away with short ones.\n\nThe pattern is always the same. Each player has a dominant strategy (here, cutting). When everyone plays it, everyone ends up worse off than if they had all held back. Nobody made a mistake. Each person's rational choice produces a bad result for the group.",
+        "example": "Your café: 'cut' = betray, 'keep' = stay silent. Both cut → $300 each instead of $500 each."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Which choice is better for each country no matter what the other does?",
+          "Now ask whether that outcome is the best one for both."
+        ],
+        "retry": "Swap the cafés for countries. Arming plays the role of cutting prices. It is each side's best move whatever the other does, so both arm. Yet both would prefer the outcome where neither does."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "reflect",
+        "heading": "Your own Elm Street",
+        "prompt": "Think of a situation from your life, work, or the news where each person doing what's best for themselves leaves everyone worse off. Who are the players? What is the 'cut price' move, and what is the 'keep price' move?",
+        "model": "Example: group projects. Each member is tempted to coast (the 'cut' move) because they still share the grade, and coasting saves them effort whatever the others do. If everyone coasts, the project is poor and everyone's grade suffers. If everyone works (the 'keep' move), all get a good grade. Other examples: overfishing a shared lake, everyone standing up at a concert to see better, or companies outspending each other on ads that cancel out."
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Subtract $300 from every 'cut' payoff, for you and for Leo.",
+          "Now check each of Leo's columns: which of your choices wins?"
+        ],
+        "retry": "Redo the table with the fine. If Leo keeps: keep $500 vs cut $700 − $300 = $400, so keep wins. If Leo cuts: keep $200 vs cut $300 − $300 = $0, so keep wins. Keeping is now dominant for both owners, and the dilemma disappears."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "What will two smart owners do?",
+        "prompt": "You and Leo are both clever and both want to earn as much as possible. Week after week, which outcome do you expect Elm Street to settle into?",
+        "reveal": "Two rational owners settle on both cutting, at $300 each. That's worse for both of them than both keeping at $500 each. Let's find out why.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "Both keep prices at $500 each, since that's obviously better for both",
+            "correct": false,
+            "feedback": "It is better for both, but is it stable? Each owner can earn $700 by cutting while the other keeps."
+          },
+          {
+            "text": "Both cut prices and earn $300 each",
+            "correct": true,
+            "feedback": "Right, and it's surprising. Both owners end up worse off than if they had both kept prices. The next steps show why each one cuts."
+          },
+          {
+            "text": "One cuts and one keeps, taking turns",
+            "correct": false,
+            "feedback": "Whoever keeps gets just $200. Neither owner wants to be that person, so this doesn't last."
+          },
+          {
+            "text": "It's impossible to predict at all",
+            "correct": false,
+            "feedback": "The table makes a surprisingly firm prediction once you check each owner's best move."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "The handshake deal",
+        "prompt": "Tired of $300 weeks, Leo crosses the street and offers a handshake: 'Let's both keep our normal price from now on.' You shake on it. It's Monday, and you must post your price before you see his. Judging purely by the profit table, which choice is the safest bet for your own profit?",
+        "reveal": "A promise changes nothing in the table. Cutting still pays more whatever Leo does, so the handshake deal tends to fall apart. Escaping a prisoner's dilemma takes something that changes the payoffs, not just words.",
+        "type": "scenario",
+        "options": [
+          {
+            "text": "Keep your price, as promised",
+            "correct": false,
+            "feedback": "If Leo also keeps, you earn $500. But if he breaks his word, you earn only $200. You're exposed to the worst box in the table."
+          },
+          {
+            "text": "Cut your price anyway",
+            "correct": true,
+            "feedback": "You earn $700 if Leo keeps his word, or $300 if he cuts. Either way you beat keeping. But Leo is reading the same table, so he likely cuts too, and you're both back at $300."
+          },
+          {
+            "text": "Raise your price above normal",
+            "correct": false,
+            "feedback": "That isn't one of the moves in this game, and it would push even more customers across the street to Leo."
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A new rental rule on Elm Street changes your profits. If Leo keeps his price, keeping earns you $500 and cutting earns you $450. If Leo cuts, keeping earns you $200 and cutting earns you $300. Is cutting still your dominant strategy?",
+        "options": [
+          "Yes, cutting always pays more",
+          "No, your best choice now depends on what Leo does",
+          "Yes, because $300 is more than $200",
+          "No, keeping is now your dominant strategy"
+        ],
+        "correctAnswer": "No, your best choice now depends on what Leo does",
+        "explanation": "Keeping wins when Leo keeps ($500 vs $450), but cutting wins when Leo cuts ($300 vs $200). No single choice wins in both columns, so neither is dominant."
+      },
+      {
+        "question": "Two neighboring countries each decide whether to build up weapons or not. Whatever the other does, each country is safer arming than staying unarmed. But both arming is expensive and tense, and both would prefer that neither arms. What outcome does the prisoner's dilemma predict?",
+        "options": [
+          "Both stay unarmed, since that's what both prefer",
+          "Both arm, even though both would prefer that neither does",
+          "One arms and the other stays unarmed",
+          "They alternate, arming in different years"
+        ],
+        "correctAnswer": "Both arm, even though both would prefer that neither does",
+        "explanation": "Arming is each country's dominant strategy, so both arm. They land in an outcome that is worse for both than mutual restraint, which is the signature of a prisoner's dilemma."
+      },
+      {
+        "question": "The town council introduces a $300 weekly fine for any café that cuts its price below normal. All other numbers in the original table stay the same. What do you now expect you and Leo to do?",
+        "options": [
+          "Both cut, because cutting is still dominant",
+          "Both keep, because keeping now pays more no matter what the rival does",
+          "One cuts and one keeps",
+          "It depends entirely on whether you trust Leo"
+        ],
+        "correctAnswer": "Both keep, because keeping now pays more no matter what the rival does",
+        "explanation": "With the fine, cutting earns $400 if your rival keeps (versus $500 for keeping) and $0 if your rival cuts (versus $200 for keeping). Keeping becomes dominant for both owners, so the dilemma disappears and both earn $500."
+      }
+    ]
+  },
+  "score": 7,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 72177,
+      "approach": "scenario",
+      "blocks": "explain > activity > problem > explain > check > compare > explain > check > activity > reflect > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 7,
+      "ms": 10943,
+      "problems": [
+        "The repeated, week-after-week framing conflicts with the unconditional prediction that rational owners must settle on both cutting. In a repeated prisoner's dilemma, future consequences and conditional strategies can sustain cooperation. The table establishes dominance for a single week's payoff, not for an entire repeated relationship.",
+        "The handshake reveal overclaims that escaping the dilemma requires changing payoffs. Repeated interaction and credible conditional responses can support cooperation without changing the stage-game payoff table.",
+        "The group-project reflection assumes coasting saves effort and is preferable whatever others do. That is not generally true: one person's contribution can substantially improve the grade, so this example needs explicit assumptions to establish dominance.",
+        "The feedback on raising prices asserts that it would send more customers to Leo, although the supplied model provides no outcomes for that action.",
+        "Hints frequently nearly disclose the answer, and retry explanations mostly repeat the same payoff comparison rather than offering genuinely different conceptual explanations."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise_failed",
+      "iteration": 1,
+      "error": "OpenRouter 402: {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhausted\",\"limit_source\":\"openrouter_in_flight_budget\",\"remedy_hint\":\"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.\",\"headers\":{\"Retry-After\":\"120\"},\"provider_name\":null}},\"user_id\":\"user_[redacted]\"}"
+    },
+    {
+      "step": "lesson.select",
+      "score": 7,
+      "passed": false
+    }
+  ]
+}

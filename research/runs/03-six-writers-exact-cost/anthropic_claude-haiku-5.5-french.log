@@ -1,0 +1,5 @@
+■ history: The French Revolution (87s, score 7.5, below bar, $0.0123, 4 calls, 27002 in / 19167 out tokens)
+  approach: mystery (The puzzle of how an absolute monarchy that looked strong collapsed so fast in 1789 is a natural hook, and each clue resolves part of it until the chain of causes answers the question.)
+  blocks:   explain > explain > check > activity:predict > explain > activity:sort > explain > check > reflect > check
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=7.5, lesson.revise, lesson.evaluate=6, lesson.select=7.5

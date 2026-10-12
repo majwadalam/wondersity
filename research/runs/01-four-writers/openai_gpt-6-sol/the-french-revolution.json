@@ -1,0 +1,224 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Why 1789?",
+    "objective": "Explain how royal debt, rising bread prices, and political ideas combined to bring France to a crisis in 1789.",
+    "estimatedMinutes": 7,
+    "approach": "mystery",
+    "approachReason": "The lesson begins with three contrasting clues, then tests what each explains before bringing them together to answer why the crisis erupted in 1789.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Clue 1: A problem the king could not settle alone",
+        "body": "France's government had borrowed heavily to pay for wars, including its support for the American Revolution. By the late 1780s, debt payments strained royal finances. Raising more money through taxes was difficult because powerful groups defended their tax privileges. In 1788, the king agreed to summon the Estates-General—a meeting of representatives—for 1789.",
+        "example": ""
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Which problem could the king not solve simply by ordering people to pay?",
+          "Look for a purpose for the meeting, not a result the meeting had already achieved."
+        ],
+        "retry": "Imagine owing money but needing agreement from others before changing who contributes. Calling a meeting addresses that obstacle; it does not make the debt disappear."
+      },
+      {
+        "kind": "explain",
+        "heading": "Clue 2: A crisis at the bread shop",
+        "body": "A poor harvest in 1788 helped push up bread prices. Bread was a basic food that took a large share of many households' income, so higher prices made daily life harder. The king's debt helps explain why representatives were called; the price of bread helps explain why the moment felt urgent to people outside the court.",
+        "example": ""
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Whose finances are strained in each part of the situation?",
+          "Ask which pressure explains the meeting and which explains everyday hardship."
+        ],
+        "retry": "Picture two strained budgets at once: the royal treasury struggles to pay its debts, while a household struggles to buy dinner. They are different problems, but both add pressure to the same moment."
+      },
+      {
+        "kind": "explain",
+        "heading": "Clue 3: What should change?",
+        "body": "Political arguments about rights and representation gave people ways to question inherited privileges. As representatives prepared to meet, people sent written grievances—complaints and hopes for reform. These ideas did not create the debt or the poor harvest, but they helped people turn hardship into demands about how France should be governed.",
+        "example": "A grievance might object that some groups kept tax privileges while others paid more."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Test each explanation against all three clues. Does it leave one out?",
+          "An idea can shape a demand without causing a harvest failure or a debt."
+        ],
+        "retry": "Think of the meeting as an open door, hardship as a reason people urgently walked through it, and political ideas as a guide to what they asked for inside."
+      },
+      {
+        "kind": "explain",
+        "heading": "The answer: Why 1789?",
+        "body": "Royal debt and resistance to tax changes pushed the king to call representatives together in 1789. Expensive bread made hardship more urgent, while ideas about rights and representation shaped what people demanded at this opening. No single clue explains the revolution's start: together, these pressures turned a dispute over royal finances into a wider challenge to the way France was governed.",
+        "example": ""
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Three clues from 1788",
+        "prompt": "Imagine three reports reaching a royal adviser: the treasury struggles to repay loans and proposals to change taxes meet resistance; a bread seller reports rising prices; a pamphlet argues that more people deserve a political voice. The king plans to call representatives together in 1789. Which clue most directly explains why he needs that meeting?",
+        "reveal": "The treasury's difficulty points to why the king sought a meeting. The other reports may help explain why that meeting became more than a discussion of government finances.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "The treasury needs revenue, but changing taxes faces resistance.",
+            "correct": true,
+            "feedback": "Yes. The government needed money and could not easily resolve the dispute over taxes."
+          },
+          {
+            "text": "The king needs representatives to run every bread shop.",
+            "correct": false,
+            "feedback": "Rising bread prices mattered greatly to households, but running bread shops was not why the king called representatives."
+          },
+          {
+            "text": "The pamphlet proves that the king has already granted everyone a vote.",
+            "correct": false,
+            "feedback": "The pamphlet expresses a demand for political change, not a reform the king had already made."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Build the explanation",
+        "prompt": "Sort each clue by its main role in the 1789 crisis. Before revealing the groups, explain one link to yourself: how might a pressure in one group make another group's pressure matter more?",
+        "reveal": "Debt and resistance to tax changes pushed the king toward a meeting. Food hardship made the moment urgent for households, while political ideas helped turn complaints into demands for a different kind of government.",
+        "type": "sort",
+        "buckets": [
+          "Pushes king to call a meeting",
+          "Makes daily life harder",
+          "Shapes demands for change"
+        ],
+        "items": [
+          {
+            "text": "Debt payments strain the royal treasury",
+            "bucket": "Pushes king to call a meeting"
+          },
+          {
+            "text": "Powerful groups resist changes to taxes",
+            "bucket": "Pushes king to call a meeting"
+          },
+          {
+            "text": "The 1788 harvest is poor",
+            "bucket": "Makes daily life harder"
+          },
+          {
+            "text": "Bread takes a larger share of a worker's wages",
+            "bucket": "Makes daily life harder"
+          },
+          {
+            "text": "A pamphlet argues that people deserve a political voice",
+            "bucket": "Shapes demands for change"
+          },
+          {
+            "text": "A grievance challenges inherited tax privileges",
+            "bucket": "Shapes demands for change"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "In 1788, an adviser tells the king that debt payments strain the treasury and powerful groups oppose changes to taxes. Why might the king summon representatives?",
+        "options": [
+          "To seek agreement on a way to raise revenue",
+          "To announce that debt payments have ended",
+          "To put representatives in charge of every bakery",
+          "To avoid discussing taxes altogether"
+        ],
+        "correctAnswer": "To seek agreement on a way to raise revenue",
+        "explanation": "The crown needed money, but resistance made tax changes difficult. Summoning representatives offered a way to address that dispute."
+      },
+      {
+        "question": "A worker in 1789 finds bread taking more of her wages, while the king prepares to meet representatives. Which statement best explains these two pressures?",
+        "options": [
+          "Dearer bread caused the crown's war debts.",
+          "The king called the meeting to set every bakery's prices.",
+          "Debt pushed the king toward a meeting, while dearer bread increased hardship for households.",
+          "The meeting ended food shortages before representatives arrived."
+        ],
+        "correctAnswer": "Debt pushed the king toward a meeting, while dearer bread increased hardship for households.",
+        "explanation": "The financial crisis helps explain the king's decision to call a meeting. Rising bread prices help explain why the situation felt urgent to many households."
+      },
+      {
+        "question": "In 1789, a representative receives complaints about taxes and costly bread alongside arguments that ordinary people deserve a stronger political voice. Which account best explains why the crisis is widening?",
+        "options": [
+          "Political ideas caused both the poor harvest and the royal debt.",
+          "The crown's need for money created a meeting, while hardship and political ideas shaped broader demands for change.",
+          "Bread prices alone explain why the king summoned representatives.",
+          "Calling the meeting made disagreements about privilege disappear."
+        ],
+        "correctAnswer": "The crown's need for money created a meeting, while hardship and political ideas shaped broader demands for change.",
+        "explanation": "Debt helps explain the political opening in 1789. Expensive bread and arguments about representation help explain why people pressed for more than a solution to the crown's finances."
+      }
+    ]
+  },
+  "score": 8.5,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 38909,
+      "approach": "mystery",
+      "blocks": "activity > explain > check > explain > check > explain > activity > check > explain",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 7,
+      "ms": 5936,
+      "problems": [
+        "The opening prediction reveals the debt clue before learners have evidence to investigate, weakening the mystery approach.",
+        "The diagram asks learners to tap and trace connections that are already drawn, so it offers little opportunity to build or test their own explanation.",
+        "The retry text mostly restates the explanations rather than offering a genuinely different way to understand the causes. Some hints narrow the choice almost to the answer."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 28010,
+      "approach": "mystery",
+      "blocks": "activity > explain > check > explain > check > explain > activity > check > explain",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 8.5,
+      "ms": 4822,
+      "problems": [
+        "The first activity and first check test nearly the same inference, so the lesson briefly feels repetitive.",
+        "Several incorrect options are implausible, making the checks easier than their scenarios suggest.",
+        "The lesson explains the combination of pressures well but gives little concrete detail about whose representation or tax privileges were contested."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8.5,
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+■ programming: Python loops (73s, score 7, below bar)
+  approach: worked_example (A running total is easiest to understand by tracing one complete loop, then filling in more of the reasoning and finally solving one independently.)
+  blocks:   worked > explain > check > code:predict > activity:order > check > problem
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=7, lesson.revise, lesson.evaluate=7, lesson.select=7

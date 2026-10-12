@@ -1,0 +1,260 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "For Loops That Build a Total",
+    "objective": "Trace and write for loops that update a running total.",
+    "estimatedMinutes": 7,
+    "approach": "worked_example",
+    "approachReason": "A fully traced loop makes each update visible before the learner predicts output, repairs a reset, and writes an update independently.",
+    "blocks": [
+      {
+        "kind": "worked",
+        "heading": "Follow the total",
+        "problem": "What does this program print?\n\n```python\ntotal = 0\nfor number in [2, 4, 6]:\n    total = total + number\nprint(total)\n```",
+        "steps": [
+          {
+            "title": "Start",
+            "text": "Set total to 0.",
+            "why": "Nothing has been added yet."
+          },
+          {
+            "title": "First iteration",
+            "text": "Use number = 2: total becomes 0 + 2 = 2.",
+            "why": "The new value is stored back in total."
+          },
+          {
+            "title": "Second iteration",
+            "text": "Use number = 4: total becomes 2 + 4 = 6.",
+            "why": "The previous total is kept, not discarded."
+          },
+          {
+            "title": "Third iteration",
+            "text": "Use number = 6: total becomes 6 + 6 = 12.",
+            "why": "Every number in the list has now been used."
+          },
+          {
+            "title": "After the loop",
+            "text": "Print total.",
+            "why": "Because print is not indented inside the loop, it runs once after all three additions."
+          }
+        ],
+        "answer": "It prints 12. Each iteration adds a number to the total left by the previous iteration."
+      },
+      {
+        "kind": "explain",
+        "heading": "What the loop is keeping",
+        "body": "A variable that keeps a result as a loop runs is an accumulator. Here, `total` begins at 0 before the loop, and the indented line updates it once for each number. The assignment `total = total + number` uses the old total to calculate the new one.",
+        "example": "Think of `total` as a running score: each turn adds to the score already on the board."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Imagine one row in a score table for each loop iteration. Which row has happened so far?",
+          "In the first row, add Monday's laps to the starting score."
+        ],
+        "retry": "Picture the first row of a score table: starting score 0 | laps added 2 | new score 2. The row for Tuesday has not happened yet."
+      },
+      {
+        "kind": "code",
+        "heading": "Which totals appear?",
+        "prompt": "Predict the exact output. Notice that one print is inside the loop and the other is after it.",
+        "language": "python",
+        "code": "total = 0\nfor price in [4, 7, 2]:\n    total = total + price\n    print(total)\nprint(\"final\", total)",
+        "explanation": "The indented print displays the running total after each price: 4, then 11, then 13. The final print runs once after the loop.",
+        "hints": [
+          "Mark each print as inside or outside the loop, then count how many times it runs."
+        ],
+        "mode": "predict",
+        "options": [
+          {
+            "text": "4\n11\n13\nfinal 13",
+            "correct": true,
+            "feedback": "Correct: the indented print runs after each update, then the final print runs once."
+          },
+          {
+            "text": "final 13",
+            "correct": false,
+            "feedback": "That misses the print inside the loop, which runs three times."
+          },
+          {
+            "text": "4\n7\n2\nfinal 13",
+            "correct": false,
+            "feedback": "Those first three lines are individual prices, not the running totals printed by the loop."
+          },
+          {
+            "text": "4\n11\n13\nfinal 0",
+            "correct": false,
+            "feedback": "The final print uses the total left after the loop; it has not reset to 0."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Picture the running totals as rows in a table. Does the café want to display every row?",
+          "Look for the line that displays the result; where should it sit to run only once?"
+        ],
+        "retry": "Imagine a two-row score table for tips: after the first tip, total is 2; after the second, it is 5. A print inside the loop displays both rows. A print after the loop displays only the last score, 5."
+      },
+      {
+        "kind": "code",
+        "heading": "Find the reset",
+        "prompt": "This program is meant to print the total of three daily step counts, but it prints only the last count. Choose the fix.",
+        "language": "python",
+        "code": "daily_steps = [2, 3, 4]\nfor steps in daily_steps:\n    total = 0\n    total = total + steps\nprint(total)",
+        "explanation": "`total = 0` belongs before the loop. Inside the loop, it erases the total from earlier iterations.",
+        "hints": [
+          "Which line throws away the previous iteration's work?"
+        ],
+        "mode": "bug",
+        "options": [
+          {
+            "text": "Move `total = 0` before the `for` line, and remove it from inside the loop.",
+            "correct": true,
+            "feedback": "Correct: initialize once, then keep updating the same total. The program will print 9."
+          },
+          {
+            "text": "Indent `print(total)` so it is inside the loop.",
+            "correct": false,
+            "feedback": "That would print on every iteration, but resetting total would still lose earlier counts."
+          },
+          {
+            "text": "Change `total = 0` to `total = 2` inside the loop.",
+            "correct": false,
+            "feedback": "The total would still restart on every iteration, now from 2."
+          },
+          {
+            "text": "Move `total = total + steps` after the loop.",
+            "correct": false,
+            "feedback": "Then the addition would not happen for each step count."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "problem",
+        "heading": "Write the missing update",
+        "prompt": "Complete the indented line so this program prints the total points earned. Type the Python assignment that replaces the blank.\n\n```python\npoints = [2, 5, 3]\ntotal = 0\nfor earned in points:\n    ______\nprint(total)\n```",
+        "answers": [
+          "total = total + earned"
+        ],
+        "unit": "",
+        "traps": [
+          {
+            "answer": "total = earned",
+            "feedback": "This replaces the running total with the current value instead of adding to it."
+          },
+          {
+            "answer": "earned = total + earned",
+            "feedback": "This changes earned, but the result needs to be stored in total."
+          }
+        ],
+        "hints": [
+          "Use both the total already stored and the current value, `earned`.",
+          "Assign the new value back to `total`."
+        ],
+        "solution": "`total = total + earned` adds the current `earned` value to the running total and stores the result back in `total`. The program then prints 10."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Put the running-total program in order",
+        "prompt": "Arrange these Python lines to print the sum of distances 3, 1, and 4. Keep the indentation shown on the update line; the lines will be shuffled for you.",
+        "reveal": "Initialize once, update inside the loop, and print after it. This program prints 8.",
+        "type": "order",
+        "steps": [
+          "total = 0",
+          "for distance in [3, 1, 4]:",
+          "total = total + distance",
+          "print(total)"
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "You count 2 laps on Monday and 3 on Tuesday. Your code sets `total = 0`, then runs `for laps in [2, 3]: total = total + laps`. What is `total` after the first iteration?",
+        "options": [
+          "0",
+          "2",
+          "3",
+          "5"
+        ],
+        "correctAnswer": "2",
+        "explanation": "The first iteration adds the first value, 2, to the starting total of 0. The 3 has not been used yet."
+      },
+      {
+        "question": "A café records tips of 2 and 3. Its loop updates `total` correctly, but `print(total)` is indented inside the loop, so it displays a number after each tip. The café wants just one final total. What should change?",
+        "options": [
+          "Move `print(total)` outside the loop, aligned with `for`.",
+          "Move `total = 0` inside the loop.",
+          "Move the line that adds each tip outside the loop.",
+          "Change the starting total from 0 to 2."
+        ],
+        "correctAnswer": "Move `print(total)` outside the loop, aligned with `for`.",
+        "explanation": "A print outside the loop runs once, after the loop has added every tip."
+      }
+    ]
+  },
+  "score": 7,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 39994,
+      "approach": "worked_example",
+      "blocks": "worked > explain > check > code > activity > check > code > problem",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 6.5,
+      "ms": 5446,
+      "problems": [
+        "The ordering activity says to keep the indentation shown, but none of its lines are indented. In that form, the arranged lines are not valid Python.",
+        "The first check and the following prediction exercise test nearly the same calculation, limiting progression.",
+        "The check retries mostly restate the original explanation rather than offering a genuinely different way to understand it."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 21756,
+      "approach": "worked_example",
+      "blocks": "worked > explain > check > code > activity > check > code > problem",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 7,
+      "ms": 4148,
+      "problems": [
+        "The ordering activity says to keep the indentation shown, but its update line has no indentation. As written, the ordered lines are not valid Python.",
+        "The first check’s retry gives the answer directly rather than helping the learner work it out.",
+        "Both retries return to a score-table trace, so they offer little alternative explanation."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 7,
+      "passed": false
+    }
+  ]
+}

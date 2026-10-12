@@ -1,0 +1,265 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Why 1789?",
+    "objective": "Explain how debt, food prices and new ideas combined to start the revolution.",
+    "estimatedMinutes": 8,
+    "approach": "mystery",
+    "approachReason": "The module's real question is a puzzle — how did Europe's most powerful monarchy collapse in months? — so the lesson poses that puzzle up front, resolves one cause at a time (bread, debt, ideas), and closes by answering it.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "A puzzle: the strongest kingdom in Europe, gone in a year",
+        "body": "In 1788 France was the most populous and most powerful kingdom in Europe: about 28 million people, the largest army on the continent, and the grandest court in the world at Versailles. By the summer of 1789 a Paris crowd had stormed the Bastille and the King was answering to an assembly of commoners.\n\nFrance did not lose a war or shrink in 1789. So what actually broke? Not one thing — three separate pressures, money, bread and ideas, all arrived at once and fed on each other. Let's take them one at a time, then put them back together.",
+        "example": "A sense of the scale: by 1788 roughly half of every livre the crown collected went to its creditors, while the army and navy together got about a quarter."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Two loaves at 14 sous each is 28 sous — compare that with the household's 40 sous.",
+          "Ask what a person who cannot feed their family does next."
+        ],
+        "retry": "Bread was not one item in a shopping basket — it was most of the basket. When its price moved, the whole household budget broke, and the street noticed. (The 40-sous household budget in the question is the same one the slider uses.)"
+      },
+      {
+        "kind": "explain",
+        "heading": "Force two: a state that could not pay its bills",
+        "body": "France's finances rested on privilege. Nobles and clergy were largely exempt from the main direct tax, so the burden fell on peasants and townspeople — and it was never enough.\n\nThen came the American war. From 1778 France helped defeat Britain, which it did with borrowed money. By 1788 about half of the crown's income was going straight to bankers as interest and repayment, and lenders had begun to refuse new loans. The only way out was a new tax that would fall on everyone, nobles included. Under French law, only the Estates-General — an assembly of the three orders, not summoned since 1614 — could consent to that.",
+        "example": "So the money crisis did not merely embarrass the King. It forced him to call an assembly of the entire kingdom, an assembly he had no way to control."
+      },
+      {
+        "kind": "problem",
+        "heading": "Work out the squeeze",
+        "prompt": "Historians estimate that in 1788 the French crown collected about 500 million livres in taxes and spent about 250 million livres of that on interest and repayment of its debts. What percentage of the crown's income went to its creditors? Give a whole number.",
+        "answers": [
+          "50"
+        ],
+        "unit": "%",
+        "traps": [
+          {
+            "answer": "25",
+            "feedback": "That is a quarter — you divided 250 by twice the income. The debt took half of what the crown collected."
+          },
+          {
+            "answer": "250",
+            "feedback": "That is the amount paid to creditors, not the share of income it represents. Convert it into a percentage."
+          }
+        ],
+        "hints": [
+          "Percentage = (debt payment ÷ income) × 100.",
+          "250 out of 500 is exactly half."
+        ],
+        "solution": "250 ÷ 500 = 0.5, so 50% of every livre raised went to debt service before a single soldier, road or official was paid."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Who had the legal right to approve a new tax?",
+          "Follow the chain: no loan → new tax needed → Estates-General must be called."
+        ],
+        "retry": "The tax deadlock is what turned a financial problem into a constitutional one: to get money, the King had to summon the body that could also take power from him."
+      },
+      {
+        "kind": "explain",
+        "heading": "Force three: new ideas about who should rule",
+        "body": "While the treasury emptied and the price of bread climbed, the terms of the argument had also changed. Enlightenment writers argued that legitimate authority comes from the people rather than from God through a king, and that all men should be equal before the law. The American Revolution had just proved such claims could be made to work.\n\nCheap pamphlets, cafés, salons and a new political press carried those arguments to lawyers, journalists, shopkeepers and parish priests. The ideas did not cause the debt or the hunger — but they gave the discontent a target and a language: the problem was not bad luck, it was a society built on privilege, and it could be rebuilt.",
+        "example": "Sieyès's pamphlet of early 1789, What Is the Third Estate?, asked its own question and answered it in one word: everything."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Which of the three forces is missing in the neighbouring kingdom?",
+          "Hunger without a broken treasury and without organised political demands usually produces riots, not revolution."
+        ],
+        "retry": "Famines and riots were common in eighteenth-century Europe and most were crushed. What made France different was insolvency and a new political language arriving in the same year as the harvest failure."
+      },
+      {
+        "kind": "explain",
+        "heading": "So why 1789?",
+        "body": "The debt created the opening. With no loans left and no legal way to tax its way clear, the crown had to summon the Estates-General for May 1789 — the one body that could also claim sovereignty for itself.\n\nThe ideas supplied the demand. The deputies of the third estate arrived with an argument already in circulation: authority belongs to the nation, not to a king.\n\nThe bread supplied the force. When the King seemed ready to break the assembly with troops, it was a hungry Paris crowd that marched on the Bastille on 14 July 1789.\n\nPut the three together and the puzzle answers itself. France was not weak in 1788 — it was unlucky in a very particular way: an insolvent state, an angry city, and a ready-made revolutionary vocabulary, all in the same year.",
+        "example": ""
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "The price of a loaf",
+        "prompt": "A working Parisian household brings in about 40 sous a day and needs two 4-pound loaves. Drag the slider to change the price of one loaf, from 8 up to 16 sous, and watch what happens to that budget.",
+        "reveal": "Bread was most of a poor household's budget, so a price spike was not hardship on the margins — it collapsed the whole budget. After the 1788 harvest failed, a Paris loaf rose from about 9 sous to about 14 by 1789: roughly half again as much, or about 55% higher.",
+        "type": "simulation",
+        "slider": {
+          "label": "Price of one 4-lb loaf",
+          "min": 8,
+          "max": 16,
+          "step": 1,
+          "unit": "sous",
+          "initial": 8
+        },
+        "bands": [
+          {
+            "upTo": 10,
+            "title": "Coping",
+            "detail": "At 8–10 sous a loaf, two loaves cost 16–20 sous: 40–50% of the day's 40 sous. This is the normal, hard-pressed budget of the Old Regime — rent, fuel and a little meat still just fit."
+          },
+          {
+            "upTo": 12,
+            "title": "Squeezed",
+            "detail": "At 11–12 sous a loaf, two loaves cost 22–24 sous: 55–60% of the day's earnings. Meat and candles go first; the family starts borrowing."
+          },
+          {
+            "upTo": 14,
+            "title": "Crisis",
+            "detail": "At 13–14 sous a loaf, two loaves cost 26–28 sous: 65–70% of income. Tools are pawned, children are sent to beg, and charity rolls swell."
+          },
+          {
+            "upTo": 16,
+            "title": "Explosion",
+            "detail": "At 15–16 sous a loaf, two loaves cost 30–32 sous: 75–80% of everything the household earns. Crowds seize grain convoys, sack bakeries, and troops are called into the streets."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Three forces, one year",
+        "prompt": "Drag each fact into the force it belongs to: Money, Bread, or Ideas.",
+        "reveal": "Two pressures were material and one was ideological — but no single one of them explains 1789. The revolution happened where they overlapped.",
+        "type": "sort",
+        "buckets": [
+          "Money",
+          "Bread",
+          "Ideas"
+        ],
+        "items": [
+          {
+            "text": "The crown pays about half its income to bankers",
+            "bucket": "Money"
+          },
+          {
+            "text": "Hail and drought destroy the 1788 harvest",
+            "bucket": "Bread"
+          },
+          {
+            "text": "Nobles and clergy pay almost no direct tax",
+            "bucket": "Money"
+          },
+          {
+            "text": "A 4-pound loaf climbs from about 9 to 14 sous",
+            "bucket": "Bread"
+          },
+          {
+            "text": "Writers argue that legitimate power comes from the people",
+            "bucket": "Ideas"
+          },
+          {
+            "text": "Pamphlets demand equality before the law",
+            "bucket": "Ideas"
+          },
+          {
+            "text": "France borrows heavily to fund the American war",
+            "bucket": "Money"
+          },
+          {
+            "text": "Crowds seize grain carts outside Paris",
+            "bucket": "Bread"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "In Paris in the spring of 1789, a labourer's household brings in about 40 sous a day and must buy two 4-pound loaves. Bread, normally about 9 sous a loaf, has risen to 14 sous. What is the most likely result?",
+        "options": [
+          "The household spends about 70% of its income on bread, and the labourer and thousands like him become ready to march when a political confrontation begins.",
+          "The household spends about 35% of its income on bread, so little changes beyond eating habits.",
+          "He demands a wage rise and his employer grants it immediately.",
+          "Nothing changes, because most Parisians baked their own bread from their own grain."
+        ],
+        "correctAnswer": "The household spends about 70% of its income on bread, and the labourer and thousands like him become ready to march when a political confrontation begins.",
+        "explanation": "Two loaves at 14 sous cost 28 of the household's 40 sous — 70% — so the poor were concentrated, desperate and in the streets: a hungry crowd is a crowd that can be mobilised."
+      },
+      {
+        "question": "In 1788 the King's minister proposes a new land tax that would fall on nobles as well as commoners. The Parlement of Paris refuses to register the tax and declares that only the Estates-General may consent to new taxes. Why does this matter?",
+        "options": [
+          "It left the crown with no legal way to raise money, forcing the King to summon the Estates-General — an assembly that could claim power for itself.",
+          "It showed that the law courts wanted to abolish noble privilege.",
+          "It proved the crown could simply ignore the courts and tax whomever it liked.",
+          "It mattered only to lawyers, since the Estates-General had no power over money."
+        ],
+        "correctAnswer": "It left the crown with no legal way to raise money, forcing the King to summon the Estates-General — an assembly that could claim power for itself.",
+        "explanation": "The tax deadlock is the link between the debt and the revolution: to get money, Louis XVI had to convene the one body that could take authority from him."
+      },
+      {
+        "question": "In a neighbouring kingdom the harvest fails, the treasury is completely debt-free, the king rules without any assembly, and no political pamphlets circulate. Using this lesson, what would you expect?",
+        "options": [
+          "A revolution within a year, because hunger always causes revolution.",
+          "Hardship, bread riots and probably a violent crackdown — but no revolution, because no fiscal deadlock forces an assembly and no organised ideas turn hunger into a political demand.",
+          "No hardship at all, because a debt-free state can feed everyone.",
+          "A peaceful transfer of power to the peasants."
+        ],
+        "correctAnswer": "Hardship, bread riots and probably a violent crackdown — but no revolution, because no fiscal deadlock forces an assembly and no organised ideas turn hunger into a political demand.",
+        "explanation": "Famine and riots were routine in eighteenth-century Europe and usually suppressed; 1789 was different because a broken treasury and a new political language coincided with the food crisis."
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 35994,
+      "approach": "mystery",
+      "blocks": "explain > activity > check > explain > problem > check > explain > activity > check > explain",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 7,
+      "ms": 17774,
+      "problems": [
+        "The bread simulation has numeric inaccuracies: at 13 sous two loaves are 65% of 40 sous, not 'more than two thirds'; at 14–16 sous it is 70–80%, not 'nearly everything'; and 14 sous is about 56% above 9 sous, not 'nearly double'.",
+        "The sort activity is placed after the ideas section in the block order, but its metadata says 'afterConcept': 0, which is inconsistent with where it is used.",
+        "The first check uses a 20-sous daily wage while the simulation uses a 40-sous household budget; this is not necessarily wrong, but the lesson does not explain the difference."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 14606,
+      "approach": "mystery",
+      "blocks": "explain > activity > check > explain > problem > check > explain > activity > check > explain",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 8,
+      "ms": 4923,
+      "problems": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+■ conceptual science: Black holes (78s, score 8, $0.0597, 4 calls, 10198 in / 3685 out tokens)
+  approach: misconception (Testing the belief that enough power can overcome any gravitational pull reveals that an event horizon is a limit on possible escape paths, not merely a region of strong gravity.)
+  blocks:   activity:predict > explain > check > activity:diagram > explain > check > reflect
+  issues:   none
+  trace:    lesson.generate, lesson.verify, lesson.evaluate=8, lesson.select=8
+
+■ programming: Python loops FAILED: OpenRouter 402: {"error":{"message":"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.","code":402,"metadata":{"reason":"in_flight_budget_exhausted","limit_source":"openrouter_in_flight_budget","remedy_hint":"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.","headers":{"Retry-After":"120"},"provider_name":null}},"user_id":"user_[redacted]"}
+  trace: [{"step":"lesson.generate","module":2,"ms":64701,"approach":"worked_example","blocks":"code > explain > check > activity > code > code > check > reflect > problem","droppedBlocks":0,"droppedActivities":0,"droppedQuestions":0,"placedChecks":0},{"step":"lesson.verify","iteration":1,"ms":5978,"claims":3,"supported":0,"contradicted":[],"unclear":3,"downgraded":["An accumulator is a variable that keeps a result built up across iterations.: search failed: OpenRouter 402: {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhausted\",\"limit_source\":\"openrouter_in_flight_budget\",\"remedy_hint\":\"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.\",\"headers\":{\"Retry-After\":\"120\"},\"provider_name\":null}},\"user_id\":\"user_[redacted]\"}","An iteration is one execution of a loop body.: search failed: OpenRouter 402: {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhausted\",\"limit_source\":\"openrouter_in_flight_budget\",\"remedy_hint\":\"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.\",\"headers\":{\"Retry-After\":\"120\"},\"provider_name\":null}},\"user_id\":\"user_[redacted]\"}","An accumulator can start with an existing amount rather than zero.: search failed: OpenRouter 402: {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhausted\",\"limit_source\":\"openrouter_in_flight_budget\",\"remedy_hint\":\"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.\",\"headers\":{\"Retry-After\":\"120\"},\"provider_name\":null}},\"user_id\":\"user_[redacted]\"}"]}]
+
+■ history: The French Revolution FAILED: OpenRouter 402: {"error":{"message":"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.","code":402,"metadata":{"reason":"in_flight_budget_exhausted","limit_source":"openrouter_in_flight_budget","remedy_hint":"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.","headers":{"Retry-After":"120"},"provider_name":null}},"user_id":"user_[redacted]"}
+  trace: [{"step":"lesson.generate","module":2,"ms":64781,"approach":"mystery","blocks":"activity > explain > check > activity > explain > check > reflect > explain","droppedBlocks":0,"droppedActivities":0,"droppedQuestions":0,"placedChecks":0},{"step":"lesson.verify_failed","iteration":1,"ms":233,"error":"OpenRouter 402: {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhausted\",\"limit_source\":\"openrouter_in_flight_budget\",\"remedy_hint\":\"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.\",\"headers\":{\"Retry-After\":\"120\"},\"provider_name\":null}},\"user_id\":\"user_[redacted]\"}"}]
+
+■ strategy: Game theory (149s, score 9, $0.1602, 8 calls, 27196 in / 8085 out tokens)
+  approach: discovery (The learner compares choices in a payoff table and discovers the worse shared outcome before the lesson names strict dominance and the prisoner's dilemma.)
+  blocks:   explain > activity:predict > explain > check > problem > explain > check > problem > reflect
+  issues:   none
+  trace:    lesson.generate, lesson.verify_failed, lesson.evaluate=6.5, lesson.revise, lesson.verify, lesson.evaluate=9, lesson.select=9
+
+■ physics: Projectile motion (85s, score 8.5, $0.0822, 5 calls, 13547 in / 4393 out tokens)
+  approach: simulation (Varying the launch angle at a fixed speed makes the trade-off between a high path and a long range visible before the learner explains it.)
+  blocks:   activity:graph > explain > check > activity:predict > explain > check > activity:scenario
+  issues:   none
+  trace:    lesson.generate, lesson.verify, lesson.evaluate=8.5, lesson.select=8.5
+
+■ mathematics: Probability (78s, score 8.5, $0.0981, 6 calls, 17285 in / 4353 out tokens)
+  approach: discovery (The learner first predicts and counts joint outcomes, then tests whether one event changes another event's probability before applying the multiplication rule.)
+  blocks:   activity:predict > explain > check > activity:sort > explain > check > problem
+  issues:   none
+  trace:    lesson.generate, lesson.verify, lesson.evaluate=8.5, lesson.select=8.5
+
+■ niche philosophy: The Socratic method (87s, score 8.7, $0.1034, 6 calls, 16702 in / 5026 out tokens)
+  approach: socratic (The learner participates in a questioning exchange, choosing questions and tracing commitments before constructing a short elenchus of their own.)
+  blocks:   dialogue > activity:scenario > explain > check > dialogue > explain > check > activity:order > reflect
+  issues:   none
+  trace:    lesson.generate, lesson.verify, lesson.evaluate=8.7, lesson.select=8.7
+
+■ niche economics: Elinor Ostrom's commons principles (71s, score 8.5, $0.0396, 2 calls, 6356 in / 3337 out tokens)
+  approach: scenario (The learner helps a fictional neighborhood resolve one orchard dispute by specifying who may harvest and which trees belong to the commons.)
+  blocks:   activity:scenario > explain > check > activity:sort > explain > check > reflect
+  issues:   none
+  trace:    lesson.generate, lesson.verify_failed, lesson.evaluate=8.5, lesson.select=8.5
+
+■ niche language: Ancient Greek accents (103s, score 8.5, $0.1053, 6 calls, 16468 in / 5275 out tokens)
+  approach: visual (The shapes of the marks and a map of their syllable positions make the distinctions visible before the learner applies them to Greek words.)
+  blocks:   explain > activity:sort > check > activity:diagram > explain > check > explain > check
+  issues:   none
+  trace:    lesson.generate, lesson.verify, lesson.evaluate=8.5, lesson.select=8.5
+
+■ niche mathematics: Babylonian sexagesimal numbers (70s, score 8.5, $0.0446, 2 calls, 6863 in / 3711 out tokens)
+  approach: worked_example (Fully worked conversions establish the method, then progressively reduced scaffolding lets the learner read and write base-60 numbers independently.)
+  blocks:   worked > explain > check > problem > worked > activity:order > check > problem
+  issues:   none
+  trace:    lesson.generate, lesson.verify_failed, lesson.evaluate=8.5, lesson.select=8.5

@@ -1,0 +1,345 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "For Loops and Accumulators",
+    "objective": "Read, predict and write for loops that build up a result in an accumulator variable.",
+    "estimatedMinutes": 9,
+    "approach": "worked_example",
+    "approachReason": "The accumulator is a fixed pattern (start, update, use), so it is best learned from one fully traced loop, then faded examples, then a loop the learner works out alone.",
+    "blocks": [
+      {
+        "kind": "code",
+        "heading": "Watch a loop build a total",
+        "prompt": "This code adds up three prices. Step through it line by line and watch the variable total grow on every pass of the loop.",
+        "language": "python",
+        "code": "prices = [3, 5, 2]\ntotal = 0\nfor p in prices:\n    total = total + p\nprint(total)",
+        "explanation": "The loop body (line 4) ran once for each item: 3 times for 3 prices. Each pass added the current price to what total already held: 0 → 3 → 8 → 10. Line 5 is not indented, so it runs once, after the loop has finished.",
+        "hints": [],
+        "mode": "trace",
+        "options": [],
+        "trace": [
+          {
+            "line": 2,
+            "note": "Line 1 has already made the list. Now total is created with the starting value 0.",
+            "state": "prices = [3, 5, 2], total = 0"
+          },
+          {
+            "line": 3,
+            "note": "The loop starts. p takes the first item in the list.",
+            "state": "p = 3, total = 0"
+          },
+          {
+            "line": 4,
+            "note": "total becomes its old value plus p: 0 + 3.",
+            "state": "p = 3, total = 3"
+          },
+          {
+            "line": 3,
+            "note": "Back to the top. p takes the next item.",
+            "state": "p = 5, total = 3"
+          },
+          {
+            "line": 4,
+            "note": "total becomes 3 + 5.",
+            "state": "p = 5, total = 8"
+          },
+          {
+            "line": 3,
+            "note": "p takes the last item.",
+            "state": "p = 2, total = 8"
+          },
+          {
+            "line": 4,
+            "note": "total becomes 8 + 2. There are no items left, so the loop ends.",
+            "state": "p = 2, total = 10"
+          },
+          {
+            "line": 5,
+            "note": "The print runs once, after the loop, and shows 10.",
+            "state": "output: 10"
+          }
+        ]
+      },
+      {
+        "kind": "explain",
+        "heading": "The accumulator pattern",
+        "body": "The variable total is called an accumulator. It is a variable that collects a result, one item at a time. Almost every accumulator loop has the same three parts.\n\n1. **Start:** before the loop, give the accumulator a starting value.\n2. **Update:** inside the loop, combine the accumulator with the current item.\n3. **Use:** after the loop, with no indentation, use the finished result.\n\nThe key line is total = total + p. It means \"take what total holds now, add p, and store the result back in total.\"",
+        "example": "The same pattern works with other operations. Use * to multiply numbers together. Use + on strings to glue text together: if word is \"ab\", then word + \"c\" gives \"abc\"."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Write down total after the first pass, then add the second item to it.",
+          "The third item, 1500, hasn't been reached yet."
+        ],
+        "retry": "Think of total as a running score that never resets. Pass 1 adds 1000 to 0, giving 1000. Pass 2 adds 2000 to that 1000. The third value has not been added yet."
+      },
+      {
+        "kind": "code",
+        "heading": "Your turn to predict: a product",
+        "prompt": "This loop uses the same pattern with multiplication. Predict exactly what it prints.",
+        "language": "python",
+        "code": "total = 1\nfor n in range(1, 5):\n    total = total * n\nprint(total)",
+        "explanation": "range(1, 5) gives 1, 2, 3, 4. It stops before 5. The total starts at 1 and goes 1×1 = 1, then 1×2 = 2, then 2×3 = 6, then 6×4 = 24.",
+        "hints": [
+          "range(1, 5) produces 1, 2, 3, 4. It does not include 5.",
+          "Multiply the running total by each n in turn, starting from 1."
+        ],
+        "mode": "predict",
+        "options": [
+          {
+            "text": "24",
+            "correct": true,
+            "feedback": "Correct. The loop multiplies 1 × 1 × 2 × 3 × 4, giving 24."
+          },
+          {
+            "text": "120",
+            "correct": false,
+            "feedback": "That would be 1 × 2 × 3 × 4 × 5. But range(1, 5) stops before 5."
+          },
+          {
+            "text": "10",
+            "correct": false,
+            "feedback": "That's 1 + 2 + 3 + 4. This loop multiplies with * instead of adding."
+          },
+          {
+            "text": "0",
+            "correct": false,
+            "feedback": "The total starts at 1, not 0. That is exactly so the multiplication doesn't get wiped out."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "code",
+        "heading": "Fix the forgetful total",
+        "prompt": "This code should print 20, the sum of the scores. Instead it prints 9. Pick the fix.",
+        "language": "python",
+        "code": "scores = [4, 7, 9]\nfor s in scores:\n    total = 0\n    total = total + s\nprint(total)",
+        "explanation": "total = 0 sits inside the loop, so it runs on every pass and wipes out the running total. Only the last score survives. The starting value must be set once, before the loop begins.",
+        "hints": [
+          "Which line runs on every single pass, even though it should only run once?"
+        ],
+        "mode": "bug",
+        "options": [
+          {
+            "text": "Move total = 0 above the for line, with no indentation.",
+            "correct": true,
+            "feedback": "Correct. Now total starts at 0 once, and each pass adds to it: 4, 11, 20."
+          },
+          {
+            "text": "Change line 4 to total = s.",
+            "correct": false,
+            "feedback": "That still keeps only the current score. It prints 9 again."
+          },
+          {
+            "text": "Indent print(total) so it is inside the loop.",
+            "correct": false,
+            "feedback": "That prints 4, 7, 9 on separate lines. The reset problem is still there."
+          },
+          {
+            "text": "Change total = 0 to total = 1.",
+            "correct": false,
+            "feedback": "The reset still happens every pass. It would print 10, not 20."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "The print is indented. How many times does the loop body run?"
+        ],
+        "retry": "Indentation decides what repeats. An indented print is part of the loop body, so it runs every pass and shows the total so far. An unindented print runs once, after the loop ends."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Trace it: after the first pass, word is \"a\". On the second pass, is \"b\" added in front or behind?",
+          "ch + word means the new letter comes first."
+        ],
+        "retry": "Order matters when you glue strings together. ch + word puts the new letter in front of what is already there. The word grows \"a\", then \"ba\", then \"cba\"."
+      },
+      {
+        "kind": "problem",
+        "heading": "Solve one on your own",
+        "prompt": "What does this code print? Trace it yourself and type the number.\n\ntotal = 0\nfor n in range(1, 6):\n    total = total + n * 2\nprint(total)",
+        "answers": [
+          "30"
+        ],
+        "unit": "",
+        "traps": [
+          {
+            "answer": "15",
+            "feedback": "That's 1 + 2 + 3 + 4 + 5. Each number is doubled before it is added."
+          },
+          {
+            "answer": "20",
+            "feedback": "You stopped at 4. range(1, 6) includes 5 and stops before 6."
+          },
+          {
+            "answer": "10",
+            "feedback": "That's only the last value added, 5 × 2. The accumulator keeps every earlier pass too."
+          }
+        ],
+        "hints": [
+          "First list the values of n: range(1, 6) stops before 6.",
+          "Double each n, then add them all up starting from 0."
+        ],
+        "solution": "range(1, 6) gives 1, 2, 3, 4, 5. Each pass adds double the number: 2 + 4 + 6 + 8 + 10. The running total goes 2, 6, 12, 20, 30, so the code prints 30."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Accumulator recipe",
+        "prompt": "You want to add up a list of distances you ran this week. Drag the steps into the order you would write them.",
+        "reveal": "Start before the loop, update inside it, use the result after it. If you get this order wrong, you get the classic bugs: a reset total, or a result printed too early.",
+        "type": "order",
+        "steps": [
+          "Create the accumulator with a starting value: total = 0",
+          "Write the loop line: for d in distances:",
+          "Indented inside the loop, update it: total = total + d",
+          "After the loop, unindented, use it: print(total)"
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Starting values",
+        "prompt": "Each task needs an accumulator. Drag each one to the starting value it should have before the loop.",
+        "reveal": "Choose a starting value that doesn't change the result. Adding 0 changes nothing, multiplying by 1 changes nothing, and gluing on \"\" (the empty string) changes nothing.",
+        "type": "sort",
+        "buckets": [
+          "Start at 0",
+          "Start at 1",
+          "Start at \"\""
+        ],
+        "items": [
+          {
+            "text": "Adding up prices in a shopping cart",
+            "bucket": "Start at 0"
+          },
+          {
+            "text": "Counting how many songs are in a playlist",
+            "bucket": "Start at 0"
+          },
+          {
+            "text": "Total distance from a list of runs",
+            "bucket": "Start at 0"
+          },
+          {
+            "text": "Multiplying 1 × 2 × 3 × 4 × 5",
+            "bucket": "Start at 1"
+          },
+          {
+            "text": "Multiplying a list of growth factors",
+            "bucket": "Start at 1"
+          },
+          {
+            "text": "Joining letters into one word",
+            "bucket": "Start at \"\""
+          },
+          {
+            "text": "Building initials from a list of names",
+            "bucket": "Start at \"\""
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "Maya tracks her steps. Her code is: total = 0, then for d in [1000, 2000, 1500]: total = total + d. What is total right after the loop finishes its SECOND pass?",
+        "options": [
+          "1000",
+          "2000",
+          "3000",
+          "4500"
+        ],
+        "correctAnswer": "3000",
+        "explanation": "After pass 1, total is 0 + 1000 = 1000. Pass 2 adds 2000, making 3000. The 1500 is only added on pass 3."
+      },
+      {
+        "question": "Leo writes: total = 0, then for n in [2, 3]: total = total + n, with print(total) indented inside the loop. What appears on screen?",
+        "options": [
+          "5",
+          "2 then 5",
+          "2 then 3",
+          "10"
+        ],
+        "correctAnswer": "2 then 5",
+        "explanation": "Because print is indented, it runs on every pass and shows the running total: 2 after the first pass, then 5 after the second."
+      },
+      {
+        "question": "Ana tries a string accumulator: word = \"\", then for ch in \"abc\": word = ch + word, and finally print(word) after the loop. What does it print?",
+        "options": [
+          "abc",
+          "cba",
+          "c",
+          "a"
+        ],
+        "correctAnswer": "cba",
+        "explanation": "Each new letter is placed in front of what word already holds: \"a\", then \"ba\", then \"cba\". This loop reverses the string."
+      }
+    ]
+  },
+  "score": 7.8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 62330,
+      "approach": "worked_example",
+      "blocks": "code > explain > check > code > activity > code > check > activity > check > problem",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 7.8,
+      "ms": 8141,
+      "problems": [
+        "The objective includes writing loops, but learners only trace, select fixes, sort starting values, and order supplied steps. There is no independent code-writing task.",
+        "The questions describe code inline rather than showing properly formatted Python. This is particularly weak for the indentation question, where the tested concept should be visible in the code.",
+        "Retry explanations mostly repeat the original trace or rule rather than offering a genuinely different explanation. The string question's retry explicitly supplies the final answer.",
+        "The lesson introduces range endpoints, multiplication, string accumulation, string reversal, and operation precedence within nine minutes. Without confirmed prior coverage, this creates some extra cognitive load for foundations learners."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 63380,
+      "approach": "worked_example",
+      "blocks": "code > explain > check > code > activity > code > check > activity > check > problem > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate_failed",
+      "iteration": 2,
+      "error": "OpenRouter 402: {\"error\":{\"message\":\"This request requires more credits, or fewer max_tokens. You requested up to 65536 tokens, but can only afford 52408. To increase, visit https://openrouter.ai/workspaces/default/keys/[redacted] and adjust the key's total limit\",\"code\":402,\"metadata\":{\"limit_source\":\"openrouter_key_limit\",\"remedy_hint\":\"Raise or remove this API key's usage limit at https://openrouter.ai/settings/keys, or use a key without a limit.\",\"provider_name\":null,\"previous_errors\":[{\"code\":402,\"message\":\"This request requires more credits, or fewer max_tokens. You requested up to 65536 tokens, but can only afford 52408. To increase, visit https://openrouter.ai/workspaces/default/keys/[redacted] and adjust the key's total limit\"}]}},\"user_id\":\"user_[redacted]\"}"
+    },
+    {
+      "step": "lesson.select",
+      "score": 7.8,
+      "passed": false
+    }
+  ]
+}

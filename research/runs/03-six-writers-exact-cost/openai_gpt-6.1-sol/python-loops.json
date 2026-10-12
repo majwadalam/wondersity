@@ -1,0 +1,253 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Build a Result, One Item at a Time",
+    "objective": "Read, predict, debug and independently write and verify for loops that accumulate a total.",
+    "estimatedMinutes": 8,
+    "approach": "worked_example",
+    "approachReason": "A fully traced total-building loop provides a model, then progressively less support leads to constructing and verifying a new loop independently.",
+    "blocks": [
+      {
+        "kind": "code",
+        "heading": "Watch a total being built",
+        "prompt": "This program adds two prices. Step through it and watch how number changes while total keeps the running result.",
+        "language": "python",
+        "code": "total = 0\nfor number in [2, 5]:\n    total = total + number\nprint(total)",
+        "explanation": "The program prints 7 once. Each pass adds the current number to the total saved from the previous pass.",
+        "hints": [],
+        "mode": "trace",
+        "options": [],
+        "trace": [
+          {
+            "line": 1,
+            "note": "Create the running total.",
+            "state": "total = 0"
+          },
+          {
+            "line": 2,
+            "note": "Take the first number from the list.",
+            "state": "number = 2, total = 0"
+          },
+          {
+            "line": 3,
+            "note": "Add 2 to the saved total.",
+            "state": "number = 2, total = 2"
+          },
+          {
+            "line": 2,
+            "note": "Take the next number from the list.",
+            "state": "number = 5, total = 2"
+          },
+          {
+            "line": 3,
+            "note": "Add 5 to the saved total.",
+            "state": "number = 5, total = 7"
+          },
+          {
+            "line": 4,
+            "note": "There are no items left, so leave the loop and print 7.",
+            "state": "number = 5, total = 7; output: 7"
+          }
+        ]
+      },
+      {
+        "kind": "explain",
+        "heading": "Two variables, two jobs",
+        "body": "A for loop takes the items in a list in order, assigning each one to the loop variable—in this example, number. The colon starts the loop body, and the indented line runs once for each item.\n\nAn accumulator is a variable that keeps a result as the loop runs: here, total starts at 0 before the loop. In total = total + number, Python calculates the right-hand side using the old total, then saves the result back into total. The unindented print runs after the loop finishes.",
+        "example": "number holds just the current item; total remembers what has been added so far."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Read the list from left to right.",
+          "Keep the current item separate from the running total."
+        ],
+        "retry": "Track the two variables in separate columns:\n\nPass | Current price | Total before addition | Total after addition\n1 | 3 | 0 | 3\n2 | 6 | 3 | 9\n\nThe question asks for the current-price column on pass 2, not either total column."
+      },
+      {
+        "kind": "code",
+        "heading": "Now predict the final result",
+        "prompt": "A shopper buys three items. What exactly does this program print?",
+        "language": "python",
+        "code": "total = 0\nfor price in [4, 1, 3]:\n    total = total + price\nprint(total)",
+        "explanation": "The total changes from 0 to 4, then 5, then 8. Because print is outside the loop, only the final 8 appears.",
+        "hints": [
+          "Write down total after each price is added.",
+          "Check whether print is inside or outside the loop."
+        ],
+        "mode": "predict",
+        "options": [
+          {
+            "text": "8",
+            "correct": true,
+            "feedback": "Correct: all three prices contribute, and the final total is printed once."
+          },
+          {
+            "text": "3",
+            "correct": false,
+            "feedback": "Imagine a receipt: the last item's price is 3, but the bill also includes the earlier items costing 4 and 1."
+          },
+          {
+            "text": "4\n5\n8",
+            "correct": false,
+            "feedback": "These are three snapshots of the running bill. Here, print is after the loop, so it shows only the completed bill."
+          },
+          {
+            "text": "0",
+            "correct": false,
+            "feedback": "Think of 0 as an empty bill before shopping. Each item increases that bill, so it is no longer empty at checkout."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "code",
+        "heading": "Repair a forgetful total",
+        "prompt": "This program should print 8, but it prints 3. Which single fix lets it remember all the prices?",
+        "language": "python",
+        "code": "for price in [4, 1, 3]:\n    total = 0\n    total = total + price\nprint(total)",
+        "explanation": "Think of total as a basket. Setting it to 0 inside the loop empties the basket before every new item, leaving only the last item. Start with an empty basket once, before collecting anything.",
+        "hints": [
+          "What happens to the saved total at the start of each pass?",
+          "Which line should happen just once, before any prices are processed?"
+        ],
+        "mode": "bug",
+        "options": [
+          {
+            "text": "Move total = 0 before the for line, with no indentation.",
+            "correct": true,
+            "feedback": "Correct: total starts once, then keeps its value between passes."
+          },
+          {
+            "text": "Indent print(total) inside the loop.",
+            "correct": false,
+            "feedback": "This takes a snapshot after each item: 4, 1 and 3. Taking more snapshots does not stop the basket being emptied."
+          },
+          {
+            "text": "Change total = 0 to total = 1.",
+            "correct": false,
+            "feedback": "Each pass still throws away the saved result and starts with 1. On the last pass, that gives 1 + 3 = 4."
+          },
+          {
+            "text": "Replace total = total + price with total = price.",
+            "correct": false,
+            "feedback": "This replaces the basket's contents with just the newest item. The final result is still 3."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Start your trace at the value assigned before the loop.",
+          "Add each bonus without discarding the starting balance."
+        ],
+        "retry": "Picture a points balance rather than an empty counter:\n\nMoment | Balance\nBefore bonuses | 10\nAfter adding 2 | 12\nAfter adding 3 | 15\n\nThe bonuses are deposits into an existing balance; they do not replace it."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Build and verify your own loop",
+        "prompt": "Your practice log contains [12, 8, 15], the minutes practiced on three days. Write a Python program that uses a for loop to calculate and print the combined minutes once. Choose your own variable names and decide where each line belongs; do not use sum().\n\nBefore running your code, write down the output you expect. Then run it, or hand-trace each pass if you cannot run Python, and compare the result with your prediction. Explain why your initialization and print belong outside the loop. Complete all three steps before revealing the model answer.",
+        "model": "Expected output: 35.\n\nOne possible program:\nminutes_total = 0\nfor day_minutes in [12, 8, 15]:\n    minutes_total = minutes_total + day_minutes\nprint(minutes_total)\n\nVerification: minutes_total starts at 0, becomes 12, then 20, then 35. The program prints 35 once, matching 12 + 8 + 15.\n\nInitialization belongs outside the loop so previous additions are not erased. Printing belongs outside because we want one completed total, not a running total after each day. Different variable names are fine if used consistently."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Put the total-building lines in order",
+        "prompt": "Arrange these lines into a program that adds 3, 1 and 4, then prints the final total once. Keep the indentation shown on each line.",
+        "reveal": "Set up the accumulator before the loop, update it inside the loop, and use the completed result after the loop. This program prints 8.",
+        "type": "order",
+        "steps": [
+          "total = 0",
+          "for number in [3, 1, 4]:",
+          "total = total + number",
+          "print(total)"
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A checkout program runs this code:\n\ntotal = 0\nfor price in [3, 6]:\n    total = total + price\n\nOn the second pass, just before the addition runs, what value does price hold?",
+        "options": [
+          "3",
+          "6",
+          "9",
+          "0"
+        ],
+        "correctAnswer": "6",
+        "explanation": "The for loop assigns the second list item, 6, to price on its second pass. The running total is a separate variable."
+      },
+      {
+        "question": "A game account already has 10 points and earns two bonuses:\n\npoints = 10\nfor bonus in [2, 3]:\n    points = points + bonus\nprint(points)\n\nWhat does the program print?",
+        "options": [
+          "5",
+          "15",
+          "13",
+          "10"
+        ],
+        "correctAnswer": "15",
+        "explanation": "The accumulator starts at 10 and keeps both additions: 10 + 2 + 3 = 15. The unindented print runs once after the loop."
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 60161,
+      "approach": "worked_example",
+      "blocks": "code > explain > check > code > activity > code > check > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 7.5,
+      "ms": 6445,
+      "problems": [
+        "The ordering activity contains an actual code-formatting error: \"total = total + number\" has no indentation, despite the instruction to keep the indentation shown. No arrangement of these exact lines produces the promised valid Python program.",
+        "The retry explanations largely restate the original rule rather than offering a genuinely different explanation or representation.",
+        "The final writing task is heavily specified and has only a model answer, so it offers limited evidence that the learner can independently construct and verify an accumulator loop."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 41349,
+      "approach": "worked_example",
+      "blocks": "code > explain > check > code > activity > code > check > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 8,
+      "ms": 5805,
+      "problems": [
+        "The ordering activity says to preserve the shown indentation, but its update step is stored as \"total = total + number\" with no leading spaces. Following the instructions literally produces an invalid Python loop rather than the claimed output of 8.",
+        "The second check tests a nonzero starting balance rather than directly checking the reset-inside-the-loop bug just taught. This is useful transfer, but leaves the debugging concept without a fresh application check."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,223 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The Event Horizon: Where Escape Becomes Impossible",
+    "objective": "Understand why nothing, not even light, can escape from inside the event horizon, and how the horizon's radius follows from escape speed.",
+    "estimatedMinutes": 7,
+    "approach": "discovery",
+    "approachReason": "Learners find the boundary themselves by varying distance and watching escape speed approach light speed, and the horizon is named only after they have seen the evidence.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "Escape is a speed contest",
+        "body": "To leave a planet, a rocket must reach its escape speed, the speed that carries it away from gravity for good. Escape speed depends on two things: the mass of the object and your distance from its centre. Closer to the centre means a stronger pull, so you need more speed to get away.\n\nEarth's escape speed at its surface is about 11 km/s. Anything that moves faster than that, in any direction, can coast away forever.",
+        "example": "Launching from the Moon's surface needs only about 2.4 km/s, because the Moon has far less mass."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "The horizon is where escape speed reaches light speed",
+        "body": "Escape speed is v = √(2GM/r). Set v equal to the speed of light c and solve for r, and you get a special radius, r_s = 2GM/c². This is the Schwarzschild radius.\n\nAt r_s, escaping takes light speed. Closer in, the formula demands more than c, and nothing can reach that. The boundary at r_s is the event horizon.",
+        "example": "As a fraction of light speed, escape speed is √(r_s/r). At twice the horizon radius it is about 0.71c; at four times, it is 0.5c."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Compare the horizon radius with the 20 km distance in the question.",
+          "Ask whether any direction of travel can lead back out once you are inside the horizon."
+        ],
+        "retry": "Inside the horizon, the escape speed would have to be faster than light. Since no path leads outward, every route ends at the centre, even one aimed straight out."
+      },
+      {
+        "kind": "worked",
+        "heading": "Finding a horizon radius",
+        "problem": "Find the event horizon radius if the Sun were squeezed into a black hole of the same mass. Use M = 1.99 × 10³⁰ kg, G = 6.67 × 10⁻¹¹, and c = 3.00 × 10⁸ m/s.",
+        "steps": [
+          {
+            "title": "Write the formula",
+            "text": "Use r_s = 2GM/c².",
+            "why": "This comes from setting escape speed equal to c, so every term in the horizon radius is a mass or a fundamental constant."
+          },
+          {
+            "title": "Compute the numerator",
+            "text": "2GM = 2 × 6.67 × 10⁻¹¹ × 1.99 × 10³⁰ ≈ 2.65 × 10²⁰.",
+            "why": "Multiply the constants and the mass first, keeping the powers of ten in order."
+          },
+          {
+            "title": "Divide by c²",
+            "text": "c² = 9.00 × 10¹⁶, so r_s ≈ 2.65 × 10²⁰ / 9.00 × 10¹⁶ ≈ 2.9 × 10³ m.",
+            "why": "Dividing by c², a very large number, shrinks the result enormously. That is why black holes are so small for their mass."
+          }
+        ],
+        "answer": "The horizon radius is about 2.9 km. The Sun would have to shrink from about 700,000 km across to under 3 km."
+      },
+      {
+        "kind": "explain",
+        "heading": "The horizon is a one-way boundary, not a wall",
+        "body": "Nothing special happens to a person who falls through the event horizon. Locally, the crossing feels ordinary. What changes is direction: inside the horizon, every possible path for light, even one aimed straight outward, bends toward the centre.\n\nSo the horizon marks the point of no return. Once you cross it inward, no signal can reach the outside again.",
+        "example": "Think of a one-way door: you can walk through it easily, but no route leads back out."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Look at the formula r_s = 2GM/c² and see which quantity it depends on.",
+          "The mass appears in the top of the formula, with no square or power."
+        ],
+        "retry": "Horizon radius is proportional to mass: twice the mass gives twice the radius. This is why supermassive black holes have horizons larger than the orbit of Mercury."
+      },
+      {
+        "kind": "problem",
+        "heading": "Earth as a black hole",
+        "prompt": "Earth has mass 5.97 × 10²⁴ kg. If Earth were compressed into a black hole, what would its event horizon radius be, in millimetres? Use G = 6.67 × 10⁻¹¹ and c = 3.00 × 10⁸ m/s.",
+        "answers": [
+          "8.85",
+          "8.8",
+          "8.9"
+        ],
+        "unit": "mm",
+        "traps": [
+          {
+            "answer": "4.4",
+            "feedback": "That is half the correct value. The horizon formula is r_s = 2GM/c², so the 2 must stay in."
+          },
+          {
+            "answer": "17.7",
+            "feedback": "That is about double the correct value. Dividing by c² (about 9 × 10¹⁶) makes the result very small, so check your powers of ten."
+          }
+        ],
+        "hints": [
+          "Use r_s = 2GM/c² and compute the numerator 2GM first, which is about 7.96 × 10¹⁴.",
+          "Your result will be in metres. Multiply by 1000 to convert to millimetres."
+        ],
+        "solution": "Solution: r_s = 2GM/c² = 2 × 6.67 × 10⁻¹¹ × 5.97 × 10²⁴ / (3.00 × 10⁸)² ≈ 7.96 × 10¹⁴ / 9.00 × 10¹⁶ ≈ 8.85 × 10⁻³ m, which is about 8.85 mm. Earth would need to shrink to roughly the size of a marble."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Escape speed near a black hole",
+        "prompt": "Drag the distance from the centre, measured in multiples of the horizon radius. Watch the escape speed as a fraction of light speed. At what distance does it reach c, and what happens at smaller distances?",
+        "reveal": "Escape speed rises as you approach the centre and hits light speed exactly at the horizon. Closer than that, no speed is enough, so nothing can get out.",
+        "type": "simulation",
+        "slider": {
+          "label": "Distance from centre (multiples of horizon radius)",
+          "min": 0.5,
+          "max": 4,
+          "step": 0.1,
+          "unit": "× r_s",
+          "initial": 2
+        },
+        "bands": [
+          {
+            "upTo": 0.99,
+            "title": "Inside the horizon: no escape",
+            "detail": "Escape would need a speed above c, which nothing can reach. Every path leads toward the centre."
+          },
+          {
+            "upTo": 1.05,
+            "title": "At the horizon: escape speed equals c",
+            "detail": "This is the threshold. Escape here would take light speed, the fastest any signal can travel."
+          },
+          {
+            "upTo": 2,
+            "title": "Just outside: escape speed 0.71c or more",
+            "detail": "Escape is possible only with a very fast rocket, and the speed needed drops as you move outward."
+          },
+          {
+            "upTo": 4,
+            "title": "Far out: escape speed 0.5c or less",
+            "detail": "The black hole's pull weakens with distance, so the escape speed falls toward zero far from the horizon."
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A black hole has an event horizon of radius 30 km. A light beam is fired straight outward from a point 20 km from its centre. What happens to the light?",
+        "options": [
+          "It escapes if fired hard enough",
+          "It escapes at exactly the speed of light",
+          "Its path always bends back toward the centre, so it never escapes",
+          "It hovers at 20 km until it slows down"
+        ],
+        "correctAnswer": "Its path always bends back toward the centre, so it never escapes",
+        "explanation": "At 20 km you are inside the 30 km horizon, where escape would need a speed above light speed. Every possible path, even one aimed outward, leads to the centre."
+      },
+      {
+        "question": "A black hole's mass is doubled while keeping everything else the same. What happens to the radius of its event horizon?",
+        "options": [
+          "It is halved",
+          "It is doubled",
+          "It is quadrupled",
+          "It is unchanged"
+        ],
+        "correctAnswer": "It is doubled",
+        "explanation": "The horizon radius r_s = 2GM/c² is directly proportional to mass, so doubling M doubles r_s."
+      }
+    ]
+  },
+  "score": 7.5,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 44342,
+      "approach": "discovery",
+      "blocks": "explain > activity > explain > check > worked > explain > check > problem",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 7.5,
+      "ms": 10571,
+      "problems": [
+        "The second check's first hint nearly gives away the answer by pointing to the mass term in the formula, so it leaves little thinking for the learner.",
+        "The second check question (doubling mass doubles the radius) is shallow and recall-level. It does not test understanding of why the horizon exists.",
+        "The 7-minute estimate is optimistic. Two explain blocks, a simulation, two checks, a 3-step worked example and a calculation problem likely take 10 or more minutes.",
+        "The activity's second band, 'Just outside: escape speed 0.71c or more', is vague. Between 1.05 and 2 r_s the speed runs from about c down to 0.71c, so a range is clearer than an open 'or more'.",
+        "The 'Escape speed rises...' reveal says the horizon is where escape speed hits light speed, but the 'Inside the horizon' explanation mixes formula-based language ('the formula demands more than c') with physical claims. A learner may read 'faster than light' as a rocket limit rather than a statement about the geometry of the formula."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 21930,
+      "approach": "discovery",
+      "blocks": "explain > activity > explain > check > worked > explain > check > problem",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 3,
+      "ms": 10633,
+      "problems": [
+        "The second knowledge check has the wrong answer key. Since r_s = 2GM/c² is proportional to mass, quadrupling the mass quadruples the radius, so the keyed answer 'twice as large' is false. The correct option is 'four times as large', which is not marked correct.",
+        "The explanation for that same question contradicts itself mid-sentence ('Wait: that would give four times...'). This is an unedited draft and would confuse learners.",
+        "The retry text for the second check states that quadrupling the mass only doubles the radius. This is false and directly contradicts the lesson's own formula and the explanation that follows.",
+        "The worked example says the Sun is about 700,000 km across. That is its radius, not its diameter; the diameter is about 1.39 million km.",
+        "The 'Earth as a black hole' problem and the first worked example are numerically correct, and the escape-speed fractions (0.71c at 2r_s, 0.5c at 4r_s) are accurate.",
+        "The lesson is well structured: discovery activity first, then the horizon formula, then checks placed right after the ideas they test. Its main weakness is that the second check teaches the wrong proportionality, which undermines the module's core understanding."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 7.5,
+      "passed": false
+    }
+  ]
+}

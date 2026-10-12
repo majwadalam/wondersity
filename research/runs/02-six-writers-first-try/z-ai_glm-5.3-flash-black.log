@@ -1,0 +1,5 @@
+■ conceptual science: Black holes (82s, score 7, below bar)
+  approach: simulation (The event horizon is a threshold defined by a quantity (escape velocity) that changes as an object is compressed, so the clearest path is to let the learner squeeze a star and watch the threshold appear.)
+  blocks:   activity:predict > explain > activity:simulation > check > explain > check > problem > explain > activity:scenario > check > summary
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=7, lesson.revise, lesson.evaluate=7, lesson.select=7

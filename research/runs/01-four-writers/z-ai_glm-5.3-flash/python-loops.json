@@ -1,0 +1,256 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "For loops and accumulators",
+    "objective": "Read, predict and write for loops that build up a result.",
+    "estimatedMinutes": 8,
+    "approach": "worked_example",
+    "approachReason": "The accumulator pattern is a procedure, so the lesson walks through one fully worked accumulation step by step, fades steps out, then has the learner write and trace their own.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "The pattern we're after",
+        "body": "Many loops don't just repeat something — they build something up: a total, a count, a piece of text. A variable that starts empty and gets updated each pass of the loop is called an accumulator.",
+        "example": "Adding up prices in a cart, counting how many times a word appears, building a sentence out of words — all accumulators."
+      },
+      {
+        "kind": "worked",
+        "heading": "Worked example: adding up a shopping trip",
+        "problem": "Prices for four items: 3.50, 2.00, 1.25, 4.75. We want a loop that ends with the total cost.",
+        "steps": [
+          {
+            "title": "Start empty",
+            "text": "Set total = 0 before the loop.",
+            "why": "The accumulator must exist before the loop starts, holding a neutral starting value."
+          },
+          {
+            "title": "Loop over the items",
+            "text": "Write 'for price in [3.50, 2.00, 1.25, 4.75]:', so price takes each value in turn.",
+            "why": "The loop variable gets one item per pass."
+          },
+          {
+            "title": "Update the accumulator",
+            "text": "Inside the loop, write 'total = total + price'.",
+            "why": "Each pass adds the current price onto whatever the total already was."
+          },
+          {
+            "title": "Read the result after the loop",
+            "text": "Print total once, after the loop ends.",
+            "why": "total = 19.00: 0 + 3.50 = 3.50, + 2.00 = 5.50, + 1.25 = 6.75, + 4.75 = 19.00."
+          }
+        ],
+        "answer": "19.00"
+      },
+      {
+        "kind": "code",
+        "heading": "Predict the total",
+        "prompt": "Trace this loop in your head. What does it print?",
+        "language": "python",
+        "code": "total = 0\nfor n in [4, 6]:\n    total = total + n\nprint(total)",
+        "explanation": "total = 10 by line 3: 0+4=4, 4+6=10. line = 4 prints it.",
+        "hints": [
+          "Run the updates one at a time: what is total after the first pass?"
+        ],
+        "mode": "predict",
+        "options": [
+          {
+            "text": "4",
+            "correct": false,
+            "feedback": "That's the value after only the first pass — the loop still has 6 to add."
+          },
+          {
+            "text": "10",
+            "correct": true,
+            "feedback": "Correct: 0 + 4 = 4, then 4 + 6 = 10."
+          },
+          {
+            "text": "0",
+            "correct": false,
+            "feedback": "That's the starting value; the loop updates total on every pass."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [],
+        "retry": "The accumulator must exist before the loop; initialise it first."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Accumulators aren't only numbers",
+        "body": "Anything that grows one step at a time can be an accumulator: start with an empty string and add a word each pass to build a sentence, or start at 0 and add 1 to count matches. The pattern is always the same three moves: initialise, update inside the loop, use the result after.",
+        "example": "s = ''  then  s = s + word + ' '  builds a space-separated sentence."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [],
+        "retry": "Counting needs only 'did it rain?', summing needs the amount."
+      },
+      {
+        "kind": "problem",
+        "heading": "You solve one",
+        "prompt": "A bakery's hourly cupcake sales are [2, 5, 0, 3, 5]. A loop runs 'count = 0' first, then for each hour: 'if sales > 0: count = count + 1', and after the loop prints count. What number is printed?",
+        "answers": [
+          "4",
+          "four"
+        ],
+        "unit": "hours",
+        "traps": [
+          {
+            "answer": "15",
+            "feedback": "15 is the SUM of sales, but this loop counts hours, never adding the sales values."
+          },
+          {
+            "answer": "5",
+            "feedback": "5 is the number of hours — but one hour sold 0, and that pass adds nothing to the count."
+          },
+          {
+            "answer": "3",
+            "feedback": "Recheck each hour: 2, 5, 3 and 5 are all greater than 0."
+          }
+        ],
+        "hints": [
+          "Count how many of the five numbers are greater than 0."
+        ],
+        "solution": "Four hours had sales greater than zero, so the counter is incremented four times: 4."
+      },
+      {
+        "kind": "code",
+        "heading": "Fix the bug",
+        "prompt": "This loop should build the word 'AB' one letter per pass, but it prints something else. Find the fix.",
+        "language": "python",
+        "code": "result = ''\nfor letter in ['A', 'B']:\n    result = letter\nprint(result)",
+        "explanation": "result = result + letter:  '' + 'A' = 'A', then 'A' + 'B' = 'AB'. Writing result = letter throws away what was already built.",
+        "hints": [
+          "Ask what result holds just before the second pass begins."
+        ],
+        "mode": "bug",
+        "options": [
+          {
+            "text": "Change result = letter to result = result + letter",
+            "correct": true,
+            "feedback": "Correct: adding onto the old result is what makes it accumulate — 'A' then 'AB'."
+          },
+          {
+            "text": "Change the starting line to result = 'AB'",
+            "correct": false,
+            "feedback": "That skips the accumulation entirely — the loop should build the word, not have it handed over."
+          },
+          {
+            "text": "Move print(result) inside the loop",
+            "correct": false,
+            "feedback": "That would print twice ('A' then 'B') instead of once with the finished result."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "reflect",
+        "heading": "Spot the pattern in your own world",
+        "prompt": "Think of something you do in daily life that works like an accumulator — you start from zero or empty and add to it one step at a time. What is the starting value, and what gets added each pass?",
+        "model": "A strong answer: 'My step counter app: steps starts at 0 each morning and each walk I take adds its step count.' Or a shopping total, or a save file's play time."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Order the accumulator moves",
+        "prompt": "Drag the four steps into the order a correct accumulator loop performs them.",
+        "reveal": "Initialise before the loop, update inside it on every pass, read the final result only after the loop ends.",
+        "type": "order",
+        "steps": [
+          "Create the accumulator with a starting value (e.g. total = 0)",
+          "Loop variable takes the first item",
+          "Update the accumulator (e.g. total = total + item)",
+          "Read or print the accumulator after the loop"
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "Your friend writes a loop to count how many tests they passed. The line inside the loop crashes with 'count is not defined'. What is missing?",
+        "options": [
+          "They forgot to create count with a starting value before the loop (e.g. count = 0)",
+          "They forgot to add 1 inside the loop (count = count + 1)",
+          "They should print count inside the loop instead",
+          "They should use a for loop with numbers instead of the test results"
+        ],
+        "correctAnswer": "They forgot to create count with a starting value before the loop (e.g. count = 0)",
+        "explanation": "An accumulator must exist and hold a neutral starting value before the loop runs, or the first update has nothing to add to."
+      },
+      {
+        "question": "You have a list of daily rainfall amounts for a week and want two answers: how many days had ANY rain, and the total millimetres that fell. Which combination is right?",
+        "options": [
+          "Count days with rain using count = count + 1 inside a condition; sum rainfall using total = total + amount for every day",
+          "Use one accumulator, total = total + amount, and divide it by 7 at the end",
+          "Count with count = count + amount; sum with total = total + 1",
+          "Use total = total + amount for the count, and count = count + 1 inside a condition for the total"
+        ],
+        "correctAnswer": "Count days with rain using count = count + 1 inside a condition; sum rainfall using total = total + amount for every day",
+        "explanation": "Counting adds a constant 1 only when the condition holds; summing adds each day's actual value. The two have exactly opposite needs from the data."
+      }
+    ]
+  },
+  "score": 7,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 18145,
+      "approach": "worked_example",
+      "blocks": "explain > worked > code > check > activity > explain > check > problem > code > reflect",
+      "droppedBlocks": 1,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 7,
+      "ms": 3634,
+      "problems": [
+        "In the 'Predict the total' code block the explanation text is garbled: 'total = 10 by line 3: 0+4=4, 4+6=10. line = 4 prints it.' — 'line = 4' is nonsensical and the line numbering is off; a learner reading this would be confused.",
+        "The worked example states the loop prints 'total = 19.00' and the answer is '19.00', but in real Python, print(19.0) outputs 19.0, not 19.00. A strict accuracy check flags this.",
+        "The second check question's explanation claims counting and summing 'have exactly opposite needs from the data' — imprecise and potentially misleading; one adds a constant under a condition, the other adds every value.",
+        "The activity (order-the-steps) is fairly low-challenge relative to the checks around it; it recycles the worked example almost verbatim and adds little thinking beyond recall of the three/four moves already just explained."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 10659,
+      "approach": "worked_example",
+      "blocks": "explain > worked > code > check > activity > explain > check > problem > code > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 6,
+      "ms": 4485,
+      "problems": [
+        "Factual/accuracy error in the worked example: 3.50 + 2.00 + 1.25 + 4.75 = 11.50, not 19.0. Both step 4's trace ('+ 4.75 = 19.0') and the answer line are wrong; every learner will compute a different result.",
+        "Activity 'Predict the sentence builder' has two options with identical text ('never stop') — one marked correct, one marked false for the missing trailing space. Learners see two indistinguishable choices; the false one should display the trailing space (e.g. 'never stop ') so the distinction is visible.",
+        "Minor: the math-error risk is compounded because the predict-code check that immediately follows uses different numbers, so a learner who tries to verify the worked example against the code block gets no contradiction — but a careful learner will be actively misled."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 7,
+      "passed": false
+    }
+  ]
+}

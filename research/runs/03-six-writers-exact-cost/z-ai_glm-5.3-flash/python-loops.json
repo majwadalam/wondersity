@@ -1,0 +1,304 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "For Loops and Accumulators",
+    "objective": "Read, predict and write for loops that build up a result.",
+    "estimatedMinutes": 8,
+    "approach": "discovery",
+    "approachReason": "Learners predict loop output and trace variables before the accumulator pattern is named, so the idea is earned from evidence they generated themselves.",
+    "blocks": [
+      {
+        "kind": "code",
+        "heading": "What will this print?",
+        "prompt": "Run your eyes over this code before anything is explained. Predict the output.",
+        "language": "python",
+        "code": "total = 0\nfor n in [1, 2, 3, 4]:\n    total = total + n\nprint(total)",
+        "explanation": "",
+        "hints": [],
+        "mode": "predict",
+        "options": [
+          {
+            "text": "0",
+            "correct": false,
+            "feedback": "That's the starting value of total — but the loop changes it before print runs."
+          },
+          {
+            "text": "10",
+            "correct": true,
+            "feedback": "Right! The loop adds 1, then 2, then 3, then 4 onto total: 1+2+3+4 = 10."
+          },
+          {
+            "text": "[1, 2, 3, 4]",
+            "correct": false,
+            "feedback": "The loop visits each number, but nothing collects them into a list — total only gets added up."
+          },
+          {
+            "text": "1234",
+            "correct": false,
+            "feedback": "The numbers are added arithmetically, not glued together as text."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "explain",
+        "heading": "You just used an accumulator",
+        "body": "A for loop repeats a block of code once for each item in a collection — here, each number in [1, 2, 3, 4]. Each pass through the block is called an iteration.\n\nThe variable `total` is an accumulator: a variable defined before the loop that each iteration builds on. It starts at 0, and every iteration does one small update (`total = total + n`) until the loop finishes and the accumulated result is ready.",
+        "example": "Think of a till at a shop: the display starts at 0, then each scanned item nudges it up. The final display is the sum."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Start from the initial value, then apply each iteration's update in order.",
+          "Each n is added to what total already holds — not to 0."
+        ],
+        "retry": ""
+      },
+      {
+        "kind": "code",
+        "heading": "Step through it yourself",
+        "prompt": "Trace this loop line by line. Watch how `result` grows one iteration at a time.",
+        "language": "python",
+        "code": "result = 0\nfor x in [3, 5, 2]:\n    result = result + x\nprint(result)",
+        "explanation": "This slow stepping is exactly what the computer does — it never 'sees' the whole list at once, only the current item.",
+        "hints": [],
+        "mode": "trace",
+        "options": [],
+        "trace": [
+          {
+            "line": 1,
+            "note": "result is set to 0 before the loop starts.",
+            "state": "result = 0, x doesn't exist yet"
+          },
+          {
+            "line": 2,
+            "note": "The loop picks up the first item: x = 3.",
+            "state": "x = 3, result = 0"
+          },
+          {
+            "line": 3,
+            "note": "result becomes result + x = 0 + 3.",
+            "state": "x = 3, result = 3"
+          },
+          {
+            "line": 2,
+            "note": "Next iteration: the loop takes x = 5.",
+            "state": "x = 5, result = 3"
+          },
+          {
+            "line": 3,
+            "note": "result becomes 3 + 5.",
+            "state": "x = 5, result = 8"
+          },
+          {
+            "line": 2,
+            "note": "Last iteration: the loop takes x = 2.",
+            "state": "x = 2, result = 8"
+          },
+          {
+            "line": 3,
+            "note": "result becomes 8 + 2.",
+            "state": "x = 2, result = 10"
+          },
+          {
+            "line": 4,
+            "note": "The list is exhausted; the loop ends and result is printed.",
+            "state": "prints 10"
+          }
+        ]
+      },
+      {
+        "kind": "explain",
+        "heading": "Accumulators aren't only for adding",
+        "body": "The accumulator pattern is flexible: the starting value and the update change, but the shape stays the same. To total numbers, start a number at 0 and add. To build a list of results, start an empty list and append each item.\n\nThe key habit: ask 'what should the result start as?' before writing the loop. That question is the whole pattern.",
+        "example": "Starting a list accumulator as `result = 0` instead of `[]` is one of the most common beginner bugs — the very next check will test you on it."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "What can you add items to, and what does that thing look like when it holds nothing yet?",
+          "A list that will collect names starts as an empty list."
+        ],
+        "retry": ""
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "worked",
+        "heading": "Worked example: doubling a list",
+        "problem": "Say we have prices [2, 5, 8] and want a new list with each doubled. Let's build it with a for loop and a list accumulator.",
+        "steps": [
+          {
+            "title": "Choose the starting value",
+            "text": "doubled = []  # empty list",
+            "why": "We're building a list, so the accumulator starts as an empty list."
+          },
+          {
+            "title": "Loop over the source",
+            "text": "for price in [2, 5, 8]:",
+            "why": "The loop visits each original price once, naming it price for that iteration."
+          },
+          {
+            "title": "Update the accumulator",
+            "text": "doubled.append(price * 2)",
+            "why": "Each iteration appends one transformed value — the list grows by one item per pass."
+          },
+          {
+            "title": "Read the result after the loop",
+            "text": "print(doubled)",
+            "why": "After three iterations, doubled holds [4, 10, 16]."
+          }
+        ],
+        "answer": "Output: [4, 10, 16]"
+      },
+      {
+        "kind": "problem",
+        "heading": "Your turn: total the even numbers",
+        "prompt": "This code runs. What does it print?\n\ntotal = 0\nfor n in [2, 4, 6, 8]:\n    total = total + n\nprint(total)",
+        "answers": [
+          "20"
+        ],
+        "unit": "",
+        "traps": [
+          {
+            "answer": "2",
+            "feedback": "That's only the first iteration's update — the loop adds all four numbers."
+          },
+          {
+            "answer": "8",
+            "feedback": "That's the last item alone, not the accumulated total."
+          }
+        ],
+        "hints": [
+          "Add the numbers one at a time onto a running total, in order.",
+          "After two iterations the total is already 6 — what comes next?"
+        ],
+        "solution": "Trace it: after each iteration total is 2, then 6, then 12, then 20."
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "result isn't empty, so its starting content is part of the final output.",
+          "The loop appends three values; where do they sit relative to the starting item?"
+        ],
+        "retry": ""
+      },
+      {
+        "kind": "summary",
+        "heading": "The accumulator pattern in one breath",
+        "points": [
+          "A for loop runs its block once per item in a collection; each run is an iteration.",
+          "An accumulator is a variable started before the loop that each iteration updates a little.",
+          "Ask 'what does the result start as?' — 0 for totals, [] for lists you build.",
+          "Trace loops one iteration at a time; that's exactly what Python does."
+        ]
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Sum or list?",
+        "prompt": "Each line comes from a for loop that builds a result. Drag each into the accumulator type it belongs to.",
+        "reveal": "Adding with + grows a single number; .append grows a list one item at a time. Same loop shape, different accumulators.",
+        "type": "sort",
+        "buckets": [
+          "Number accumulator",
+          "List accumulator"
+        ],
+        "items": [
+          {
+            "text": "total = 0",
+            "bucket": "Number accumulator"
+          },
+          {
+            "text": "total = total + n",
+            "bucket": "Number accumulator"
+          },
+          {
+            "text": "results = []",
+            "bucket": "List accumulator"
+          },
+          {
+            "text": "results.append(n * 3)",
+            "bucket": "List accumulator"
+          },
+          {
+            "text": "count = count + 1",
+            "bucket": "Number accumulator"
+          },
+          {
+            "text": "names.append(item)",
+            "bucket": "List accumulator"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "Maya is adding up her weekly savings. She writes:\n\ntotal = 0\nfor n in [5, 10, 20]:\n    total = total + n\n\nWhat is total after the loop finishes?",
+        "options": [
+          "35",
+          "20",
+          "5",
+          "0"
+        ],
+        "correctAnswer": "35",
+        "explanation": "The loop adds each item onto the running total: 0+5=5, then 15, then 35. Each iteration builds on what total already holds."
+      },
+      {
+        "question": "Dev wants to collect all the names starting with 'A' from a list of guests. His loop body does names.append(guest) whenever the name matches. What must names be before the loop starts?",
+        "options": [
+          "An empty list: names = []",
+          "Zero: names = 0",
+          "The full guest list: names = guests",
+          "It doesn't need to be defined at all"
+        ],
+        "correctAnswer": "An empty list: names = []",
+        "explanation": "A list accumulator must start as an empty list; starting at 0 or reusing the guest list would break the append or duplicate entries."
+      },
+      {
+        "question": "This code runs:\n\nresult = [\"go\"]\nfor n in [1, 2, 3]:\n    result.append(n * 3)\nprint(result)\n\nWhat does it print?",
+        "options": [
+          "[\"go\", 3, 6, 9]",
+          "[3, 6, 9]",
+          "[\"go\", 1, 2, 3]",
+          "[6]"
+        ],
+        "correctAnswer": "[\"go\", 3, 6, 9]",
+        "explanation": "The accumulator starts as [\"go\"], and each iteration appends one transformed value after it, giving [\"go\", 3, 6, 9]."
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 16235,
+      "approach": "discovery",
+      "blocks": "code > explain > check > code > explain > check > activity > worked > problem > check > summary",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8,
+      "ms": 2538,
+      "problems": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true
+    }
+  ]
+}

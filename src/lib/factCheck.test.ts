@@ -46,7 +46,11 @@ describe("checkFacts", () => {
           "400 ÷ 60 = 6 remainder 40, so the next digit is 40.",
           "In base 60, 1,40 = 100.",
           "r = 2GM / (3.00 x 10^8)^2 = 7.96 x 10^14 / 9.00 x 10^16 = 8.9 x 10^-3 m",
-          "R = v^2 / 10 = 225 × 1 / 10 = 22.5 m"
+          "R = v^2 / 10 = 225 × 1 / 10 = 22.5 m",
+          // A real lesson (run 08) rejected for "60 × 60 = 3": the number ran on.
+          "So 60 × 60 = 3,600s place, the third column.",
+          "60 × 60 = 3 600",
+          "60 × 60 = 3,600 = 1,0,0 in base 60"
         )
       ),
       []

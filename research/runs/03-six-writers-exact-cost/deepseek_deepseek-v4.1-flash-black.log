@@ -1,0 +1,6 @@
+Model call failed (The operation was aborted due to timeout); retrying
+■ conceptual science: Black holes (149s, score 7, below bar, $0.0239, 2 calls, 6983 in / 19089 out tokens)
+  approach: simulation (The event horizon emerges from a quantity the learner can vary and see change — squeeze a mass smaller and the escape speed climbs until it passes the speed of light — so the lesson is built around varying that quantity and interpreting what happens.)
+  blocks:   explain > activity:simulation > check > explain > worked > check > activity:predict > explain > check > activity:sort > problem
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=7, lesson.revise_skipped, lesson.select=7

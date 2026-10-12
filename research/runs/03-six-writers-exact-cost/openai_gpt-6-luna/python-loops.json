@@ -1,0 +1,231 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "For Loops and Accumulators",
+    "objective": "Read, predict, and write a for loop that builds a result by adding each item to a running total.",
+    "estimatedMinutes": 7,
+    "approach": "worked_example",
+    "approachReason": "A fully worked sum makes the loop’s repeated update visible, then tracing and a short coding task let the learner take over the same pattern.",
+    "blocks": [
+      {
+        "kind": "worked",
+        "heading": "Watch a total grow",
+        "problem": "We want to add every number in `[4, 1, 3]`. Follow what changes on each pass through the loop.",
+        "steps": [
+          {
+            "title": "Start",
+            "text": "Set `total = 0` before the loop.",
+            "why": "The accumulator is the variable that holds the result so far. Zero is the starting total for addition."
+          },
+          {
+            "title": "First pass",
+            "text": "The loop visits 4; update `total` to `0 + 4 = 4`.",
+            "why": "The current item is added to the result built so far."
+          },
+          {
+            "title": "Second pass",
+            "text": "The loop visits 1; update `total` to `4 + 1 = 5`.",
+            "why": "The old total is kept and the new item is added."
+          },
+          {
+            "title": "Third pass",
+            "text": "The loop visits 3; update `total` to `5 + 3 = 8`.",
+            "why": "After the final item, the accumulator contains the full sum."
+          }
+        ],
+        "answer": "The loop ends with `total` equal to 8."
+      },
+      {
+        "kind": "explain",
+        "heading": "The loop-and-accumulator pattern",
+        "body": "A `for` loop takes one item at a time from a sequence and runs its indented body for each item. An accumulator is a variable updated in that body to build a result across the passes.\n\nFor a sum, start with `total = 0`, then add the current item with `total += item`. The order matters: initialize before the loop, update inside it, and use the final value after it.",
+        "example": "In the worked example, `total += item` is shorthand for `total = total + item`."
+      },
+      {
+        "kind": "code",
+        "heading": "Predict the printed total",
+        "prompt": "Before choosing, trace the value of `total` as each number is visited.",
+        "language": "python",
+        "code": "numbers = [3, 1, 4]\ntotal = 0\nfor n in numbers:\n    total += n\nprint(total)",
+        "explanation": "The total goes 0 → 3 → 4 → 8, so the program prints 8.",
+        "hints": [
+          "Start at 0 and update the total once for each number.",
+          "After adding 3 and 1, the total is 4. What happens when you add 4?"
+        ],
+        "mode": "predict",
+        "options": [
+          {
+            "text": "8",
+            "correct": true,
+            "feedback": "Correct: the loop adds 3, then 1, then 4 to the running total."
+          },
+          {
+            "text": "4",
+            "correct": false,
+            "feedback": "That is the last item, not the sum of all the items."
+          },
+          {
+            "text": "3, 1, 4",
+            "correct": false,
+            "feedback": "Those are the items visited; `print` displays the accumulator after the loop."
+          },
+          {
+            "text": "7",
+            "correct": false,
+            "feedback": "Check the last update: adding 4 to the previous total of 4 gives 8."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Where should the starting value be set?",
+          "Inside the loop, update the old total using the current day’s count."
+        ],
+        "retry": "Think of `total` as a notebook value: each day’s page count should be added to the value already written there."
+      },
+      {
+        "kind": "explain",
+        "heading": "Trace the changing value",
+        "body": "To predict a loop, keep a small trace of the accumulator after each pass. The loop variable changes to the next item, while the accumulator carries the result forward.\n\nNotice that an item can be zero: the loop still visits it, and adding zero leaves the running total unchanged.",
+        "example": "For page counts `[5, 0, 3]`, the total changes from 0 to 5, stays 5, then becomes 8."
+      },
+      {
+        "kind": "code",
+        "heading": "Trace each pass",
+        "prompt": "Step through the code in order. For each highlighted line, record the value of `total` after that line runs.",
+        "language": "python",
+        "code": "values = [2, 4, 1]\ntotal = 0\nfor value in values:\n    total += value\nprint(total)",
+        "explanation": "The loop visits 2, 4, and 1; the total ends at 7 and that is what gets printed.",
+        "hints": [
+          "The accumulator begins at 0.",
+          "Each pass adds the current `value` to the total from the previous pass."
+        ],
+        "mode": "trace",
+        "options": [],
+        "trace": [
+          {
+            "line": 1,
+            "note": "Assign the list to `values`.",
+            "state": "values = [2, 4, 1]"
+          },
+          {
+            "line": 2,
+            "note": "Set the accumulator to its starting value.",
+            "state": "total = 0"
+          },
+          {
+            "line": 4,
+            "note": "Add the first value, 2.",
+            "state": "value = 2, total = 2"
+          },
+          {
+            "line": 4,
+            "note": "Add the next value, 4.",
+            "state": "value = 4, total = 6"
+          },
+          {
+            "line": 4,
+            "note": "Add the final value, 1.",
+            "state": "value = 1, total = 7"
+          },
+          {
+            "line": 5,
+            "note": "Display the completed total.",
+            "state": "Output: 7"
+          }
+        ]
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Only use the first two prices; the third has not been visited yet.",
+          "Add the second price to the total after the first pass."
+        ],
+        "retry": "After pass one, the total is 7. Pass two adds 2, so the running total is 9."
+      },
+      {
+        "kind": "problem",
+        "heading": "Write the update line",
+        "prompt": "You are writing a loop to total `values = [6, 2, 5]`. The code already has `total = 0` before the loop and `for n in values:` on the line above. Type the single indented line that updates the accumulator on each pass.",
+        "answers": [
+          "total += n"
+        ],
+        "unit": "",
+        "traps": [
+          {
+            "answer": "total = n",
+            "feedback": "This replaces the accumulator with the current item, so earlier values are lost."
+          },
+          {
+            "answer": "total += values",
+            "feedback": "The loop variable `n` is the current number; `values` is the whole list."
+          }
+        ],
+        "hints": [
+          "The update should use the current item, `n`.",
+          "Add `n` to the old value of `total` rather than replacing it."
+        ],
+        "solution": "Use `total += n`. This adds the current item to the total built from earlier items; after all three passes, the total is 13."
+      }
+    ],
+    "activities": [],
+    "questions": [
+      {
+        "question": "You are tracking pages read each day with `[5, 0, 3]`. Which code correctly builds the total?",
+        "options": [
+          "total = 0\nfor pages in [5, 0, 3]:\n    total += pages",
+          "for pages in [5, 0, 3]:\n    total = pages",
+          "total = 0\nfor pages in [5, 0, 3]:\n    total += 1",
+          "total = 0\nfor pages in [5, 0, 3]:\n    pages += total"
+        ],
+        "correctAnswer": "total = 0\nfor pages in [5, 0, 3]:\n    total += pages",
+        "explanation": "This initializes the accumulator before the loop and adds each day’s page count to it. The zero is visited too, but adding it does not change the total."
+      },
+      {
+        "question": "A shop program starts at `total = 0` and adds each price in `[7, 2, 6]`. What is `total` immediately after the second loop pass?",
+        "options": [
+          "2",
+          "7",
+          "9",
+          "15"
+        ],
+        "correctAnswer": "9",
+        "explanation": "The first pass adds 7, making the total 7; the second adds 2, making it 9. The last price has not been processed yet."
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 37540,
+      "approach": "worked_example",
+      "blocks": "worked > explain > code > check > explain > code > check > problem",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8,
+      "ms": 5313,
+      "problems": [
+        "The second check’s retry gives away the answer directly rather than offering a different explanation that helps the learner work it out.",
+        "The lesson practices nearly the same summing pattern throughout; a small variation, such as using a different sequence or asking learners to spot a faulty accumulator update, could deepen transfer."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true
+    }
+  ]
+}

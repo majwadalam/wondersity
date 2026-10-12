@@ -1,0 +1,260 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Why 1789?",
+    "objective": "Explain how royal debt, high food prices, and new ideas combined to turn a financial crisis into a challenge to political authority.",
+    "estimatedMinutes": 8,
+    "approach": "mystery",
+    "approachReason": "The lesson investigates why a government money problem became a revolution, uncovering the different roles of debt, bread prices, and ideas before connecting them.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "How does a money problem become a revolution?",
+        "body": "France had experienced government debts and bad harvests before. Yet in 1789, a financial crisis became a struggle over who had the right to govern.\n\nOur mystery is not simply why people were unhappy. It is why the government's money problems, people's daily hardships, and arguments about political authority became connected.",
+        "example": "Look for three different roles: what forced the government to act, what made the crisis urgent for ordinary people, and what made existing authority open to challenge."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Debt forced a political decision",
+        "body": "Costly wars, including French support for American independence, had added to royal debt. Servicing that debt strained the government's finances, while its tax system could not provide enough revenue to meet its commitments.\n\nProposals to broaden taxation met resistance from privileged groups and institutions. With financial reform blocked, Louis XVI called the Estates-General in 1789 to address the crisis. A dispute about raising money now opened a dispute about representation and who could approve change.",
+        "example": "Debt was not the same as national poverty: wealth could exist in France without the crown being able to tax it effectively."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Separate wealth in the country from money available to the government.",
+          "Think about what happens when a ruler needs a tax change but cannot secure agreement."
+        ],
+        "retry": "To collect more revenue, the crown needed changes to taxation. Resistance to those changes made the question of who could authorize them politically important."
+      },
+      {
+        "kind": "explain",
+        "heading": "Second clue: the price of bread",
+        "body": "A poor harvest in 1788 helped push grain and bread prices upward. Bread was a staple food, so rising prices put intense pressure on households with little money to spare.\n\nThis was a different crisis from royal debt: one threatened the government's finances; the other threatened people's ability to eat. Food hardship heightened anger and helped draw ordinary people into unrest while political leaders struggled over reform.",
+        "example": "Imagine a household whose earnings stay the same while its essential food becomes more expensive. Less money remains for rent, fuel, or anything else."
+      },
+      {
+        "kind": "explain",
+        "heading": "Third clue: reasons to question authority",
+        "body": "Enlightenment debates circulated arguments about liberty, legal equality, and government accountable to the people it governed. These ideas did not all point to one political program, but they offered ways to question inherited privilege and unchecked royal power.\n\nHigh bread prices could prompt a demand for affordable food. Ideas about rights and representation helped people make a broader argument: the rules of government themselves should change. Ideas did not cause the debt or the poor harvest; they helped shape how the crisis was understood.",
+        "example": "“We need cheaper bread” and “we should have a voice in government” are different demands. In 1789, economic hardship and political arguments could reinforce one another."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Identify which part of the situation concerns survival and which concerns political authority.",
+          "The strongest explanation connects the pressures without treating them as the same thing."
+        ],
+        "retry": "A shortage explains why people need relief. Arguments about rights and representation help explain why some also demand a different way of governing."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Test a one-cause explanation",
+        "prompt": "Someone says, “The French Revolution started because bread was expensive.” In two or three sentences, explain what this gets right and what it leaves out. Include the roles of royal debt and new ideas.",
+        "model": "Expensive bread made daily life harder and intensified popular anger. But royal debt forced the crown to seek reforms and call the Estates-General, opening a political confrontation. Ideas about rights and representation helped turn demands for relief into challenges to privilege and authority."
+      },
+      {
+        "kind": "explain",
+        "heading": "The mystery resolved: pressures converged",
+        "body": "Debt helps explain why the crown had to act; food prices help explain the urgency and anger beyond the government; new ideas help explain why authority and privilege became targets of criticism. In 1789, the calling of the Estates-General gave these pressures a political meeting point.\n\nNo single factor made revolution inevitable. Their interaction helps explain why a financial emergency became a much wider struggle over how France should be governed.",
+        "example": ""
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Can a wealthy country have a broke government?",
+        "prompt": "France contained considerable wealth, yet the crown faced a financial crisis. Which explanation would best account for both being true?",
+        "reveal": "A country's wealth and its government's available revenue are not the same thing. Debt payments and obstacles to effective taxation could leave the crown in crisis even in a wealthy kingdom.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "Debt costs could exceed available revenue, while resistance made tax reform difficult.",
+            "correct": true,
+            "feedback": "Yes. The crown needed income it could actually collect, not simply wealth that existed somewhere in France."
+          },
+          {
+            "text": "All wealth in the country was automatically available for the king to spend.",
+            "correct": false,
+            "feedback": "Private wealth was not automatically royal revenue. Collecting taxes depended on rules, privileges, and political cooperation."
+          },
+          {
+            "text": "High bread prices automatically paid off the government's debt.",
+            "correct": false,
+            "feedback": "Higher food prices burdened buyers; they did not automatically supply the crown with the money needed to service its debt."
+          },
+          {
+            "text": "Having a large debt meant that nobody in France owned valuable property.",
+            "correct": false,
+            "feedback": "Government debt did not mean everyone was poor. A government's finances and its subjects' wealth are different things."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Three pressures, one political crisis",
+        "prompt": "Tap the nodes and trace their connections. Find the route from royal debt to a political confrontation, then explore how bread prices and ideas added different pressures.",
+        "reveal": "Debt opened a confrontation over reform, food hardship intensified popular anger, and ideas supplied arguments for changing authority. These were connected pressures, not three names for the same problem.",
+        "type": "diagram",
+        "nodes": [
+          {
+            "label": "Royal debt",
+            "detail": "Debt servicing strained royal finances and increased the pressure to secure more revenue."
+          },
+          {
+            "label": "Disputed tax reform",
+            "detail": "Resistance to proposed changes blocked efforts to resolve the financial crisis."
+          },
+          {
+            "label": "Estates-General",
+            "detail": "Its calling in 1789 opened a forum in which financial reform and political representation became contested."
+          },
+          {
+            "label": "High bread prices",
+            "detail": "Poor harvest conditions helped raise the cost of a staple food."
+          },
+          {
+            "label": "Popular hardship",
+            "detail": "Difficulty affording food intensified anger and helped fuel unrest."
+          },
+          {
+            "label": "Rights and representation",
+            "detail": "Circulating ideas offered arguments against inherited privilege and unchecked royal authority."
+          },
+          {
+            "label": "Challenge to authority",
+            "detail": "The crisis expanded beyond finding money or food to questioning how France should be governed."
+          }
+        ],
+        "edges": [
+          {
+            "from": 0,
+            "to": 1,
+            "label": "increased pressure for"
+          },
+          {
+            "from": 1,
+            "to": 2,
+            "label": "helped lead to the calling of"
+          },
+          {
+            "from": 2,
+            "to": 6,
+            "label": "opened a political arena for"
+          },
+          {
+            "from": 3,
+            "to": 4,
+            "label": "intensified"
+          },
+          {
+            "from": 4,
+            "to": 6,
+            "label": "added popular pressure to"
+          },
+          {
+            "from": 5,
+            "to": 6,
+            "label": "supplied arguments for"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "Imagine you advise the crown before the Estates-General meets. Debt payments are straining revenue, and powerful opponents resist broader taxation. Why could this financial problem become a political crisis?",
+        "options": [
+          "Changing taxation raises questions about who can authorize reform and whose privileges can be challenged.",
+          "Government debt proves that every household has run out of money.",
+          "Resistance to taxation removes the need to negotiate with anyone.",
+          "Calling representatives guarantees that all disagreements will disappear."
+        ],
+        "correctAnswer": "Changing taxation raises questions about who can authorize reform and whose privileges can be challenged.",
+        "explanation": "The crown's need for revenue collided with resistance to reform. Resolving that conflict involved authority, privilege, and representation—not just accounting."
+      },
+      {
+        "question": "In an imagined French town in 1789, residents complain that bread is unaffordable. A pamphlet also argues that laws should not favor inherited privilege and that people should have a voice in government. Which interpretation best explains the combination?",
+        "options": [
+          "Food hardship creates urgency, while political ideas help turn grievances into demands about government.",
+          "The pamphlet caused the poor harvest that made bread expensive.",
+          "Residents' hunger and the crown's debt are exactly the same financial problem.",
+          "Ideas about representation mean food prices no longer matter to residents."
+        ],
+        "correctAnswer": "Food hardship creates urgency, while political ideas help turn grievances into demands about government.",
+        "explanation": "High food prices placed immediate pressure on households. Arguments about privilege and representation offered a way to connect dissatisfaction to broader political change."
+      }
+    ],
+    "sources": [
+      {
+        "url": "https://www.worldhistory.org/Estates-General%5Fof%5F1789/",
+        "title": "www.worldhistory.org"
+      },
+      {
+        "url": "https://www.revolution.chnm.org/exhibits/show/liberty--equality--fraternity/enlightenment-and-human-rights",
+        "title": "The Enlightenment and Human Rights · Explore · LIBERTY, EQUALITY, FRATERNITY: EXPLORING THE FRENCH REVOUTION"
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 69151,
+      "approach": "mystery",
+      "blocks": "explain > activity > explain > check > explain > explain > activity > check > reflect > explain",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 1,
+      "ms": 33073,
+      "claims": 8,
+      "supported": 2,
+      "contradicted": [],
+      "unclear": 6,
+      "downgraded": [
+        "Costly wars, including French support for American independence, increased France's royal debt.: the quoted evidence isn't on the cited page",
+        "Servicing royal debt strained France's government finances, and the tax system failed to raise enough revenue to meet government commitments.: the quoted evidence isn't on the cited page",
+        "Privileged groups and institutions in France resisted proposals to broaden taxation before the French Revolution.: the quoted evidence isn't on the cited page",
+        "A poor harvest in France in 1788 helped raise grain and bread prices.: the quoted evidence isn't on the cited page",
+        "Food hardship intensified popular anger and helped draw ordinary people into unrest during the French revolutionary crisis.: the quoted evidence isn't on the cited page",
+        "Ideas about rights and representation helped turn demands for economic relief into challenges to privilege and political authority during the French Revolution.: the quoted evidence isn't on the cited page"
+      ]
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8,
+      "ms": 33080,
+      "problems": [
+        "Most incorrect options are implausible absolutes, making both checks easier than the scenario framing suggests. They do not strongly test whether learners can distinguish credible competing explanations.",
+        "The diagram activity mainly asks learners to inspect an already completed causal map; it offers limited active reasoning or feedback on their understanding.",
+        "The retry explanations largely restate the original explanations rather than offering genuinely different ways to understand the concepts.",
+        "The mystery framing is engaging, but the three-factor explanation is announced immediately and repeated several times, reducing the sense of investigation.",
+        "The political mechanism remains somewhat abstract: the lesson mentions disputes over representation without briefly explaining how disagreement over voting in the Estates-General turned financial reform into a confrontation over authority."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true,
+      "sources": 2
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+eval/anthropic_claude-haiku-5.5/black-holes.json	7	Factual error: the worked Sun example says the Sun would shrink from about 700,000 km across, but 700,000 km is roughly the Sun's radius; its diameter is about 1.4 million km. / Activity band inaccuracy: the 'Up to 4' band says escape speed is '0.5c or less', but for distances from just above 2 r_s up to almost 4 r_s, escape speed is greater than 0.5c. At 3 r_s it is about 0.58c.
+eval/anthropic_claude-haiku-5.5/python-loops.json	8.5	
+eval/anthropic_claude-haiku-5.5/the-french-revolution.json	9	
+eval/deepseek_deepseek-v4.1-flash/black-holes.json	9.5	None
+eval/deepseek_deepseek-v4.1-flash/python-loops.json	9	
+eval/deepseek_deepseek-v4.1-flash/the-french-revolution.json	8	The bread-price simulation states that at 11.5 sous bread is 'over half' a 25-sous daily wage, but 11.5/25 = 46%, not over half. / The trap feedback for 25% is somewhat unclear about how that answer would arise.
+eval/openai_gpt-6-sol/black-holes.json	9	
+eval/openai_gpt-6-sol/python-loops.json	9	
+eval/openai_gpt-6-sol/the-french-revolution.json	9	
+eval/z-ai_glm-5.3-flash/black-holes.json	7	The historical claim that Newton guessed the black-hole escape-velocity idea is inaccurate; this is usually attributed to John Michell and later Laplace. / All three checks have empty hints and empty retry fields, and the provided explanations are not genuinely alternative explanations.
+eval/z-ai_glm-5.3-flash/python-loops.json	5	Critical arithmetic error in the core worked example: 3.50 + 2.00 + 1.25 + 4.75 = 11.50, but the lesson states 'total = 19.00' and sets answer: '19.00'. The trace line '...+ 1.25 = 6.75, + 4.75 = 19.00' is also mathematically wrong (6.75 + 4.75 = 11.50). The central example that the whole module rests on teaches an incorrect result. / The predict block explanation 'line = 4 prints it' is garbled/typo'd — it should read 'line 4 prints it'; a beginner tracing line-by-line could be confused.
+eval/z-ai_glm-5.3-flash/the-french-revolution.json	7	The second knowledge check appears before the third explanatory block that teaches the ideas needed to answer it; it asks why the crowd wanted political change, but the cahiers and National Assembly are only introduced afterward. / The 8-minute estimate seems tight for four dense explanatory blocks, two activities, and three multi-part checks.

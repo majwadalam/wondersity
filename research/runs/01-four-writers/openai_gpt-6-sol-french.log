@@ -1,0 +1,5 @@
+■ history: The French Revolution (78s, score 8.5)
+  approach: mystery (The lesson begins with three contrasting clues, then tests what each explains before bringing them together to answer why the crisis erupted in 1789.)
+  blocks:   activity:predict > explain > check > explain > check > explain > activity:sort > check > explain
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=7, lesson.revise, lesson.evaluate=8.5, lesson.select=8.5

@@ -1,0 +1,5 @@
+■ programming: Python loops (43s, score 8, $0.0028, 2 calls, 6474 in / 4816 out tokens)
+  approach: worked_example (A fully worked sum makes the loop’s repeated update visible, then tracing and a short coding task let the learner take over the same pattern.)
+  blocks:   worked > explain > code:predict > check > explain > code:trace > check > problem
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=8, lesson.select=8

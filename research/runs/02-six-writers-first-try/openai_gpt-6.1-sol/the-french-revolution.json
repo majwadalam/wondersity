@@ -1,0 +1,191 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Why 1789?",
+    "objective": "Explain how royal debt, rising food prices, and ideas about political authority combined to turn a crisis into revolution in 1789.",
+    "estimatedMinutes": 7,
+    "approach": "mystery",
+    "approachReason": "The lesson opens with the puzzle of why familiar problems produced a revolution in 1789, then uncovers how financial pressure, hunger, and challenges to royal authority reinforced one another.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Clue 1: The crown needed money—and cooperation",
+        "body": "France's monarchy had accumulated heavy debts through wars, including support for the American War of Independence. Debt meant that money collected today had to help pay for earlier borrowing, leaving less for current expenses.\n\nRaising more revenue was difficult: the tax system was unequal, and privileged groups resisted reforms that threatened their advantages. Nobles were not exempt from every tax, but important exemptions and privileges limited what the crown could collect. Unable to settle the financial crisis, Louis XVI summoned the Estates-General, an assembly representing the clergy, nobility, and Third Estate, to meet in May 1789.",
+        "example": "The financial problem created a political opening: the king needed agreement on changes, not merely more coins."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Distinguish needing money from being able to collect it.",
+          "Which option connects resistance to tax reform with the need for a representative assembly?"
+        ],
+        "retry": "Think of a ruler who needs new revenue but cannot easily change who pays. Negotiating over taxes can open a debate about who gets a voice in government."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "Clue 3: Who had the right to decide?",
+        "body": "Hunger could produce anger, but ideas helped people question the political system itself. Enlightenment arguments about rights, equality before the law, and government serving the people gave critics ways to challenge inherited privilege and unchecked royal power.\n\nAt the Estates-General, disputes over voting made these questions urgent: should each estate have one collective vote, or should individual representatives vote together? Many Third Estate deputies argued that they represented the nation, rather than merely one social order. In June 1789, they declared themselves a National Assembly, challenging the idea that political authority belonged to the king alone.",
+        "example": "There was no single revolutionary opinion. Not everyone wanted to abolish the monarchy, but questions about representation and authority were now being acted upon."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Look for an explanation that gives each pressure a different role.",
+          "Which account connects a government decision, everyday hardship, and a claim about representation?"
+        ],
+        "retry": "The three pressures did different jobs: debt pushed the crown toward an assembly, costly bread made the crisis urgent for ordinary people, and political ideas helped turn complaints into challenges to authority."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Test the explanation by removing a clue",
+        "prompt": "Imagine that France's harvest had been plentiful and bread affordable in early 1789, but royal debt and debates about representation remained. Would all the pressures toward revolution disappear? Explain what would remain and what would be weaker.",
+        "model": "No. The crown would still face debt and resistance to tax reform, and the Estates-General could still become a site of conflict over representation. Affordable bread would reduce immediate hardship and one source of popular anger. Political conflict could still occur, but its intensity and course might differ; this does not prove that revolution was inevitable."
+      },
+      {
+        "kind": "explain",
+        "heading": "The mystery resolved: why 1789?",
+        "body": "Debt, hunger, and criticism of privilege were not entirely new in France. What made 1789 explosive was their convergence: the crown's financial crisis opened a political arena just as expensive bread intensified public distress.\n\nArguments about rights and representation helped people turn dissatisfaction into a challenge to who could speak for the nation. No single cause made revolution inevitable, but together these pressures made a financial dispute much harder to contain.",
+        "example": ""
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "A puzzle about timing",
+        "prompt": "France had experienced debt, hunger, and criticism of rulers before. Why might these problems lead to a revolution in 1789 rather than remain separate crises? Choose the strongest explanation; we will investigate its pieces.",
+        "reveal": "The key is not just that several problems existed, but that they interacted. Follow how the crown's need for money, the public's need for bread, and arguments about political authority became connected.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "Royal debt alone automatically caused people to reject the monarchy.",
+            "correct": false,
+            "feedback": "Debt strained the government, but it did not automatically determine how people would respond."
+          },
+          {
+            "text": "Expensive bread made political debates and royal finances irrelevant.",
+            "correct": false,
+            "feedback": "Bread prices mattered greatly, but they developed alongside a financial and political crisis."
+          },
+          {
+            "text": "Financial crisis opened a political conflict while food hardship and new ideas intensified it.",
+            "correct": true,
+            "feedback": "This connects the pressures rather than treating them as isolated causes. The lesson will uncover how the connections worked."
+          },
+          {
+            "text": "New political ideas immediately persuaded everyone to demand a republic.",
+            "correct": false,
+            "feedback": "People held different views, and many initially sought changes within a monarchy rather than a republic."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "From a poor harvest to public anger",
+        "prompt": "Tap the nodes in order, starting with the poor harvest. Trace how a problem in the fields could affect a worker's household and then the mood in the streets.",
+        "reveal": "Bread was a staple, so higher prices could sharply squeeze household budgets when wages failed to keep pace. Food hardship increased public anger during the crown's financial and political crisis.",
+        "type": "diagram",
+        "nodes": [
+          {
+            "label": "Poor harvest in 1788",
+            "detail": "A poor harvest reduced grain supplies. The harsh winter that followed added to hardship."
+          },
+          {
+            "label": "Higher bread prices",
+            "detail": "Scarcer grain contributed to higher bread prices. Bread was a central part of many people's daily diet."
+          },
+          {
+            "label": "Household budgets squeezed",
+            "detail": "When earnings did not keep up with food prices, buying essentials became harder. There was less money left for other needs."
+          },
+          {
+            "label": "Public anger and unrest",
+            "detail": "Distress could fuel protests and demands for action. Hunger did not dictate one political response, but it made the wider crisis more urgent."
+          }
+        ],
+        "edges": [
+          {
+            "from": 0,
+            "to": 1,
+            "label": "Reduced grain supplies help raise prices"
+          },
+          {
+            "from": 1,
+            "to": 2,
+            "label": "Food takes more of people's earnings"
+          },
+          {
+            "from": 2,
+            "to": 3,
+            "label": "Hardship fuels demands for action"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A royal adviser in 1788 proposes changing taxes to raise revenue, but privileged groups resist. Why does calling the Estates-General make sense as the crown's next move?",
+        "options": [
+          "It could help secure agreement on financial changes the crown had struggled to impose.",
+          "It would automatically cancel all debts owed by the monarchy.",
+          "It would increase the grain harvest before the next winter.",
+          "It would remove the need to collect taxes in the future."
+        ],
+        "correctAnswer": "It could help secure agreement on financial changes the crown had struggled to impose.",
+        "explanation": "Resistance to financial reform made the debt crisis a problem of political cooperation. Summoning the Estates-General was an attempt to address that impasse, although it opened wider conflicts."
+      },
+      {
+        "question": "In June 1789, a Paris worker struggles to buy bread while Third Estate deputies claim the right to represent the nation. Which explanation best connects these events with the crown's debt crisis?",
+        "options": [
+          "Debt made bread expensive by itself, and expensive bread automatically created the National Assembly.",
+          "The deputies' political ideas removed food hardship, leaving only a dispute about royal spending.",
+          "The poor harvest forced everyone to adopt the same political aims, regardless of social position.",
+          "Debt helped bring representatives together, food hardship intensified public anger, and ideas about representation challenged royal authority."
+        ],
+        "correctAnswer": "Debt helped bring representatives together, food hardship intensified public anger, and ideas about representation challenged royal authority.",
+        "explanation": "Each pressure contributed differently, and their interaction helps explain why the crisis widened. None alone explains both the political opening and the growing public urgency."
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 58948,
+      "approach": "mystery",
+      "blocks": "activity > explain > check > activity > explain > check > reflect > explain",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8,
+      "ms": 9261,
+      "problems": [
+        "The multiple-choice distractors are mostly implausible absolutes, making the checks easier than their scenarios suggest. Learners can often identify the answer without understanding the causal relationships.",
+        "The opening activity reveals the complete explanation immediately, weakening the mystery approach and leaving little genuine investigation.",
+        "The food-price diagram provides the causal sequence rather than asking learners to construct or evaluate it, so its interactivity requires limited reasoning.",
+        "The retry explanations largely restate the original causal account rather than offering a genuinely different explanatory approach."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true
+    }
+  ]
+}

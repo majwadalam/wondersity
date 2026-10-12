@@ -1,0 +1,236 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Why 1789?",
+    "objective": "Explain how royal debt, rising food prices, and new political ideas combined to bring France into revolution in 1789.",
+    "estimatedMinutes": 7,
+    "approach": "mystery",
+    "approachReason": "Learners investigate separate clues to a puzzle—why a financial crisis became a revolution—before connecting them in the final scenario.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Clue 1: A debt crisis brings representatives together",
+        "body": "France had accumulated large debts through earlier wars and royal spending, including its support for the American Revolution. The government needed more revenue, but privileged groups resisted tax reforms that would make them pay more. In 1789, Louis XVI summoned the Estates-General—representatives of the clergy, nobility, and commoners—to address the crisis.",
+        "example": "The meeting was intended to help solve the state's budget problem. But once representatives gathered, they could also argue about who had power to make decisions."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Separate the reason the king called the meeting from the arguments that followed once it began.",
+          "Which choice connects the government's need for money to a political meeting?"
+        ],
+        "retry": "Think of a government facing bills it cannot pay: it needs revenue and may have to ask groups with different interests to agree on a solution. The meeting created an opportunity for a budget problem to become a dispute over authority."
+      },
+      {
+        "kind": "explain",
+        "heading": "Clue 2: The crisis reaches the dinner table",
+        "body": "A poor harvest in 1788 reduced the supply of grain, and bread prices rose. Bread was a staple food, so families who already spent much of their income on it had little room to absorb the increase. The state's debt threatened the government's finances; expensive bread made hardship immediate for ordinary people.",
+        "example": "A household could not solve the harvest shortage by changing how the government collected taxes. It had to find money for more expensive food, making the crisis personal and urgent."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Follow the chain from harvest to grain supply to the price families faced.",
+          "Which answer describes the effect on ordinary households, not the cause of the royal debt?"
+        ],
+        "retry": "The state's budget and a family's food budget are different problems. A poor harvest reduced grain supply; the resulting higher bread prices squeezed household spending and could intensify public anger."
+      },
+      {
+        "kind": "explain",
+        "heading": "Clue 3: Who gets a say?",
+        "body": "Ideas associated with the Enlightenment—including arguments about rights, representation, and political authority—gave people ways to question the old order. At the Estates-General, each of the three estates traditionally had one vote, so the clergy and nobility could outvote the much larger Third Estate together. The Third Estate wanted voting by head, meaning each representative would have a vote, and challenged the privileged arrangement.",
+        "example": "Imagine a meeting with 100 commoners and two privileged groups, but each group gets only one vote. Counting by group can silence the largest group; counting each person or representative separately changes the balance."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "Solve the mystery: why did the pressures combine?",
+        "body": "Debt helped force Louis XVI to call the Estates-General, putting questions about representation in front of the country’s leaders. Rising bread prices made the wider crisis painful in daily life, while ideas about rights and representation helped people frame demands for political change. None of these clues alone explains the whole revolution: together, they turned a financial problem into a broader struggle over hardship and who should hold power.",
+        "example": "The state's budget crisis was about how the government could raise money; a household's food crisis was about affording bread. The political conflict connected those pressures to a larger question: who should make decisions for France?"
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Trace what debt caused the king to do, then ask what food hardship and ideas added to that situation.",
+          "Look for an answer that explains how the pressures reinforced one another, not one that treats a single cause as sufficient."
+        ],
+        "retry": "Picture three pressures meeting at once: the government needs money, households face more expensive bread, and representatives challenge a system that limits their political voice. The connection is that material hardship raised the stakes while the political meeting and new ideas offered a route and language for challenging authority."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "The opening puzzle",
+        "prompt": "The king called the Estates-General to face a crisis, but the meeting soon became a struggle over political power. Before you see the other clues, what would you investigate to understand that change?",
+        "reveal": "Keep your prediction provisional: the meeting's rules help explain why a financial discussion could become political, but they are only one clue. Next, investigate the pressures that brought people and representatives to that moment.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "Whether representatives had equal influence when decisions were made",
+            "correct": true,
+            "feedback": "That could reveal how a meeting called for financial reasons became a dispute over political voice."
+          },
+          {
+            "text": "Whether the royal family had announced a plan to leave France",
+            "correct": false,
+            "feedback": "That would be important evidence for a different question, but it does not explain why a meeting about finances became a dispute over representation."
+          },
+          {
+            "text": "Whether France had already won a new war in 1789",
+            "correct": false,
+            "feedback": "War could affect royal finances, but this would not explain what made the Estates-General politically contentious."
+          },
+          {
+            "text": "Whether every French family could grow its own grain",
+            "correct": false,
+            "feedback": "Food supply matters to the crisis, but this question would not reveal how the meeting's political rules worked."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Sort the historical clues",
+        "prompt": "Place each clue in the category that best describes its role in the crisis. Some events were pressures or triggers; others shaped the political demands people made.",
+        "reveal": "Debt and resistance to tax reform pressed the monarchy toward a political meeting. Food prices made hardship urgent for ordinary people, while rights and representation ideas shaped challenges to how power was distributed.",
+        "type": "sort",
+        "buckets": [
+          "Financial trigger",
+          "Popular pressure",
+          "Ideas and political demands"
+        ],
+        "items": [
+          {
+            "text": "War and royal spending leave France heavily indebted.",
+            "bucket": "Financial trigger"
+          },
+          {
+            "text": "Privileged groups resist reforms that would raise their tax contributions.",
+            "bucket": "Financial trigger"
+          },
+          {
+            "text": "A poor harvest reduces the supply of grain.",
+            "bucket": "Popular pressure"
+          },
+          {
+            "text": "Bread prices rise, straining families' budgets.",
+            "bucket": "Popular pressure"
+          },
+          {
+            "text": "Arguments about rights and representation question the old order.",
+            "bucket": "Ideas and political demands"
+          },
+          {
+            "text": "The Third Estate challenges voting by estate and seeks voting by head.",
+            "bucket": "Ideas and political demands"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "The French government is deeply in debt, and privileged groups resist paying more. What best explains Louis XVI's decision to summon the Estates-General?",
+        "options": [
+          "He wanted the estates to approve a new political system before any tax debate began.",
+          "He needed representatives to help address the state's financial crisis, which brought disputes over political influence into the open.",
+          "He wanted to ask the Third Estate to set bread prices after a poor harvest.",
+          "He planned to replace the clergy and nobility with Enlightenment writers."
+        ],
+        "correctAnswer": "He needed representatives to help address the state's financial crisis, which brought disputes over political influence into the open.",
+        "explanation": "The state needed revenue, and Louis XVI summoned representatives amid efforts to address the debt. Their meeting also raised the question of how much influence each estate should have."
+      },
+      {
+        "question": "After a poor harvest, a family in France spends much more of its income on bread. Which consequence best connects this experience to the wider crisis?",
+        "options": [
+          "The higher price directly ends the government's debt and removes the need for a political meeting.",
+          "The hardship makes the old voting rules more equal because bread is now expensive for everyone.",
+          "The family's financial strain makes the crisis immediate for ordinary people, adding pressure to the existing government and political conflict.",
+          "The family's need for bread proves that Enlightenment ideas caused the harvest failure."
+        ],
+        "correctAnswer": "The family's financial strain makes the crisis immediate for ordinary people, adding pressure to the existing government and political conflict.",
+        "explanation": "Expensive bread did not create the royal debt or settle political disputes. It made hardship immediate for families and added pressure to a crisis already unfolding."
+      },
+      {
+        "question": "A representative in 1789 sees the state struggling with debt, hears that families are facing costly bread, and joins a debate where the Third Estate challenges voting by estate. Which explanation best shows how these clues interacted?",
+        "options": [
+          "Bread prices created the royal debt, so the Estates-General met only to decide how to reduce grain costs.",
+          "Enlightenment ideas caused the poor harvest, and the harvest forced privileged groups to support equal voting.",
+          "The debt alone made revolution inevitable; food hardship and representation debates had no meaningful role.",
+          "Debt brought representatives together, food hardship widened the pressure, and ideas about representation helped turn the meeting into a challenge to political authority."
+        ],
+        "correctAnswer": "Debt brought representatives together, food hardship widened the pressure, and ideas about representation helped turn the meeting into a challenge to political authority.",
+        "explanation": "The debt helped trigger the political meeting, rising bread prices increased everyday hardship, and ideas about representation shaped demands for change. Their interaction—not any one clue alone—helps explain why the crisis became revolutionary."
+      }
+    ]
+  },
+  "score": 7.5,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 73037,
+      "approach": "mystery",
+      "blocks": "activity > explain > check > explain > activity > check > explain",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 7,
+      "ms": 10626,
+      "problems": [
+        "The lesson ends immediately after introducing Enlightenment ideas and the struggle over representation. There is no final check requiring learners to explain how all three causes interacted, which is the module's central goal.",
+        "The opening prediction reveals the complete causal explanation before learners investigate the clues, weakening the mystery approach.",
+        "The timeline provides dates for every event, so ordering them requires little historical reasoning. It also introduces the National Assembly before explaining its significance.",
+        "Multiple-choice distractors are mostly implausible, making the checks easier than the learning objective warrants. Both questions place the correct answer first.",
+        "Retry explanations largely restate the original explanations rather than offering genuinely different ways to understand the causes.",
+        "The eight-minute estimate is generous for the amount of reading and substantive learner work provided."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 27341,
+      "approach": "mystery",
+      "blocks": "activity > explain > check > explain > check > explain > activity > explain > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 7.5,
+      "ms": 11149,
+      "problems": [
+        "The lesson explains the pressures clearly but stops before showing a concrete revolutionary outcome. Without the Third Estate declaring itself the National Assembly, the shift from a financial crisis to a challenge to royal authority remains somewhat abstract.",
+        "Most incorrect answers are obviously implausible, such as Enlightenment ideas causing the harvest failure. Learners can often identify the correct answer without understanding the causal relationships.",
+        "The opening prediction has a predetermined correct answer and discounts food supply as an investigative direction, even though food hardship is central to the module. It functions more as a leading quiz than an open investigation.",
+        "The voting example mixes commoners, groups, and representatives without clearly distinguishing population size from the number of deputies. It also omits the doubling of Third Estate representation, which helps explain why voting by head mattered in 1789.",
+        "The retry explanations generally restate the original causal chains rather than offering genuinely different ways to understand them."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 7.5,
+      "passed": false
+    }
+  ]
+}

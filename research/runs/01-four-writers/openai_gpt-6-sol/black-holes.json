@@ -1,0 +1,266 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The event horizon: can light escape?",
+    "objective": "Explain why light still travels at its usual local speed inside an event horizon, yet cannot reach an observer outside.",
+    "estimatedMinutes": 8,
+    "approach": "misconception",
+    "approachReason": "Testing the claim that a black hole slows light to a stop reveals the more useful idea: the horizon marks where outward escape paths end.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Light does not slow to a stop",
+        "body": "An astronaut beside the flashlight measures its beam moving at the speed of light, even after crossing the event horizon. The horizon is not a wall that catches the beam. It is a boundary: once inside, even light aimed outward has no future path that leads back outside.",
+        "example": "A brighter flashlight sends more light, not faster light."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Think about the beam's speed beside the astronaut, not whether it reaches a distant telescope.",
+          "Crossing the horizon changes the beam's possible destinations, not its locally measured speed."
+        ],
+        "retry": "Separate what happens nearby from where the beam can eventually go. Locally it moves at light speed; globally it cannot escape."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "A boundary between possible destinations",
+        "body": "For an outward-pointing flash just outside the horizon, a path to a distant observer is still possible. At the horizon, an outward-directed light ray cannot move out beyond it; inside, even that ray remains inside. This is why the event horizon is called a point of no return—not because light stops moving, but because no signal from inside can get out.",
+        "example": ""
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Both probes aim their flashes directly outward.",
+          "Compare the possible destinations of light starting just outside and just inside."
+        ],
+        "retry": "The question is not whether a flashlight works near a black hole. It is which side of the boundary the flash starts on."
+      },
+      {
+        "kind": "activity",
+        "ref": 2
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Imagine replacing one outward-going light ray with a million.",
+          "Would any of those rays start on the other side of the horizon?"
+        ],
+        "retry": "Adding power changes how much light is sent. It does not create a route from inside the horizon to outside."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Replace the mistaken picture",
+        "prompt": "A friend says, “Nothing escapes because gravity makes light stop at the horizon.” In your own words, give them a better explanation.",
+        "model": "Light never stops in a nearby observer's measurement. The event horizon is the boundary beyond which even an outward-directed light signal has no future path to the outside."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "A flashlight just inside",
+        "prompt": "An astronaut crosses a black hole's event horizon and immediately points a flashlight outward. Why can't its beam reach a distant observer?",
+        "reveal": "The beam does not slow to a stop. Inside the horizon, even light aimed outward cannot follow a future path back outside.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "The beam moves at light speed nearby, but its path cannot lead outside.",
+            "correct": true,
+            "feedback": "Yes. Local speed and eventual destination are different questions."
+          },
+          {
+            "text": "Gravity slows the beam to a complete stop at the horizon.",
+            "correct": false,
+            "feedback": "An observer beside the beam still measures it moving at light speed."
+          },
+          {
+            "text": "The beam escapes if the flashlight is powerful enough.",
+            "correct": false,
+            "feedback": "More power produces more light, not a path out of the horizon."
+          },
+          {
+            "text": "The beam bounces off the horizon like a solid surface.",
+            "correct": false,
+            "feedback": "The event horizon is a boundary, not a physical surface."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Slide across the horizon",
+        "prompt": "Place a flashlight at different distances from the center of an idealized black hole. At each position, it fires a beam directly outward. Which positions give the beam a route to a distant observer? A distance of 1 horizon radius marks the event horizon.",
+        "reveal": "Just outside, the outward beam has a route away; just inside, it does not. Its locally measured speed is still the speed of light at either position.",
+        "type": "simulation",
+        "slider": {
+          "label": "Distance from center",
+          "min": 0.5,
+          "max": 2,
+          "step": 0.1,
+          "unit": "horizon radii",
+          "initial": 1.2
+        },
+        "bands": [
+          {
+            "upTo": 0.9,
+            "title": "Inside",
+            "detail": "Even a directly outward beam has no route to an observer outside."
+          },
+          {
+            "upTo": 1,
+            "title": "At the horizon",
+            "detail": "An outward-directed light ray cannot move out beyond the boundary."
+          },
+          {
+            "upTo": 2,
+            "title": "Outside",
+            "detail": "A directly outward beam can travel toward a distant observer."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Follow each beam",
+        "prompt": "Tap the two flashlight nodes, then trace their connections. Which beam has a route to the distant telescope?",
+        "reveal": "The outside beam can connect to the distant telescope. The inside beam still travels, but every part of its future route stays inside.",
+        "type": "diagram",
+        "nodes": [
+          {
+            "label": "Flashlight outside",
+            "detail": "It fires directly away from the black hole, starting beyond the horizon."
+          },
+          {
+            "label": "Outside beam",
+            "detail": "This outward-going light can continue away from the black hole."
+          },
+          {
+            "label": "Distant telescope",
+            "detail": "An outward-going signal from outside can reach an observer far away."
+          },
+          {
+            "label": "Event horizon",
+            "detail": "This boundary separates starting points that can send an outward beam away from those that cannot."
+          },
+          {
+            "label": "Flashlight inside",
+            "detail": "It also fires directly outward, but starts inside the boundary."
+          },
+          {
+            "label": "Inside beam",
+            "detail": "It moves at light speed locally, yet cannot cross outward through the horizon."
+          },
+          {
+            "label": "Future inside",
+            "detail": "The beam's future remains within the black hole."
+          }
+        ],
+        "edges": [
+          {
+            "from": 0,
+            "to": 1,
+            "label": "sends"
+          },
+          {
+            "from": 1,
+            "to": 2,
+            "label": "can reach"
+          },
+          {
+            "from": 3,
+            "to": 0,
+            "label": "outside"
+          },
+          {
+            "from": 3,
+            "to": 4,
+            "label": "inside"
+          },
+          {
+            "from": 4,
+            "to": 5,
+            "label": "sends"
+          },
+          {
+            "from": 5,
+            "to": 6,
+            "label": "remains inside"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "After crossing the event horizon, an astronaut switches on a flashlight and measures its beam beside them. Which description fits?",
+        "options": [
+          "The beam moves at light speed nearby, though it cannot reach outside.",
+          "The beam slows steadily until it stops beside the astronaut.",
+          "The beam moves faster than light to fight gravity.",
+          "The flashlight produces no beam once it crosses the horizon."
+        ],
+        "correctAnswer": "The beam moves at light speed nearby, though it cannot reach outside.",
+        "explanation": "The astronaut still measures light moving at its usual speed. What changes is whether the beam's future path can lead outside."
+      },
+      {
+        "question": "Two probes fire beams directly outward: one is just outside a black hole's event horizon and one is just inside. Which beam can reach a distant telescope?",
+        "options": [
+          "Only the beam from just outside",
+          "Only the beam from just inside",
+          "Both beams, because both move at light speed",
+          "Neither beam, because the horizon blocks all nearby light"
+        ],
+        "correctAnswer": "Only the beam from just outside",
+        "explanation": "An outward-going beam starting outside has a route away. The beam starting inside has no future path across the horizon to the telescope."
+      },
+      {
+        "question": "A probe inside the event horizon cannot send a light signal to its crew outside. It replaces its flashlight with a much brighter laser aimed outward. What changes?",
+        "options": [
+          "It sends more light, but none of that light can reach the crew outside.",
+          "The laser's light moves faster and crosses the horizon.",
+          "The stronger beam punches a temporary hole through the horizon.",
+          "The crew receives the signal because light always moves at light speed."
+        ],
+        "correctAnswer": "It sends more light, but none of that light can reach the crew outside.",
+        "explanation": "Brightness does not change light's speed or create an escape path. Even an outward-directed signal sent from inside remains inside."
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 39073,
+      "approach": "misconception",
+      "blocks": "activity > explain > check > activity > explain > check > activity > check > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8,
+      "ms": 5946,
+      "problems": [
+        "The diagram gives away the route to the telescope in its node labels, so tracing it requires little inference.",
+        "The final check repeats the brighter-flashlight idea introduced in the opening activity, limiting the increase in difficulty."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true
+    }
+  ]
+}

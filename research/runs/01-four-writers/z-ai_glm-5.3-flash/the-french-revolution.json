@@ -1,0 +1,188 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Why 1789?",
+    "objective": "Explain how debt, food prices and new ideas combined to start the revolution.",
+    "estimatedMinutes": 8,
+    "approach": "mystery",
+    "approachReason": "France had been bankrupt-sounding, hungry and unequal for decades, yet the revolution broke out in 1789 — opening with that puzzle and resolving it piece by piece fits the material perfectly.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "The puzzle",
+        "body": "France had been deeply in debt since the Seven Years' War in the 1760s. Peasants had grumbled about feudal dues for centuries. Enlightenment writers like Voltaire and Rousseau had been criticising the old order since the 1750s.\n\nAnd yet the revolution exploded in 1789 — almost overnight. Nothing on the list above was new. So what changed? That's the mystery this lesson solves.",
+        "example": "France's debt in 1789 was over 4 billion livres — roughly half the state's annual income was needed just to pay interest."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Piece 1: the American trigger",
+        "body": "Here's what changed first: in 1778 France joined the American War of Independence, sending ships, soldiers and money to fight Britain. It was a diplomatic triumph — but a financial catastrophe. Between 1778 and 1783, war spending pushed the debt past the point where normal borrowing could cover it.\n\nBy 1788, the state was effectively bankrupt: it could not borrow enough to pay its bills. The king had to do something no French king had done in 175 years — call the Estates-General, a meeting of representatives from all three orders, to approve new taxes.",
+        "example": "Ironically, the French funded a revolution for liberty in America — and many French soldiers, like the young Lafayette, came home full of the same ideas."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Look back at the chart activity: it wasn't the size of the debt alone.",
+          "Bankruptcy means you can't even cover the interest payments on what you owe."
+        ],
+        "retry": "Think of debt like a credit card: it's not the total balance that matters most, but whether you can still pay the monthly interest."
+      },
+      {
+        "kind": "explain",
+        "heading": "Piece 2: the price of bread",
+        "body": "A bankrupt government creates a crisis in Versailles; hungry people create one in the streets. In 1788 a hailstorm destroyed crops, and a brutal winter froze what was left. By mid-1789 the price of bread in Paris had hit its highest level in decades — a worker might spend 88% of their daily wage just to feed a family.\n\nBread was not a luxury. For most French people it was nearly the entire diet. When bread spiked, people didn't cut back — they rioted. And riots in 1789 were not just bread riots: crowds shouted slogans about liberty and the nation.",
+        "example": "In July 1789, a Parisian labourer earned about 30 sous a day while a loaf cost 14.5 sous — a worker's daily wage bought roughly two loaves, down from four or more in earlier years."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "A riot over bread is about bread. What made the crowds demand political things too?",
+          "The module goal mentions three ingredients: money, food, and something else."
+        ],
+        "retry": "Motive plus opportunity plus meaning: hunger supplied the rage, the bankruptcy crisis supplied the chaos, and new ideas supplied the justification."
+      },
+      {
+        "kind": "explain",
+        "heading": "Piece 3: ideas give hunger a language",
+        "body": "The third ingredient wasn't new either — but its moment finally arrived. Enlightenment ideas about popular sovereignty had circulated among educated readers for decades. What changed in 1789 was that a bankrupt king called the Estates-General, and ordinary people across France were asked, for the first time, to write down their grievances in official complaint lists (cahiers de doléances).\n\nSuddenly abstract ideas met a concrete political moment. When the Third Estate's demands were ignored, they didn't just grumble — they declared themselves a National Assembly and swore they would not disband until France had a constitution.",
+        "example": "Over 25,000 cahiers were drawn up in spring 1789 — peasants complaining about feudal dues, lawyers about unequal courts, all in the new vocabulary of rights."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Without the ideas, what is a hungry crowd? A riot — or something more?",
+          "The Tennis Court Oath demanded a constitution. Could hungry people demand that without the new political language?"
+        ],
+        "retry": "This is how historians think: each ingredient explains a different part — why the state collapsed, why crowds erupted, and why the eruption became a revolution rather than just a riot."
+      },
+      {
+        "kind": "summary",
+        "heading": "Why 1789 — answered",
+        "points": [
+          "Debt made it possible: bankruptcy forced Louis XVI to summon the Estates-General, opening a political door.",
+          "Bread made it urgent: the worst food crisis in decades put desperate crowds on the streets of Paris.",
+          "Ideas made it a revolution: they turned riots over bread into demands for rights and a constitution."
+        ]
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "France's debt crisis in numbers",
+        "prompt": "Which figure would have alarmed the king's ministers most? Guess the biggest bar first, then check the details.",
+        "reveal": "It wasn't the total debt that broke France — it was that interest payments alone consumed roughly half the annual income, leaving nothing to pay for anything else.",
+        "type": "chart",
+        "unit": "livres (millions)",
+        "bars": [
+          {
+            "label": "Debt in 1774 (Louis XVI's accession)",
+            "value": 2350,
+            "note": "Large, but manageable — lenders still trusted the crown."
+          },
+          {
+            "label": "Debt after the American war (1783)",
+            "value": 4300,
+            "note": "The war nearly doubled it in nine years."
+          },
+          {
+            "label": "Debt in 1789",
+            "value": 4500,
+            "note": "Still climbing on interest alone, with no way to service it."
+          },
+          {
+            "label": "Annual income, 1789",
+            "value": 500,
+            "note": "About half of this went straight to interest payments — the real crisis."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "The road to revolution",
+        "prompt": "Drag the events into the order they happened, from trigger to explosion.",
+        "reveal": "Notice the shape: a financial problem opened the political door, hunger pushed crowds through it, and ideas told them what to demand once inside.",
+        "type": "order",
+        "steps": [
+          "Bankrupt state: Louis XVI summons the Estates-General for 1789",
+          "Cahiers de doléances: ordinary people write grievance lists with the language of rights",
+          "Third Estate declares itself the National Assembly; the Tennis Court Oath",
+          "Bread prices peak in Paris amid the worst harvest crisis in decades",
+          "Crowd storms the Bastille, 14 July 1789"
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "By 1788 the French state could not borrow enough to pay its bills. What did this bankruptcy directly force Louis XVI to do — the act that set 1789 apart from the 1760s and 1770s?",
+        "options": [
+          "Declare a default and cancel all royal debts",
+          "Summon the Estates-General to approve new taxes",
+          "Sell off the colonies to Britain and Spain",
+          "Order the nobility to pay taxes by royal decree, backed by the army"
+        ],
+        "correctAnswer": "Summon the Estates-General to approve new taxes",
+        "explanation": "Bankruptcy left the crown no credit and no alternative: only an assembly representing the nation could legitimise sweeping new taxes. Calling the Estates-General opened the political door the revolution walked through."
+      },
+      {
+        "question": "Paris in July 1789: bread costs 14.5 sous, a labourer earns 30 sous a day, and the king has just gathered troops around the capital. Earlier bread riots had been put down without revolution. Which factor best explains why the crowd that stormed the Bastille wanted political change, not just cheaper bread?",
+        "options": [
+          "The Bastille held hundreds of political prisoners awaiting release",
+          "New ideas of rights and popular sovereignty, spread by the cahiers and the National Assembly, gave the crowds political demands",
+          "Bread prices were higher in 1789 than at any point in French history",
+          "The Estates-General had voted to abolish the monarchy"
+        ],
+        "correctAnswer": "New ideas of rights and popular sovereignty, spread by the cahiers and the National Assembly, gave the crowds political demands",
+        "explanation": "Hunger explains the rage; only the new political vocabulary explains the targets and slogans. The crowd wasn't just demanding bread — it was acting as 'the nation' against despotism, in language the Enlightenment had supplied."
+      },
+      {
+        "question": "A historian argues: 'Remove any ONE of the three ingredients and there is no revolution in 1789.' Suppose the Enlightenment had never happened, but the debt crisis and bread prices were exactly the same. What is the most likely outcome?",
+        "options": [
+          "A revolution anyway — hunger and bankruptcy are enough on their own",
+          "No crisis at all — without ideas, the debt and bread problems would not have mattered",
+          "A serious bread riot and a royal fiscal reform, but no revolution and no constitution",
+          "A revolution led by the nobility, who had their own grievances against the crown"
+        ],
+        "correctAnswer": "A serious bread riot and a royal fiscal reform, but no revolution and no constitution",
+        "explanation": "Without the political language of rights and sovereignty, hungry crowds riot for bread but don't demand constitutions, and the king's fiscal fix wouldn't be overturned by claims of a National Assembly. That is exactly what happened in earlier crises."
+      }
+    ]
+  },
+  "score": 9,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 23453,
+      "approach": "mystery",
+      "blocks": "explain > activity > explain > check > explain > check > explain > activity > check > summary",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 9,
+      "ms": 4195,
+      "problems": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 9,
+      "passed": true
+    }
+  ]
+}

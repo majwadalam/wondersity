@@ -1,0 +1,261 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Launch Angle and Range: Finding the Sweet Spot",
+    "objective": "Explain how changing the launch angle reshapes a projectile's path, why 45° gives the longest range on flat ground, and why paired angles land in the same spot.",
+    "estimatedMinutes": 8,
+    "approach": "simulation",
+    "approachReason": "Launch angle is one quantity that smoothly reshapes the whole path. Dragging it and watching the arc change builds the idea faster than any description could.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "Why the middle wins",
+        "body": "Your launch speed has two jobs. Part of it carries the ball sideways, and part of it lifts the ball up to buy air time. The angle decides how that speed is split between the two.\n\nAt a low angle, the ball moves sideways fast but falls back down almost at once. At a steep angle, it stays up a long time but barely creeps forward. Range depends on both: sideways speed × time in the air. On flat ground with no air resistance, 45° splits the speed evenly, and that balance makes the product as big as it can be.",
+        "example": "At 20 m/s: a 10° launch lands about 14 m away, a 45° launch about 41 m, and an 80° launch about 14 m again."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Which setting on the graph produced the arc that landed farthest right?",
+          "The best angle balances sideways speed against time in the air."
+        ],
+        "retry": "Think of range as two things multiplied: sideways speed and time in the air. A low angle maximizes the first, and a steep angle maximizes the second. 45° is the angle where their product peaks."
+      },
+      {
+        "kind": "explain",
+        "heading": "Twin angles",
+        "body": "Go back to the graph and try 30°, then 60°. The arcs look completely different: one is low and quick, the other tall and slow. Yet they land in exactly the same spot.\n\nThis works for any pair of angles that add up to 90°, such as 20° and 70°, or 35° and 55°. The steeper twin gains in air time exactly what it loses in sideways speed.",
+        "example": "At 20 m/s, both 30° and 60° land about 35.3 m away. The 60° ball just takes longer to get there and climbs about three times higher."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Add the two angles together. What do you get?"
+        ],
+        "retry": "Complementary angles (ones that add to 90°) always share a range on flat ground. 25° + 65° = 90°, so both throws land at the same distance."
+      },
+      {
+        "kind": "explain",
+        "heading": "The range rule in one line",
+        "body": "Everything you saw is captured by one formula for flat ground with no air resistance: R = v² × sin(2θ) / g. Here v is the launch speed, θ is the launch angle, and g ≈ 10 m/s² is gravity.\n\nThe sine of an angle is largest (exactly 1) at 90°. That means sin(2θ) peaks when 2θ = 90°, which is when θ = 45°. At 45° the rule simplifies to R = v² / g. Notice that speed is squared: doubling the speed quadruples the range.",
+        "example": "Twin check: 2 × 30° = 60° and 2 × 60° = 120°. Since sin 60° = sin 120°, the two ranges come out equal."
+      },
+      {
+        "kind": "problem",
+        "heading": "How far does it land?",
+        "prompt": "A ball is launched at 15 m/s at 45° over flat ground. Use g = 10 m/s² and ignore air resistance. How far away does it land?",
+        "answers": [
+          "22.5"
+        ],
+        "unit": "m",
+        "traps": [
+          {
+            "answer": "225",
+            "feedback": "That's v² alone. You still need to divide by g = 10."
+          },
+          {
+            "answer": "15.9",
+            "feedback": "You used sin(45°). The formula uses sin(2θ), so you want sin(90°) = 1."
+          },
+          {
+            "answer": "1.5",
+            "feedback": "The speed must be squared: 15² = 225, not 15."
+          }
+        ],
+        "hints": [
+          "At 45°, sin(2θ) = sin(90°) = 1, so R = v² / g.",
+          "Square 15 first, then divide by 10."
+        ],
+        "solution": "R = v² × sin(2θ) / g = 15² × sin(90°) / 10 = 225 × 1 / 10 = 22.5 m."
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Both angles land in the same place, so compare how long each one stays in the air.",
+          "Recall how tall the 60° arc was compared with the 30° arc."
+        ],
+        "retry": "Twin angles reach the same distance, but they are not the same throw. The low angle has more sideways speed and a shorter, flatter path, so it gets there sooner. The high angle spends much longer in the air."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Which angle goes farthest?",
+        "prompt": "You throw a ball at the same speed every time over flat ground, with no air resistance. Which launch angle sends it the farthest?",
+        "reveal": "45° wins. The longest throw comes from balancing forward speed against time in the air, not from favoring either one.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "30°",
+            "correct": false,
+            "feedback": "Close, but too flat. The ball moves forward quickly yet lands too soon."
+          },
+          {
+            "text": "45°",
+            "correct": true,
+            "feedback": "Right. It's the balance point between forward speed and air time."
+          },
+          {
+            "text": "60°",
+            "correct": false,
+            "feedback": "This one stays up longer, but it moves forward too slowly. It actually ties with 30°."
+          },
+          {
+            "text": "75°",
+            "correct": false,
+            "feedback": "Mostly up and down. Lots of height, but very little distance."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Reshape the arc",
+        "prompt": "This is the path of a ball launched at 20 m/s. Drag the launch angle from low to high and watch where the arc meets the ground. Find the angle that lands farthest right. Then compare 30° with 60°.",
+        "reveal": "The range rises, peaks near 41 m at 45°, then falls again. Angles equally far from 45° land in the same spot.",
+        "type": "graph",
+        "expression": "x*tan(k*pi/180) - 9.8*x^2/(2*20^2*cos(k*pi/180)^2)",
+        "slider": {
+          "label": "Launch angle",
+          "min": 10,
+          "max": 80,
+          "step": 5,
+          "unit": "°",
+          "initial": 30
+        },
+        "bands": [
+          {
+            "upTo": 30,
+            "title": "Low and flat",
+            "detail": "Fast forward motion, but the ball hits the ground quickly, so the range is short to medium."
+          },
+          {
+            "upTo": 40,
+            "title": "Stretching out",
+            "detail": "More air time is paying off. The landing point keeps moving farther away."
+          },
+          {
+            "upTo": 50,
+            "title": "Peak distance",
+            "detail": "Around 45° the ball lands about 41 m away, the longest possible at this speed."
+          },
+          {
+            "upTo": 65,
+            "title": "Taller, shorter",
+            "detail": "Height keeps growing, but forward speed drops, so the range shrinks. 60° matches 30°."
+          },
+          {
+            "upTo": 80,
+            "title": "Mostly up",
+            "detail": "A tall, narrow arc. At 80° it lands only about 14 m away, the same as at 10°."
+          }
+        ],
+        "axis": {
+          "xLabel": "Horizontal distance (m)",
+          "yLabel": "Height (m)",
+          "xMin": 0,
+          "xMax": 45,
+          "yMin": 0,
+          "yMax": 22
+        }
+      }
+    ],
+    "questions": [
+      {
+        "question": "A shot-putter in a physics thought experiment (flat ground, no air resistance) wants the longest possible throw at their usual speed. Which release angle should they use?",
+        "options": [
+          "30°",
+          "45°",
+          "60°",
+          "90°"
+        ],
+        "correctAnswer": "45°",
+        "explanation": "At 45° the launch speed is split evenly between forward motion and lift, which maximizes sideways speed × air time."
+      },
+      {
+        "question": "Maya kicks a ball at 25° and it lands 30 m away on flat ground. She kicks again at the same speed, this time at 65°. Ignoring air resistance, where does it land?",
+        "options": [
+          "About 30 m away",
+          "About 78 m away, since the angle is much bigger",
+          "About 12 m away, since steep kicks barely travel",
+          "About 45 m away, since 65° is closer to 45°"
+        ],
+        "correctAnswer": "About 30 m away",
+        "explanation": "25° and 65° add to 90°, so they are twin angles with the same range. The 65° kick just flies higher and takes longer."
+      },
+      {
+        "question": "A firefighter's hose sprays water at a fixed speed toward a window that is closer than the hose's maximum range. Both 20° and 70° would reach it. To get water there as fast as possible, which should they choose?",
+        "options": [
+          "70°, because a higher arc means more speed",
+          "20°, because the flatter path spends less time in the air",
+          "Either one, since equal range means equal travel time",
+          "45°, because it is always the best angle"
+        ],
+        "correctAnswer": "20°, because the flatter path spends less time in the air",
+        "explanation": "Twin angles share a range but not a flight time. The low angle has more sideways speed and a short, flat arc, so the water arrives sooner."
+      }
+    ]
+  },
+  "score": 7,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 55568,
+      "approach": "simulation",
+      "blocks": "activity > activity > explain > check > explain > check > explain > problem > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 7,
+      "ms": 12449,
+      "problems": [
+        "The equal-launch-and-landing-height condition is not stated explicitly. Flat ground and no air resistance alone do not guarantee a 45° optimum: a shot-putter normally releases above ground level, making the first check ambiguous.",
+        "The firefighter check incorrectly applies complementary-angle reasoning to an elevated window. At fixed speed, 20° and 70° have equal ground-level ranges, but their trajectories do not pass through the same elevated target. The intended faster-arrival answer is sensible, but the scenario's premise is inconsistent.",
+        "Two activity blocks occur consecutively, as flagged. Although their interaction types differ, the prediction's reveal gives away both the optimum angle and the complementary-angle result before learners explore the graph.",
+        "Several hints directly disclose the key operation or answer, and retry explanations mostly repeat the original speed–air-time explanation rather than offering a genuinely different explanatory route.",
+        "The simulation uses g = 9.8 m/s², while the later formula section introduces g ≈ 10 m/s² without explaining the change. Both are valid, but learners may wonder why the formula gives 40 m where the graph shows about 41 m."
+      ],
+      "factErrors": [],
+      "structureIssues": [
+        "Two \"activity\" blocks back to back; vary the interaction."
+      ]
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 56202,
+      "approach": "simulation",
+      "blocks": "activity > explain > activity > explain > check > explain > check > explain > problem > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate_failed",
+      "iteration": 2,
+      "error": "OpenRouter 402: {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhausted\",\"limit_source\":\"openrouter_in_flight_budget\",\"remedy_hint\":\"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.\",\"headers\":{\"Retry-After\":\"120\"},\"provider_name\":null}},\"user_id\":\"user_[redacted]\"}"
+    },
+    {
+      "step": "lesson.select",
+      "score": 7,
+      "passed": false
+    }
+  ]
+}

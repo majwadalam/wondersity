@@ -1,0 +1,5 @@
+■ conceptual science: Black holes (87s, score 7.5, below bar)
+  approach: discovery (Learners find the boundary themselves by varying distance and watching escape speed approach light speed, and the horizon is named only after they have seen the evidence.)
+  blocks:   explain > activity:simulation > explain > check > worked > explain > check > problem
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=7.5, lesson.revise, lesson.evaluate=3, lesson.select=7.5

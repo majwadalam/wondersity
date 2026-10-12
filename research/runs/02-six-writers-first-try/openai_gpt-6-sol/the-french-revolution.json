@@ -1,0 +1,202 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Why 1789?",
+    "objective": "Explain how royal debt, rising bread prices, and ideas about political representation combined to start the French Revolution.",
+    "estimatedMinutes": 7,
+    "approach": "mystery",
+    "approachReason": "The puzzle of why a long-standing debt crisis erupted in 1789 lets learners uncover each pressure before connecting them.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Clue 1: The crown needed money",
+        "body": "France's government had borrowed heavily to pay for wars, including its support for the American Revolution. By the late 1780s, repaying debt consumed a large share of its income. Raising more money was difficult: proposed tax reforms met resistance from groups defending their privileges.\n\nAfter other efforts failed, King Louis XVI summoned the Estates-General, an assembly of representatives, to meet in 1789. A financial problem had opened a national political debate.",
+        "example": "The debt was not new in 1789. The chance to argue publicly over how France should be governed was."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "What was the king trying to change to raise money?",
+          "Think about why people who opposed those changes mattered."
+        ],
+        "retry": "The king needed a way through a dispute over money and taxes. Calling representatives together also gave them a place to challenge how decisions were made."
+      },
+      {
+        "kind": "explain",
+        "heading": "Clue 2: Bread became harder to afford",
+        "body": "A poor harvest in 1788 helped push bread prices upward into 1789. For many families, bread was an essential daily expense, so a price rise could consume money needed for everything else.\n\nThe government's debt did not cause the poor harvest. But the two pressures struck at the same time: the crown struggled to raise money while many people struggled to buy food.",
+        "example": "A deputy debating taxes and a Parisian trying to buy bread faced different problems—but both had reason to think the situation could not continue."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Focus on what happens to a family's spending when an essential food costs more.",
+          "Would a poor harvest directly erase government debt?"
+        ],
+        "retry": "A high bread price matters especially when bread takes up much of a household's budget. It can turn a political crisis into an immediate concern for people who are not in the assembly."
+      },
+      {
+        "kind": "explain",
+        "heading": "Clue 3: Who should have a say?",
+        "body": "Ideas about liberty, equality before the law, and government answerable to the nation had circulated before 1789. They gave critics a way to argue that political power should not rest only with the king and privileged groups.\n\nWhen the Estates-General met, representatives of the Third Estate—the vast majority of French people who were neither clergy nor nobility—pressed for a stronger voice. On June 17, 1789, their deputies declared themselves the National Assembly, claiming to represent the nation.",
+        "example": "New ideas did not make bread cheaper or pay the debt. They helped people argue about who had the authority to solve those problems."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Which pressure brought representatives together in 1789?",
+          "Then ask what made change urgent outside the assembly and what gave deputies a reason to claim authority."
+        ],
+        "retry": "Think of three different roles: debt pushed the king to seek a solution, expensive bread sharpened public anger, and political ideas shaped demands for change."
+      },
+      {
+        "kind": "explain",
+        "heading": "Why 1789?",
+        "body": "No single clue solves the puzzle. Years of debt pushed the king to summon representatives in 1789; soaring bread prices made the crisis urgent for many households; and ideas about representation helped deputies challenge the old political order. Together, these pressures turned a search for money into the beginning of a revolution.",
+        "example": "Debt explains the political opening. Bread prices explain much of the urgency. New ideas help explain why the answer became a demand for political change."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "An old debt, a new crisis",
+        "prompt": "France had owed money for years. What might make that old problem turn into a national political confrontation in 1789?",
+        "reveal": "To find a way out of its financial crisis, the king summoned representatives. That created an opening for a much bigger argument—but it does not yet explain why so many people felt the moment was urgent.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "The king's search for new revenue led him to summon representatives, who could challenge his plans.",
+            "correct": true,
+            "feedback": "Yes. The debt created pressure for action, and the assembly created a place for political demands."
+          },
+          {
+            "text": "All of France's debt was first borrowed in 1789.",
+            "correct": false,
+            "feedback": "The debt had built up over many years. The puzzle is why it became politically explosive then."
+          },
+          {
+            "text": "A poor harvest paid off the government's loans.",
+            "correct": false,
+            "feedback": "A poor harvest could raise food prices; it could not repay government debt."
+          },
+          {
+            "text": "The king no longer needed taxes, so he gave up political power.",
+            "correct": false,
+            "feedback": "The government needed more revenue, not less, and the king did not simply give up power."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "How the pressures met",
+        "prompt": "Trace the events in order. At which point did the king's money problem become a debate over who could speak for France?",
+        "reveal": "The debt and the ideas about representation predated 1789. The poor harvest increased hardship, while the meeting of representatives gave political demands a place to take shape.",
+        "type": "timeline",
+        "events": [
+          {
+            "marker": "1778–1783",
+            "title": "War spending adds to debt",
+            "detail": "France's support for the American Revolution adds to an already costly burden of borrowing."
+          },
+          {
+            "marker": "1788",
+            "title": "A poor harvest",
+            "detail": "A poor harvest helps drive bread prices higher into the following year."
+          },
+          {
+            "marker": "1788",
+            "title": "An assembly is called",
+            "detail": "Facing a financial crisis, the king announces that the Estates-General will meet in 1789."
+          },
+          {
+            "marker": "May 1789",
+            "title": "The Estates-General meets",
+            "detail": "Representatives gather to address the crisis, opening disputes about taxes and political voice."
+          },
+          {
+            "marker": "June 1789",
+            "title": "Deputies claim to represent the nation",
+            "detail": "Third Estate deputies declare themselves the National Assembly, challenging the old political order."
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "In the late 1780s, the king's advisers need more revenue, but attempts to change taxes face resistance. Why might summoning the Estates-General change the situation?",
+        "options": [
+          "It gives representatives a forum to debate the financial crisis and make their own demands.",
+          "It immediately erases the government's debts.",
+          "It guarantees that privileged groups will volunteer to pay every tax.",
+          "It allows the king to avoid discussing taxes altogether."
+        ],
+        "correctAnswer": "It gives representatives a forum to debate the financial crisis and make their own demands.",
+        "explanation": "The crown sought a way through its financial crisis. Bringing representatives together also gave them an opportunity to contest how France was governed."
+      },
+      {
+        "question": "In spring 1789, a wage-earning family finds that its usual loaf costs much more than before. Why could this deepen unrest?",
+        "options": [
+          "Bread now takes a larger share of the family's money, making daily life more precarious.",
+          "Higher bread prices automatically repay the king's debts.",
+          "A bread shortage means no one can discuss politics.",
+          "Bread becomes less important to the family's spending."
+        ],
+        "correctAnswer": "Bread now takes a larger share of the family's money, making daily life more precarious.",
+        "explanation": "Bread was an essential expense for many families. When its price rose, hardship made the wider crisis feel immediate."
+      },
+      {
+        "question": "A Third Estate deputy in June 1789 says the assembly should speak for the nation. Meanwhile, people outside it face expensive bread. Which account best explains why the crisis became revolutionary?",
+        "options": [
+          "Debt brought representatives together, food prices heightened hardship, and ideas about representation supported a challenge to royal authority.",
+          "Food prices alone caused the king to borrow money for earlier wars and created every political demand.",
+          "New political ideas immediately lowered bread prices and ended the debt crisis.",
+          "The king called representatives because France had no financial problems."
+        ],
+        "correctAnswer": "Debt brought representatives together, food prices heightened hardship, and ideas about representation supported a challenge to royal authority.",
+        "explanation": "The pressures played different, connected roles. A fiscal crisis created the political opening, hardship added urgency, and ideas about representation shaped the challenge."
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 44419,
+      "approach": "mystery",
+      "blocks": "activity > explain > check > explain > check > explain > activity > check > explain",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8,
+      "ms": 5156,
+      "problems": [
+        "The timeline activity asks learners to identify a turning point but provides no way to record or test their choice, so it functions mostly as reading.",
+        "Several incorrect options are implausible, making the checks easier than the ideas warrant.",
+        "The retry explanations largely restate the lesson rather than offering a genuinely different way to understand the causes."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true
+    }
+  ]
+}

@@ -93,7 +93,7 @@ async function stage(learnerId: string, lessonId: number, topic: string) {
     const earlier = row.course_id ? (await getCourseGuides(row.course_id, learnerId)).find((g) => g.portrait) : undefined;
     // One retry: a malformed script is common enough to be worth it.
     for (let attempt = 0; attempt < 2 && !staging; attempt++) {
-      const raw = await callStructured(STAGING_SYSTEM, stagingInput(lesson, topic, earlier), STAGING_SCHEMA, deadline, { timeoutMs: 90_000, model: stagingModel() });
+      const raw = await callStructured(STAGING_SYSTEM, stagingInput(lesson, topic, earlier), STAGING_SCHEMA, deadline, { timeoutMs: 90_000, model: stagingModel(), maxTokens: 10_000 });
       const result = normalizeStaging(raw, blockCount);
       if (result.ok) staging = result.staging;
       else console.error("staging rejected:", result.error);

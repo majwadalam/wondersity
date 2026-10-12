@@ -1,0 +1,243 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The Prisoner's Dilemma: Smart Choices, Worse Results",
+    "objective": "Use a payoff table to explain why each person's individually rational choice can leave both people worse off.",
+    "estimatedMinutes": 8,
+    "approach": "discovery",
+    "approachReason": "The learner compares choices in a payoff table and discovers the worse shared outcome before the lesson names strict dominance and the prisoner's dilemma.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "Two prisoners, two choices",
+        "body": "Imagine a fictional game: you and Sam each choose **Stay silent** or **Confess**, without seeing the other's choice, and each wants to minimize their own prison time. The sentences below are the game's rules, not a description of real legal procedures.\n\nThis **payoff table** shows the outcome of every pair of choices: your choice selects a row, and Sam's choice selects a column. Each cell lists **your years first, then Sam's years**; here, smaller numbers are better.\n\n| Your choice ↓ / Sam's choice → | Stay silent | Confess |\n|---|---|---|\n| **Stay silent** | You: 1; Sam: 1 | You: 5; Sam: 0 |\n| **Confess** | You: 0; Sam: 5 | You: 3; Sam: 3 |",
+        "example": "For example, the bottom-left cell means you confess while Sam stays silent: you receive 0 years, and Sam receives 5."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "One choice wins in both columns",
+        "body": "In the **Sam stays silent** column, confessing gives you **0 years rather than 1**. In the **Sam confesses** column, confessing gives you **3 years rather than 5**. Confessing is better for you in either case—you do not need to predict Sam's choice.\n\nA choice that is strictly better for you regardless of what the other player does is called a **strictly dominant strategy**. Here, confessing is strictly dominant for you; because Sam faces the same incentives, it is strictly dominant for Sam too.",
+        "example": "“Better” means better according to the game's stated goal: minimizing your own prison time. It does not mean morally better."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Find the row for your choice and the column for Sam's choice.",
+          "Check whose sentence each number describes."
+        ],
+        "retry": "Treat the table like a map: first locate your row, then Sam's column, then read the two labeled sentences. Switching which prisoner confesses moves you to a different cell—it does not simply preserve the same outcome."
+      },
+      {
+        "kind": "problem",
+        "heading": "Now look at both prisoners",
+        "prompt": "Use the payoff table: when both confess, they receive 3 years each; when both stay silent, they receive 1 year each.\n\nHow many fewer years of prison time, **adding both prisoners' sentences together**, would mutual silence produce compared with mutual confession?",
+        "answers": [
+          "4"
+        ],
+        "unit": "years",
+        "traps": [
+          {
+            "answer": "2",
+            "feedback": "That is the reduction for one prisoner. The question asks for the combined reduction for both."
+          },
+          {
+            "answer": "6",
+            "feedback": "That is the combined sentence under mutual confession, not the difference between the two outcomes."
+          }
+        ],
+        "hints": [
+          "Add the two sentences for each outcome.",
+          "Subtract the total under mutual silence from the total under mutual confession."
+        ],
+        "solution": "Mutual confession totals 3 + 3 = 6 years. Mutual silence totals 1 + 1 = 2 years. The reduction is 6 − 2 = 4 years, with each prisoner serving 2 fewer years."
+      },
+      {
+        "kind": "explain",
+        "heading": "The dilemma you just discovered",
+        "body": "Both prisoners would be better off if both stayed silent: each would receive 1 year instead of 3. Yet each has an individual incentive to confess, so choosing their strictly dominant strategies leads to the worse outcome for both.\n\nThis is the **prisoner's dilemma**. Staying silent is called **cooperating**, and confessing is called **defecting** in this game. The problem is not failure to notice the better shared outcome: mutual silence is vulnerable because either prisoner can benefit by switching alone.",
+        "example": "To judge the shared outcome, compare cells where both change choices. To judge an individual's incentive, hold the other player's choice fixed and change only that individual's choice."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Assume Sam keeps the agreement. What happens if you change only your own choice?",
+          "Distinguish a better shared outcome from an incentive to stick to it."
+        ],
+        "retry": "An agreement describes what both hope to do; it does not necessarily make following it each person's best choice. Imagine Sam's choice is locked at silence: you still control your own row, and moving away from the agreed cell benefits you while harming Sam."
+      },
+      {
+        "kind": "problem",
+        "heading": "Find the dilemma outside prison",
+        "prompt": "Two fictional shops each choose **Advertise** or **Don't advertise**, without seeing the other's choice. Each wants to maximize its own profit, and the profits below already include advertising costs; each cell lists **Shop A's profit first, then Shop B's**.\n\n| Shop A's choice ↓ / Shop B's choice → | Don't advertise | Advertise |\n|---|---|---|\n| **Don't advertise** | A: 8; B: 8 | A: 4; B: 10 |\n| **Advertise** | A: 10; B: 4 | A: 6; B: 6 |\n\nIf each shop chooses its strictly dominant strategy, what is their **combined profit**?",
+        "answers": [
+          "12"
+        ],
+        "unit": "profit units",
+        "traps": [
+          {
+            "answer": "16",
+            "feedback": "That is the combined profit if neither advertises. Check whether either shop could increase its own profit by advertising alone."
+          },
+          {
+            "answer": "14",
+            "feedback": "That is the total when just one shop advertises. The other shop would increase its own profit from 4 to 6 by advertising too."
+          },
+          {
+            "answer": "6",
+            "feedback": "That is one shop's profit when both advertise. Add both shops' profits."
+          }
+        ],
+        "hints": [
+          "For Shop A, compare the two rows within each column.",
+          "Apply the same reasoning to Shop B, then add their profits at the resulting outcome."
+        ],
+        "solution": "If the other shop does not advertise, advertising gives 10 rather than 8. If the other shop advertises, advertising gives 6 rather than 4. Both therefore choose Advertise, for a combined profit of 6 + 6 = 12 units."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Explain the conflict, not just the total",
+        "prompt": "A shop owner says, “If advertising is the best choice for each of us, both advertising must be the best outcome for both of us.” Use the shop table to explain the mistake in two or three sentences: why is advertising individually attractive, and why does the resulting outcome leave each shop worse off than neither advertising?",
+        "model": "Advertising raises a shop's own profit whatever the other shop does: 10 is greater than 8, and 6 is greater than 4. But when both follow that incentive, each earns 6 instead of the 8 each would earn if neither advertised. An individually best choice holds the other's choice fixed; a better shared outcome can require both to change choices."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Compare one column at a time",
+        "prompt": "Using the prison payoff table above, first look only at the column where Sam stays silent and compare your two sentences. Then do the same in the column where Sam confesses. Which choice gives you fewer years in each column?",
+        "reveal": "Confessing gives you fewer years in both columns. You can find your best choice without knowing which column Sam will choose.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "Stay silent, whichever choice Sam makes.",
+            "correct": false,
+            "feedback": "Check your own sentence in each column: silence gives you 1 instead of 0, or 5 instead of 3."
+          },
+          {
+            "text": "Confess, whichever choice Sam makes.",
+            "correct": true,
+            "feedback": "Yes: against silence, 0 is less than 1; against confession, 3 is less than 5."
+          },
+          {
+            "text": "Stay silent if Sam stays silent; confess if Sam confesses.",
+            "correct": false,
+            "feedback": "Matching Sam's silence gives you 1 year, but confessing in that same column gives you 0."
+          },
+          {
+            "text": "There is no way to compare without knowing Sam's choice.",
+            "correct": false,
+            "feedback": "You can examine each possible column separately. If the same row wins in both, knowing Sam's choice is unnecessary."
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "You choose to stay silent, but Sam confesses. A clerk must record both sentences using the payoff table. Which entry is correct?",
+        "options": [
+          "You receive 5 years; Sam receives 0 years.",
+          "You receive 0 years; Sam receives 5 years.",
+          "You receive 3 years; Sam receives 3 years.",
+          "You receive 1 year; Sam receives 1 year."
+        ],
+        "correctAnswer": "You receive 5 years; Sam receives 0 years.",
+        "explanation": "Your Stay silent row intersects Sam's Confess column at You: 5; Sam: 0. The prisoner who confesses alone receives the shorter sentence."
+      },
+      {
+        "question": "You and Sam agree to stay silent, but the agreement cannot be enforced and the original payoffs remain unchanged. Why does each still have an incentive to break the agreement?",
+        "options": [
+          "Confessing reduces that prisoner's own sentence if the other stays silent.",
+          "Mutual silence gives each prisoner a longer sentence than mutual confession.",
+          "The agreement makes confessing less attractive than before.",
+          "Confessing alone reduces both prisoners' sentences."
+        ],
+        "correctAnswer": "Confessing reduces that prisoner's own sentence if the other stays silent.",
+        "explanation": "If the other prisoner stays silent, switching to confession reduces your own sentence from 1 year to 0. The agreement identifies a better shared outcome but does not remove the individual incentive to defect."
+      }
+    ]
+  },
+  "score": 9,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 63647,
+      "approach": "discovery",
+      "blocks": "activity > explain > check > problem > explain > check > problem",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.verify_failed",
+      "iteration": 1,
+      "ms": 641,
+      "error": "OpenRouter 402: {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhausted\",\"limit_source\":\"openrouter_in_flight_budget\",\"remedy_hint\":\"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.\",\"headers\":{\"Retry-After\":\"120\"},\"provider_name\":null}},\"user_id\":\"user_[redacted]\"}"
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 6.5,
+      "ms": 12532,
+      "problems": [
+        "The opening activity asks learners to use 'the stated rules,' but no rules, scenario, or payoff table have been presented. Learners cannot reason out the answer from the prompt; the necessary numbers appear only in feedback and the following explanation.",
+        "The objective explicitly promises use of a payoff table, yet the lesson contains no payoff table. This misses both the stated objective and an important opportunity to teach how to read strategic outcomes.",
+        "The retry explanations largely repeat the original numerical comparisons rather than offering genuinely different explanations.",
+        "The first check closely repeats the opening activity and explanation. Meanwhile, the final transfer problem accepts only a combined-profit number, so it does not directly verify that learners can explain the conflict between individual incentives and collective outcomes."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 51212,
+      "approach": "discovery",
+      "blocks": "explain > activity > explain > check > problem > explain > check > problem > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 2,
+      "ms": 21382,
+      "claims": 4,
+      "supported": 0,
+      "contradicted": [],
+      "unclear": 4,
+      "downgraded": [
+        "A strictly dominant strategy gives a player a strictly better outcome than every alternative strategy regardless of what the other player does.: the quoted evidence isn't on the cited page",
+        "In the prisoner's dilemma, both players choosing their strictly dominant strategies produces an outcome that is worse for each player than mutual cooperation.: the quoted evidence isn't on the cited page",
+        "In the standard prisoner interpretation of the prisoner's dilemma, staying silent is called cooperating and confessing is called defecting.: search failed: OpenRouter 402: {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhausted\",\"limit_source\":\"openrouter_in_flight_budget\",\"remedy_hint\":\"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.\",\"headers\":{\"Retry-After\":\"120\"},\"provider_name\":null}},\"user_id\":\"user_[redacted]\"}",
+        "Mutual cooperation in the prisoner's dilemma is vulnerable to unilateral defection because either player can improve their own outcome by defecting while the other cooperates.: the quoted evidence isn't on the cited page"
+      ]
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 9,
+      "ms": 21384,
+      "problems": [
+        "The first knowledge check tests basic table reading after strict dominance has been introduced. This briefly steps backward in difficulty and leaves the newly named concept without an immediate dedicated check.",
+        "Both numerical problems ask for combined totals, so some assessment effort measures arithmetic rather than the strategic conflict. The final reflection addresses this well, but the shop problem alone could be answered without explicitly comparing the individually rational and mutually preferable outcomes."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 9,
+      "passed": true,
+      "sources": 0
+    }
+  ]
+}

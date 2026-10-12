@@ -1,0 +1,181 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The Prisoner's Dilemma: Best for You, Worse for Both",
+    "objective": "Explain why each prisoner's individually rational choice can leave both prisoners worse off than a different pair of choices.",
+    "estimatedMinutes": 7,
+    "approach": "scenario",
+    "approachReason": "One fictional prisoner's decision lets the learner compare personal incentives with the consequences for both prisoners.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "Two rooms, one decision",
+        "body": "In this fictional game, you and another prisoner must independently choose **stay silent** or **confess**, without seeing the other's choice. Assume each of you cares only about minimizing your own prison time, and both know these rules.\n\nIf both stay silent, each gets **1 year**; if both confess, each gets **3 years**. If only one confesses, that prisoner gets **0 years**, while the silent prisoner gets **5 years**. Your task is to choose—not to guess what a morally good person would do.",
+        "example": "These are invented rules for a strategic model, not a description of actual legal procedure. Fewer years means a better outcome for that prisoner."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "You don't need to guess",
+        "body": "Separate the decision into two cases. If the other prisoner stays silent, confessing gives you **0 years instead of 1**; if the other prisoner confesses, confessing gives you **3 years instead of 5**.\n\nConfessing gives you less prison time in either case. A choice that is strictly better for you regardless of the other player's choice is called a **strictly dominant strategy**. Here, confessing is strictly dominant.",
+        "example": "Compare your two choices while holding the other prisoner's choice fixed. Don't compare outcomes in which both people change their choices at once."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Hold the other prisoner's choice fixed at 'stay silent.'",
+          "Compare only your own sentence under your two possible choices."
+        ],
+        "retry": "Even certainty about the other's silence does not make silence your best choice. Compare the 1 year you get by staying silent with the 0 years you get by confessing."
+      },
+      {
+        "kind": "problem",
+        "heading": "Follow both prisoners' reasoning",
+        "prompt": "The other prisoner faces exactly the same incentives as you. If each chooses the strictly dominant strategy, both confess and each receives 3 years. If both instead stayed silent, each would receive 1 year.\n\nHow many fewer **total prison-years** would the pair receive with mutual silence rather than mutual confession?",
+        "answers": [
+          "4"
+        ],
+        "unit": "prison-years",
+        "traps": [
+          {
+            "answer": "2",
+            "feedback": "Each prisoner would save 2 years, but the question asks for the saving across both prisoners."
+          },
+          {
+            "answer": "6",
+            "feedback": "That is their combined sentence with mutual confession, not the reduction from switching to mutual silence."
+          }
+        ],
+        "hints": [
+          "Add the two sentences for each outcome.",
+          "Subtract the total with mutual silence from the total with mutual confession."
+        ],
+        "solution": "Mutual confession gives 3 + 3 = 6 total prison-years. Mutual silence gives 1 + 1 = 2 total prison-years. The reduction is 6 − 2 = 4 prison-years."
+      },
+      {
+        "kind": "explain",
+        "heading": "Where the dilemma lives",
+        "body": "Both prisoners prefer mutual silence to mutual confession: **1 year each is better than 3 years each**. Yet each individually benefits from confessing, whichever choice the other makes. This conflict between individual incentives and a mutually better outcome is the **prisoner's dilemma**.\n\nThe problem is not simply a failure to understand the rules or predict the other person. Even if both understand everything, each still has a personal incentive to confess. Mutual silence benefits both, but either prisoner could improve their own outcome by switching alone.",
+        "example": "“Individually rational” means best for the individual's stated goal under these rules. It does not mean morally right or best for the pair."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "The promise adds no reward or penalty, so use the original rules.",
+          "Suppose the other prisoner keeps the promise. Would you personally benefit from switching?"
+        ],
+        "retry": "A promise does not change the sentences in this version of the game. If the other prisoner keeps it, breaking it still reduces your sentence from 1 year to 0 years."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Explain the trap to your lawyer",
+        "prompt": "Your lawyer says, “If confessing is best for each of you, then both confessing must be best for both of you.” In two or three sentences, explain the mistake using the prison sentences. Include why simply telling both prisoners to stay silent leaves an incentive problem.",
+        "model": "Confessing is better for each prisoner when the other's choice is held fixed, but mutual confession gives each 3 years rather than the 1 year from mutual silence. Telling both to stay silent does not remove the incentive to switch: if the other stays silent, confessing reduces your own sentence from 1 year to 0 years. Individual improvements do not necessarily produce an outcome that is better for everyone."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Choose before seeing the other choice",
+        "prompt": "You must submit your choice now under the rules above, and your sole goal is to minimize your own prison time. Which plan serves that goal best, regardless of what the other prisoner chooses?",
+        "reveal": "Confessing gives you fewer years in both possible cases: 0 rather than 1 if the other stays silent, and 3 rather than 5 if the other confesses. The surprising part is that the other prisoner can reason exactly the same way.",
+        "type": "scenario",
+        "options": [
+          {
+            "text": "Confess.",
+            "correct": true,
+            "feedback": "If the other stays silent, you receive 0 rather than 1 year. If the other confesses, you receive 3 rather than 5 years."
+          },
+          {
+            "text": "Stay silent.",
+            "correct": false,
+            "feedback": "Mutual silence would be good for both, but for your own sentence, confessing is better in either case."
+          },
+          {
+            "text": "Flip a coin to choose between silence and confession.",
+            "correct": false,
+            "feedback": "Randomizing sometimes selects silence, which gives you more prison time than confessing for either choice the other prisoner makes."
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "Your lawyer somehow knows for certain that the other prisoner will stay silent. Under the game's rules, which choice minimizes your own prison time?",
+        "options": [
+          "Confess: you get 0 years instead of 1.",
+          "Stay silent: you get 0 years instead of 3.",
+          "Either choice: both give you 1 year.",
+          "Confess: you get 3 years instead of 5."
+        ],
+        "correctAnswer": "Confess: you get 0 years instead of 1.",
+        "explanation": "With the other prisoner's silence fixed, your silence gives you 1 year and your confession gives you 0. Knowing their choice does not remove your incentive to confess."
+      },
+      {
+        "question": "Before being separated, you both promise to stay silent. The promise carries no penalty for breaking it, and each still cares only about their own prison time. Why does the dilemma remain?",
+        "options": [
+          "If the other keeps the promise, confessing still reduces your own sentence from 1 year to 0.",
+          "The promise makes mutual silence worse for both than mutual confession.",
+          "Confessing is beneficial only when you expect the other prisoner to break the promise.",
+          "The promise changes the sentence for mutual confession from 3 years each to 5 years each."
+        ],
+        "correctAnswer": "If the other keeps the promise, confessing still reduces your own sentence from 1 year to 0.",
+        "explanation": "The promise leaves the incentives unchanged: confessing remains better for each prisoner for either choice by the other. Wanting the mutually better outcome is not the same as having an individual incentive to choose the action that produces it."
+      }
+    ]
+  },
+  "score": 8.3,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 56083,
+      "approach": "scenario",
+      "blocks": "explain > activity > explain > check > problem > explain > check > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 1,
+      "ms": 13818,
+      "claims": 4,
+      "supported": 0,
+      "contradicted": [],
+      "unclear": 4,
+      "downgraded": [
+        "A strictly dominant strategy gives a player a strictly better outcome regardless of the other player's choice.: search failed: OpenRouter 402: {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhausted\",\"limit_source\":\"openrouter_in_flight_budget\",\"remedy_hint\":\"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.\",\"headers\":{\"Retry-After\":\"120\"},\"provider_name\":null}},\"user_id\":\"user_[redacted]\"}",
+        "The prisoner's dilemma involves a conflict between individual incentives and an outcome that would be better for both players.: search failed: OpenRouter 402: {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhausted\",\"limit_source\":\"openrouter_in_flight_budget\",\"remedy_hint\":\"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.\",\"headers\":{\"Retry-After\":\"120\"},\"provider_name\":null}},\"user_id\":\"user_[redacted]\"}",
+        "Individual improvements do not necessarily produce an outcome that is better for everyone.: the quoted evidence isn't on the cited page",
+        "An individually rational choice serves the individual's stated goal and need not be morally right or best for the pair.: search failed: OpenRouter 402: {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhausted\",\"limit_source\":\"openrouter_in_flight_budget\",\"remedy_hint\":\"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.\",\"headers\":{\"Retry-After\":\"120\"},\"provider_name\":null}},\"user_id\":\"user_[redacted]\"}"
+      ]
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8.3,
+      "ms": 13827,
+      "problems": [
+        "The activity, first explanation, and first check repeat essentially the same comparison. This reinforces the idea but limits the intellectual progression.",
+        "Several incorrect answer options contradict explicitly stated sentences, making the checks easier than alternatives based on plausible strategic misconceptions would be.",
+        "The retry explanations repeat the same numerical reasoning rather than offering a genuinely different explanation or representation.",
+        "All application remains within the prisoner scenario, so the lesson does not test whether learners can recognize the same incentive conflict in another setting."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8.3,
+      "passed": true,
+      "sources": 0
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+■ history: The French Revolution (78s, score 8)
+  approach: mystery (The module's real puzzle — why the strongest kingdom in Europe collapsed in a single year — is best taught by posing it first and resolving it one pressure at a time.)
+  blocks:   explain > activity:chart > explain > check > activity:simulation > problem > explain > check > activity:timeline > check > summary
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=8, lesson.select=8

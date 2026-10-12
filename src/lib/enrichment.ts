@@ -96,7 +96,7 @@ async function planResources(topic: string, lesson: Lesson, deadline: Deadline):
     `Topic: ${topic}\nLesson: ${lesson.title}\nObjective: ${lesson.objective}`,
     planJsonSchema,
     deadline,
-    { model: enrichModel(), timeoutMs: CALL_TIMEOUT_MS }
+    { model: enrichModel(), timeoutMs: CALL_TIMEOUT_MS, maxTokens: 2_000 }
   );
   return PlanSchema.parse(raw);
 }
@@ -256,6 +256,7 @@ titled "${lesson.title}". ${
     {
       model: enrichModel(),
       timeoutMs: CALL_TIMEOUT_MS,
+      maxTokens: 2_000,
       webSearch: {
         maxResults: 6,
         ...(kind === "video" ? { includeDomains: ["youtube.com"] } : { excludeDomains: ["youtube.com", "reddit.com", "quora.com", "pinterest.com", "amazon.com"] }),

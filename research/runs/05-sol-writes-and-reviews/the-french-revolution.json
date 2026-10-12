@@ -1,0 +1,243 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Why 1789?",
+    "objective": "Explain how royal debt, rising bread prices, and new ideas about political authority combined to turn a financial crisis into a revolutionary opening.",
+    "estimatedMinutes": 8,
+    "approach": "mystery",
+    "approachReason": "The lesson begins with a king seeking money and builds a chain of evidence explaining why his financial problem became a challenge to royal authority.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "A money problem becomes a political problem",
+        "body": "In May 1789, Louis XVI brought together the Estates-General—representatives of the clergy, nobility, and everyone else—for the first time since 1614. He needed help addressing a financial crisis.\n\nHere is our mystery: why could a meeting called to solve the king’s money problem become an opening for revolution?",
+        "example": "Look for three connected clues: pressure on the government, pressure on ordinary households, and arguments about who should have a political voice."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Clue 1: the government cannot easily pay",
+        "body": "France’s involvement in expensive wars, including support for American independence, added to a large royal debt. Paying interest on earlier borrowing consumed much of the government’s income, and obtaining new loans became harder.\n\nThe problem was not simply that France had no wealth: the monarchy struggled to tax that wealth effectively. Tax privileges gave the clergy and nobility important advantages, although nobles were not exempt from every tax. Attempts to spread taxation more widely met resistance, pushing the king toward calling the Estates-General.",
+        "example": "Debt created a need for money; resistance to tax reform made raising that money a political problem."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Separate the wealth of the country from the money available to the royal government.",
+          "Which option connects debt to resistance over who should pay?"
+        ],
+        "retry": "A country can contain plenty of wealth while its government struggles to collect revenue. Who pays—and who can resist paying—matters."
+      },
+      {
+        "kind": "problem",
+        "heading": "Clue 2: feel the bread-price squeeze",
+        "prompt": "Imagine a household with a fixed daily income of 12 coins. Its daily bread used to cost 6 coins, but now costs 9 coins. This is an illustrative budget, not a record of one historical family.\n\nAfter buying bread at the new price, how many coins remain for rent, fuel, and everything else?",
+        "answers": [
+          "3"
+        ],
+        "unit": "coins",
+        "traps": [
+          {
+            "answer": "9",
+            "feedback": "That is the new bread cost, not the money left after buying it."
+          },
+          {
+            "answer": "6",
+            "feedback": "That was the money left at the old bread price. Use the new cost of 9 coins."
+          }
+        ],
+        "hints": [
+          "Start with the household’s income and subtract the new bread cost.",
+          "Calculate 12 − 9."
+        ],
+        "solution": "12 − 9 = 3 coins remain. Previously, 12 − 6 = 6 coins remained: the increase in bread costs has halved the money available for other needs."
+      },
+      {
+        "kind": "explain",
+        "heading": "Clue 3: hardship meets a language of change",
+        "body": "The poor harvest of 1788 helped drive up grain and bread prices, putting severe pressure on households that depended on bread. This made the crisis urgent for ordinary people, not just royal officials.\n\nMeanwhile, Enlightenment writers and public debate had spread arguments about rights, equality before the law, and limits on arbitrary power. People could use these ideas to ask not only for cheaper food, but also for fairer taxation and a greater voice in government. The Estates-General gave representatives a place to raise those demands. This did not mean everyone wanted to abolish the monarchy: many initially hoped to reform it.",
+        "example": "Food hardship supplied urgency; political ideas helped turn grievances into demands about how France should be governed."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Look for an option that explains both the immediate hardship and the proposed change in government.",
+          "Which option gives food prices and political ideas different, connected roles?"
+        ],
+        "retry": "A complaint identifies suffering. A political demand proposes changing the rules or institutions that shape people’s lives."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "reflect",
+        "heading": "Solve the mystery",
+        "prompt": "Return to the opening puzzle: why could a meeting called to solve the king’s money problem become an opening for revolution?\n\nWrite a three-sentence explanation. Connect royal debt to the meeting, bread prices to public pressure, and new ideas to demands about political authority.",
+        "model": "Royal debt and resistance to tax reform pushed Louis XVI to summon the Estates-General, creating a political opening. High bread prices made hardship urgent and increased pressure for change. Ideas about rights, fair taxation, and representation helped people turn their grievances into challenges to the existing system: the king needed money, but those he consulted could demand changes in how power worked."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "The pressures converge",
+        "prompt": "Explore these four moments in order. At each one, ask: does this increase pressure on the government, on ordinary households, or on both?",
+        "reveal": "Long-running financial problems collided with an immediate food crisis. Calling representatives together created an opportunity to question more than the royal budget.",
+        "type": "timeline",
+        "events": [
+          {
+            "marker": "1778",
+            "title": "France enters the American war",
+            "detail": "France formally allies with the American revolutionaries and enters the war against Britain. Supporting the war adds substantially to royal borrowing."
+          },
+          {
+            "marker": "1786–1787",
+            "title": "Tax reform faces resistance",
+            "detail": "Royal ministers seek changes, including broader taxation of land. Resistance to reform makes resolving the financial crisis harder."
+          },
+          {
+            "marker": "1788",
+            "title": "Financial and harvest crises overlap",
+            "detail": "The monarchy faces an acute financial crisis, while a poor harvest contributes to rising grain and bread prices."
+          },
+          {
+            "marker": "5 May 1789",
+            "title": "The Estates-General opens",
+            "detail": "Representatives gather at Versailles. The crown seeks financial solutions, but representatives bring wider grievances and demands for reform."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Three pressures, one political opening",
+        "prompt": "Tap the nodes and trace the connections. Follow the debt route first, then find how bread prices and political ideas feed into demands for change.",
+        "reveal": "The causes played different roles: debt helped force a political opening, bread prices intensified popular pressure, and new ideas shaped demands for reform. Their interaction helps explain why the crisis became revolutionary, without making that outcome inevitable.",
+        "type": "diagram",
+        "nodes": [
+          {
+            "label": "Royal debt",
+            "detail": "War spending and debt payments put severe pressure on royal finances."
+          },
+          {
+            "label": "Tax reform blocked",
+            "detail": "Resistance to broader taxation made it difficult to solve the financial crisis through ordinary royal measures."
+          },
+          {
+            "label": "Estates-General",
+            "detail": "The king summoned representatives to address the crisis. Their gathering also created a forum for wider political demands."
+          },
+          {
+            "label": "High bread prices",
+            "detail": "The poor harvest of 1788 helped raise the cost of a food essential to everyday survival."
+          },
+          {
+            "label": "Popular pressure",
+            "detail": "Household hardship increased anger and the urgency of demands for action."
+          },
+          {
+            "label": "New political ideas",
+            "detail": "Arguments about rights, legal equality, and limits on power offered ways to challenge existing arrangements."
+          },
+          {
+            "label": "Demands for change",
+            "detail": "Grievances could become demands for fairer taxation, representation, and limits on royal authority."
+          }
+        ],
+        "edges": [
+          {
+            "from": 0,
+            "to": 1,
+            "label": "makes tax reform urgent"
+          },
+          {
+            "from": 1,
+            "to": 2,
+            "label": "helps push the king to summon"
+          },
+          {
+            "from": 2,
+            "to": 6,
+            "label": "provides a forum for"
+          },
+          {
+            "from": 3,
+            "to": 4,
+            "label": "intensifies"
+          },
+          {
+            "from": 4,
+            "to": 6,
+            "label": "adds urgency to"
+          },
+          {
+            "from": 5,
+            "to": 6,
+            "label": "helps shape"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "You advise a royal minister in 1787. Debt payments are draining revenue, and a proposal to tax privileged landowners more broadly faces resistance. Which explanation best captures the difficulty?",
+        "options": [
+          "France contains no wealth that could be taxed.",
+          "War debts will disappear once the fighting stops.",
+          "The crown needs revenue, but changing who pays taxes meets political resistance.",
+          "Higher bread prices will automatically increase the crown’s income enough."
+        ],
+        "correctAnswer": "The crown needs revenue, but changing who pays taxes meets political resistance.",
+        "explanation": "Debt made additional revenue urgent, but tax privileges and resistance to reform limited the crown’s options. This turned a financial difficulty into a struggle over power and privilege."
+      },
+      {
+        "question": "In early 1789, a town’s petition complains about expensive bread and asks for fairer taxes and representatives who can influence government. Which interpretation best connects these demands?",
+        "options": [
+          "Bread prices explain every demand, so political ideas played no role.",
+          "Food hardship adds urgency, while ideas about fairness and representation shape the proposed reforms.",
+          "The petition proves that everyone in the town already wants to abolish the monarchy.",
+          "The king’s debt directly caused the poor harvest, which then produced the petition."
+        ],
+        "correctAnswer": "Food hardship adds urgency, while ideas about fairness and representation shape the proposed reforms.",
+        "explanation": "High bread prices put immediate pressure on households, while political ideas offered a language for demanding changes to taxation and government. Supporting reform did not necessarily mean wanting to abolish the monarchy."
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 71745,
+      "approach": "mystery",
+      "blocks": "explain > activity > explain > check > problem > explain > check > activity > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8,
+      "ms": 9233,
+      "problems": [
+        "The timeline and diagram mainly involve revealing information rather than making decisions with feedback. Their prompts encourage thinking, but neither verifies that learners can classify pressures or explain causal links.",
+        "Both multiple-choice checks have conspicuously implausible distractors, making recognition easier than genuine historical reasoning. There is no harder scenario-based check requiring learners to connect all three causes.",
+        "The lesson explains the revolutionary opening well but stops short of a concrete example of how the Estates-General became a challenge to authority, such as the dispute over voting and the Third Estate declaring a National Assembly.",
+        "The diagram's edge from 'Royal debt' to 'Tax reform blocked' is labeled 'makes tax reform urgent.' This conflates the need for reform with resistance to it, slightly weakening an otherwise clear causal model."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true
+    }
+  ]
+}

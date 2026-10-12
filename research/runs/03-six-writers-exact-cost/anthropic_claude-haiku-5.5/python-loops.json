@@ -1,0 +1,338 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "For Loops and Accumulators",
+    "objective": "Read, predict and write for loops that build up a result using an accumulator.",
+    "estimatedMinutes": 9,
+    "approach": "discovery",
+    "approachReason": "Learners predict what the loop does and trace it step by step before the accumulator pattern is named, so the idea comes from evidence they have already seen.",
+    "blocks": [
+      {
+        "kind": "code",
+        "heading": "Predict the output",
+        "prompt": "Before reading on, predict what this program prints. Pay attention to how total changes on each pass through the loop.",
+        "language": "python",
+        "code": "total = 0\nfor n in [3, 5, 2]:\n    total = total + n\nprint(total)",
+        "explanation": "This variable is an accumulator: it starts with a neutral value, is updated inside the loop, and holds the final result when the loop ends.",
+        "hints": [
+          "Write down total after each pass before reading the options.",
+          "Count how many times the line inside the loop runs."
+        ],
+        "mode": "predict",
+        "options": [
+          {
+            "text": "3",
+            "correct": false,
+            "feedback": "That's only the first number. total is updated on every pass, not just the first."
+          },
+          {
+            "text": "5",
+            "correct": false,
+            "feedback": "That's the middle number. The loop doesn't keep one value; it adds them all together."
+          },
+          {
+            "text": "10",
+            "correct": true,
+            "feedback": "Right. total starts at 0, then picks up 3, then 5, then 2: 0 + 3 + 5 + 2 = 10."
+          },
+          {
+            "text": "0",
+            "correct": false,
+            "feedback": "total does start at 0, but the line inside the loop changes it on every pass."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "explain",
+        "heading": "The accumulator pattern",
+        "body": "A for loop visits each item in a sequence once, in order, binding the loop variable to that item on each pass. An accumulator is a variable you set up before the loop, update inside it using the current item, and read after the loop finishes.\n\nThe shape is always the same: start with a neutral value (0 for sums, 1 for products, an empty string or list for text or lists), update it on each pass, and use the result once the loop is done. The update usually refers to the variable's own old value, as in total = total + n.",
+        "example": "The starting value must be neutral. A sum starts at 0 because 0 + x = x. A product starting at 0 would stay 0 forever, which is why products start at 1."
+      },
+      {
+        "kind": "code",
+        "heading": "Trace the loop",
+        "prompt": "Before you read each detail, write down what squares holds after each line, then check your value. Each step shows the line that runs and the variable values after it.",
+        "language": "python",
+        "code": "squares = 0\nfor i in range(3):\n    squares = squares + i * i\nprint(squares)",
+        "explanation": "range(3) produces 0, 1, 2, so the loop body runs three times. The accumulator ends at 0 + 1 + 4 = 5.",
+        "hints": [
+          "Count how many times the line inside the loop runs.",
+          "The loop variable and the accumulator change on different lines. Track each one separately."
+        ],
+        "mode": "trace",
+        "options": [],
+        "trace": [
+          {
+            "line": 1,
+            "note": "Set squares to 0.",
+            "state": "squares = 0"
+          },
+          {
+            "line": 2,
+            "note": "The loop takes its first value, i = 0.",
+            "state": "i = 0, squares = 0"
+          },
+          {
+            "line": 3,
+            "note": "Add i * i (which is 0) to squares.",
+            "state": "i = 0, squares = 0"
+          },
+          {
+            "line": 2,
+            "note": "Next pass: i = 1.",
+            "state": "i = 1, squares = 0"
+          },
+          {
+            "line": 3,
+            "note": "Add 1 * 1 to squares.",
+            "state": "i = 1, squares = 1"
+          },
+          {
+            "line": 2,
+            "note": "Next pass: i = 2.",
+            "state": "i = 2, squares = 1"
+          },
+          {
+            "line": 3,
+            "note": "Add 2 * 2 to squares.",
+            "state": "i = 2, squares = 5"
+          },
+          {
+            "line": 4,
+            "note": "The loop is finished, so print the result.",
+            "state": "Output: 5"
+          }
+        ]
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Ask yourself where the running total should be created: once, or on every pass?",
+          "Look for the option where the total is updated using its own previous value."
+        ],
+        "retry": "The accumulator must start before the loop, be updated inside it, and be used after it. Putting the start inside the loop would reset it on every pass."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "worked",
+        "heading": "Worked example: totaling a list",
+        "problem": "Write a loop that adds up the numbers in nums = [2, 7, 1] and prints the total.",
+        "steps": [
+          {
+            "title": "Set up the accumulator",
+            "text": "Create total = 0 before the loop.",
+            "why": "The loop needs a place to store the running sum, and 0 is the neutral starting value for addition."
+          },
+          {
+            "title": "Loop over the items",
+            "text": "for n in nums:",
+            "why": "The loop variable n takes the values 2, then 7, then 1, one per pass."
+          },
+          {
+            "title": "Update inside the loop",
+            "text": "total = total + n",
+            "why": "Each pass adds the current item to the old total. After pass 1 total is 2, after pass 2 it is 9, after pass 3 it is 10."
+          },
+          {
+            "title": "Use the result after the loop",
+            "text": "print(total)",
+            "why": "This line is not indented under the loop, so it runs once after all passes, not once per item."
+          }
+        ],
+        "answer": "Output: 10"
+      },
+      {
+        "kind": "reflect",
+        "heading": "Now you write it: count the items",
+        "prompt": "Write a for loop that counts how many names are in names = [\"Ana\", \"Ben\", \"Cy\", \"Dee\"] and prints the count. Use an accumulator called count, and say in one sentence where its starting value goes and why.",
+        "model": "count = 0\nfor name in names:\n    count = count + 1\nprint(count)\n\nOutput: 4. The count starts at 0 before the loop so it is not reset on each pass. Each pass adds 1 to its own old value, so the total number of passes builds up."
+      },
+      {
+        "kind": "code",
+        "heading": "Find the bug",
+        "prompt": "This program should print the sum of the scores, 245, but it prints 90. Which change fixes it?",
+        "language": "python",
+        "code": "scores = [70, 85, 90]\ntotal = 0\nfor s in scores:\n    total = s\nprint(total)",
+        "explanation": "The bug is an overwrite, not a starting value. total = s throws away the previous total, so only the last score survives. An accumulator must read its old value on the right-hand side.",
+        "hints": [
+          "Look at what the loop body does to total on each pass.",
+          "In an accumulator, the new value should depend on the old one."
+        ],
+        "mode": "bug",
+        "options": [
+          {
+            "text": "Replace total = s with total = total + s",
+            "correct": true,
+            "feedback": "Right. The update must build on the old total instead of overwriting it with the current score."
+          },
+          {
+            "text": "Move total = 0 inside the loop",
+            "correct": false,
+            "feedback": "Resetting total on every pass still overwrites it. total would only ever hold the last score."
+          },
+          {
+            "text": "Change print(total) to print(scores)",
+            "correct": false,
+            "feedback": "That prints the list, not the sum, and the loop still overwrites total."
+          },
+          {
+            "text": "Change total = 0 to total = 70",
+            "correct": false,
+            "feedback": "Starting from a score doesn't fix the overwrite, and 70 is not a neutral starting value for a sum."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "problem",
+        "heading": "Predict the product",
+        "prompt": "What does this program print?\n\ntotal = 1\nfor n in range(1, 5):\n    total = total * n\nprint(total)",
+        "answers": [
+          "24"
+        ],
+        "unit": "",
+        "traps": [
+          {
+            "answer": "10",
+            "feedback": "That's the sum 1 + 2 + 3 + 4. This loop multiplies, so each pass multiplies the total."
+          },
+          {
+            "answer": "4",
+            "feedback": "That's only the last value of n. The accumulator keeps its running product across all passes."
+          }
+        ],
+        "hints": [
+          "How many values does range(1, 5) produce?",
+          "Multiply the total by each value in turn, starting from 1."
+        ],
+        "solution": "range(1, 5) produces 1, 2, 3, 4. The total goes 1, then 1 × 1 = 1, then × 2 = 2, then × 3 = 6, then × 4 = 24, so the program prints 24."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Think about what the accumulator starts as, and what its update does on each pass.",
+          "Each pass adds one letter to the end of the text built so far. Trace the letters in order."
+        ],
+        "retry": "The accumulator here is a string that grows by adding one letter per pass. The update uses the old value of sign, so each letter is added to the end of what is already there."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Adding up a bill",
+        "prompt": "You are adding up a restaurant bill with items = [12, 8, 5]. You write the loop, but you put the starting value inside it:\n\nfor p in items:\n    total = 0\n    total = total + p\n\nAfter the loop you print total. What do you see?",
+        "reveal": "Where the starting value sits decides whether the accumulator builds up or keeps resetting.",
+        "type": "scenario",
+        "options": [
+          {
+            "text": "0",
+            "correct": false,
+            "feedback": "The reset is inside the loop, so total is set to 0 and then gets the item. Nothing is left at 0 at the end."
+          },
+          {
+            "text": "5",
+            "correct": true,
+            "feedback": "Right. Each pass resets total to 0 and then adds the item, so after the last pass total is 0 + 5 = 5."
+          },
+          {
+            "text": "12",
+            "correct": false,
+            "feedback": "That is the first price, and it is gone by the end. The reset inside the loop throws each amount away."
+          },
+          {
+            "text": "25",
+            "correct": false,
+            "feedback": "That is the true sum, but the reset on every pass stops the amounts from building up. Move the 0 before the loop."
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "You are totaling the cost of items in a shopping cart: prices = [4.50, 12.00, 3.25]. Which approach correctly computes the total?",
+        "options": [
+          "Start total = 0 before the loop, then total = total + p inside it",
+          "Set total = p inside the loop, with nothing set before it",
+          "Set total = 0 inside the loop, then total = total + p",
+          "Set total = prices before the loop, then print(total)"
+        ],
+        "correctAnswer": "Start total = 0 before the loop, then total = total + p inside it",
+        "explanation": "The running total must be created once before the loop and updated on each pass using its own old value. Resetting it inside the loop or overwriting it with the current price throws away the earlier amounts."
+      },
+      {
+        "question": "A sign-maker builds a sign from letters = ['S', 'u', 'n'] by starting with sign = '' before the loop and running sign = sign + letter for each letter. What does print(sign) show after the loop?",
+        "options": [
+          "Sun",
+          "n",
+          "nuS",
+          "['S', 'u', 'n']"
+        ],
+        "correctAnswer": "Sun",
+        "explanation": "Each pass adds the current letter to the end of the old text, so the letters build up in order: S, then Su, then Sun. The other options show only the last letter, the letters in reverse, or the list itself rather than the built-up text."
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 43934,
+      "approach": "discovery",
+      "blocks": "code > explain > code > check > worked > activity > code > problem > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 6.5,
+      "ms": 11427,
+      "problems": [
+        "The counting check (ref 1 and the second question) relies on an `if` condition inside a loop, which the lesson never teaches. Learners meet an unfamiliar construct in the assessment.",
+        "The module goal is to write loops, but learners never write code themselves. The only writing is a worked example they read, plus a predict-the-output problem. There is no fill-in or write-it-yourself exercise.",
+        "The 'Trace the loop' block is passive. It shows every state and asks the learner to do nothing, so it is closer to a reading demonstration than a hands-on trace.",
+        "The activity is a simple three-bucket sort of six lines. It mostly restates the explanation and does little to test whether the learner can apply the pattern.",
+        "Both checks are multiple-choice with near-identical structure. The alternative explanations are only retry messages, not genuinely different ways of seeing the idea.",
+        "The predict block has an empty hints array, so a learner who is stuck on the first question gets no scaffolding."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 36290,
+      "approach": "discovery",
+      "blocks": "code > explain > code > check > activity > worked > reflect > code > problem > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 8,
+      "ms": 9595,
+      "problems": [
+        "The reset-placement idea is tested three times (the shopping-cart check, the restaurant-bill activity, and the 'Find the bug' block with its 'Move total = 0 inside the loop' option), so the later items add little new practice.",
+        "The activity's wrong-answer feedback for 25 ('Move the 0 before the loop') and the check hint ('Look for the option where the total is updated using its own previous value') give the answer away too directly.",
+        "The lesson's accumulator work is almost entirely numeric or a single string example; the list-building accumulator named in the explain block (empty list) never gets practised, and the module goal of writing loops that build up a result is only partly exercised."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true
+    }
+  ]
+}

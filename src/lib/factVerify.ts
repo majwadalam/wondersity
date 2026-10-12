@@ -20,6 +20,21 @@ import { env } from "./env";
 
 /** At most this many claims are searched per lesson version (cost and time). */
 export const MAX_CLAIMS = 8;
+const SEARCH_CONCURRENCY = 4;
+
+/** Maps over items with at most `limit` running at once, keeping the input order. */
+async function mapLimited<T, R>(items: T[], limit: number, fn: (item: T) => Promise<R>): Promise<R[]> {
+  const out: R[] = new Array(items.length);
+  let next = 0;
+  const worker = async () => {
+    while (next < items.length) {
+      const i = next++;
+      out[i] = await fn(items[i]);
+    }
+  };
+  await Promise.all(Array.from({ length: Math.min(limit, items.length) }, worker));
+  return out;
+}
 const CALL_TIMEOUT_MS = 60_000;
 // Deliberately wrong text: wrong options, trap feedback, stated misconceptions.
 // Code is checked by what it does, not by searching.
@@ -109,7 +124,7 @@ List at most ${MAX_CLAIMS}, the ones most likely to be wrong and most important 
     `Topic: ${topic}\n\nLesson text:\n${lessonText(lesson)}`,
     extractJsonSchema,
     deadline,
-    { model: verifyModel(), reasoningEffort: "low", timeoutMs: CALL_TIMEOUT_MS }
+    { model: verifyModel(), reasoningEffort: "low", timeoutMs: CALL_TIMEOUT_MS, maxTokens: 3_000 }
   );
   return ExtractSchema.parse(raw).claims.slice(0, MAX_CLAIMS);
 }
@@ -152,7 +167,7 @@ Leave "correction", "sourceUrl" and "evidence" empty when they don't apply.`,
     `Lesson topic: ${topic}\nClaim: ${claim}`,
     judgementJsonSchema,
     deadline,
-    { model: verifyModel(), timeoutMs: CALL_TIMEOUT_MS, webSearch: { maxResults: 5, engine: searchEngine() } }
+    { model: verifyModel(), timeoutMs: CALL_TIMEOUT_MS, maxTokens: 2_000, webSearch: { maxResults: 5, engine: searchEngine() } }
   );
   return { judgement: JudgementSchema.parse(data), sources };
 }
@@ -163,6 +178,24 @@ const normalizeUrl = (u: string) => u.trim().replace(/[#?].*$/, "").replace(/\/+
 const normalizeText = (t: string) => t.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ").trim();
 
 /**
+ * Whether a quote is really on the page. Search results come back as excerpts
+ * joined by "…", and models tidy what they copy (citation marks dropped, a
+ * quote stitched across a gap), so an exact match rejected most real quotes;
+ * models also quote short, precise sentences ("Maximum range is achieved at
+ * 45°."). So: at least 3 meaningful words (numbers count); a short quote
+ * (under 6) must be wholly on the page, a longer one 80%. An invented quote
+ * still fails (runs 07-08 in research/model-runs.md).
+ */
+export function evidenceOnPage(evidence: string, page: string) {
+  const words = (t: string) => normalizeText(t).split(" ").filter((w) => w.length > 2 || /\d/.test(w));
+  const quoted = [...new Set(words(evidence))];
+  if (quoted.length < 3) return false;
+  const onPage = new Set(words(page));
+  const share = quoted.filter((w) => onPage.has(w)).length / quoted.length;
+  return share >= (quoted.length < 6 ? 1 : 0.8);
+}
+
+/**
  * Applies the harness's rules to the model's verdict: a verdict needs a source
  * the search returned, and evidence found on that page when its text is known.
  */
@@ -171,9 +204,9 @@ export function settleVerdict(claim: string, where: string, judgement: Judgement
   if (judgement.verdict === "unclear") return { ...base, verdict: "unclear" };
   const source = sources.find((s) => normalizeUrl(s.url) === normalizeUrl(judgement.sourceUrl));
   if (!source) return { ...base, verdict: "unclear", downgraded: `cited a page the search didn't return (${judgement.sourceUrl || "none"})` };
-  const evidence = normalizeText(judgement.evidence);
-  if (source.content && (evidence.length < 12 || !normalizeText(source.content).includes(evidence))) {
-    return { ...base, verdict: "unclear", downgraded: "the quoted evidence isn't on the cited page" };
+  if (source.content && !evidenceOnPage(judgement.evidence, source.content)) {
+    // The quote and page are kept so a run's trace shows why (see research/model-runs.md).
+    return { ...base, verdict: "unclear", downgraded: `the quoted evidence isn't on the cited page: "${judgement.evidence.slice(0, 200)}" (${source.url})` };
   }
   return {
     ...base,
@@ -212,15 +245,19 @@ export async function verifyFacts(
   deps: VerifyDeps = { extract: extractClaims, judge: judgeClaim }
 ): Promise<VerifyReport> {
   const claims = await deps.extract(topic, lesson, deadline);
-  const checks = await Promise.all(
-    claims.map(async ({ claim, where }): Promise<ClaimCheck> => {
+  // At most SEARCH_CONCURRENCY searches at a time: each holds a credit
+  // reservation while it runs, and many at once can exhaust the key's budget.
+  const checks = await mapLimited(
+    claims,
+    SEARCH_CONCURRENCY,
+    async ({ claim, where }): Promise<ClaimCheck> => {
       try {
         const { judgement, sources } = await deps.judge(topic, claim, deadline);
         return settleVerdict(claim, where, judgement, sources);
       } catch (e) {
         return { claim, where, verdict: "unclear", downgraded: `search failed: ${e instanceof Error ? e.message : e}` };
       }
-    })
+    }
   );
   return summarize(checks);
 }

@@ -1,0 +1,32 @@
+■ conceptual science: Black holes (101s, score 8.2, $0.1885, 11 calls, 29842 in / 5790 out tokens)
+  approach: misconception (Testing the idea that a stronger flashlight could overcome gravity replaces a misleading tug-of-war picture with the idea that escape is no longer a possible future path.)
+  blocks:   activity:predict > explain > activity:diagram > check > explain > check > reflect
+  issues:   none
+  trace:    lesson.generate, lesson.verify, lesson.evaluate=8.2, lesson.select=8.2
+■ programming: Python loops (80s, score 8.5, $0.0634, 4 calls, 11378 in / 3753 out tokens)
+  approach: worked_example (A fully traced total-building loop gives learners a model, then prediction and repair tasks gradually prepare them to write their own loop.)
+  blocks:   code:trace > explain > check > code:predict > explain > check > code:bug > reflect
+  issues:   none
+  trace:    lesson.generate, lesson.verify, lesson.evaluate=8.5, lesson.select=8.5
+■ history: The French Revolution (102s, score 8, $0.1890, 11 calls, 29846 in / 6822 out tokens)
+  approach: mystery (The lesson investigates why a government money problem became a revolution, uncovering the different roles of debt, bread prices, and ideas before connecting them.)
+  blocks:   explain > activity:predict > explain > check > explain > explain > activity:diagram > check > reflect > explain
+  issues:   none
+  trace:    lesson.generate, lesson.verify, lesson.evaluate=8, lesson.select=8
+■ strategy: Game theory (70s, score 8.3, $0.0594, 4 calls, 10747 in / 3544 out tokens)
+  approach: scenario (One fictional prisoner's decision lets the learner compare personal incentives with the consequences for both prisoners.)
+  blocks:   explain > activity:scenario > explain > check > problem > explain > check > reflect
+  issues:   none
+  trace:    lesson.generate, lesson.verify, lesson.evaluate=8.3, lesson.select=8.3
+■ physics: Projectile motion FAILED: OpenRouter 402: {"error":{"message":"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.","code":402,"metadata":{"reason":"in_flight_budget_exhausted","limit_source":"openrouter_in_flight_budget","remedy_hint":"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.","headers":{"Retry-After":"120"},"provider_name":null}},"user_id":"user_[redacted]"}
+  trace: []
+■ mathematics: Probability FAILED: OpenRouter 402: {"error":{"message":"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.","code":402,"metadata":{"reason":"in_flight_budget_exhausted","limit_source":"openrouter_in_flight_budget","remedy_hint":"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.","headers":{"Retry-After":"120"},"provider_name":null}},"user_id":"user_[redacted]"}
+  trace: []
+■ niche philosophy: The Socratic method FAILED: OpenRouter 402: {"error":{"message":"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.","code":402,"metadata":{"reason":"in_flight_budget_exhausted","limit_source":"openrouter_in_flight_budget","remedy_hint":"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.","headers":{"Retry-After":"120"},"provider_name":null}},"user_id":"user_[redacted]"}
+  trace: []
+■ niche economics: Elinor Ostrom's commons principles FAILED: OpenRouter 402: {"error":{"message":"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.","code":402,"metadata":{"reason":"in_flight_budget_exhausted","limit_source":"openrouter_in_flight_budget","remedy_hint":"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.","headers":{"Retry-After":"120"},"provider_name":null}},"user_id":"user_[redacted]"}
+  trace: []
+■ niche language: Ancient Greek accents FAILED: OpenRouter 402: {"error":{"message":"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.","code":402,"metadata":{"reason":"in_flight_budget_exhausted","limit_source":"openrouter_in_flight_budget","remedy_hint":"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.","headers":{"Retry-After":"120"},"provider_name":null}},"user_id":"user_[redacted]"}
+  trace: []
+■ niche mathematics: Babylonian sexagesimal numbers FAILED: OpenRouter 402: {"error":{"message":"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.","code":402,"metadata":{"reason":"in_flight_budget_exhausted","limit_source":"openrouter_in_flight_budget","remedy_hint":"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.","headers":{"Retry-After":"120"},"provider_name":null}},"user_id":"user_[redacted]"}
+  trace: []

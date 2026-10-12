@@ -1,0 +1,221 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Launch angle and range",
+    "objective": "Explain how launch angle changes a projectile’s path and landing distance when launch speed and landing height stay the same.",
+    "estimatedMinutes": 9,
+    "approach": "simulation",
+    "approachReason": "Learners vary the launch angle on a trajectory plot, compare what changes, then use the observed paths to explain how horizontal speed and flight time determine range.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Two effects combine to set the range",
+        "body": "The plot assumes a launch speed of 20 m/s, equal launch and landing heights, and no air resistance. A projectile’s horizontal range is its horizontal speed multiplied by its time in the air.\n\nAs the launch angle gets steeper, more speed points upward and less points horizontally. The upward component keeps the projectile in the air longer, but the smaller horizontal component carries it forward more slowly. Range reflects both effects together.",
+        "example": "A steep launch can make a high arc without making a long-range shot: extra time in the air may be offset by slower horizontal motion."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Compare the horizontal reach just below and just above the angle you are considering.",
+          "At the best angle, neither going steeper nor shallower would increase the landing distance."
+        ],
+        "retry": "Think of range as horizontal speed multiplied by time aloft. Around 45°, neither component dominates too strongly, so their combined effect gives the greatest range under these assumptions."
+      },
+      {
+        "kind": "worked",
+        "heading": "Why can two angles have the same range?",
+        "problem": "A ball is launched at 20 m/s at either 30° or 60°. It lands at its launch height, and air resistance is ignored. Compare the ranges using R = v² sin(2θ) / g, with g = 9.8 m/s².",
+        "steps": [
+          {
+            "title": "Find the range at 30°",
+            "text": "R = (20² / 9.8) sin(2 × 30°) = (400 / 9.8) sin(60°).",
+            "why": "The range formula uses twice the launch angle."
+          },
+          {
+            "title": "Find the range at 60°",
+            "text": "R = (20² / 9.8) sin(2 × 60°) = (400 / 9.8) sin(120°).",
+            "why": "For this launch, twice the angle is 120°."
+          },
+          {
+            "title": "Compare the results",
+            "text": "sin(60°) = sin(120°) ≈ 0.866, so both ranges are about 35.3 m.",
+            "why": "The two angles add to 90°, so they produce equal ranges in this model, despite having different paths."
+          }
+        ],
+        "answer": "Both launches travel about 35.3 m horizontally. The 60° launch stays in the air longer and reaches a higher peak, while its horizontal speed is lower."
+      },
+      {
+        "kind": "explain",
+        "heading": "The pattern behind the plot",
+        "body": "For a fixed launch speed and equal launch and landing heights, the range is greatest at 45°. Below 45°, increasing the angle increases range; above 45°, increasing it decreases range. Complementary angles—two angles that add to 90°—give equal ranges in this idealized model.\n\nEqual range does not mean identical motion. A steeper complementary launch has more upward speed, so it stays in the air longer and reaches a higher peak, while moving horizontally more slowly.",
+        "example": "For example, 20° and 70° are complementary: they have the same predicted range, but the 70° path is higher and takes longer."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "First compare the angles’ sum; then consider which launch has the larger upward component.",
+          "Remember that equal landing distance does not require equal peak height or airtime."
+        ],
+        "retry": "At the same speed, the 70° launch has a larger upward component than the 20° launch, so it rises higher and stays airborne longer. Its smaller horizontal speed balances that extra time so the ranges match."
+      },
+      {
+        "kind": "problem",
+        "heading": "Calculate the best-case range",
+        "prompt": "A ball is launched at 20 m/s at 45° and lands at its launch height. Ignoring air resistance, use R = v² sin(2θ) / g and g = 9.8 m/s² to find its range. Give your answer to the nearest tenth.",
+        "answers": [
+          "40.8"
+        ],
+        "unit": "m",
+        "traps": [
+          {
+            "answer": "20.4",
+            "feedback": "Check whether you used sin(90°) = 1; the range formula does not divide this result by 2."
+          },
+          {
+            "answer": "28.9",
+            "feedback": "This can result from using sin(45°) instead of sin(2 × 45°)."
+          }
+        ],
+        "hints": [
+          "In the range formula, double the launch angle before taking the sine.",
+          "What is sin(90°)?"
+        ],
+        "solution": "R = (20² / 9.8) sin(90°) = 400 / 9.8 ≈ 40.8 m."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Watch the trajectory change",
+        "prompt": "Drag the launch angle and compare 30°, 45°, and 60°. For each, note where the path lands and how high it rises. Before reading the explanation, predict which angle gives the longest range and which two angles might land at the same distance.",
+        "reveal": "The 45° path has the greatest range, while 30° and 60° land at the same distance. The steeper 60° path rises higher; its longer flight time is balanced by a lower horizontal speed.",
+        "type": "graph",
+        "expression": "x*tan(k*pi/180) - 9.8*x^2/(2*20^2*cos(k*pi/180)^2)",
+        "slider": {
+          "label": "Launch angle",
+          "min": 15,
+          "max": 75,
+          "step": 1,
+          "unit": "°",
+          "initial": 30
+        },
+        "bands": [
+          {
+            "upTo": 35,
+            "title": "Below 45°",
+            "detail": "As the angle rises through this range, the horizontal reach increases toward its maximum."
+          },
+          {
+            "upTo": 45,
+            "title": "At 45°",
+            "detail": "The idealized trajectory reaches its greatest horizontal range."
+          },
+          {
+            "upTo": 75,
+            "title": "Above 45°",
+            "detail": "The arc gets steeper, but the horizontal range shrinks as horizontal speed falls."
+          }
+        ],
+        "axis": {
+          "xLabel": "Horizontal distance (m)",
+          "yLabel": "Height above launch point (m)",
+          "xMin": 0,
+          "xMax": 45,
+          "yMin": 0,
+          "yMax": 12
+        }
+      }
+    ],
+    "questions": [
+      {
+        "question": "A coach keeps a ball’s launch speed and landing height the same, and wants the greatest range predicted by the no-air-resistance model. The current launch angle is 35°. Which adjustment best meets the goal?",
+        "options": [
+          "Increase the angle toward 45°",
+          "Increase the angle toward 70°",
+          "Decrease the angle toward 10°",
+          "Keep increasing the angle past 45°"
+        ],
+        "correctAnswer": "Increase the angle toward 45°",
+        "explanation": "For a fixed speed and equal launch and landing heights, the balance of horizontal speed and airtime gives the greatest range at 45°. Going past 45° reduces the range."
+      },
+      {
+        "question": "At a field test, two balls are launched at the same speed and land at their launch height. One is launched at 20° and the other at 70°, with air resistance ignored. Which comparison is predicted by the model?",
+        "options": [
+          "The 70° launch travels farther and reaches a higher peak",
+          "The 20° launch travels farther and stays in the air longer",
+          "They have equal ranges, but the 70° launch reaches a higher peak and stays in the air longer",
+          "They have equal ranges, peak heights, and flight times"
+        ],
+        "correctAnswer": "They have equal ranges, but the 70° launch reaches a higher peak and stays in the air longer",
+        "explanation": "The angles are complementary, so the model predicts equal ranges. The 70° launch has more upward speed, giving it a higher peak and longer flight time."
+      }
+    ]
+  },
+  "score": 7,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 30812,
+      "approach": "simulation",
+      "blocks": "explain > check > worked > explain > check > problem",
+      "droppedBlocks": 1,
+      "droppedActivities": 1,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 5,
+      "ms": 9025,
+      "problems": [
+        "The advertised simulation is absent: the activities array is empty and there is no interactive trajectory plot. The opening explanation and first check repeatedly ask learners to use a plot they cannot access.",
+        "The first check tests the 45° maximum before the lesson establishes it, relying on the missing simulation to supply that understanding.",
+        "The lesson has no hands-on exploration of launch angle. Its central instructional promise—discovering the relationship by changing the angle—is not fulfilled.",
+        "The physical explanation is incomplete: it mentions the split between upward and horizontal speed but does not explain how upward speed changes flight time, or how flight time and horizontal speed jointly determine range.",
+        "The second check repeats the exact 30°/60° example just worked through, rather than testing transfer to a new pair or a different scenario.",
+        "Several hints effectively reveal the answer, and the retry explanations mostly repeat the original rule rather than offer a genuinely different explanation.",
+        "The sparse content is unlikely to occupy eight minutes meaningfully without the missing simulation."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 26534,
+      "approach": "simulation",
+      "blocks": "activity > explain > check > worked > explain > check > problem",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 7,
+      "ms": 8896,
+      "problems": [
+        "The graph's y-axis ends at 12 m, clipping the peaks of the trajectories learners are asked to compare: the 60° launch reaches about 15.3 m, and the 75° launch about 19.0 m. This undermines the central exploration of peak height.",
+        "The slider bands incorrectly label angles from 36° through 44° as 'At 45°' and state that they achieve the greatest range. Only 45° does so.",
+        "The first check says the landing height stays the same, but does not explicitly say it equals the launch height. A fixed landing height alone does not guarantee that 45° maximizes range.",
+        "The retry explanations largely repeat the original explanations rather than offering a genuinely different route to understanding."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 7,
+      "passed": false
+    }
+  ]
+}

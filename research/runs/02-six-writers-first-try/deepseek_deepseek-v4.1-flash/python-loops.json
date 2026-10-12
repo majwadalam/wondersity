@@ -1,0 +1,331 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "For Loops and Accumulators",
+    "objective": "Read, predict and write for loops that build up a result with an accumulator variable.",
+    "estimatedMinutes": 8,
+    "approach": "worked_example",
+    "approachReason": "An accumulator is a small procedure with a fixed shape, best learned by watching a full trace, then a faded trace, then solving one alone.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "A loop that leaves something behind",
+        "body": "A for loop repeats lines of code, but on its own it leaves no trace when it finishes. Most useful loops do a job that outlasts them: adding up a bill, counting how many scores pass, gluing letters into a message.\n\nTo do that, the loop needs a variable created outside it and updated on every pass. That variable is called an accumulator.",
+        "example": "A scoreboard behaves the same way: it shows 0 before the game, climbs as points are scored, and you read the final number after the final whistle."
+      },
+      {
+        "kind": "code",
+        "heading": "Trace the running total",
+        "prompt": "Step through this loop and watch the variable total change on every pass.",
+        "language": "python",
+        "code": "total = 0\nfor n in [3, 7, 2]:\n    total = total + n\nprint(total)",
+        "explanation": "total is created once, before the loop. The line total = total + n does not overwrite a new variable each time — it reads the old total, adds n, and stores the result back in the same box.",
+        "hints": [
+          "Notice that line 3 runs three times but total is only created once.",
+          "After each pass, total holds the sum of everything seen so far."
+        ],
+        "mode": "trace",
+        "options": [],
+        "trace": [
+          {
+            "line": 1,
+            "note": "total is created and set to 0.",
+            "state": "total = 0"
+          },
+          {
+            "line": 2,
+            "note": "The loop starts and n is set to the first item of the list.",
+            "state": "n = 3, total = 0"
+          },
+          {
+            "line": 3,
+            "note": "total becomes the old total plus n.",
+            "state": "n = 3, total = 3"
+          },
+          {
+            "line": 2,
+            "note": "The loop goes back and takes the next item.",
+            "state": "n = 7, total = 3"
+          },
+          {
+            "line": 3,
+            "note": "total grows again: 3 + 7.",
+            "state": "n = 7, total = 10"
+          },
+          {
+            "line": 2,
+            "note": "Last item of the list is picked up.",
+            "state": "n = 2, total = 10"
+          },
+          {
+            "line": 3,
+            "note": "total becomes 10 + 2, then the list is finished.",
+            "state": "n = 2, total = 12"
+          },
+          {
+            "line": 4,
+            "note": "The loop is over, so print runs once with the finished total.",
+            "state": "prints 12"
+          }
+        ]
+      },
+      {
+        "kind": "explain",
+        "heading": "The accumulator pattern",
+        "body": "Every accumulator follows the same three moves, in this order: create it before the loop, update it inside the loop (usually acc = acc + something), and read it after the loop, when it holds the finished result.\n\nThe starting value matters. Use 0 for a sum or a count, 1 for a product, and an empty string \"\" for text you are building up. Start a sum at 1 and every answer will be wrong.",
+        "example": "Summing [3, 7, 2]: total = 0 before the loop, total = total + n inside, print(total) after — 12."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "A NameError means Python was asked to use a name that does not exist yet.",
+          "Where does the name total first need to exist?"
+        ],
+        "retry": "Think of the accumulator as a jar. You must put an empty jar on the table before the loop starts tossing things in — otherwise the loop has nothing to add to."
+      },
+      {
+        "kind": "worked",
+        "heading": "Worked example: counting, not summing",
+        "problem": "How many of the numbers in [4, 9, 2, 11, 7] are greater than 5?\n\ncount = 0\nfor n in [4, 9, 2, 11, 7]:\n    if n > 5:\n        count = count + 1\nprint(count)",
+        "steps": [
+          {
+            "title": "Set up the counter",
+            "text": "Before the loop, write count = 0.",
+            "why": "A counter must exist before the loop and start empty, or the first count = count + 1 fails with a NameError."
+          },
+          {
+            "title": "Pass 1: n = 4",
+            "text": "4 > 5 is False, so the line inside the if does not run.",
+            "why": "count stays 0."
+          },
+          {
+            "title": "Pass 2: n = 9",
+            "text": "9 > 5 is True, so count becomes 0 + 1.",
+            "why": "count = 1."
+          },
+          {
+            "title": "Pass 3: n = 2",
+            "text": "2 > 5 is False again, so nothing happens.",
+            "why": "count stays 1."
+          },
+          {
+            "title": "Passes 4 and 5: n = 11, then 7",
+            "text": "Both pass the test, so count climbs 1 → 2 → 3.",
+            "why": "count = 3, and the list is exhausted, so the loop ends."
+          }
+        ],
+        "answer": "print(count) shows 3 — the number of values above 5, not their sum (which would be 22)."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Follow one pass at a time. What does total hold at the end of the very first pass?",
+          "If total is wiped at the start of every pass, only the final item can survive."
+        ],
+        "retry": "The loop body runs again and again. Anything at the top of the body is undone on every single pass, so a running total can never run."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Ask what total holds the moment the first loop ends.",
+          "The second loop starts from that value, not from zero."
+        ],
+        "retry": "An accumulator does not reset itself. It only restarts if you write total = 0 again — and sometimes keeping the old value is exactly what you want."
+      },
+      {
+        "kind": "problem",
+        "heading": "Build a product on your own",
+        "prompt": "A loop runs over the list [2, 3, 5]. Before the loop: product = 1. Inside the loop: product = product * n. After the loop: print(product).\n\nWhat does the program print? Type just the number.",
+        "answers": [
+          "30"
+        ],
+        "unit": "",
+        "traps": [
+          {
+            "answer": "10",
+            "feedback": "That is the sum 2 + 3 + 5. The line multiplies, so the numbers compound instead of adding."
+          },
+          {
+            "answer": "0",
+            "feedback": "That happens if you start the accumulator at 0 — the first multiply gives 0 and nothing can recover from it."
+          },
+          {
+            "answer": "6",
+            "feedback": "That is product after two passes only — the last number, 5, has not been multiplied in yet."
+          }
+        ],
+        "hints": [
+          "Trace it pass by pass rather than spotting a pattern.",
+          "1 * 2 = 2, then 2 * 3 = 6, then...?"
+        ],
+        "solution": "product = 1 → 1 * 2 = 2 → 2 * 3 = 6 → 6 * 5 = 30, so print(product) shows 30. The start value of 1 is what makes a product accumulator work: starting at 0 would make every multiplication zero."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Works or broken?",
+        "prompt": "Drag each snippet into the right bucket. \"Works\" means the loop ends with the correct finished result sitting in the accumulator.",
+        "reveal": "An accumulator needs three things in the right order: create it before the loop, update it inside the loop, and read it after the loop.",
+        "type": "sort",
+        "buckets": [
+          "Works",
+          "Broken"
+        ],
+        "items": [
+          {
+            "text": "total = 0 before the loop; total = total + n inside the loop",
+            "bucket": "Works"
+          },
+          {
+            "text": "total = total + n inside the loop, but total is never set before the loop",
+            "bucket": "Broken"
+          },
+          {
+            "text": "total = 0 as the first line inside the loop body, above the add line",
+            "bucket": "Broken"
+          },
+          {
+            "text": "count = 0 before the loop; inside an if, count = count + 1",
+            "bucket": "Works"
+          },
+          {
+            "text": "count = count + 1 inside the loop; count = 0 after the loop",
+            "bucket": "Broken"
+          },
+          {
+            "text": "total = 0 before the loop; total = total + n inside; print(total) after the loop",
+            "bucket": "Works"
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Predict the total",
+        "prompt": "Before you run anything, work out what this prints:\n\ntotal = 0\nfor n in [1, 2, 3, 4]:\n    total = total + n * 2\nprint(total)\n\nWhich value does print show?",
+        "reveal": "Each pass adds n * 2 to the running total: 2, then 6, then 12, then 20. The accumulator keeps everything the earlier passes added.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "20",
+            "correct": true,
+            "feedback": "Correct. The passes add 2, 4, 6 and 8 to a total that keeps growing: 2, 6, 12, 20."
+          },
+          {
+            "text": "10",
+            "correct": false,
+            "feedback": "That is 1 + 2 + 3 + 4 — the accumulator is adding n * 2, not n."
+          },
+          {
+            "text": "12",
+            "correct": false,
+            "feedback": "That is the total after three passes. The last value, n = 4, still adds 8 more."
+          },
+          {
+            "text": "40",
+            "correct": false,
+            "feedback": "That double-counts. The total is not multiplied by 2; only each item is."
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "Leo wants to add up every number in a list. Inside his loop he writes total = total + n, and the program crashes with a NameError on exactly that line. What should he do?",
+        "options": [
+          "Create total = 0 on a line before the loop starts.",
+          "Move total = total + n to a line before the loop starts.",
+          "Change the for loop into a while loop.",
+          "Rename total to n so the two names match."
+        ],
+        "correctAnswer": "Create total = 0 on a line before the loop starts.",
+        "explanation": "An accumulator has to exist before the loop first uses it, and it needs a starting value — 0 for a sum. Without that setup line, Python has never seen the name total."
+      },
+      {
+        "question": "Sam writes total = 0 on the line before his loop over [5, 10, 15], and total = total + n inside the loop. A classmate moves total = 0 to the first line inside the loop body, above the add line. What does print(total) show now?",
+        "options": [
+          "15",
+          "30",
+          "0",
+          "5"
+        ],
+        "correctAnswer": "15",
+        "explanation": "Resetting a variable inside the loop body wipes it on every pass, so the running total never survives. Only the last value added — 15 — is left at the end."
+      },
+      {
+        "question": "Priya's loop over [2, 4, 6] starts with total = 0 and adds each number, ending at 12. Without resetting total, she then runs a second loop over [1, 1] using the same add line. What does print(total) show now?",
+        "options": [
+          "14",
+          "12",
+          "2",
+          "0"
+        ],
+        "correctAnswer": "14",
+        "explanation": "The accumulator keeps whatever value it held when the first loop ended. The second loop adds 1 and 1 on top of 12, giving 14."
+      }
+    ]
+  },
+  "score": 7,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 46269,
+      "approach": "worked_example",
+      "blocks": "explain > code > explain > check > worked > activity > check > activity > check > problem",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 7,
+      "ms": 16233,
+      "problems": [
+        "The worked example says the sum of [4, 9, 2, 11, 7] would be 22, but it is actually 33.",
+        "The module goal includes writing for loops, but the lesson only asks learners to read, trace, sort, and predict; the final task asks for a numeric answer rather than writing a loop."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 18411,
+      "approach": "worked_example",
+      "blocks": "explain > code > explain > check > worked > activity > check > activity > problem > check > problem",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 7,
+      "ms": 13307,
+      "problems": [
+        "One code-output trap is wrong: if the missing line in the prices problem is print(total), total is still 0, so it prints 0 four times, not 4, 13, 15.",
+        "The worked example says the sum 'would be 33', but the values greater than 5 are 9 + 11 + 7 = 27; 33 is the sum of the whole list."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 7,
+      "passed": false
+    }
+  ]
+}

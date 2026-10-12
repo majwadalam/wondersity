@@ -1,0 +1,5 @@
+■ conceptual science: Black holes (77s, score 8.3, $0.0465, 2 calls, 6461 in / 3960 out tokens)
+  approach: misconception (Testing the idea that a stronger engine could beat a black hole replaces an everyday speed-based picture with the correct picture of which future paths are possible.)
+  blocks:   activity:predict > explain > check > activity:diagram > explain > check > reflect > check
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=8.3, lesson.select=8.3

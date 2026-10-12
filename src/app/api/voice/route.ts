@@ -1,4 +1,5 @@
 import { createHash } from "node:crypto";
+import { ModelHttpError } from "@/lib/model";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { asLearner } from "@/lib/auth";
@@ -81,7 +82,7 @@ async function speak(line: string, voice: string, manner: string) {
     }),
     signal: AbortSignal.timeout(45_000),
   });
-  if (!res.ok || !res.body) throw new Error(`voice: HTTP ${res.status}`);
+  if (!res.ok || !res.body) throw new ModelHttpError(res.status || 502, `voice: ${res.ok ? "no audio" : (await res.text()).slice(0, 300)}`);
 
   const chunks: Buffer[] = [];
   let transcript = "";

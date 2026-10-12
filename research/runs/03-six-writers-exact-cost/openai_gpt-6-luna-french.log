@@ -1,0 +1,5 @@
+■ history: The French Revolution (40s, score 8, $0.0024, 2 calls, 6328 in / 4191 out tokens)
+  approach: scenario (A fictional Third Estate deputy’s journey through spring 1789 lets you see how financial, everyday, and political pressures converged.)
+  blocks:   explain > activity:scenario > explain > check > activity:sort > explain > check > check
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=8, lesson.select=8

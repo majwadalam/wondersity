@@ -1,0 +1,300 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Why 1789?",
+    "objective": "Explain how debt, food prices and new ideas combined to start the revolution.",
+    "estimatedMinutes": 8,
+    "approach": "mystery",
+    "approachReason": "The timing itself is the puzzle: France was the strongest kingdom in Europe, so why did it collapse in a single year? Each section resolves one part, and the final block assembles the answer.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "A puzzle fit for a king",
+        "body": "In 1788, France was the most powerful kingdom in Europe. Its army was huge, its culture was envied, its king sat unchallenged on the throne. Yet within twelve months, that king had lost control of the country, and within four he had lost his head.\n\nHere is what makes it a real puzzle: revolutions usually happen in weakened, failing states. France in 1789 was not failing. Something specific pushed it over the edge — and not one thing, but three, colliding at exactly the same moment.",
+        "example": ""
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Why debt spelled danger in France specifically",
+        "body": "Every major power was deep in debt after the expensive wars of the 18th century — but Britain managed its debt comfortably while France spiralled. The difference was who could be taxed. In Britain, Parliament represented the wealthy, who consented to tax themselves. In France, the wealthiest group — the nobility and clergy — were largely exempt from the main taxes.\n\nSo every attempt to fix the debt meant squeezing the one group with the power to block reform: the privileged orders, who controlled the high courts. By 1787 the government was effectively bankrupt, and the only fix left was to demand sacrifices from people who had never sacrificed anything.",
+        "example": "Louis XVI's finance ministers — Turgot, Necker, Calonne — each tried reform and each was blocked or dismissed. Calonne literally called an assembly of nobles in 1787 to approve new taxes; the nobles refused, saying only the whole nation could approve them. That demand backfired spectacularly: it opened the door to the Estates-General, and with it, politics."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Ask who had to consent to a new tax in France — and who did not.",
+          "What did the nobles' refusal force the king to do to raise money at all?"
+        ],
+        "retry": "It's not that the tax was a bad idea — it's that in France, tax reform was constitutionally impossible without the consent of the very people it taxed. In Britain the same kind of tax had already been passed, which is why the same debt meant crisis in Paris but not in London."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "1788: the harvest from hell",
+        "body": "In 1788 a catastrophic hailstorm, then drought, then a freezing winter wrecked the harvest. Bread prices in Paris roughly doubled by July 1789 — the very month crowds stormed the Bastille. A labourer who earned about 30 sous a day saw the price of a 4-pound loaf rise from around 8 sous to about 14.5 sous; with a family needing two or three loaves a day, bread alone could swallow most of a full day's wage.\n\nThis matters because hunger turns grumbling into action. Crowds gathered at markets and bakeries; rumours flew that aristocrats were hoarding grain. Hungry Parisians were now available on the streets, in mobs, at exactly the moment politics opened up.",
+        "example": "The famous phrase 'Let them eat cake' was attributed to Marie-Antoinette but she almost certainly never said it — it appears in print years earlier. But the fact that Parisians believed it tells you everything about the mood of 1789."
+      },
+      {
+        "kind": "activity",
+        "ref": 2
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Which ingredient was genuinely new to 1789?",
+          "Debt and hunger had struck before. Ask what had changed in people's heads, not just their stomachs."
+        ],
+        "retry": "The right answer treats 1789 as a collision, not a single cause. Debt created a fiscal crisis that forced the king to open politics; hunger created crowds ready to act; Enlightenment ideas gave those crowds a language of rights and a conviction that the old order was not divinely fixed."
+      },
+      {
+        "kind": "activity",
+        "ref": 3
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "The nobles said only 'the nation' could consent to taxes. Follow that argument to its logical end.",
+          "If the nation consents to taxes, who is sovereign — and how did the Third Estate make that claim practical?"
+        ],
+        "retry": "Once the 'nation' was invoked as the source of authority — an idea straight from Rousseau and the American example — the nobles' argument that only the nation could consent to taxes turned against the whole privileged order. The dispute over voting rules was really a dispute over who was sovereign."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Solve the puzzle",
+        "prompt": "You now hold all three clues. In your own words: why 1789? Write two or three sentences explaining why the crisis erupted in that year and not a decade earlier or later.",
+        "model": "A strong answer names the collision: France's debt crisis forced the king to summon the Estates-General (the political opening); the failed 1788 harvest filled the streets with hungry, angry crowds (the mobilising force); and Enlightenment ideas of citizenship and rights gave both elites and crowds a new standard to judge the old order by (the legitimising force). Any one alone might have been survived; all three at once could not be."
+      },
+      {
+        "kind": "summary",
+        "heading": "Why 1789 — in one line",
+        "points": [
+          "Debt forced the king to open politics: the Estates-General was summoned to fix money, not to start a revolution.",
+          "Hunger mobilised the streets: the 1788 harvest failure put desperate crowds in Paris at the decisive moment.",
+          "New ideas supplied the language: rights, citizenship and national sovereignty turned complaints into a claim to remake the state."
+        ]
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Who owed what in the 1780s",
+        "prompt": "France is usually remembered as uniquely bankrupt. Guess which country carried the largest national debt in the 1780s, then tap the bars to compare.",
+        "reveal": "Britain actually owed more than France — around 5 billion livres against France's 4-plus billion. The difference wasn't the size of the debt: Britain taxed its wealthy landowners to service it, while France could not tax its privileged elite, so the same burden meant crisis in Paris and not in London.",
+        "type": "chart",
+        "unit": "billion livres (approx. equivalent)",
+        "bars": [
+          {
+            "label": "Britain",
+            "value": 5,
+            "note": "Roughly 5 billion livres equivalent — huge, but Parliament taxed the wealthy to service it."
+          },
+          {
+            "label": "France",
+            "value": 4.5,
+            "note": "About 4.5 billion livres equivalent, with debt service eating roughly half of state revenue — because nobles and clergy largely escaped direct tax."
+          },
+          {
+            "label": "Spain",
+            "value": 1.5,
+            "note": "Far smaller, sustained partly by colonial silver."
+          },
+          {
+            "label": "Austria",
+            "value": 1,
+            "note": "Modest by comparison; a land empire with lighter naval spending."
+          },
+          {
+            "label": "Prussia",
+            "value": 0.4,
+            "note": "Small, and famously austere — the army was funded by the army."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "A Parisian family's budget, 1789",
+        "prompt": "You are a Parisian locksmith's family living on about 30 sous a day, and your household eats two 4-pound loaves of bread each day. Drag the price of a single loaf and watch what bread alone costs your family — and what's left for everything else: rent, firewood, clothes.",
+        "reveal": "At normal prices two loaves took about half the day's wage; at July 1789 prices (around 14.5 sous per loaf) bread alone swallowed nearly the whole wage, leaving almost nothing for rent or firewood. Hunger left little to lose — which is exactly when crowds become crowds.",
+        "type": "simulation",
+        "slider": {
+          "label": "Price of one loaf",
+          "min": 8,
+          "max": 15,
+          "step": 0.5,
+          "unit": "sous",
+          "initial": 8
+        },
+        "bands": [
+          {
+            "upTo": 10.5,
+            "title": "Tight but survivable",
+            "detail": "Two loaves cost about 16–21 of the day's 30 sous — roughly half to two-thirds of the wage. There is something left for rent, wood and clothing. Life is hard, not desperate."
+          },
+          {
+            "upTo": 13,
+            "title": "Crisis",
+            "detail": "Two loaves now cost 22–26 sous of a 30-sous wage. Families go hungry, buy on credit and riot at bakeries — this was spring 1789."
+          },
+          {
+            "upTo": 15,
+            "title": "Bread eats everything",
+            "detail": "At ~14.5 sous a loaf, two loaves cost about 29 of 30 sous: the entire wage goes on bread alone, leaving nothing for rent or firewood. Markets explode, rumours of grain hoarding spread, and thousands are on the streets daily — this was July 1789."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Three kinds of spark",
+        "prompt": "Each item below was part of the road to 1789. Sort each one by which of the three causes it belongs to: money, hunger, or ideas.",
+        "reveal": "Notice that none of these alone causes a revolution — the fiscal crisis opens the door, hunger fills the street, and ideas tell people the door should be open.",
+        "type": "sort",
+        "buckets": [
+          "Debt and taxation",
+          "Hunger",
+          "Enlightenment ideas"
+        ],
+        "items": [
+          {
+            "text": "Costly support for the American War of Independence",
+            "bucket": "Debt and taxation"
+          },
+          {
+            "text": "Nobles' exemption from the taille tax",
+            "bucket": "Debt and taxation"
+          },
+          {
+            "text": "The catastrophic hailstorm and drought of 1788",
+            "bucket": "Hunger"
+          },
+          {
+            "text": "Rumours that aristocrats were hoarding grain",
+            "bucket": "Hunger"
+          },
+          {
+            "text": "Rousseau's claim that sovereignty belongs to the people",
+            "bucket": "Enlightenment ideas"
+          },
+          {
+            "text": "American soldiers like Lafayette returning home",
+            "bucket": "Enlightenment ideas"
+          },
+          {
+            "text": "Censorship collapsing under cheap pamphlets",
+            "bucket": "Enlightenment ideas"
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "The chain reaction, 1788–89",
+        "prompt": "Drag these events into the order they actually happened, from cause to explosion.",
+        "reveal": "Follow the chain: fiscal crisis forces the Estates-General, debate over voting rules creates a National Assembly, the king tries to shut it down, and hunger puts the crowd on the street at the decisive moment.",
+        "type": "order",
+        "steps": [
+          "The 1788 harvest fails after hail, drought and a savage winter",
+          "Louis XVI summons the Estates-General for May 1789 to solve the debt",
+          "The Third Estate demands votes by head; the king refuses; they declare a National Assembly (June 1789)",
+          "The king gathers troops around Paris and dismisses popular minister Necker",
+          "Hungry Paris crowds search for weapons and storm the Bastille (14 July 1789)"
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A French royal minister in 1786 proposes a new land tax that would fall on nobles for the first time in generations. The courts, staffed by noble judges, block it. Why does this push France toward crisis rather than solving the debt problem?",
+        "options": [
+          "The tax would actually have raised little money, so the debt kept growing as before",
+          "Blocking the tax forced the government to call the Estates-General, opening politics to the whole nation at a moment of hunger and new ideas",
+          "Nobles refused the tax out of simple greed, showing they did not care about France's survival",
+          "Louis XVI wanted to avoid taxing nobles, and the courts merely confirmed his wish"
+        ],
+        "correctAnswer": "Blocking the tax forced the government to call the Estates-General, opening politics to the whole nation at a moment of hunger and new ideas",
+        "explanation": "Because only the Estates-General could override the courts' refusal, the fiscal crisis forced the king to open politics — and once open, hunger and new ideas poured through."
+      },
+      {
+        "question": "France had bad harvests and heavy war debts in the 1740s and 1750s without revolution. Why did the same pressures explode in 1789?",
+        "options": [
+          "The king in 1789 was far weaker and more indecisive than earlier kings, so a stronger ruler could have prevented it",
+          "Only in 1789 did debt and bad harvests happen at the same time; earlier they never coincided",
+          "Earlier crises lacked the third ingredient: a widely spread conviction, from Enlightenment writers and the American example, that the old order could rightly be replaced",
+          "French people in 1789 were simply hungrier than any earlier generation had been"
+        ],
+        "correctAnswer": "Earlier crises lacked the third ingredient: a widely spread conviction, from Enlightenment writers and the American example, that the old order could rightly be replaced",
+        "explanation": "Debt and hunger had struck before; what was new in 1789 was a public language of rights and popular sovereignty that turned suffering into a demand for a new order."
+      },
+      {
+        "question": "In May 1789 the Estates-General meets to approve new taxes. Within six weeks its Third Estate declares itself a National Assembly claiming to speak for the nation. What best explains this transformation?",
+        "options": [
+          "The Third Estate had always planned revolution and used the meeting as a pretext",
+          "The nobles' own argument that only 'the nation' could consent to taxes backfired: once invoked, the nation claimed sovereignty, and voting by head instead of by order made that claim real",
+          "The king explicitly invited the deputies to reform the constitution, so they merely followed his instructions",
+          "Parisian street crowds stormed the meeting hall and forced the deputies to declare an assembly"
+        ],
+        "correctAnswer": "The nobles' own argument that only 'the nation' could consent to taxes backfired: once invoked, the nation claimed sovereignty, and voting by head instead of by order made that claim real",
+        "explanation": "The fiscal dispute over voting rules became a constitutional dispute: if the nation consents to taxes, the nation — not the king or the orders — is sovereign."
+      }
+    ]
+  },
+  "score": 9,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 21006,
+      "approach": "mystery",
+      "blocks": "explain > activity > explain > check > activity > explain > activity > check > activity > check > reflect > summary",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 7,
+      "ms": 18725,
+      "problems": [
+        "Factual/numeric inaccuracies: the debt chart (200–250 million livres) is off by an order of magnitude — France's debt was roughly 4+ billion livres in the 1780s; the relative claim (Britain owed more) is right but the numbers shown are wrong.",
+        "The bread/wage claim is shaky: 'a family's daily loaf costing over 30 sous' implies bread exceeded a full wage, but at July 1789 prices (~14.5 sous per loaf) bread took roughly 60–90% of a 30-sous wage for a household, not more than 100% of it; the simulation's 'Impossible' band (a single loaf at 15 sous = more than the whole wage) repeats this error.",
+        "Both checks have empty hints arrays — the rubric expects hints that guide without giving the answer away.",
+        "Minor typo in body text ('turnsgrumbling').",
+        "The simulation's slider semantics are slightly muddled: the prompt frames it as a family budget, but only one loaf's price is dragged, so the wage arithmetic never quite adds up as described."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 13305,
+      "approach": "mystery",
+      "blocks": "explain > activity > explain > check > activity > explain > activity > check > activity > check > reflect > summary",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 9,
+      "ms": 2623,
+      "problems": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 9,
+      "passed": true
+    }
+  ]
+}

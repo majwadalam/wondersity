@@ -523,7 +523,17 @@ async function run(state: RunState): Promise<TutorResult> {
     }
 
     const turnStarted = Date.now();
-    const reply = await callWithTools(messages, TOOLS, state.startedAt + HARD_DEADLINE_MS);
+    let reply: Awaited<ReturnType<typeof callWithTools>>;
+    try {
+      reply = await callWithTools(messages, TOOLS, state.startedAt + HARD_DEADLINE_MS);
+    } catch (e) {
+      // Once the lesson is written and saved, the only turn left is the short
+      // note to the learner: losing it must not lose the lesson (an end-to-end
+      // test had a saved lesson thrown away because this call failed).
+      if (!state.written) throw e;
+      trace.push({ step: "agent.note_failed", turn: step, error: e instanceof Error ? e.message.slice(0, 200) : String(e) });
+      break;
+    }
     messages.push(reply);
     trace.push({
       step: "agent.turn",

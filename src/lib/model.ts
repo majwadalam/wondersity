@@ -163,6 +163,13 @@ type StructuredOptions = {
   reasoningEffort?: ReasoningEffort;
   timeoutMs?: number;
   model?: string;
+  /**
+   * The most output tokens (including hidden reasoning) this call may use.
+   * Without it, OpenRouter reserves the model's largest possible reply against
+   * the key's credit while the call runs (about $1 for GPT-6.1 Sol), so a few
+   * parallel calls fail with 402 "in-flight budget exhausted".
+   */
+  maxTokens?: number;
   /** OpenRouter's web search plugin: search before answering. */
   webSearch?: { maxResults?: number; engine?: string; includeDomains?: string[]; excludeDomains?: string[] };
 };
@@ -197,7 +204,7 @@ async function structuredCall(
   user: string,
   schema: Record<string, unknown>,
   deadline: Deadline,
-  { reasoningEffort, timeoutMs, model = writerModel(), webSearch }: StructuredOptions
+  { reasoningEffort, timeoutMs, model = writerModel(), webSearch, maxTokens }: StructuredOptions
 ): Promise<{ data: unknown; sources: Source[] }> {
   // Anthropic refuses our larger lesson schemas as constrained grammars ("compiled
   // grammar is too large"), so it gets the schema in the prompt and plain JSON
@@ -214,6 +221,7 @@ async function structuredCall(
     ],
     response_format: unconstrained ? { type: "json_object" } : { type: "json_schema", json_schema: { name: "response", strict: true, schema } },
     ...(reasoningEffort ? { reasoning: { effort: reasoningEffort } } : {}),
+    ...(maxTokens ? { max_tokens: maxTokens } : {}),
     ...(webSearch
       ? {
           plugins: [
@@ -243,7 +251,8 @@ export async function callWithTools(
   tools: ToolDefinition[],
   deadline: Deadline
 ): Promise<AssistantMessage> {
-  return chat({ messages, tools, tool_choice: "auto" }, deadline);
+  // A turn is a short note or a tool call; the largest is a course plan (~3k tokens).
+  return chat({ messages, tools, tool_choice: "auto", max_tokens: 8_000 }, deadline);
 }
 
 // Embeddings: a topic as 1536 numbers, so topics that mean the same thing

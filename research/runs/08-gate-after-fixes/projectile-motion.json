@@ -1,0 +1,222 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Launch angle and range",
+    "objective": "Explain how changing the launch angle changes a projectile’s height and range, and identify angles that give the same range in an ideal level-ground launch.",
+    "estimatedMinutes": 7,
+    "approach": "simulation",
+    "approachReason": "Varying the launch angle while keeping launch speed fixed lets the learner see the competing effects on height and horizontal distance.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Why higher does not always mean farther",
+        "body": "The launch angle is measured above the horizontal. The range is the horizontal distance from launch to landing—not the distance traveled along the curved path.\n\nAt the same launch speed, increasing the angle gives the projectile more upward speed but less horizontal speed. On level ground, this means more time in the air, but slower sideways travel. With no air resistance, those competing effects give the greatest range at 45°.",
+        "example": "A nearly vertical launch rises high and stays airborne a long time, but makes little horizontal progress."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Keep the launch speed fixed and think about where each path meets the ground.",
+          "Which angle balances upward and horizontal motion for the greatest range?"
+        ],
+        "retry": "Range depends on both sideways speed and time aloft. Increasing the angle helps range only up to the balance point at 45° under these ideal conditions."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "Different paths, equal range",
+        "body": "At the same launch speed, 30° and 60° give the same range in this model. The 30° launch moves horizontally faster but lands sooner; the 60° launch moves horizontally slower but stays airborne longer.\n\nThis equal-range pairing works for angles that add to 90°, such as 20° and 70°. These are called complementary angles; 45° is its own partner. The rule assumes no air resistance and equal launch and landing heights—do not automatically apply it to a launch from a cliff.",
+        "example": "Equal range does not mean equal maximum height, equal flight time, or identical paths."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Do the two angles add to 90°?",
+          "Separate where the projectile lands from how high it rises and how long it flies."
+        ],
+        "retry": "Complementary angles share a landing distance under the stated conditions. The larger angle still produces a higher arc and a longer flight."
+      },
+      {
+        "kind": "problem",
+        "heading": "Find the other launch",
+        "prompt": "An ideal launcher hits a ground-level target at a launch angle of 28°. You keep the same launch speed and want to hit the same target with a higher arc. Air resistance is ignored, and launch and landing heights are equal.\n\nWhat other launch angle should you use? Enter the angle measured above the horizontal.",
+        "answers": [
+          "62",
+          "62°"
+        ],
+        "unit": "degrees",
+        "traps": [
+          {
+            "answer": "45",
+            "feedback": "45° maximizes range at this speed; it is not the equal-range partner of 28°."
+          },
+          {
+            "answer": "28",
+            "feedback": "That repeats the original path. You need the other angle that reaches the same target."
+          }
+        ],
+        "hints": [
+          "Use the equal-range pairing, not the maximum-range angle.",
+          "The original angle and its partner must add to 90°."
+        ],
+        "solution": "The equal-range angles add to 90°, so the other angle is 90 − 28 = 62°. This larger angle gives a higher arc and longer flight while keeping the same range."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Change the launch angle",
+        "prompt": "Drag the launch angle through 15°, 30°, 45°, 60°, and 75°. Compare the highest point of each arc and where it returns to height zero. Which angle lands farthest to the right? Only the angle changes; launch speed stays at 20 m/s.",
+        "reveal": "The arc gets higher as the angle increases, but the range first grows and then shrinks. In this level-ground, no-air-resistance model, 45° gives the greatest range.",
+        "type": "graph",
+        "expression": "x*tan(k*pi/180)-9.8*x^2/(2*20^2*cos(k*pi/180)^2)",
+        "slider": {
+          "label": "Launch angle",
+          "min": 10,
+          "max": 80,
+          "step": 1,
+          "unit": "degrees",
+          "initial": 15
+        },
+        "bands": [
+          {
+            "upTo": 30,
+            "title": "Low arc",
+            "detail": "Increasing the angle in this range makes the arc higher and moves the landing point farther away."
+          },
+          {
+            "upTo": 45,
+            "title": "Approaching maximum range",
+            "detail": "Height and range both increase as you approach 45°. At 45°, the range is greatest."
+          },
+          {
+            "upTo": 60,
+            "title": "Higher, but not farther",
+            "detail": "Above 45°, the arc continues to rise higher, but the landing point moves closer."
+          },
+          {
+            "upTo": 80,
+            "title": "Tall, short-range arc",
+            "detail": "Much of the launch speed is directed upward. The projectile rises high but travels less distance horizontally."
+          }
+        ],
+        "axis": {
+          "xLabel": "Horizontal distance (m)",
+          "yLabel": "Height above launch (m)",
+          "xMin": 0,
+          "xMax": 45,
+          "yMin": 0,
+          "yMax": 22
+        }
+      },
+      {
+        "afterConcept": 0,
+        "title": "30° versus 60°",
+        "prompt": "Two projectiles launch at the same speed from level ground, with no air resistance. One launches at 30° and the other at 60°. What do you predict about their horizontal ranges?",
+        "reveal": "They land at the same horizontal distance despite following different arcs. The higher launch trades horizontal speed for extra time in the air.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "The 30° launch has a greater range.",
+            "correct": false,
+            "feedback": "It has more horizontal speed, but less time in the air. For this pair, those effects exactly balance."
+          },
+          {
+            "text": "The 60° launch has a greater range.",
+            "correct": false,
+            "feedback": "It stays airborne longer, but has less horizontal speed. For this pair, those effects exactly balance."
+          },
+          {
+            "text": "They have the same range.",
+            "correct": true,
+            "feedback": "Yes. Their different horizontal speeds and flight times produce the same landing distance."
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A launcher fires at 30°. You want the greatest possible horizontal range without changing its launch speed. The projectile lands at its launch height, and air resistance is ignored. Which setting should you choose?",
+        "options": [
+          "15°, because more horizontal speed always means more range.",
+          "45°, because it balances horizontal speed and time in the air.",
+          "60°, because a higher arc always travels farther.",
+          "80°, because the longest flight always gives the greatest range."
+        ],
+        "correctAnswer": "45°, because it balances horizontal speed and time in the air.",
+        "explanation": "At fixed launch speed, with equal launch and landing heights and no air resistance, 45° gives the maximum range. A higher angle increases flight time but reduces horizontal speed too much to increase range."
+      },
+      {
+        "question": "Two identical balls are launched at the same speed, one at 25° and one at 65°. They land at their launch height, and air resistance is ignored. Which comparison is correct?",
+        "options": [
+          "They have the same range, but the 65° ball rises higher and stays airborne longer.",
+          "They have the same range, maximum height, and flight time.",
+          "The 65° ball has greater range because it stays airborne longer.",
+          "The 25° ball has greater range because it moves horizontally faster."
+        ],
+        "correctAnswer": "They have the same range, but the 65° ball rises higher and stays airborne longer.",
+        "explanation": "25° + 65° = 90°, so these complementary angles give equal range under the stated conditions. The 65° launch has more upward speed, producing a higher arc and longer flight."
+      }
+    ]
+  },
+  "score": 8.5,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 52359,
+      "approach": "simulation",
+      "blocks": "activity > explain > check > activity > explain > check > problem",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 1,
+      "ms": 28898,
+      "claims": 8,
+      "supported": 0,
+      "contradicted": [],
+      "unclear": 8,
+      "downgraded": [
+        "At fixed launch speed, a projectile achieves its maximum horizontal range at a launch angle of 45° when air resistance is absent and launch and landing heights are equal.: the quoted evidence isn't on the cited page",
+        "Complementary launch angles give equal projectile ranges at the same launch speed when air resistance is absent and launch and landing heights are equal.: search failed: OpenRouter 402: {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhausted\",\"limit_source\":\"openrouter_in_flight_budget\",\"remedy_hint\":\"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.\",\"headers\":{\"Retry-After\":\"120\"},\"provider_name\":null}},\"user_id\":\"user_[redacted]\"}",
+        "At fixed launch speed, increasing the launch angle above the horizontal from 0° toward 90° increases the projectile’s initial upward speed and decreases its horizontal speed.: search failed: OpenRouter 402: {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhausted\",\"limit_source\":\"openrouter_in_flight_budget\",\"remedy_hint\":\"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.\",\"headers\":{\"Retry-After\":\"120\"},\"provider_name\":null}},\"user_id\":\"user_[redacted]\"}",
+        "For a projectile launched and landing at the same height without air resistance, increasing the launch angle from 0° toward 90° at fixed launch speed increases flight time.: the quoted evidence isn't on the cited page",
+        "At the same launch speed, complementary launch angles other than 45° produce different maximum heights and flight times, with the larger angle producing a higher arc and longer flight under ideal level-ground conditions.: the quoted evidence isn't on the cited page",
+        "At fixed launch speed in a level-ground model without air resistance, projectile range decreases as the launch angle increases above 45° toward 90°, while maximum height increases.: the quoted evidence isn't on the cited page",
+        "A projectile’s range is the horizontal distance from its launch point to its landing point, rather than the distance traveled along its curved trajectory.: search failed: OpenRouter 402: {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhausted\",\"limit_source\":\"openrouter_in_flight_budget\",\"remedy_hint\":\"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.\",\"headers\":{\"Retry-After\":\"120\"},\"provider_name\":null}},\"user_id\":\"user_[redacted]\"}",
+        "Complementary angles are two angles whose measures add to 90°.: the quoted evidence isn't on the cited page"
+      ]
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8.5,
+      "ms": 28905,
+      "problems": [
+        "The retry explanations largely repeat the original explanations rather than offering a genuinely different way to understand the relationships.",
+        "The 30° versus 60° prediction follows a graph activity that already asks learners to inspect both angles, so it offers limited new investigative challenge."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8.5,
+      "passed": true,
+      "sources": 0
+    }
+  ]
+}

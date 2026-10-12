@@ -1,0 +1,179 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The Event Horizon",
+    "objective": "Understand why nothing, not even light, escapes from inside the event horizon.",
+    "estimatedMinutes": 8,
+    "approach": "simulation",
+    "approachReason": "The event horizon is a boundary defined by what can and cannot escape, so the fastest way to grasp it is to move a light beam closer and closer to a black hole and watch exactly where escape stops being possible.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "The idea to test: escape speed",
+        "body": "To leave any object, you must climb out of its gravity, and the deeper the gravity well, the faster you must go. That required speed is called the escape velocity. Earth's is about 11 km/s; for the Sun it is 617 km/s.\n\nA black hole is a body whose escape velocity at its surface is at least the speed of light — the fastest speed there is. So the question this module answers is: what happens as you approach, and then cross, the place where escape speed reaches 299,792 km/s?",
+        "example": "Newton already guessed this in the 1700s: he imagined a star compressed so much that its escape velocity exceeded light's speed, and concluded light could not leave it."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "What the beam just showed you",
+        "body": "Far away, the beam travels in almost a straight line. Closer in, gravity bends it noticeably — light has no mass, but gravity bends the space it travels through. Very close to the horizon, the beam has to point almost perfectly outward to escape at all; even slightly sideways, it curves back.\n\nAt the horizon itself, even a beam aimed straight out cannot gain ground: the escape velocity there equals the speed of light. Inside it, escape would require going faster than light — which nothing can do. That boundary is the event horizon, and its radius for a given mass is called the Schwarzschild radius.",
+        "example": "The horizon isn't a physical surface. An object falling through feels nothing special at that moment — it's the outside universe that can never hear from it again."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [],
+        "retry": ""
+      },
+      {
+        "kind": "problem",
+        "heading": "Shrink the Earth",
+        "prompt": "The Schwarzschild radius of an object of mass M is r = 2GM/c², where G = 6.67×10⁻¹¹ m³/(kg·s²), c = 3×10⁸ m/s, and the Earth's mass is M = 6×10²⁴ kg. If you could compress the Earth (radius 6,400 km) without losing any mass, how small would it have to be before light could not escape its surface? Give the radius in meters.",
+        "answers": [
+          "0.0089",
+          "0.009",
+          "8.9e-3"
+        ],
+        "unit": "m",
+        "traps": [],
+        "hints": [
+          "Compute the numerator 2GM first, then divide by c².",
+          "Your answer should be smaller than a marble."
+        ],
+        "solution": "Worked solution: r = 2 × (6.67×10⁻¹¹) × (6×10²⁴) / (3×10⁸)² = 8.0×10¹⁴ / 9×10¹⁶ ≈ 0.0089 m. Compress the entire Earth to under a centimeter and it becomes a black hole."
+      },
+      {
+        "kind": "explain",
+        "heading": "Why 'nothing escapes' is even stranger than it sounds",
+        "body": "Inside the horizon, the roles of space and time effectively trade places. Outside, you can move freely in space but are dragged forward in time. Inside, the direction toward the center is like the direction toward tomorrow: not a place you choose to go, but a moment you cannot avoid.\n\nThat's why no engine, no matter how powerful, helps. The engine can change where you are, but every possible path — every 'future' — ends at the center. Asking how to escape from inside a black hole is like asking how to get to last Tuesday.",
+        "example": "This is also why the horizon is called an 'event horizon': it is the boundary of the region whose events can never send a signal to the outside world."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [],
+        "retry": ""
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [],
+        "retry": ""
+      },
+      {
+        "kind": "summary",
+        "heading": "What you now know",
+        "points": [
+          "The event horizon is where escape velocity reaches the speed of light — inside it, escape would require faster-than-light travel, which is impossible.",
+          "Its size is the Schwarzschild radius, r = 2GM/c²: about 3 km for a solar mass, and about a centimeter for the Earth.",
+          "Crossing the horizon is unremarkable for the one falling in — the 'point of no return' is a fact about signals reaching the outside, not about a local wall or force."
+        ]
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Light beam vs. black hole",
+        "prompt": "Drag the hover distance and fire the beam. Find the distance at which an outward beam just barely escapes, and confirm what happens inside 3 km.",
+        "reveal": "Closer to the horizon, gravity bends light more and more, until at 3 km even a straight-out beam can't get out. That radius is the event horizon.",
+        "type": "simulation",
+        "slider": {
+          "label": "Hover distance from center",
+          "min": 0,
+          "max": 20,
+          "step": 0.5,
+          "unit": "km",
+          "initial": 10
+        },
+        "bands": [
+          {
+            "upTo": 3,
+            "title": "No escape",
+            "detail": "You are inside the event horizon. Even light aimed straight out falls back."
+          },
+          {
+            "upTo": 6,
+            "title": "Barely escaping",
+            "detail": "The beam climbs out only if aimed almost perfectly outward; any tilt and it loops back."
+          },
+          {
+            "upTo": 15,
+            "title": "Bent but free",
+            "detail": "The beam escapes along a visibly curved path — gravity bends light."
+          },
+          {
+            "upTo": 20,
+            "title": "Nearly straight",
+            "detail": "Far from the horizon, the beam travels almost as if the black hole weren't there."
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "You hover your ship just barely outside a black hole's event horizon and shine a laser pointer straight outward. What does a distant observer see?",
+        "options": [
+          "The beam escapes, but greatly weakened (redshifted) and bent by gravity",
+          "The beam travels out in a perfectly straight line at full brightness",
+          "The beam travels a short distance, then falls back into the black hole",
+          "The beam vanishes instantly at the horizon"
+        ],
+        "correctAnswer": "The beam escapes, but greatly weakened (redshifted) and bent by gravity",
+        "explanation": "Just outside the horizon, outward-pointed light can still escape, but climbing out of the deep gravity well drains it of energy, so it arrives redshifted and dim, on a bent path. Only from inside the horizon does even straight-out light fail to escape."
+      },
+      {
+        "question": "A probe drifts through the event horizon of a stellar black hole. Moments later it fires the most powerful rocket engine ever built, pointed away from the center. What happens?",
+        "options": [
+          "It slows its fall and hovers, but can never quite climb back out",
+          "It escapes, since a powerful enough engine beats any gravity",
+          "It is destroyed by the engine's thrust against the horizon's surface",
+          "No signal from it ever reaches the outside, no matter what it does"
+        ],
+        "correctAnswer": "No signal from it ever reaches the outside, no matter what it does",
+        "explanation": "Inside the horizon, escape would require exceeding the speed of light, and every possible path leads inward — toward the center the way tomorrow leads forward in time. No engine changes that."
+      },
+      {
+        "question": "Astronaut A falls through the event horizon. Astronaut B hovers far outside and watches. Which statement is correct?",
+        "options": [
+          "A feels a jolt crossing the horizon, and B sees A vanish at that instant",
+          "A crosses smoothly, while B never sees A quite cross — A's light fades and redshifts away",
+          "Both agree A crossed at the same moment, by their own clocks",
+          "A sees B's messages arrive normally forever after crossing"
+        ],
+        "correctAnswer": "A crosses smoothly, while B never sees A quite cross — A's light fades and redshifts away",
+        "explanation": "Crossing the horizon is locally uneventful for A, but light from A takes ever longer to climb out and is redshifted ever more, so from far away A appears to dim and fade toward the horizon rather than pass through it."
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 21849,
+      "approach": "simulation",
+      "blocks": "explain > activity > explain > check > problem > explain > check > check > summary",
+      "droppedBlocks": 3,
+      "droppedActivities": 1,
+      "droppedQuestions": 0,
+      "placedChecks": 2
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8,
+      "ms": 6007,
+      "problems": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true
+    }
+  ]
+}

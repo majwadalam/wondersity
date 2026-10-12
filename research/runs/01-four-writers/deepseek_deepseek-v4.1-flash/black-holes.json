@@ -1,0 +1,313 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The Event Horizon",
+    "objective": "Understand why nothing, not even light, escapes from inside the event horizon.",
+    "estimatedMinutes": 9,
+    "approach": "discovery",
+    "approachReason": "The learner builds the horizon themselves — predicting what sets escape speed, watching light get trapped as a mass is squeezed, and only then naming the boundary — so the rule is discovered before it is defined.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Escape speed has only two dials",
+        "body": "Throw a ball upward and it comes back. Throw it at about 11.2 km/s from Earth's surface and it never returns. That threshold is the escape speed, v = sqrt(2GM/r), and it has just two dials: the mass M, and how far r you are from the centre.\n\nMore mass pulls harder; being close to the centre of a compact object does too. That second dial is the surprising one. Squeeze an object without adding a single gram and its escape speed climbs — which is why a small, dense world can hold on tighter than a giant, fluffy one.",
+        "example": "Earth's escape speed is 11.2 km/s but the Moon's is only 2.4 km/s — that is why Apollo needed a giant rocket to leave Earth and a small one to leave the Moon."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Escape speed depends on 1 divided by the square root of the radius — so halving the radius does not double the speed.",
+          "Same mass, half the radius: the escape speed goes up by a factor of the square root of 2."
+        ],
+        "retry": "Climbing out of a gravity well is like climbing out of a hole: a narrower, steeper hole of the same mass is harder to climb, even though nothing was added."
+      },
+      {
+        "kind": "activity",
+        "ref": 2
+      },
+      {
+        "kind": "worked",
+        "heading": "How small is 'too small'?",
+        "problem": "How far would the Earth have to be squeezed before its escape speed reached the speed of light? Use G = 6.67 x 10^-11, Earth's mass M = 5.97 x 10^24 kg, and c = 3.00 x 10^8 m/s.",
+        "steps": [
+          {
+            "title": "Set the trap",
+            "text": "Write the escape-speed rule and demand that it equal c:  sqrt(2GM/r) = c",
+            "why": "The horizon is exactly the size at which the speed needed to leave equals the fastest speed there is."
+          },
+          {
+            "title": "Solve for r",
+            "text": "Square both sides and rearrange:  r = 2GM / c^2",
+            "why": "r is the only unknown left — and r, the size of the object, is precisely what we are hunting."
+          },
+          {
+            "title": "Put the Earth in",
+            "text": "r = 2(6.67 x 10^-11)(5.97 x 10^24) / (3.00 x 10^8)^2 = 7.96 x 10^14 / 9.00 x 10^16 = 8.9 x 10^-3 m",
+            "why": "About 8.9 millimetres — a radius under one centimetre."
+          },
+          {
+            "title": "Say what it means",
+            "text": "Squeeze the whole Earth into a ball of radius 0.9 cm and light can no longer leave its surface.",
+            "why": "Einstein's full theory gives exactly the same radius; the escape-speed shortcut lands on the right answer."
+          }
+        ],
+        "answer": "r = 2GM/c^2. This is the Schwarzschild radius: about 0.9 cm for the Earth, about 3 km for the Sun, and about 3 km times the number of solar masses for any black hole."
+      },
+      {
+        "kind": "explain",
+        "heading": "A boundary, not a surface",
+        "body": "The event horizon is the radius where escape speed reaches the speed of light. Nothing inside it can get out — not a rocket, not a radio pulse, not a beam of light — and since no light ever comes back from it, there is nothing there to see.\n\nIt is not a surface. A probe drifting across the horizon of a giant black hole feels nothing special and can keep falling; what ends is its ability to send anything back to the outside universe.\n\nFor light the honest picture is stranger than 'thrown too slowly'. Locally, light always travels at c. What the black hole has done is curve spacetime so that inside the horizon every direction a photon could aim — including straight out — leads deeper in.",
+        "example": "Astronomers call this radius the Schwarzschild radius. For the Sun it is about 2.95 km, and for the Earth about 0.9 cm."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Ask what is physically present at the horizon itself.",
+          "The horizon is defined by what can still reach the outside, not by anything you could bump into."
+        ],
+        "retry": "Think of the horizon as the edge of a region from which no message can ever be sent: a one-way door drawn into spacetime, not a wall built in space."
+      },
+      {
+        "kind": "dialogue",
+        "heading": "Doesn't light get pulled back?",
+        "turns": [
+          {
+            "speaker": "Learner",
+            "text": "If gravity is a pull on mass, why should light care? A photon has no mass at all."
+          },
+          {
+            "speaker": "Teacher",
+            "text": "That is the crack in the old picture. Light is not slowed by a force — it simply follows the straightest path available in whatever shape spacetime has."
+          },
+          {
+            "speaker": "Learner",
+            "text": "And near a black hole, spacetime is curved so steeply that the straightest path bends?"
+          },
+          {
+            "speaker": "Teacher",
+            "text": "More and more, the closer you get. Outside the horizon a beam aimed outward still wins — it climbs away, just reddened and delayed."
+          },
+          {
+            "speaker": "Learner",
+            "text": "And right at the horizon?"
+          },
+          {
+            "speaker": "Teacher",
+            "text": "An outward beam there makes no progress at all: it hovers. One step inside, and every path — even the ones aimed straight out — leads inward."
+          },
+          {
+            "speaker": "Learner",
+            "text": "So the horizon is not a thing you hit. It is where the directions run out."
+          },
+          {
+            "speaker": "Teacher",
+            "text": "Exactly. A boundary drawn by what can still reach the outside world."
+          }
+        ]
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "The local speed of light is always c — nothing can make a beam slow down.",
+          "Ask what has happened to the direction called 'outward' inside the horizon."
+        ],
+        "retry": "Outside the horizon some directions still lead away, so light climbs out (getting redder on the way). Inside, 'away' no longer exists: every future path curves toward the centre."
+      },
+      {
+        "kind": "problem",
+        "heading": "Size of a real horizon",
+        "prompt": "A black hole formed from a massive star has a mass 10 times the Sun's. The event horizon radius for one solar mass is 2.95 km, and the radius scales in direct proportion to mass. What is the radius of this black hole's event horizon, in kilometres?",
+        "answers": [
+          "29.5",
+          "30"
+        ],
+        "unit": "km",
+        "traps": [
+          {
+            "answer": "2.95",
+            "feedback": "That is the radius for one solar mass — you still have to scale it by 10."
+          },
+          {
+            "answer": "295",
+            "feedback": "Ten times too big: you scaled by 100 instead of 10."
+          },
+          {
+            "answer": "59",
+            "feedback": "That is the diameter (2 x 29.5 km). The question asks for the radius."
+          }
+        ],
+        "hints": [
+          "Start with the size for one Sun, then scale to ten.",
+          "The horizon radius is proportional to mass: 10 x 2.95 km."
+        ],
+        "solution": "r = 2.95 km x 10 = 29.5 km — about 30 km in radius, roughly 60 km across. Every black hole has a horizon; a heavier one simply draws it farther out."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Escape from the surface",
+        "prompt": "The escape speed from the Moon's surface is 2.4 km/s, from Earth's 11.2 km/s, and from the Sun's surface 618 km/s. Before you know the formula, guess: what is really setting that number?",
+        "reveal": "Escape speed = sqrt(2GM/r). Only two dials: more mass, or a smaller radius. The second dial is the dangerous one — you can raise escape speed without adding a single gram.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "The Sun is far hotter, so its surface flings things away harder.",
+            "correct": false,
+            "feedback": "Hot gas pushes, but escape speed is about gravity, not temperature. Icy Europa still needs about 2 km/s to leave."
+          },
+          {
+            "text": "The Sun packs about 330,000 Earth-masses into a ball only about 100 times wider, so the pull at its surface is vastly stronger.",
+            "correct": true,
+            "feedback": "Right: escape speed grows with mass and shrinks with distance from the centre. The Sun wins on both dials at once."
+          },
+          {
+            "text": "Escape speed depends only on how much mass there is; size does not matter.",
+            "correct": false,
+            "feedback": "Size matters enormously. Squeeze the same mass into a smaller ball and escape gets harder — that is the whole trick behind a black hole."
+          },
+          {
+            "text": "It depends on how heavy the rocket is.",
+            "correct": false,
+            "feedback": "The rocket's mass cancels out: a pebble and a rocket need exactly the same escape speed."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Escape speeds, ranked",
+        "prompt": "Guess first, then look: which of these places demands the most speed to leave?",
+        "reveal": "Even the Sun's surface is 500 times short of light speed. No ordinary object comes close — you have to squeeze something small to shut the door.",
+        "type": "chart",
+        "unit": "km/s",
+        "bars": [
+          {
+            "label": "Moon",
+            "value": 2.4,
+            "note": "A small rocket was enough for Apollo."
+          },
+          {
+            "label": "Earth",
+            "value": 11.2,
+            "note": "Why leaving home needs a multi-stage rocket."
+          },
+          {
+            "label": "Jupiter",
+            "value": 59.5,
+            "note": "Five times Earth's — a deep gravity well."
+          },
+          {
+            "label": "Sun's surface",
+            "value": 618,
+            "note": "The champion of ordinary objects — and still only 0.2% of light speed."
+          },
+          {
+            "label": "Speed of light",
+            "value": 299792,
+            "note": "The universal speed limit. Nothing can beat this bar."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Squeeze the Earth",
+        "prompt": "Keep the Earth's mass exactly as it is and drag the slider to shrink its radius. Watch for the moment the escape speed catches up with light.",
+        "reveal": "The flip happens at 0.9 cm: squeeze the entire Earth into a sphere under a centimetre in radius and light can no longer get out.",
+        "type": "simulation",
+        "slider": {
+          "label": "Earth's radius",
+          "min": 0.5,
+          "max": 3,
+          "step": 0.1,
+          "unit": "cm",
+          "initial": 3
+        },
+        "bands": [
+          {
+            "upTo": 0.9,
+            "title": "Trapped: a black hole",
+            "detail": "At 0.9 cm — the Schwarzschild radius of the Earth — the escape speed has reached the speed of light. The whole planet now sits inside its own horizon: no light, no signal, no rocket leaves."
+          },
+          {
+            "upTo": 3,
+            "title": "Still leaking light",
+            "detail": "Light can still escape from the surface, though gravity steals energy from it on the way out. Squeeze a little smaller and the door shuts."
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "Two newly found planets have exactly the same mass. Planet Kestrel is twice as wide across as planet Moth. How does the escape speed from Moth's surface compare with Kestrel's?",
+        "options": [
+          "The same — escape speed depends only on mass.",
+          "About 1.4 times larger.",
+          "Twice as large.",
+          "Half as large."
+        ],
+        "correctAnswer": "About 1.4 times larger.",
+        "explanation": "Escape speed goes as sqrt(2GM/r), so with the same mass and half the radius the speed rises by a factor of sqrt(2), about 1.4."
+      },
+      {
+        "question": "A robotic probe orbits a supermassive black hole of four billion solar masses, streaming a data packet to Earth every second. It drifts across the event horizon. What happens?",
+        "options": [
+          "The probe strikes the horizon like a wall, feels a jolt, and goes silent instantly.",
+          "The probe is crushed the moment it crosses, and its signal stops that same second.",
+          "The probe feels nothing unusual and keeps recording, but none of the packets it sends after crossing ever reach Earth.",
+          "The probe slows down and hovers forever just outside the horizon."
+        ],
+        "correctAnswer": "The probe feels nothing unusual and keeps recording, but none of the packets it sends after crossing ever reach Earth.",
+        "explanation": "The horizon is a boundary in spacetime, not a physical surface, so there is nothing to hit and nothing special to feel locally — but no signal sent from inside can reach the outside world."
+      },
+      {
+        "question": "A classmate says: 'Inside the event horizon, light gets pulled back like a ball thrown too slowly — it slows down, stops, and falls back in.' Which reply is correct?",
+        "options": [
+          "Right — gravity slows the light down, and when it stops it falls back in.",
+          "Light has no mass, so gravity has no effect on it at all.",
+          "Light never slows down locally; the black hole curves spacetime so that inside the horizon every direction, even straight outward, leads inward.",
+          "Light runs out of energy at the horizon and simply stops."
+        ],
+        "correctAnswer": "Light never slows down locally; the black hole curves spacetime so that inside the horizon every direction, even straight outward, leads inward.",
+        "explanation": "Locally light always travels at c, so it cannot be slowed or stopped; what changes inside the horizon is the geometry — every available path, including outward ones, leads deeper in."
+      }
+    ]
+  },
+  "score": 9,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 82225,
+      "approach": "discovery",
+      "blocks": "activity > explain > activity > check > activity > worked > explain > check > dialogue > check > problem",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 9,
+      "ms": 6407,
+      "problems": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 9,
+      "passed": true
+    }
+  ]
+}

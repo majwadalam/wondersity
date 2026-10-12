@@ -1,0 +1,267 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Why 1789?",
+    "objective": "Explain how debt, food prices and new ideas combined to start the revolution.",
+    "estimatedMinutes": 8,
+    "approach": "mystery",
+    "approachReason": "The module's real puzzle — why the strongest kingdom in Europe collapsed in a single year — is best taught by posing it first and resolving it one pressure at a time.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "The puzzle of 1788",
+        "body": "In 1788 France was the most powerful kingdom in Europe: 28 million people, the largest army on the continent, the wealthiest nobility, and a court at Versailles that set the taste of the whole Western world. Twelve months later the King's authority had collapsed and his own subjects were arming themselves in the streets.\n\nWhat broke it? Not a lost war, and not one villain. Three pressures — an empty treasury, the price of bread, and a new set of political ideas — all arrived in the same few years. We will take them one at a time, then put them back together.",
+        "example": "France had no central bank, no general paper currency and no income tax. When the King needed money he borrowed it from financiers, or he called an assembly."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "A kingdom that could not tax its own rich",
+        "body": "The Crown's costs had outrun its income for decades. Fighting Britain in the Seven Years' War, then helping the American colonies win independence from 1778, pushed borrowing to the point where roughly half of all revenue went simply to paying interest on existing debt.\n\nThe obvious fix was to tax the wealth that existed. But nobles and clergy were legally exempt from the main direct tax, the taille, and the parlements could block a royal edict. The monarchy could borrow, but it could not tax — and by 1788 it could no longer borrow either.",
+        "example": "Compare Britain: its taxpayers were proportionally much heavier, but its government borrowed cheaply because lenders trusted a parliament that could actually raise taxes. France's king governed alone, and paid high interest for it."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Ask what the Crown's remaining options were once the new tax was blocked.",
+          "If money can't be raised by the king alone, who else has to be brought into the room?"
+        ],
+        "retry": "A king who cannot tax and cannot borrow has only one move left: he must ask the nation for help — and the nation can attach conditions."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "problem",
+        "heading": "The bread calculation",
+        "prompt": "In July 1789 a 4-pound loaf of bread in Paris cost about 14 sous. An unskilled labourer earned about 25 sous for a day's work, when he could find any. What percentage of his daily wage went to that single loaf? Round to the nearest whole percent.",
+        "answers": [
+          "56"
+        ],
+        "unit": "%",
+        "traps": [
+          {
+            "answer": "32%",
+            "feedback": "That is 8 ÷ 25 — the price of a loaf before the 1788 harvest failed."
+          },
+          {
+            "answer": "25%",
+            "feedback": "That comes from using the wage as the price. Divide the price by the wage, not the other way round."
+          }
+        ],
+        "hints": [
+          "Divide the price of one loaf by the day's wage.",
+          "14 out of 25 means 14 ÷ 25."
+        ],
+        "solution": "14 ÷ 25 = 0.56, so 56%. Historians use this 'bread share' of a wage to measure how close a household stood to the edge; once it passes about half, a bad week becomes a catastrophe."
+      },
+      {
+        "kind": "explain",
+        "heading": "New ideas made hunger political",
+        "body": "Cheap pamphlets, cafés and salons carried ideas that had been unthinkable a generation earlier: that legitimate power comes from the people rather than from God's chosen king; that the nation is one body of citizens, not three separate orders each with its own rights; and that the American colonies had just proved a people could write its own rules.\n\nThe most-read pamphlet of early 1789, Sieyès's What is the Third Estate?, answered its own question with one word: everything. Such writing gave the crowd's anger a target and a demand, instead of leaving it a mere grievance.",
+        "example": "A pamphlet cost a few sous and passed hand to hand. A Parisian worker who could not read heard it read aloud in a café or on a street corner."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "What exactly is the pamphlet saying about where authority comes from?",
+          "The word 'nation' is doing the work here — who counts as the nation?"
+        ],
+        "retry": "Popular sovereignty is the name for the claim that authority belongs to the nation. It is the idea that turns a riot about bread into a claim about who should govern."
+      },
+      {
+        "kind": "activity",
+        "ref": 2
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Try removing one cause at a time: with a solvent treasury, or with cheap bread, would the same thing have happened in the same year?",
+          "Notice how the Crown's weakness made the other two problems worse."
+        ],
+        "retry": "Historians call this a convergence: the same event — the summoning of the Estates-General — was demanded by the treasury, feared by the court, and welcomed by the pamphleteers."
+      },
+      {
+        "kind": "summary",
+        "heading": "So why 1789?",
+        "points": [
+          "An empty treasury: about half of revenue went to debt interest, the wealthiest subjects were exempt from the main tax, and in 1788 the Crown's credit finally ran out.",
+          "Bread: a failed harvest drove a loaf from about 8 to 15 sous while a labourer earned around 25 sous a day, putting crowds in the streets.",
+          "Ideas: pamphlets and the American example argued that sovereignty belonged to the nation, which turned anger into a demand for a constitution.",
+          "The fuse: unable to tax or to borrow, the King had to summon the Estates-General — the one assembly that could claim the nation's own authority. Debt, bread and ideas met there."
+        ]
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Where did the money go?",
+        "prompt": "Estimate before you look: which of these did the French Crown actually spend most on in 1788? Tap the bars from largest to smallest.",
+        "reveal": "Half of the Crown's spending was interest on old debts. The King was borrowing to pay yesterday's lenders, and the only part of the budget he could easily cut was the small slice that built roads and ran courts.",
+        "type": "chart",
+        "unit": "% of the Crown's spending, 1788",
+        "bars": [
+          {
+            "label": "Interest on the debt",
+            "value": 50,
+            "note": "About half of every livre the Crown raised went straight to lenders, without buying a single soldier or a single sack of grain."
+          },
+          {
+            "label": "Army and navy",
+            "value": 25,
+            "note": "Wars with Britain, including helping the American colonies from 1778, were the reason the borrowing had grown so large."
+          },
+          {
+            "label": "Court and central government",
+            "value": 15,
+            "note": "Versailles, the ministers, and the officials who collected what taxes there were."
+          },
+          {
+            "label": "Everything else",
+            "value": 10,
+            "note": "Roads, courts and public services — the only part that could really be cut, and it was already small."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "The price of one loaf",
+        "prompt": "Drag the price of a 4-pound loaf of bread and watch what it does to a labourer's day. He earns about 25 sous when he finds work.",
+        "reveal": "Bread was not expensive because bakers were greedy; it was expensive because the harvest had failed. But the political effect came from the ratio — once bread took more than half a day's wage, hunger organised itself into crowds.",
+        "type": "simulation",
+        "slider": {
+          "label": "Price of a 4-pound loaf",
+          "min": 8,
+          "max": 15,
+          "step": 0.5,
+          "unit": "sous",
+          "initial": 8
+        },
+        "bands": [
+          {
+            "upTo": 9,
+            "title": "Tight but survivable",
+            "detail": "Roughly a third of the day's wage goes to bread — the ordinary squeeze of the old regime, and families still eat meat occasionally."
+          },
+          {
+            "upTo": 11.5,
+            "title": "The table shrinks",
+            "detail": "Over half the wage now buys bread. Families switch to cheaper grain, sell clothes, and borrow from neighbours."
+          },
+          {
+            "upTo": 15,
+            "title": "Hunger turns into riot",
+            "detail": "Bread takes most of the day's earnings. Crowds seize grain carts and attack bakers' shops, and in Paris the price of bread becomes a political fact."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "One year, three pressures",
+        "prompt": "Put the events of 1788–89 back in order. Notice how each one loads the next.",
+        "reveal": "The harvest failed before the treasury broke, and the treasury broke before the pamphlets peaked. By the time the Estates-General met, all three pressures were sitting in the same hall at Versailles.",
+        "type": "timeline",
+        "events": [
+          {
+            "marker": "Summer 1788",
+            "title": "Bad weather destroys the harvest",
+            "detail": "Hail and drought cut the grain crop. The price of a loaf begins climbing from around 8 sous."
+          },
+          {
+            "marker": "August 1788",
+            "title": "The treasury suspends payments",
+            "detail": "With about half of revenue committed to debt interest, the Crown cannot borrow more. It agrees to summon the Estates-General for May 1789, the first since 1614."
+          },
+          {
+            "marker": "Winter 1788–89",
+            "title": "Hunger and anger spread",
+            "detail": "Bread reaches 14 to 15 sous. Town crowds demand cheap grain and fixed prices, and troops are called out to guard markets."
+          },
+          {
+            "marker": "Spring 1789",
+            "title": "Pamphlets and election meetings",
+            "detail": "Thousands of pamphlets and cahiers circulate. Sieyès's What is the Third Estate? argues the nation is the Third Estate entire."
+          },
+          {
+            "marker": "May 1789",
+            "title": "The Estates-General meets at Versailles",
+            "detail": "Delegates arrive with mandates from voters. The deadlock over whether to vote by order or by head opens the real question: who holds sovereignty in France?"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "It is 1787 and the King's finance minister proposes a new land tax that would fall on nobles and clergy as well as commoners. The Assembly of Notables rejects it, and the parlements block it too. Why does this rejection push France towards revolution rather than simply leaving the deficit as it was?",
+        "options": [
+          "Because the Crown could neither tax nor borrow any longer, so the only remaining way to raise money was to summon the Estates-General — an assembly with the standing to challenge the King.",
+          "Because the nobles and clergy were poorer than the commoners and could never have paid the tax anyway.",
+          "Because the King responded by abolishing the nobility, which enraged the court and the army.",
+          "Because the deficit was small and no one in France considered it a serious problem."
+        ],
+        "correctAnswer": "Because the Crown could neither tax nor borrow any longer, so the only remaining way to raise money was to summon the Estates-General — an assembly with the standing to challenge the King.",
+        "explanation": "The state was near the limit of its borrowing while the wealthiest subjects were exempt from the main tax, so the Crown's last financial move was to call the whole nation into an assembly — which then claimed sovereignty itself."
+      },
+      {
+        "question": "In the spring of 1789 an educated shopkeeper in Lyon reads a pamphlet arguing that the Third Estate is 'the whole nation' and that laws require the nation's consent. A neighbour insists the King rules by God's will and the people should simply obey. Which claim is the shopkeeper most likely to defend?",
+        "options": [
+          "Legitimate authority comes from the nation, and no single order of society should decide for the rest.",
+          "Only the King can ever be trusted with power, because he alone is answerable to God.",
+          "The only real problem is the price of bread; politics has nothing to do with it.",
+          "Feudal privileges should be extended to everyone, including merchants and peasants."
+        ],
+        "correctAnswer": "Legitimate authority comes from the nation, and no single order of society should decide for the rest.",
+        "explanation": "The central new idea was popular sovereignty: authority derives from the nation rather than from the divine right of the king, so no one order may legislate for the others."
+      },
+      {
+        "question": "A Parisian merchant writes in July 1789: 'The King has called the Estates-General, bread is at 15 sous, and every café argues about the nation's rights.' Which explanation best accounts for why France exploded in 1789 rather than simply enduring another hard year?",
+        "options": [
+          "Each pressure worsened the others: a bankrupt Crown could neither relieve the hunger nor resist the Assembly, hunger put crowds in the streets, and the new ideas gave those crowds a claim to make.",
+          "The harvest failure alone would have been enough, because bread prices always produce revolutions on their own.",
+          "The Enlightenment alone explains it, because material conditions such as debt and food prices did not really matter.",
+          "The nobility deliberately provoked a revolution in order to reduce the King's power and rule in his place."
+        ],
+        "correctAnswer": "Each pressure worsened the others: a bankrupt Crown could neither relieve the hunger nor resist the Assembly, hunger put crowds in the streets, and the new ideas gave those crowds a claim to make.",
+        "explanation": "Historians treat 1789 as a convergence: fiscal collapse removed the state's room to manoeuvre, the food crisis supplied the crowds, and Enlightenment politics supplied the language and the demands."
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 40420,
+      "approach": "mystery",
+      "blocks": "explain > activity > explain > check > activity > problem > explain > check > activity > check > summary",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8,
+      "ms": 37183,
+      "problems": [
+        "The bread-price simulation bands contain a factual/numerical error: it says that at up to 11.5 sous bread is 'over half the wage,' but 11.5 / 25 = 46%, not over half. The over-half threshold is 12.5 sous. The next band also begins before bread truly takes 'most' of a day's earnings. This conflicts with the module's own problem, where 14 sous = 56%.",
+        "The timeline activity may not be genuinely challenging if the events are rendered in the already-correct order shown in the data. Without shuffling, it is closer to a display than an ordering task.",
+        "The check 'retry' explanations often restate the correct answer rather than offering a genuinely different alternative explanation. The hints are useful, but the retry text is more corrective than alternative."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true
+    }
+  ]
+}

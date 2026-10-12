@@ -1,0 +1,248 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "For Loops That Build a Result",
+    "objective": "Read, predict, and write for loops that accumulate a total or count.",
+    "estimatedMinutes": 7,
+    "approach": "practice",
+    "approachReason": "Short code-reading, tracing, fixing, and writing tasks build fluency with the repeated updates that make an accumulator work.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "Keep a running result",
+        "body": "A `for` loop gives a variable each value from a collection, one at a time, and runs the indented code for each value. To build a result, create another variable before the loop and update it inside the loop.\n\nThat result variable is called an accumulator: it keeps what you have built so far. For a sum, start at `0` and add each value to the running total.",
+        "example": "Think of a shopping basket: each new item joins what is already there, rather than replacing the whole basket."
+      },
+      {
+        "kind": "code",
+        "heading": "Trace a running total",
+        "prompt": "Step through the code. Watch `amount` change to the next value while `total` keeps the result from the previous iteration.",
+        "language": "python",
+        "code": "total = 0\nfor amount in [3, 5, 2]:\n    total = total + amount\nprint(total)",
+        "explanation": "`total = total + amount` first calculates the right-hand side, using the old total, then stores the result in `total`. The final print is outside the loop.",
+        "hints": [],
+        "mode": "trace",
+        "options": [],
+        "trace": [
+          {
+            "line": 1,
+            "note": "Create the accumulator.",
+            "state": "total = 0"
+          },
+          {
+            "line": 2,
+            "note": "Take the first amount.",
+            "state": "amount = 3, total = 0"
+          },
+          {
+            "line": 3,
+            "note": "Add 3 to the running total.",
+            "state": "amount = 3, total = 3"
+          },
+          {
+            "line": 2,
+            "note": "Take the next amount; keep the total.",
+            "state": "amount = 5, total = 3"
+          },
+          {
+            "line": 3,
+            "note": "Add 5 to the running total.",
+            "state": "amount = 5, total = 8"
+          },
+          {
+            "line": 2,
+            "note": "Take the final amount.",
+            "state": "amount = 2, total = 8"
+          },
+          {
+            "line": 3,
+            "note": "Add 2 to the running total.",
+            "state": "amount = 2, total = 10"
+          },
+          {
+            "line": 4,
+            "note": "The loop has finished. Print the result.",
+            "state": "amount = 2, total = 10; output: 10"
+          }
+        ]
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Stop after the second addition, not after the whole loop.",
+          "Start at zero and add the first two amounts."
+        ],
+        "retry": "The loop variable holds one current value. The accumulator holds the combined result from all values processed so far."
+      },
+      {
+        "kind": "code",
+        "heading": "What is this loop building?",
+        "prompt": "A packing app processes these parcel weights. Predict the exact output: notice what gets added each time.",
+        "language": "python",
+        "code": "count = 0\nfor weight in [4, 7, 2]:\n    count = count + 1\nprint(count)",
+        "explanation": "There are three iterations, and each adds 1. This loop counts parcels; it does not add their weights.",
+        "hints": [
+          "Follow the expression on the right of the equals sign."
+        ],
+        "mode": "predict",
+        "options": [
+          {
+            "text": "13",
+            "correct": false,
+            "feedback": "That is the sum of the weights, but the update adds 1, not weight."
+          },
+          {
+            "text": "3",
+            "correct": true,
+            "feedback": "Correct: three weights cause three additions of 1."
+          },
+          {
+            "text": "2",
+            "correct": false,
+            "feedback": "That is the last weight, not the count."
+          },
+          {
+            "text": "1",
+            "correct": false,
+            "feedback": "The previous count is kept, so the three updates build on one another."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "explain",
+        "heading": "Choose the update—and preserve it",
+        "body": "The update decides what the accumulator means: `total = total + weight` adds weights, while `count = count + 1` counts items. The loop variable does not have to appear in the update.\n\nSet the starting value before the loop, so it happens once. Indent the update so it happens for every item, and put the final `print` after the loop to show just the finished result.",
+        "example": "For a total that starts from nothing, use `0`. If you already have a balance, you can start from that balance instead."
+      },
+      {
+        "kind": "code",
+        "heading": "Fix the disappearing total",
+        "prompt": "This program should print the total price, 15, but it prints 6. Choose the one fix that preserves earlier additions.",
+        "language": "python",
+        "code": "for price in [4, 5, 6]:\n    total = 0\n    total = total + price\nprint(total)",
+        "explanation": "Move `total = 0` before the loop, without indentation. Inside the loop it runs on every iteration, erasing the previous total.",
+        "hints": [
+          "Which line erases the work done on earlier iterations?"
+        ],
+        "mode": "bug",
+        "options": [
+          {
+            "text": "Move `total = 0` before the loop and remove its indentation.",
+            "correct": true,
+            "feedback": "Correct: initialize once, then add all three prices to the same running total."
+          },
+          {
+            "text": "Change the update to `total = price`.",
+            "correct": false,
+            "feedback": "That replaces the total with each price instead of accumulating them."
+          },
+          {
+            "text": "Indent `print(total)` inside the loop.",
+            "correct": false,
+            "feedback": "That prints 4, 5, and 6 on separate lines; it does not fix the reset."
+          },
+          {
+            "text": "Change `total = 0` to `total = 1` in its current position.",
+            "correct": false,
+            "feedback": "The total still resets each time; the final output would be 7."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "The starting value is already in the right place.",
+          "Choose an update that includes both the old total and the current donation."
+        ],
+        "retry": "Adding uses the old total in the new value. Assigning just the current donation discards the old total."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Write your own accumulator",
+        "prompt": "A shop sold 2, 4, and 3 notebooks in three orders. Write a Python program using a `for` loop to add the values in `[2, 4, 3]` and print only the final total. Include the starting value, the loop, the update, and the final print.",
+        "model": "One solution:\n\n```python\ntotal = 0\nfor notebooks in [2, 4, 3]:\n    total = total + notebooks\nprint(total)\n```\n\nIt prints `9`. Your variable names can differ; check that initialization happens once, addition happens inside the loop, and printing happens after it."
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "The balance starts at 10, not zero.",
+          "Process 3 first, then -2, then 4, keeping each new balance."
+        ],
+        "retry": "An accumulator can start with an existing amount. Each update changes that amount; it does not start over at zero."
+      }
+    ],
+    "activities": [],
+    "questions": [
+      {
+        "question": "A delivery app runs this code:\n\n```python\ntotal = 0\nfor amount in [3, 5, 2]:\n    total = total + amount\n```\n\nImmediately after the second execution of the update line, what are `amount` and `total`?",
+        "options": [
+          "amount = 5, total = 8",
+          "amount = 5, total = 5",
+          "amount = 2, total = 10",
+          "amount = 3, total = 8"
+        ],
+        "correctAnswer": "amount = 5, total = 8",
+        "explanation": "The second amount is 5. The total keeps the first 3 and adds 5, giving 8."
+      },
+      {
+        "question": "A fundraiser wants the combined value of all donations. Which line should replace the blank?\n\n```python\ntotal = 0\nfor donation in [5, 8, 2]:\n    _____\nprint(total)\n```",
+        "options": [
+          "total = donation",
+          "total = total + 1",
+          "total = total + donation",
+          "donation = total + donation"
+        ],
+        "correctAnswer": "total = total + donation",
+        "explanation": "This adds the current donation to the saved total and stores the result back in `total`. The other choices replace the total, count donations, or update the wrong variable."
+      },
+      {
+        "question": "A game starts a player with 10 points, then applies three score changes. What does this code print?\n\n```python\nscore = 10\nfor change in [3, -2, 4]:\n    score = score + change\nprint(score)\n```",
+        "options": [
+          "5",
+          "14",
+          "15",
+          "13\n11\n15"
+        ],
+        "correctAnswer": "15",
+        "explanation": "The running score goes from 10 to 13, then 11, then 15. Because `print` is outside the loop, only the final score is printed."
+      }
+    ]
+  },
+  "score": 8.5,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 51918,
+      "approach": "practice",
+      "blocks": "explain > code > check > code > explain > code > check > reflect > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8.5,
+      "ms": 6160,
+      "problems": [
+        "The first check repeats the exact example and state already displayed in the trace, so it tests recall more than independent tracing.",
+        "The retry explanations mostly restate the original accumulator explanation rather than offering a genuinely different representation or analogy.",
+        "The final writing task provides a model but no execution-based validation or targeted feedback, limiting evidence that learners can independently write a working loop."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8.5,
+      "passed": true
+    }
+  ]
+}

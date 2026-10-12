@@ -1,0 +1,237 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The One-Way Boundary",
+    "objective": "Understand why nothing, not even light, can escape from inside a non-spinning black hole’s event horizon.",
+    "estimatedMinutes": 8,
+    "approach": "discovery",
+    "approachReason": "You test where an upstream swimmer can make progress, then use that evidence to explore how a black hole’s spacetime limits the future paths light can take.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "What the river model suggests",
+        "body": "In the river model, a swimmer can move upstream when their swimming speed is greater than the current. If the current matches their top speed, they can hold position but make no upstream progress; if it is faster, every effort carries them downstream.\n\nFor a non-spinning black hole, this is a way to picture how spacetime’s future directions tilt inward. At the event horizon, even light aimed radially outward cannot make progress to the distant universe; inside, all future-directed paths lead to smaller radii. The river is only an analogy: light does not locally slow down, and there is no literal current carrying it.",
+        "example": "The horizon is not a solid surface. It marks the boundary between locations from which an outward light signal can reach the distant universe and locations from which it cannot."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Locate the probe relative to the horizon at one Schwarzschild radius.",
+          "Compare its position with what you observed when the current reached the swimmer’s top speed."
+        ],
+        "retry": "Think of the river model another way: the question is whether the available future directions allow progress away from the center, not whether the light is pointed the right way."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "Trace the possible paths",
+        "body": "The path map shows why location matters. Outside the horizon, a directly radial outward light ray can reach the distant universe, while an inward ray can head toward the horizon. At the horizon, a directly radial outward ray stays on the boundary rather than reaching the distant universe; inside, every future-directed light path goes to a smaller radius.\n\nThis distinction applies to a directly radial outward flash. Outside the horizon, a light ray aimed in a different direction can still be captured, so being outside alone does not guarantee escape. At and inside the horizon, however, no direction gives light a route to the distant universe.",
+        "example": "The river analogy helps picture the inward tilt of possible paths, but it is not a literal flow. Locally, light always travels at the speed of light; the geometry of spacetime determines which destinations its future paths can reach."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Separate increasing the strength of a signal from changing the paths spacetime allows.",
+          "Ask whether a relay outside the horizon can receive a message with no path to it."
+        ],
+        "retry": "In the river picture, adding power to a swimmer does not change which way the current carries every possible route once the current is beyond the swimmer’s maximum speed. A relay station also needs a signal path to receive the message in the first place."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Can the swimmer make headway?",
+        "prompt": "Imagine a swimmer whose maximum speed through the water is fixed. Change the current speed as a fraction of that maximum. Before checking each setting, predict whether the swimmer can make progress upstream.",
+        "reveal": "Below the swimmer’s maximum speed, they can make upstream progress; at the limit they can only hold position, and above it they are carried downstream. This is a model for the horizon: it helps picture a boundary where outward progress becomes impossible, but it is not a literal current or a claim that light slows down.",
+        "type": "simulation",
+        "slider": {
+          "label": "Current speed as a fraction of swimmer's maximum",
+          "min": 0.5,
+          "max": 1.5,
+          "step": 0.1,
+          "unit": "× maximum speed",
+          "initial": 1
+        },
+        "bands": [
+          {
+            "upTo": 0.9,
+            "title": "Current is slower",
+            "detail": "The swimmer can make progress upstream."
+          },
+          {
+            "upTo": 1,
+            "title": "At the limit",
+            "detail": "The swimmer can hold position but cannot make upstream progress."
+          },
+          {
+            "upTo": 1.5,
+            "title": "Current is faster",
+            "detail": "Even maximum effort cannot prevent the swimmer from being carried downstream."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Trace light’s future paths",
+        "prompt": "Tap each location and trace its connections. Compare the routes available outside, at, and inside the horizon: which paths reach the distant universe, and which stay at or go deeper into the black hole?",
+        "reveal": "Outside, a directly radial outward path can reach the distant universe. At the horizon it stays on the boundary, and inside all future light paths lead to smaller radii.",
+        "type": "diagram",
+        "nodes": [
+          {
+            "label": "Outside the horizon",
+            "detail": "Here, a directly radial outward light path can lead to the distant universe."
+          },
+          {
+            "label": "Radially outward light outside",
+            "detail": "This is an available future path outside the horizon and can reach the distant universe."
+          },
+          {
+            "label": "Distant universe",
+            "detail": "An outward light signal that escapes can arrive here."
+          },
+          {
+            "label": "Event horizon",
+            "detail": "At this boundary, directly radial outward light stays on the horizon rather than reaching the distant universe."
+          },
+          {
+            "label": "Inside the horizon",
+            "detail": "Every future-directed light path here goes to a smaller radius."
+          },
+          {
+            "label": "Future light paths inside",
+            "detail": "Even an outward-aimed beam follows a future path toward a smaller radius."
+          },
+          {
+            "label": "Smaller radii",
+            "detail": "These are the inward destinations of future-directed paths from inside the horizon."
+          }
+        ],
+        "edges": [
+          {
+            "from": 0,
+            "to": 1,
+            "label": "allows"
+          },
+          {
+            "from": 1,
+            "to": 2,
+            "label": "can reach"
+          },
+          {
+            "from": 0,
+            "to": 3,
+            "label": "lies outside"
+          },
+          {
+            "from": 3,
+            "to": 4,
+            "label": "bounds"
+          },
+          {
+            "from": 4,
+            "to": 5,
+            "label": "sets the available paths for"
+          },
+          {
+            "from": 5,
+            "to": 6,
+            "label": "lead toward"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A probe is at 1.2 Schwarzschild radii from the center of a non-spinning black hole and sends a flash directly radially outward. What should a distant observer expect?",
+        "options": [
+          "The flash can reach them because this direct outward path starts outside the horizon.",
+          "The flash cannot reach them because all light outside the horizon is captured.",
+          "The flash reaches them only if it is powerful enough to overcome gravity.",
+          "The flash stops at the horizon because the horizon is a solid surface."
+        ],
+        "correctAnswer": "The flash can reach them because this direct outward path starts outside the horizon.",
+        "explanation": "At 1.2 Schwarzschild radii, the probe is outside the horizon, and a directly radial outward light ray can escape. This does not mean every direction outside the horizon escapes; some paths can still be captured."
+      },
+      {
+        "question": "An astronaut inside a black hole asks a rescue ship outside to use a more powerful laser, then proposes placing a relay station just beyond the horizon. Which assessment is best?",
+        "options": [
+          "Either plan works if the laser is powerful enough to push light outward.",
+          "The laser cannot send a signal out, and the outside relay cannot receive a signal without a path from inside.",
+          "The relay works because signals can cross the horizon in one direction, from inside to outside.",
+          "The laser works if aimed radially outward, even though the astronaut is inside."
+        ],
+        "correctAnswer": "The laser cannot send a signal out, and the outside relay cannot receive a signal without a path from inside.",
+        "explanation": "Inside the horizon, no future light path reaches the distant outside, regardless of the beam’s power or direction. A relay outside cannot help unless a signal can reach it."
+      }
+    ]
+  },
+  "score": 7.3,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 31801,
+      "approach": "discovery",
+      "blocks": "activity > explain > check > activity > explain > check > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 7,
+      "ms": 13346,
+      "problems": [
+        "The lesson largely states that no escape path exists rather than explaining why spacetime makes escape impossible. The river analogy is introduced but not developed enough to supply that missing conceptual mechanism.",
+        "The claim that an outward-directed flash outside the horizon can escape needs a directly radial qualification. Near a Schwarzschild black hole, light with an initially outward radial component can still be captured if its direction lies outside the escape cone.",
+        "The second activity mostly repeats the first activity's conclusion through labeled nodes. Its connections mix spatial relationships and light trajectories, so tracing them provides little additional reasoning.",
+        "The second question is not meaningfully harder than the first: both test whether outward-pointing light escapes from inside the horizon.",
+        "Several hints effectively disclose the answer, and the retry explanations mostly restate the original explanations rather than offering a genuinely different route to understanding."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 27217,
+      "approach": "discovery",
+      "blocks": "activity > explain > check > activity > explain > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 7.3,
+      "ms": 11629,
+      "problems": [
+        "The rescue scenario is ambiguously worded: the astronaut asks an outside ship to use a laser, but the answer evaluates sending a signal outward from inside. An outside ship can send light inward across the horizon.",
+        "The first check introduces Schwarzschild radii without defining the term or explicitly teaching that the horizon is at one Schwarzschild radius. Its hint supplies information missing from the lesson.",
+        "The path diagram does not actually represent all the routes learners are asked to trace. It lacks an outward light path staying on the horizon and an inward light path from outside; several edges describe spatial relationships rather than light trajectories.",
+        "The second retry's claim that adding power to a swimmer does not help is misleading unless the swimmer's maximum speed remains fixed. Increasing swimming power could change that maximum, unlike increasing a light beam's intensity.",
+        "The second activity mostly exposes labeled conclusions rather than requiring predictions or decisions. The retries also largely repeat the river analogy instead of providing a genuinely different explanation."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 7.3,
+      "passed": false
+    }
+  ]
+}

@@ -1,0 +1,233 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The event horizon",
+    "objective": "Understand why nothing, not even light, escapes from inside the event horizon.",
+    "estimatedMinutes": 8,
+    "approach": "simulation",
+    "approachReason": "The event horizon is a quantity-driven boundary: shrinking a fixed mass and watching surface escape velocity climb toward light speed makes the idea concrete and physically honest.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "How hard is it to get away?",
+        "body": "Every object with mass pulls on things around it, and to break free you need a certain minimum launch speed: the escape velocity. It depends on two things: the object's mass, and how tightly that mass is packed. Leave Earth's surface and you need 11.2 km/s; but escape velocity also rises sharply as you shrink the same mass into a smaller sphere.",
+        "example": "The Moon's escape velocity is only 2.4 km/s — one reason Apollo landers needed small engines, while leaving Earth takes a giant booster."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Light always travels at one fixed speed — it can never launch faster.",
+          "If leaving requires more speed than anything in the universe can have, can anything leave?"
+        ],
+        "retry": "The key insight: light can't speed up. If getting out required travelling faster than 300,000 km/s, no photon could ever manage it — light itself is trapped."
+      },
+      {
+        "kind": "explain",
+        "heading": "The point of no return",
+        "body": "The event horizon is the boundary around a compressed mass where the escape velocity equals the speed of light. Outside it, light can still climb away; inside it, nothing can escape — not rock, not rocket fuel, not even light itself. And since light is the fastest thing there is, everything slower is trapped even more thoroughly.",
+        "example": "This is why black holes are black: the horizon marks the region from which light never reaches us."
+      },
+      {
+        "kind": "explain",
+        "heading": "Squeezed, not just massive",
+        "body": "Here is the twist the simulation showed: a black hole doesn't need enormous mass — it needs enormous compression. Squeeze the entire Earth down to the size of a marble and its surface would sit inside its own event horizon. Crushing any mass small enough turns it into a black hole.",
+        "example": "A stellar black hole of 10 solar masses has a horizon of only ~30 km — several Suns' worth of mass packed into a sphere smaller than a city."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Radio waves are light. Ask what it would take for anything, moving at light speed at most, to get out from inside the horizon.",
+          "Inside the horizon, all paths lead inward — no amount of power changes that."
+        ],
+        "retry": "The horizon isn't a wall you feel — it's a boundary in causality. Signals from inside can never reach outside, no matter how powerful the transmitter."
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [],
+        "retry": ""
+      },
+      {
+        "kind": "summary",
+        "heading": "Where gravity wins",
+        "points": [
+          "The event horizon is where escape velocity equals the speed of light.",
+          "Inside it, nothing can escape — light can't speed up, and everything else is slower.",
+          "Compression, not sheer mass, makes a black hole: any mass squeezed small enough becomes one."
+        ]
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "The crushing machine",
+        "prompt": "Take one solar mass — the mass of our Sun — and drag its radius down from 700,000 km to 1 km. Watch the escape velocity at the surface climb as you compress it. Find the radius where escape velocity reaches the speed of light (300,000 km/s).",
+        "reveal": "The Sun becomes a black hole not by gaining mass but by being crushed: at a radius of about 3 km, surface escape velocity hits light speed — that surface is the event horizon.",
+        "type": "simulation",
+        "slider": {
+          "label": "Radius of the Sun's mass",
+          "min": 1,
+          "max": 700000,
+          "step": 1000,
+          "unit": "km",
+          "initial": 696000
+        },
+        "bands": [
+          {
+            "upTo": 4000,
+            "title": "Black hole",
+            "detail": "Escape velocity at the surface exceeds 300,000 km/s. Nothing can leave — you've crossed inside the event horizon (at ~3 km for one solar mass)."
+          },
+          {
+            "upTo": 30000,
+            "title": "Neutron-star density",
+            "detail": "Escape velocity is a large fraction of light speed. Light still escapes, but it loses energy climbing out."
+          },
+          {
+            "upTo": 700000,
+            "title": "Ordinary star",
+            "detail": "At the Sun's real radius the escape velocity is only ~618 km/s — a tiny fraction of light speed, so light streams away freely."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Can light escape?",
+        "prompt": "Sort each object by whether light escaping from its surface could reach us — as it is today.",
+        "reveal": "Only objects whose surfaces sit inside their own event horizon trap light. Compression, not sheer mass, decides: crushed small enough, anything becomes a black hole.",
+        "type": "sort",
+        "buckets": [
+          "Light escapes",
+          "Light is trapped"
+        ],
+        "items": [
+          {
+            "text": "The Sun (696,000 km radius, 1 solar mass)",
+            "bucket": "Light escapes"
+          },
+          {
+            "text": "A 10-solar-mass stellar black hole (30 km horizon)",
+            "bucket": "Light is trapped"
+          },
+          {
+            "text": "Earth compressed to a 9-mm marble",
+            "bucket": "Light is trapped"
+          },
+          {
+            "text": "A white dwarf (Earth-sized, ~1 solar mass)",
+            "bucket": "Light escapes"
+          },
+          {
+            "text": "Sagittarius A*, 4 million solar masses",
+            "bucket": "Light is trapped"
+          },
+          {
+            "text": "A neutron star (20 km radius, 1.4 solar masses)",
+            "bucket": "Light escapes"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "You've compressed a star until its surface escape velocity just exceeds 300,000 km/s. A beam of light shines straight up from the surface. What happens?",
+        "options": [
+          "It slows down below light speed, stalls, and falls back onto the surface",
+          "It always travels at 300,000 km/s, yet it still can't get out — no path leads away once escape would require more than light speed",
+          "It escapes at full speed but stretched to longer wavelengths",
+          "It circles the star in a tight orbit and escapes after going around a few times"
+        ],
+        "correctAnswer": "It always travels at 300,000 km/s, yet it still can't get out — no path leads away once escape would require more than light speed",
+        "explanation": "Light never slows down, but escape now demands more than light speed, so no outgoing journey is possible: the beam is trapped inside the event horizon that has just formed at the surface."
+      },
+      {
+        "question": "A black hole's event horizon has a radius of 3 km. A nearby black hole has exactly twice the mass. What is its event horizon radius?",
+        "options": [
+          "1.5 km",
+          "12 km",
+          "9 km",
+          "6 km"
+        ],
+        "correctAnswer": "6 km",
+        "explanation": "The horizon radius is directly proportional to mass, so doubling the mass doubles the horizon from 3 km to 6 km."
+      },
+      {
+        "question": "A probe drifts 1 km inside a black hole's event horizon and radios a message straight outward. What does the mission team receive?",
+        "options": [
+          "A delayed message, arriving after several minutes",
+          "A red-shifted message that fades to nothing within seconds",
+          "A normal message, but at reduced signal strength",
+          "Nothing at all — from inside the horizon, every direction leads deeper in, so no signal can ever reach them"
+        ],
+        "correctAnswer": "Nothing at all — from inside the horizon, every direction leads deeper in, so no signal can ever reach them",
+        "explanation": "Radio waves are light. Inside the horizon, escape velocity exceeds light speed in every direction, so the signal can never reach the team."
+      }
+    ]
+  },
+  "score": 9,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 16623,
+      "approach": "simulation",
+      "blocks": "explain > activity > check > explain > check > explain > activity > check > summary",
+      "droppedBlocks": 1,
+      "droppedActivities": 1,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 6,
+      "ms": 6100,
+      "problems": [
+        "The 'Escape velocity machine' simulation is factually broken as described: a star of 1 solar mass and solar radius has an escape velocity of only ~618 km/s, so even a 10-solar-mass star (at any plausible stellar radius) reaches barely ~2,000 km/s — nowhere near 300,000 km/s. The bands imply a normal star becomes a black hole at ~10 M☉ without ever stating that the radius is being compressed, so the 'crossing' the learner is told to find does not correspond to reality.",
+        "The band thresholds (3, 7, 10 solar masses) are arbitrary and physically meaningless for escape velocity at a stellar surface.",
+        "Check questions provide explanations but no genuinely different alternative explanation, as required.",
+        "Activity 1 (sort) is tagged afterConcept 0 but is placed after the third explain block; concept anchoring is inconsistent.",
+        "The correct answer to question 1 ('light cannot reach escape velocity') relies on a Newtonian picture the lesson itself frames carefully; a stronger option would acknowledge light doesn't 'slow down' but still cannot escape, avoiding the misleading 'it needs to exceed 300,000 km/s' framing that contradicts relativity."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 16513,
+      "approach": "simulation",
+      "blocks": "explain > activity > check > explain > explain > activity > check > check > summary",
+      "droppedBlocks": 1,
+      "droppedActivities": 0,
+      "droppedQuestions": 3,
+      "placedChecks": 1
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 9,
+      "ms": 4637,
+      "problems": [
+        "The third check (horizon radius proportional to mass) is never explicitly taught — the linear scaling rule is only revealed in the answer explanation, creating a small teach-then-test gap.",
+        "The final check has empty hints and an empty retry string, unlike the two earlier checks which model the expected quality.",
+        "The Newtonian escape-velocity framing is a heuristic (locally light always moves at c and the horizon is a causal, not surface, boundary); the lesson handles this well but leans on 'surface escape velocity' language that a rigorous treatment would soften — acceptable at Foundations level."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 9,
+      "passed": true
+    }
+  ]
+}

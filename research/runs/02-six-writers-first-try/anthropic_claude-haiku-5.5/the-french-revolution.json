@@ -1,0 +1,264 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Why 1789?",
+    "objective": "Explain how royal debt, food prices and new ideas combined to start the French Revolution in 1789.",
+    "estimatedMinutes": 8,
+    "approach": "mystery",
+    "approachReason": "France had carried heavy debt and social privilege for decades without revolting, so the question 'why 1789?' is a genuine puzzle that each section can help resolve.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "A kingdom that should have held",
+        "body": "In 1788, France was the most populous state in Europe, with roughly 28 million people. Its king, Louis XVI, held considerable authority, though in practice that power was limited by the parlements, provincial privileges and long-standing custom. France had also been in debt and riddled with privilege for generations, yet it had never collapsed into revolt.\n\nSo the puzzle is not why France had problems. It is why those problems suddenly turned into a revolution in 1789. Three pressures met that year: money, food and ideas.",
+        "example": ""
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "The money problem",
+        "body": "France spent heavily supporting the American colonists in their war against Britain (1775 to 1783). The war was expensive, and the debt it added was never fully paid down. By 1788 the state was spending around half of its revenue just on interest payments on that debt.\n\nThe tax system made things worse. Nobles and clergy were largely exempt from the taille and many other taxes, so the Third Estate, the commoners who made up nearly all of the population, carried most of the burden. When the king's ministers needed more money, the obvious sources were the privileged groups, and they refused.",
+        "example": "Louis XVI had little choice but to summon the Estates-General in 1788 for May 1789, the first meeting of this national assembly since 1614."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Think about who was already paying and who was not.",
+          "Ask which group had the most to lose from a tax applied equally to all landowners."
+        ],
+        "retry": "The privileged orders were not just unwilling to pay; they had a legal and social identity built on exemption. Any fair tax threatened that identity, which is why reform kept stalling."
+      },
+      {
+        "kind": "explain",
+        "heading": "The food problem",
+        "body": "The summer of 1788 brought a devastating hailstorm that flattened crops across much of northern France. A harsh winter followed, and frozen rivers slowed the mills that ground grain into flour. Grain prices, and the price of bread, rose sharply through the winter of 1788 to 1789.\n\nBread was the basic food of ordinary people, and wages did not rise with it. Many urban workers and peasants spent a very large share of their income on bread, often around 40 percent or more. When the loaf doubled in price, a family had almost nothing left for anything else.",
+        "example": ""
+      },
+      {
+        "kind": "problem",
+        "heading": "How much of a wage goes to bread?",
+        "prompt": "A Paris day laborer earns 20 sous per day. In winter 1788 to 1789, a 4-pound loaf of bread costs 8 sous. What percentage of his daily wage goes on that one loaf? Type the number only.",
+        "answers": [
+          "40",
+          "40%"
+        ],
+        "unit": "%",
+        "traps": [
+          {
+            "answer": "8",
+            "feedback": "8 is the cost of the loaf, not its share of the wage. Divide the loaf cost by the wage."
+          },
+          {
+            "answer": "250",
+            "feedback": "You divided the wage by the loaf cost and multiplied wrongly. The share is the loaf cost divided by the wage, so 8 ÷ 20."
+          }
+        ],
+        "hints": [
+          "A percentage share is part ÷ whole.",
+          "Divide 8 by 20, then multiply the result by 100."
+        ],
+        "solution": "The share is the part divided by the whole: 8 ÷ 20 = 0.40. Multiply by 100 to get a percentage: 40%. At that level, roughly two-fifths of the wage went to bread before anything else was bought."
+      },
+      {
+        "kind": "explain",
+        "heading": "The ideas problem",
+        "body": "Enlightenment writers had spent decades questioning arbitrary rule and privilege. Montesquieu argued that power should be divided among separate branches so that no single authority could become arbitrary. Rousseau argued that sovereignty belongs to the people as a whole, not to a monarch. Their books circulated widely in France, and the American Revolution then showed that a people could write a constitution and replace a monarchy with a government built on rights.\n\nIn January 1789, the abbé Sieyès published a pamphlet asking, 'What is the Third Estate?' His answer was 'everything', and he asked what it had been politically until then: 'nothing'. Ideas like these gave ordinary people a language for claiming power.",
+        "example": "Ideas alone rarely start revolutions. They matter when a crisis makes people ready to act on them."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Both years had poor harvests. Look for what changed between them in politics.",
+          "Ask what made people believe they could demand a say over bread and taxes."
+        ],
+        "retry": "A bad harvest was not new. What was new in 1789 was that the state had called an assembly to decide taxes, and that people now had a political vocabulary of rights and sovereignty."
+      },
+      {
+        "kind": "explain",
+        "heading": "The answer",
+        "body": "Debt created the crisis that forced the king to summon an assembly, and privilege blocked any tax reform that would have eased it. Bad harvests then pushed bread prices so high that frustration turned into hunger and street anger. Enlightenment ideas gave deputies and crowds a language of rights to justify demanding change.\n\nNone of these causes was new in 1789. The revolution began in that year because all three pressures met at once, and the Estates-General gave people a national stage on which to act.",
+        "example": ""
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Ask which pressure produced the assembly, which produced the crowds, and which gave the crowds their demands.",
+          "Each of the three pressures should match one part of the answer."
+        ],
+        "retry": "Remove any one pressure and the outcome changes: without the assembly there is no national forum, without the bread shortage there is no mass anger, and without ideas the anger has no political direction."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "What tipped France over?",
+        "prompt": "France had been in debt for decades and had unequal taxes for centuries. Which pressure do you think most directly sparked the crisis of 1789?",
+        "reveal": "Debt set up the crisis, but hunger from failed harvests turned discontent into mass action in 1789.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "Royal debt from the American war",
+            "correct": false,
+            "feedback": "Debt created the crisis and forced the summoning of the Estates-General, but it had been building for years without triggering revolt."
+          },
+          {
+            "text": "A failed harvest and soaring bread prices",
+            "correct": true,
+            "feedback": "Yes. Bread prices drove hunger and street anger in 1789, the immediate spark, although debt had already set up the political crisis."
+          },
+          {
+            "text": "Enlightenment books circulating in Paris",
+            "correct": false,
+            "feedback": "Ideas gave people a language for protest, but they had circulated for decades before 1789 without causing revolution."
+          },
+          {
+            "text": "An invasion by a foreign army",
+            "correct": false,
+            "feedback": "No foreign army invaded France in 1789. The threat came from within the kingdom."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Sort the causes",
+        "prompt": "Drag each cause into the pressure it belongs to: money, food or ideas.",
+        "reveal": "Money and food were material pressures that made people desperate; ideas gave that desperation a political direction.",
+        "type": "sort",
+        "buckets": [
+          "Money",
+          "Food",
+          "Ideas"
+        ],
+        "items": [
+          {
+            "text": "Debt left over from the American war",
+            "bucket": "Money"
+          },
+          {
+            "text": "Hailstorm that flattened the 1788 harvest",
+            "bucket": "Food"
+          },
+          {
+            "text": "Nobles and clergy exempt from most taxes",
+            "bucket": "Money"
+          },
+          {
+            "text": "Bread taking more than half of a laborer's wage",
+            "bucket": "Food"
+          },
+          {
+            "text": "Rousseau's claim that sovereignty belongs to the people",
+            "bucket": "Ideas"
+          },
+          {
+            "text": "Sieyès asking what the Third Estate had been politically",
+            "bucket": "Ideas"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "In 1787, a royal minister proposes a new land tax that applies equally to every landowner, whatever their estate. Which obstacle was most likely to stop it?",
+        "options": [
+          "The privileged orders would resist paying, having long been exempt from most taxes",
+          "Peasants would refuse to grow wheat for the royal granaries at any price",
+          "The Estates-General already held full power to approve any tax without consultation",
+          "Foreign creditors would insist on repayment only in gold coin from Paris mints"
+        ],
+        "correctAnswer": "The privileged orders would resist paying, having long been exempt from most taxes",
+        "explanation": "Nobles and clergy were largely exempt from the main taxes, so an equal tax threatened their privilege. Their resistance blocked reform and left the crown short of money."
+      },
+      {
+        "question": "Harvest failures and high bread prices had happened in France before, such as in 1775. Why did the 1789 shortage set off a revolution when the earlier one did not?",
+        "options": [
+          "Bread was cheaper overall in 1775, so households had more savings to draw on",
+          "In 1789 a fiscal crisis forced an assembly to meet, and people claimed a say over bread",
+          "In 1775 the grain trade was fully free, so no one blamed the government for shortages",
+          "Bakers in 1789 were mostly foreign-born, which made crowds angrier at the trade"
+        ],
+        "correctAnswer": "In 1789 a fiscal crisis forced an assembly to meet, and people claimed a say over bread",
+        "explanation": "Hunger alone had produced riots before. In 1789 the Estates-General gave a national forum for grievances, and Enlightenment ideas let people argue they had a right to a say in these decisions."
+      },
+      {
+        "question": "A Paris pamphleteer in spring 1789 links three things: the crown's unpaid debts, a bread price that has doubled, and the claim that sovereignty belongs to the people. Which explanation best accounts for why protest became revolution?",
+        "options": [
+          "Hunger alone, since debt and ideas had existed for decades without causing a revolt",
+          "Debt forced an assembly, bread prices gave crowds grievances, and ideas gave them a claim to be heard",
+          "Ideas alone, since the Estates-General had been dormant for more than a century and a half",
+          "A foreign invasion, which forced the king to impose new taxes on every class of French people"
+        ],
+        "correctAnswer": "Debt forced an assembly, bread prices gave crowds grievances, and ideas gave them a claim to be heard",
+        "explanation": "Each pressure does a different job: debt produced the Estates-General, bread prices produced mass anger, and ideas gave that anger a political claim. Only together do they explain 1789."
+      }
+    ]
+  },
+  "score": 7.5,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 51207,
+      "approach": "mystery",
+      "blocks": "explain > activity > explain > check > explain > problem > explain > activity > check > explain",
+      "droppedBlocks": 1,
+      "droppedActivities": 1,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 7,
+      "ms": 10087,
+      "problems": [
+        "The solution to the bread problem says 'nearly half the wage went to bread', but the computed share is 40%. That is a loose and slightly inaccurate framing.",
+        "The explain text says many workers spent 'more than half' of their income on bread, while the worked problem shows 40%. The two figures sit awkwardly together without reconciliation.",
+        "Both check questions have a correct answer that is the longest and most detailed option, which cues test-savvy learners toward the right answer.",
+        "The ideas section is thin. It names Montesquieu, Voltaire and Rousseau but does not say what they argued, so the link to 'rights' and 'sovereignty' is asserted rather than explained.",
+        "The 'Louis XVI ruled with broad authority' framing is oversimplified and is not developed, so the opening puzzle rests on an unexamined claim."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 29344,
+      "approach": "mystery",
+      "blocks": "explain > activity > explain > check > explain > problem > explain > activity > check > explain > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 7.5,
+      "ms": 8953,
+      "problems": [
+        "The predict activity is placed right after the money section but asks about bread prices, which the learner has not yet been taught. The question depends on material that comes later.",
+        "The sort activity has a 'Food' item saying bread takes 'more than half of a laborer's wage', which conflicts with the lesson's own worked example of about 40% and the 'around 40 percent or more' statement.",
+        "The sort activity is tagged afterConcept 0 but includes an 'Ideas' bucket, so its placement does not match the lesson's sequence of concepts.",
+        "The trap feedback for '250' says the learner 'multiplied wrongly', which is vague. It should show that 20 ÷ 8 × 100 is the reverse of the correct calculation.",
+        "At an estimated 8 minutes, the module packs two activities, a calculation problem and three checks, which is probably over the time budget."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 7.5,
+      "passed": false
+    }
+  ]
+}

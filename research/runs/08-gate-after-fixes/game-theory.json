@@ -1,0 +1,183 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The Prisoner's Dilemma: A Discount Nobody Wants",
+    "objective": "Explain how a choice that pays better for each player individually can leave both players worse off.",
+    "estimatedMinutes": 7,
+    "approach": "scenario",
+    "approachReason": "One fictional pricing decision lets the learner experience the temptation to compete and then discover its cost to both businesses.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "Two cafés, one decision",
+        "body": "You run Cedar Café, opposite Maple Café, and each café must independently choose tomorrow's price: regular or discount. You choose at the same time, without seeing the other's decision; treat this as a one-day decision with no agreements or future consequences.\n\nFor this fictional example, the table gives each café's daily profit after all costs:\n\n| Cedar's choice | Maple's choice | Cedar's profit | Maple's profit |\n|---|---|---:|---:|\n| Regular | Regular | $40 | $40 |\n| Discount | Regular | $55 | $15 |\n| Regular | Discount | $15 | $55 |\n| Discount | Discount | $25 | $25 |\n\nEach owner wants to maximize their own café's profit.",
+        "example": "These are invented profits for a simplified game, not a claim about how real café pricing always works."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Uncertainty doesn't change your best choice",
+        "body": "If Maple chooses regular, discounting gives Cedar $55 rather than $40. If Maple discounts, discounting gives Cedar $25 rather than $15.\n\nSo discounting pays Cedar more in either case: you do not need to guess Maple's decision. A choice that gives a higher payoff regardless of the other player's choice is called a strictly dominant strategy.",
+        "example": "Compare Cedar's two choices while holding Maple's choice fixed. Comparing $55 with $25 would instead change Maple's choice, so it would not answer which action Cedar should take."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Hold Cedar's choice fixed at discount.",
+          "Compare only the two rows where Cedar discounts."
+        ],
+        "retry": "When Cedar discounts, Maple can choose between $15 from regular pricing and $25 from discounting. The $40 outcome requires Cedar to choose regular too."
+      },
+      {
+        "kind": "explain",
+        "heading": "Two sensible decisions, one disappointing result",
+        "body": "Maple faces exactly the same incentives as Cedar: discounting pays more whatever Cedar does. If both owners choose their strictly dominant strategy, both discount and earn $25 each.\n\nYet both would earn $40 each if both chose regular pricing. This is the prisoner's dilemma: each player's individual incentive pushes toward an outcome that is worse for both than mutual cooperation would be.",
+        "example": "In this pricing game, choosing regular plays the role of cooperation, and discounting plays the role of defection. Those labels describe the game's incentives, not the owners' moral character."
+      },
+      {
+        "kind": "problem",
+        "heading": "Count the cost to the two cafés",
+        "prompt": "Both cafés choose discount and earn $25 each. Both could instead earn $40 each by choosing regular. How much lower is their combined daily profit when both discount?",
+        "answers": [
+          "30"
+        ],
+        "unit": "dollars",
+        "traps": [
+          {
+            "answer": "15",
+            "feedback": "That is the loss for one café: 40 − 25 = 15. The question asks for the loss across both cafés."
+          },
+          {
+            "answer": "50",
+            "feedback": "That is their combined profit when both discount, not the amount lost compared with both choosing regular."
+          }
+        ],
+        "hints": [
+          "Calculate the combined profit for each of the two outcomes.",
+          "Subtract the both-discount total from the both-regular total."
+        ],
+        "solution": "Both regular: 40 + 40 = 80. Both discount: 25 + 25 = 50. The combined loss is 80 − 50 = 30 dollars."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Start with both cafés choosing regular, then change only Cedar's choice.",
+          "Separate what happens to Cedar's profit from what happens to their combined profit."
+        ],
+        "retry": "A better outcome for both is not necessarily each player's best individual choice. When Maple keeps regular pricing, Cedar can raise its own profit by discounting—even though that cuts Maple's profit."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Explain the dilemma to your co-owner",
+        "prompt": "Your co-owner says, “If both cafés end up worse off, at least one owner must have made a bad calculation.” Write a two-sentence reply using the profits to explain why that conclusion is wrong.",
+        "model": "Discounting gives either owner more profit regardless of the other café's choice: $55 instead of $40 against regular, or $25 instead of $15 against discount. Both can therefore calculate correctly for themselves and still end up earning $25 each rather than the $40 each available if both chose regular."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Your sealed pricing decision",
+        "prompt": "You must submit Cedar's pricing decision before learning Maple's choice. Using the profit table, which policy gives you the highest profit in either possible case?",
+        "reveal": "Discounting wins both comparisons: $55 beats $40 if Maple chooses regular, and $25 beats $15 if Maple discounts. You can identify your best choice without predicting Maple's choice.",
+        "type": "scenario",
+        "options": [
+          {
+            "text": "Choose discount regardless of Maple's choice.",
+            "correct": true,
+            "feedback": "You get the higher available profit in either case: $55 against regular or $25 against discount."
+          },
+          {
+            "text": "Choose regular regardless of Maple's choice.",
+            "correct": false,
+            "feedback": "You get $40 against regular or $15 against discount. Discounting would give you more in both cases."
+          },
+          {
+            "text": "Choose regular if you expect Maple to discount.",
+            "correct": false,
+            "feedback": "Against Maple's discount, regular earns you $15 while discount earns you $25."
+          },
+          {
+            "text": "Flip a coin between regular and discount.",
+            "correct": false,
+            "feedback": "The coin sometimes selects regular, which pays less than discount against either of Maple's choices."
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "Maple's owner learns that Cedar will discount. If Maple wants the highest profit for itself, what should it choose?",
+        "options": [
+          "Discount, earning $25 instead of $15.",
+          "Regular, earning $40 instead of $25.",
+          "Regular, because Cedar's discount makes Maple's choice irrelevant.",
+          "Either price, because both give Maple the same profit."
+        ],
+        "correctAnswer": "Discount, earning $25 instead of $15.",
+        "explanation": "With Cedar's discount held fixed, Maple earns $25 by discounting and $15 by choosing regular. Discounting is its better response."
+      },
+      {
+        "question": "The owners notice that both choosing regular would earn them $40 each. Why doesn't recognizing this shared benefit remove the dilemma in this one-day game?",
+        "options": [
+          "Either owner could increase its own profit from $40 to $55 by discounting while the other keeps regular pricing.",
+          "Both choosing regular actually produces less combined profit than both discounting.",
+          "An owner choosing regular would earn $40 regardless of the other owner's choice.",
+          "Discounting is attractive only when an owner expects the other café to choose regular."
+        ],
+        "correctAnswer": "Either owner could increase its own profit from $40 to $55 by discounting while the other keeps regular pricing.",
+        "explanation": "Both choosing regular is better for both than both discounting, but each owner has an individual incentive to depart from it. Recognizing the shared benefit does not change those payoffs."
+      }
+    ]
+  },
+  "score": 8.5,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 59931,
+      "approach": "scenario",
+      "blocks": "explain > activity > explain > check > explain > problem > check > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 1,
+      "ms": 16486,
+      "claims": 2,
+      "supported": 0,
+      "contradicted": [],
+      "unclear": 2,
+      "downgraded": [
+        "A strictly dominant strategy gives a player a higher payoff than every alternative strategy regardless of the other player's choice.: the quoted evidence isn't on the cited page",
+        "In the prisoner's dilemma, each player's individual incentive favors an outcome that leaves both players worse off than mutual cooperation would.: the quoted evidence isn't on the cited page"
+      ]
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8.5,
+      "ms": 16487,
+      "problems": [
+        "The first check's retry mostly repeats the same payoff comparison as its explanation rather than offering a genuinely different explanation.",
+        "All tasks use the same cafés and payoff table, so the lesson checks understanding within the example but not whether learners can recognize the dilemma in a new setting.",
+        "The combined-profit calculation is accurate but less strategically demanding than the surrounding tasks."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8.5,
+      "passed": true,
+      "sources": 0
+    }
+  ]
+}

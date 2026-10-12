@@ -1,0 +1,231 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "When Two Events Both Happen",
+    "objective": "Recognize independent events and multiply their probabilities to find the probability that both happen.",
+    "estimatedMinutes": 7,
+    "approach": "discovery",
+    "approachReason": "The learner first predicts and explores pairs of outcomes, then discovers why independent probabilities multiply.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "One result does not change the other",
+        "body": "For two independent fair coin flips, the four equally likely pairs are HH, HT, TH, and TT. Only HH gives two heads, so its probability is 1/4.\n\nThe flips are independent: learning the result of the first flip does not change the probability of heads on the second. Even after a head, the second flip still has a 1/2 chance of heads.",
+        "example": "Independent does not mean the results must be different. Two independent flips can both land heads."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Ask whether seeing the first result changes how the second coin behaves."
+        ],
+        "retry": "Treat the second flip as a fresh trial. The first result neither uses up heads nor makes tails due."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "A fraction of a fraction",
+        "body": "The first spinner lands blue with probability 3/5. Among those blue outcomes, 1/4 also have a star on the second spinner. Taking 1/4 of 3/5 gives (3/5) × (1/4) = 3/20.\n\nThis is the multiplication rule for independent events: P(A and B) = P(A) × P(B). Here, “and” means both happen in the same trial. The probabilities do not need to be equal, but independence must hold.",
+        "example": "Multiplication keeps only the fraction of A outcomes that also satisfy B."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "The question asks for both prizes, not just one.",
+          "Multiply the two probabilities because the prize draws are independent."
+        ],
+        "retry": "Adding would not isolate the plays where both prizes are won. For independent events, keep the fraction of first-prize wins that also win the second prize."
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "After a red marble is removed, how many red marbles and total marbles remain?"
+        ],
+        "retry": "Before multiplying the original probabilities, check whether the first event changes the chance of the second."
+      },
+      {
+        "kind": "problem",
+        "heading": "Your turn: both devices work",
+        "prompt": "A field team needs both a radio and a GPS to work. The probability that the radio works is 0.8, and the probability that the GPS works is 0.9. Their working or failing is independent.\n\nWhat is the probability that both work? Enter a decimal.",
+        "answers": [
+          "0.72",
+          ".72"
+        ],
+        "unit": "",
+        "traps": [
+          {
+            "answer": "1.7",
+            "feedback": "You added the probabilities. For two independent events both happening, multiply; a probability also cannot exceed 1."
+          },
+          {
+            "answer": "0.02",
+            "feedback": "That is the probability that both fail: 0.2 × 0.1. The team needs both to work."
+          }
+        ],
+        "hints": [
+          "Which operation finds the probability that two independent events both happen?",
+          "Calculate 0.8 × 0.9."
+        ],
+        "solution": "Because the events are independent, P(both work) = 0.8 × 0.9 = 0.72."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Two fair flips",
+        "prompt": "You flip a fair coin twice, independently. What is the probability that both flips land heads?",
+        "reveal": "The four equally likely pairs are HH, HT, TH, and TT. Only one pair has two heads, giving a probability of 1/4.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "1/2",
+            "correct": false,
+            "feedback": "That is the chance of heads on one flip. Requiring heads on both narrows the successful outcomes."
+          },
+          {
+            "text": "1/4",
+            "correct": true,
+            "feedback": "Yes. HH is one of the four equally likely pairs."
+          },
+          {
+            "text": "1/3",
+            "correct": false,
+            "feedback": "One head and one tail can occur in two different orders, HT and TH. There are four equally likely pairs, not three."
+          },
+          {
+            "text": "1",
+            "correct": false,
+            "feedback": "Adding the two chances gives 1, but two heads are not guaranteed. Outcomes such as TT are possible."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Trace blue AND star",
+        "prompt": "You spin two independent fair spinners. The first has five equal sections, three blue; the second has four equal sections, one marked with a star. Tap the nodes to trace how many of the 20 equally likely section pairs give both blue and a star.",
+        "reveal": "Three of the 20 pairs give both blue and a star. Selecting 3/5 of the pairs, then 1/4 of those, produces (3/5) × (1/4) = 3/20.",
+        "type": "diagram",
+        "nodes": [
+          {
+            "label": "All pairs: 20",
+            "detail": "Each of the five first-spinner sections can pair with each of the four second-spinner sections: 5 × 4 = 20 equally likely pairs."
+          },
+          {
+            "label": "Blue: 12 pairs",
+            "detail": "The three blue sections each pair with four second-spinner sections: 3 × 4 = 12 pairs."
+          },
+          {
+            "label": "Not blue: 8 pairs",
+            "detail": "The two non-blue sections each pair with four second-spinner sections. These eight pairs cannot satisfy both requirements."
+          },
+          {
+            "label": "Blue AND star: 3 pairs",
+            "detail": "Each of the three blue sections pairs with the one star section. These are the three winning pairs."
+          },
+          {
+            "label": "Blue, no star: 9 pairs",
+            "detail": "Each of the three blue sections pairs with three non-star sections. These nine pairs meet only the blue requirement."
+          }
+        ],
+        "edges": [
+          {
+            "from": 0,
+            "to": 1,
+            "label": "Keep 3/5"
+          },
+          {
+            "from": 0,
+            "to": 2,
+            "label": "Other 2/5"
+          },
+          {
+            "from": 1,
+            "to": 3,
+            "label": "Keep 1/4 of blue pairs"
+          },
+          {
+            "from": 1,
+            "to": 4,
+            "label": "Other 3/4 of blue pairs"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "Maya flips a fair coin twice, independently. The first flip is heads. What is the probability that the second flip is heads?",
+        "options": [
+          "1/2, because the first result does not change the second flip.",
+          "1/4, because getting heads twice is harder than getting it once.",
+          "0, because tails must follow heads.",
+          "1, because heads on the first flip guarantees heads again."
+        ],
+        "correctAnswer": "1/2, because the first result does not change the second flip.",
+        "explanation": "Independence means that knowing the first result does not change the second flip's probability. The chance of heads on the second flip remains 1/2."
+      },
+      {
+        "question": "An arcade play includes two independent prize draws. You have a 0.2 chance of winning the first prize and a 0.3 chance of winning the second. What is the probability of winning both?",
+        "options": [
+          "0.06",
+          "0.5",
+          "0.2",
+          "0.1"
+        ],
+        "correctAnswer": "0.06",
+        "explanation": "The draws are independent, so multiply: 0.2 × 0.3 = 0.06. Both prizes are won in 6% of plays in the long run."
+      },
+      {
+        "question": "A bag contains one red and one blue marble. You draw a marble, keep it out, then draw the remaining marble. A friend says the probability of two reds is (1/2) × (1/2) = 1/4. What is the best response?",
+        "options": [
+          "Correct: any two draws are independent.",
+          "Incorrect: after drawing red, no red remains, so two reds are impossible.",
+          "Incorrect: the probability should be 1/2 + 1/2 = 1.",
+          "Correct: both draws start with two possible colors."
+        ],
+        "correctAnswer": "Incorrect: after drawing red, no red remains, so two reds are impossible.",
+        "explanation": "Removing the first marble changes the possibilities for the second draw, so the events are not independent. There is only one red marble, making two reds impossible."
+      }
+    ]
+  },
+  "score": 8.3,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 55356,
+      "approach": "discovery",
+      "blocks": "activity > explain > check > activity > explain > check > check > problem",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8.3,
+      "ms": 7539,
+      "problems": [
+        "The spinner activity supplies every count and fraction in its node labels. Tapping reveals explanations but requires little independent reasoning, weakening the discovery approach.",
+        "Some retry explanations largely restate the original explanation rather than providing a genuinely different representation, particularly the fair-coin independence check.",
+        "The final device problem changes the context but repeats the same direct multiplication task as the arcade check, adding little assessment difficulty."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8.3,
+      "passed": true
+    }
+  ]
+}

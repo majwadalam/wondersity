@@ -1,0 +1,5 @@
+■ programming: Python loops (44s, score 8)
+  approach: worked_example (A fully traced loop makes each update visible before learners predict, repair, and write accumulator code themselves.)
+  blocks:   code:trace > explain > check > code:predict > check > code:bug > explain > check > problem
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=8, lesson.select=8

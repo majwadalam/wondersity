@@ -1,0 +1,5 @@
+■ history: The French Revolution (95s, score 7.5, below bar, $0.1200, 4 calls, 16995 in / 9507 out tokens)
+  approach: mystery (The puzzle of why longstanding grievances became a revolution in 1789 lets learners uncover how three pressures came together at one moment.)
+  blocks:   explain > activity:timeline > explain > check > activity:predict > explain > check > activity:diagram > explain > check > explain
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=7.5, lesson.revise, lesson.evaluate=7, lesson.select=7.5

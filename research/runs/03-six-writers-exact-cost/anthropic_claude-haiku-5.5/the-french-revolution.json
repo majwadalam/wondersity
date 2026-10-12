@@ -1,0 +1,241 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Why 1789?",
+    "objective": "Explain how debt, food prices and new ideas combined to start the French Revolution.",
+    "estimatedMinutes": 7,
+    "approach": "mystery",
+    "approachReason": "The puzzle of how an absolute monarchy that looked strong collapsed so fast in 1789 is a natural hook, and each clue resolves part of it until the chain of causes answers the question.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "The puzzle",
+        "body": "In 1787, France was the most populous kingdom in Europe, with roughly 28 million people and a king with a large army and a vast administration. Yet by the summer of 1789, the king had called the Estates-General, the Third Estate had declared itself the National Assembly, and Paris was in revolt. A government that looked strong fell apart in about two years.\n\nSo what changed? Historians point to three forces working together: money, bread and ideas. Let's examine each clue.",
+        "example": ""
+      },
+      {
+        "kind": "explain",
+        "heading": "Clue one: the state ran out of money",
+        "body": "France had fought expensive wars, most recently aiding the American colonists in the 1770s and early 1780s. By the late 1780s, paying interest on the royal debt consumed roughly half of government revenue. Taxes were uneven: nobles and many clergy were largely exempt from the main land taxes, so the burden fell heavily on commoners.\n\nWhen the finance ministers tried to fix this by taxing privileged groups, the Assembly of Notables in 1787 and the parlements (courts) pushed back. Reform stalled, and the crown turned to the Estates-General as a last resort.",
+        "example": "Think of a household that spends half its income just on loan interest, while its richest relatives refuse to contribute. Sooner or later it must change the rules."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Ask who was exempt from the main land tax, and who had to approve any change.",
+          "Look for the option where the people who would pay more are also the ones who must agree."
+        ],
+        "retry": "Privileged groups were not exempt from every tax, but they held the main exemptions, and the bodies that had to approve reform were made up of those same groups. Reform therefore needed the consent of the people it would cost."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Clue two: bread was the household budget",
+        "body": "Bread was the staple food of the poor, and a Paris worker's budget could be dominated by it. When the 1788 harvest was damaged by a severe summer hailstorm and then a harsh winter, grain prices climbed through the spring of 1789. A rise in bread prices did not just make life harder; it left almost nothing for other needs, and it made hunger a daily political fact.\n\nThe ideas of the period mattered here too. Writers had questioned privilege and the justice of royal government, and pamphlets circulated widely. But ideas alone did not topple a state. They gave frustrated people a language for blaming the government.",
+        "example": "Compare two shopping lists: if bread takes most of your wages, a price increase cannot be absorbed by cutting back on luxuries. It must be cut from food itself."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "How the clues combined",
+        "body": "Each clue alone was serious but survivable. Together they made a chain. The debt crisis forced the king to call the Estates-General in May 1789. Rising bread prices in the spring turned frustration into anger in towns and countryside alike. The Estates-General became a stage: the Third Estate, which represented most people, declared itself the National Assembly in June, and the crowd that stormed the Bastille on 14 July showed that Paris would not wait for permission.\n\nThe lesson is that the revolution started where a financial failure, a subsistence crisis and a new political vocabulary met at the same moment.",
+        "example": "The Bastille was a royal fortress and prison. Its fall on 14 July 1789 became the symbol of the revolution, but it was the product of the three pressures above, not a single cause."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Ask which clue explains why the king had to summon an assembly at all.",
+          "Consider what each clue contributed: a reason for action, a trigger, or a language for it."
+        ],
+        "retry": "The bread crisis explains why the crowds were desperate, the debt explains why the king had to summon the Estates-General, and the ideas gave the crowds and the Third Estate a justification for acting."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Rank the triggers",
+        "prompt": "Of the three clues (debt, bread prices and new ideas), which would you say was the most important trigger for the revolution in 1789, and why? Explain how the other two made your choice more or less decisive.",
+        "model": "A strong answer picks one clue but recognises the interaction: for example, debt forced the Estates-General, bread prices made the crowds act, and ideas shaped what the Third Estate demanded. Credit for showing the chain, not for a single cause."
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Two regions read the same pamphlets. What is different between them that the pamphlets cannot explain?",
+          "Ask which factor would make a shared idea feel urgent and personal."
+        ],
+        "retry": "Shared ideas were not enough on their own. Where bread prices had spiked, the same pamphlets led to direct action, which shows that the clues worked together."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "What share of wages went on bread?",
+        "prompt": "Around 1789, roughly what share of a typical Paris worker's income went on bread? Make your prediction before you read on.",
+        "reveal": "For many urban workers, bread took about half of income or more. That is why a rise in bread prices left almost no room for anything else.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "About 10%",
+            "correct": false,
+            "feedback": "Too low. Bread was far more central to ordinary budgets than this suggests."
+          },
+          {
+            "text": "About 25%",
+            "correct": false,
+            "feedback": "Still too low. Many workers spent a much larger share on bread than a quarter of income."
+          },
+          {
+            "text": "About 50% or more",
+            "correct": true,
+            "feedback": "Right. For many urban workers, bread absorbed around half of income or more, so price rises hit everything else."
+          },
+          {
+            "text": "About 90%",
+            "correct": false,
+            "feedback": "Too high. Workers also paid for rent, fuel and clothing, so bread was large but not almost all of income."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Sort the causes",
+        "prompt": "Drag each cause into the category it belongs to: money, bread, or ideas.",
+        "reveal": "Money and bread problems were material pressures that hit households and the treasury directly. Ideas supplied the vocabulary that turned those pressures into demands for political change.",
+        "type": "sort",
+        "buckets": [
+          "Money crisis",
+          "Bread crisis",
+          "Ideas"
+        ],
+        "items": [
+          {
+            "text": "Interest payments absorb about half of royal revenue",
+            "bucket": "Money crisis"
+          },
+          {
+            "text": "Privileged groups exempt from the main land tax",
+            "bucket": "Money crisis"
+          },
+          {
+            "text": "Hailstorm damages the 1788 harvest",
+            "bucket": "Bread crisis"
+          },
+          {
+            "text": "Bread prices rise through spring 1789",
+            "bucket": "Bread crisis"
+          },
+          {
+            "text": "Pamphlets questioning privilege circulate widely",
+            "bucket": "Ideas"
+          },
+          {
+            "text": "Writers argue that sovereignty belongs to the nation",
+            "bucket": "Ideas"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "You are a royal finance minister in 1787. Treasury revenue is mostly consumed by debt interest, and you propose a land tax that applies equally to nobles and commoners. What is the main obstacle to this plan?",
+        "options": [
+          "The army is too small to collect any new tax",
+          "Privileged groups hold the main exemptions, and the bodies that must approve reform are drawn from those same groups",
+          "Peasants refuse to pay any tax under any circumstances",
+          "Foreign bankers have stopped lending to France altogether"
+        ],
+        "correctAnswer": "Privileged groups hold the main exemptions, and the bodies that must approve reform are drawn from those same groups",
+        "explanation": "Reform required approval from the very groups that would pay more under it. That deadlock pushed the crown toward summoning the Estates-General."
+      },
+      {
+        "question": "It is April 1789 and bread prices have risen sharply. A crowd gathers at a Paris bakery, and the talk quickly turns to the king and the coming Estates-General. Which best explains why a food protest became political so fast?",
+        "options": [
+          "Bread shortages, a debt-driven crisis and circulating pamphlets had already made the government's failures visible and personal",
+          "The crowd had been organised by the royal army in advance",
+          "Only nobles were hungry, so the crowd was rebelling against them",
+          "The Estates-General had already passed laws on bread prices"
+        ],
+        "correctAnswer": "Bread shortages, a debt-driven crisis and circulating pamphlets had already made the government's failures visible and personal",
+        "explanation": "The three clues reinforced one another. Hunger gave urgency, the fiscal crisis made the government look incapable, and pamphlets supplied the vocabulary for blame."
+      },
+      {
+        "question": "Two provincial towns in 1789 both read the same revolutionary pamphlets. Only one saw riots over bread. What best explains the difference?",
+        "options": [
+          "Its local bread prices had spiked, so the ideas gave an urgent, personal reason to act",
+          "Its pamphlets were better written than the other town's",
+          "It had no nobles, so there was no one to blame",
+          "Only that town had a printing press"
+        ],
+        "correctAnswer": "Its local bread prices had spiked, so the ideas gave an urgent, personal reason to act",
+        "explanation": "Shared ideas need a material trigger to become action. The town with spiking bread prices had the hunger that made the pamphlets' arguments urgent."
+      }
+    ]
+  },
+  "score": 7.5,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 35602,
+      "approach": "mystery",
+      "blocks": "explain > explain > check > activity > explain > activity > explain > check > reflect > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 7.5,
+      "ms": 8546,
+      "problems": [
+        "The first explain block has an empty example string, so one concept gets no concrete illustration unlike the others.",
+        "In the third question, the correct option is the longest and most detailed, and the distractors are weak (e.g. 'Only that town had a printing press'), so the answer is easy to guess.",
+        "The second question's correct option is the only one that lists several factors, which makes it stand out from the single-cause distractors.",
+        "The final check's second hint refers to 'two regions' while the question says 'two provincial towns', a small inconsistency.",
+        "The sort activity is fairly easy: each item's category is nearly obvious from its wording, so it checks recall more than reasoning."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 33325,
+      "approach": "mystery",
+      "blocks": "explain > explain > check > activity > explain > activity > explain > activity > check > reflect > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 6,
+      "ms": 9714,
+      "problems": [
+        "Several hints give away the answer. For the first check, the hint 'Look for the option where the people who would pay more are also the ones who must agree' points directly to the correct option. For the last check, 'Ask which factor would make a shared idea feel urgent' does the same for the bread-price answer.",
+        "The `afterConcept` values are all 0, so the bread-price and combined-causes activities (refs 1 and 2) are tied to the first concept instead of the concepts they test. This metadata mismatch could break sequencing.",
+        "The first check question is nearly self-answering. The scenario states the tax 'applies equally' and that nobles hold exemptions, so the learner is not asked to reason through a real choice.",
+        "The distractors are weak in the questions. Options like 'The army had organised the crowd' or 'Nobles had starved the crowd' are easy to dismiss, so the questions test recall of the obvious more than understanding.",
+        "The retry for the last check repeats the explanation almost word for word, so it adds little new help.",
+        "Three activities, three checks and a reflection in an 8-minute lesson is a dense load. The timing is probably underestimated.",
+        "The sort activity's 'borderline' item is only loosely defined. The prompt says one item is borderline, but the placement of 'a pamphlet blames the king for bread prices' as purely ideas does not clearly show why it is the hard case."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 7.5,
+      "passed": false
+    }
+  ]
+}

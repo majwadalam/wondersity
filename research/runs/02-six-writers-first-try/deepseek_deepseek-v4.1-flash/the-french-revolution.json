@@ -1,0 +1,245 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Why 1789?",
+    "objective": "Explain how debt, food prices and new ideas combined to start the revolution.",
+    "estimatedMinutes": 9,
+    "approach": "mystery",
+    "approachReason": "The module's core question is a genuine puzzle — why did Europe's richest kingdom collapse in a single year? — so the lesson poses it up front and resolves it thread by thread (debt, bread, ideas) before the learner answers it themselves.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "The richest kingdom in Europe",
+        "body": "In 1788 France was the wealthiest and most populous kingdom in Europe: about 28 million people, the largest army in the West, and the best farmland on the continent. Twelve months later its king had lost control of his own capital.\n\nNo single cause explains that. Three different pressures — an empty treasury, the price of bread, and new ideas about who had the right to rule — all landed at the same moment. This lesson follows each one, then puts them back together.",
+        "example": "When the Estates-General finally met at Versailles in May 1789, it was the first time the kingdom's representatives had been summoned in 175 years."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Thread one: a state that had spent its future",
+        "body": "France had fought Britain twice in thirty years — the Seven Years' War and then the war for American independence — and paid for both with borrowed money. By 1788 roughly half of everything the crown collected went straight to its creditors, before a single soldier or official was paid.\n\nThe obvious fix, taxing the nobles and clergy who were largely exempt, ran into privilege. French law held that no new tax could be levied without consent, and only one body could give that consent: the Estates-General. In August 1788, out of money, Louis XVI called it.",
+        "example": "The Assembly of Notables, summoned in 1787 to approve reform, refused; the parlements did the same in 1788. Both told the king to consult the Estates-General — which is how a financial crisis cracked open the door to politics."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Think about who would have to agree to a tax that touched the privileged orders.",
+          "In 1787–88, two bodies were asked to approve reform. Ask what each of them said."
+        ],
+        "retry": "Privilege was not just greed — it was a legal order. Nobles and clergy held that their exemptions were part of the constitution of the kingdom, and that only a full assembly of the nation could alter them."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "Thread two: the price of bread",
+        "body": "In July 1788 hailstorms flattened the grain harvest across northern France, and the winter that followed was brutal. The price of the standard four-pound loaf in Paris climbed from around 8 or 9 sous to 14 or 15 by 1789, while a labourer earned perhaps 20 to 30 sous a day.\n\nBread was most of what a poor family ate, and Paris — some 600,000 people — depended on the market for it. When a single foodstuff eats half a day's wage, a bad harvest becomes a political event: crowds gather at the bakeries, and crowds that gather over bread can be turned toward other targets.",
+        "example": "In April 1789, rumours that a wallpaper manufacturer had proposed cutting wages set off the Réveillon riots in Paris — crowds, troops, and dozens dead, three months before the Bastille."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Ask what people do when one item takes half their income.",
+          "Ask what a hungry crowd is physically able to do that a scattered rural population cannot."
+        ],
+        "retry": "Hunger did not have to be universal to matter. It had to be concentrated in the cities, where crowds could gather quickly and where political news travelled fastest."
+      },
+      {
+        "kind": "explain",
+        "heading": "Thread three: new ideas about who rules",
+        "body": "For a century, writers of the Enlightenment had been arguing that legitimate authority comes from the people, not from God's appointment of a king. Rousseau's The Social Contract (1762) described a 'general will' belonging to the citizen body; the American Revolution of 1776 showed that such ideas could actually be put into practice.\n\nBy 1789 these were no longer abstract. The abbé Sieyès' pamphlet What Is the Third Estate? answered its own question — everything — and argued that the nation's representatives, not the monarch, held sovereignty. Across France, voters compiling their cahiers de doléances got used to speaking as citizens with grievances, not as subjects with petitions.",
+        "example": "The Estates-General's elections were also a mass literacy in politics: hundreds of grievance lists arrived at Versailles, most of them demanding the same things — fair taxes, an end to privilege, and a say in law-making."
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "A declaration is just paper unless something makes it credible. What did the deputies have behind them?",
+          "Notice both halves of the situation: the argument they are making, and the crowd that could defend it."
+        ],
+        "retry": "Sovereignty means the right to make final decisions. The Third Estate's move did not seize power physically; it relocated the source of authority in words — and then relied on the street to make that stick."
+      },
+      {
+        "kind": "worked",
+        "heading": "How three pressures became one revolution",
+        "problem": "Trace the chain from an empty royal treasury to the fall of the Bastille on 14 July 1789. Each step adds one of the three pressures — money, food, ideas — and hands the problem to the next link.",
+        "steps": [
+          {
+            "title": "1. The treasury fails",
+            "text": "Two wars against Britain leave the crown owing more than it can raise; by 1788 roughly half of revenue goes to interest.",
+            "why": "Debt alone does not topple a monarchy — but it forces the king to ask someone for money, and that someone sets conditions."
+          },
+          {
+            "title": "2. The king opens politics",
+            "text": "No new tax without consent, and only the Estates-General can consent. In August 1788 Louis XVI summons it for May 1789, for the first time in 175 years.",
+            "why": "A fiscal emergency cracks open a door that had stayed shut since 1614 — and once open, it cannot be quietly closed."
+          },
+          {
+            "title": "3. The elections organise a nation",
+            "text": "Voters elect deputies and draw up cahiers de doléances; pamphlets like Sieyès' What Is the Third Estate? argue that authority belongs to the nation.",
+            "why": "Local complaints become a national programme, and Enlightenment vocabulary gives everyone a shared word for what they want."
+          },
+          {
+            "title": "4. Deadlock at Versailles",
+            "text": "Outvoted by the privileged orders, the Third Estate's deputies declare themselves the National Assembly on 17 June 1789.",
+            "why": "Sovereignty is now claimed by an assembly rather than granted by a king — this is the revolutionary act itself."
+          },
+          {
+            "title": "5. Bread does the rest",
+            "text": "The king masses troops around Paris; Paris is hungry, armed and organised; on 14 July crowds seize the Bastille.",
+            "why": "The treasury crisis opened the revolution, ideas gave it a language, and the price of bread gave it muscle."
+          }
+        ],
+        "answer": "Final answer: no single cause. Debt forced the king to open politics, ideas turned his deputies into a sovereign nation, and the price of bread put a crowd in the street willing to defend it."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Solve the mystery yourself",
+        "prompt": "In 1788 France was the richest kingdom in Europe. By July 1789 its king had lost control of his own capital. In your own words, explain why — and say which of the three pressures you think mattered most, and why.",
+        "model": "A strong answer: debt forced the king to summon the Estates-General; those elections produced deputies and grievance lists that turned scattered complaints into a national programme; Enlightenment ideas let the deputies claim sovereignty for the nation rather than the king; and the doubled price of bread put hungry crowds in the Paris streets at exactly the moment the king threatened the new assembly. Each pressure alone might have been survivable — the three together were fatal."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "The bill for two wars",
+        "prompt": "In 1788 the French monarchy was the richest state in Europe — and it was going broke. Which of these swallowed the largest single share of the king's spending?",
+        "reveal": "France had borrowed heavily to fight Britain — first in the Seven Years' War, then in the American war. By 1788 about half of every livre the crown collected went straight to its creditors.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "The court at Versailles and the king's own household",
+            "correct": false,
+            "feedback": "Lavish, and hated for it — but the court was a small fraction of spending next to the debt."
+          },
+          {
+            "text": "Interest payments on money borrowed for past wars",
+            "correct": true,
+            "feedback": "Correct: about half of all royal revenue went to servicing debts from the Seven Years' War and the war for American independence."
+          },
+          {
+            "text": "The standing army and navy kept ready in peacetime",
+            "correct": false,
+            "feedback": "Expensive — but the interest on earlier wars cost the crown more than the forces it kept in being."
+          },
+          {
+            "text": "Grain bought by the crown to feed the poor",
+            "correct": false,
+            "feedback": "The crown bought very little grain. Feeding the hungry was left to charity, the Church and the market — which is precisely why bread prices turned into politics."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Bread and the wage",
+        "prompt": "Drag the slider to change the share of a worker's daily wage that one loaf of bread takes, and watch what happens in the city.",
+        "reveal": "A failed harvest in 1788 pushed bread toward half a worker's daily wage. The crowds that gathered around the bakeries in 1789 were the same crowds that marched on the Bastille.",
+        "type": "simulation",
+        "slider": {
+          "label": "Share of a day's wage spent on bread",
+          "min": 20,
+          "max": 90,
+          "step": 5,
+          "unit": "%",
+          "initial": 30
+        },
+        "bands": [
+          {
+            "upTo": 30,
+            "title": "Bread is affordable",
+            "detail": "At about a third of a wage, a family eats and still has money for rent, fuel and clothing. Prices like these are the quiet norm of the 1770s."
+          },
+          {
+            "upTo": 50,
+            "title": "Half the wage gone",
+            "detail": "Meat, butter and wine disappear from the table. Families buy only bread, and one bad week wipes out any savings."
+          },
+          {
+            "upTo": 70,
+            "title": "Households on the edge",
+            "detail": "Rent goes unpaid, begging rises, and small riots break out at markets. This is the state of many French towns in the winter of 1788–89."
+          },
+          {
+            "upTo": 90,
+            "title": "Crisis",
+            "detail": "Nearly the whole wage buys one loaf. Crowds seize grain, attack bakeries and demand that someone — the king, the town, anyone — act. Paris in mid-1789."
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "It is 1787. As Louis XVI's finance minister you propose a single land tax that nobles and clergy would pay like everyone else. What is the most likely response?",
+        "options": [
+          "The nobles and clergy agree, since the state's danger is obvious to everyone.",
+          "The Assembly of Notables and the parlements refuse, arguing that only the Estates-General can consent to a new tax.",
+          "The king imposes the tax by decree and it is collected without serious opposition.",
+          "The peasants riot against the new tax and the proposal is abandoned."
+        ],
+        "correctAnswer": "The Assembly of Notables and the parlements refuse, arguing that only the Estates-General can consent to a new tax.",
+        "explanation": "Tax privilege was defended as part of the kingdom's constitution, and the only body with authority to consent to a new tax was the Estates-General — so the fiscal crisis forced the king to summon it."
+      },
+      {
+        "question": "You live in a market town in spring 1789. Bread costs nearly double last year's price, close to half a day's wage for a four-pound loaf. What is the most likely consequence?",
+        "options": [
+          "Families spend nearly everything on bread, and hungry crowds gather in the market — a crowd that can be turned toward political protest.",
+          "Workers buy more bread than usual, and the local economy booms.",
+          "The crown distributes free grain, and calm returns within days.",
+          "The Church sells its land, and the price of bread falls within weeks."
+        ],
+        "correctAnswer": "Families spend nearly everything on bread, and hungry crowds gather in the market — a crowd that can be turned toward political protest.",
+        "explanation": "When a single foodstuff consumes half a wage, households have nothing left, and the crowds that form at markets become the physical force later deployed in political confrontations in Paris."
+      },
+      {
+        "question": "June 1789. The deputies at Versailles are deadlocked over voting, and royal troops are massing near Paris. The Third Estate declares itself the National Assembly. What makes that claim so powerful?",
+        "options": [
+          "They have the king's written approval and the support of his ministers.",
+          "They claim sovereignty belongs to the nation's representatives rather than the king alone — an argument Enlightenment writers had made respectable and a hungry Paris made credible.",
+          "They threaten to hand France's government back to the nobility if they are not obeyed.",
+          "They promise to fix the price of bread immediately by law."
+        ],
+        "correctAnswer": "They claim sovereignty belongs to the nation's representatives rather than the king alone — an argument Enlightenment writers had made respectable and a hungry Paris made credible.",
+        "explanation": "Sieyès-style arguments relocated authority from monarch to nation, and the bread-fed crowds of Paris supplied the pressure that made the claim impossible for the king to simply overturn."
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 47260,
+      "approach": "mystery",
+      "blocks": "explain > activity > explain > check > activity > explain > check > explain > check > worked > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8,
+      "ms": 5526,
+      "problems": [
+        "Only two hands-on blocks (one multiple-choice prediction and one slider simulation); for a 9-minute lesson across three distinct threads, the debt and ideas threads get no interactive treatment — the map/worked block carries the synthesis alone.",
+        "Both activities declare afterConcept 0, though activity 1 is placed after the first explain and activity 2 after a check; the metadata doesn't track the actual placement.",
+        "The slider simulation is the weakest block: its pedagogical payload is the four text bands, so a learner who never drags it loses nothing — verging on decorative for the 'food prices' thread.",
+        "The three checks are all 'what makes X most likely' MCQs with near-identical stems; variety in check format is limited."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true
+    }
+  ]
+}

@@ -2,7 +2,7 @@
 // Gemini Nano Banana through OpenRouter. Used by /api/covers and /api/stage.
 // About $0.035 an image.
 
-import { recordUsage } from "./model";
+import { ModelHttpError, recordUsage } from "./model";
 import { requireEnv, env } from "./env";
 
 /**
@@ -39,7 +39,8 @@ export async function generateImage(prompt: string, aspectRatio: "4:3" | "16:9" 
     }),
     signal: AbortSignal.timeout(timeoutMs),
   });
-  if (!res.ok) throw new Error(`image: HTTP ${res.status}`);
+  // A provider error, so serverError classifies it (credit, limits, outage) like any model call.
+  if (!res.ok) throw new ModelHttpError(res.status, `image: ${(await res.text()).slice(0, 300)}`);
   const data = await res.json();
   // Paintings are the largest cost per lesson, so they count in the run's total.
   recordUsage(data.usage);

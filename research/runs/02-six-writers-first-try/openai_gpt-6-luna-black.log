@@ -1,0 +1,5 @@
+■ conceptual science: Black holes (75s, score 8)
+  approach: misconception (The lesson tests the idea that a black hole traps light by slowing it, then uses evidence and a causal-path model to replace that explanation.)
+  blocks:   activity:predict > explain > check > activity:scenario > explain > check > explain
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=6, lesson.revise, lesson.evaluate=8, lesson.select=8

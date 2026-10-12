@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { lessonText, settleVerdict, verifyFacts, type VerifyDeps } from "./factVerify";
+import { evidenceOnPage, lessonText, settleVerdict, verifyFacts, type VerifyDeps } from "./factVerify";
 import type { Lesson } from "./lessonBlocks";
 
 const britannica = {
@@ -91,7 +91,7 @@ describe("verifyFacts", () => {
         if (claim.startsWith("Necker")) throw new Error("search timed out");
         return claim.includes("1700")
           ? { judgement: judgement({ verdict: "contradicted", correction: "It last met in 1614." }), sources: [britannica] }
-          : { judgement: judgement({ evidence: "Louis XVI summoned it in 1788" }), sources: [britannica] };
+          : { judgement: judgement({ evidence: "had not met since 1614 when Louis XVI summoned it in 1788" }), sources: [britannica] };
       },
     };
     const report = await verifyFacts("The French Revolution", lesson, Date.now() + 60_000, deps);
@@ -99,5 +99,25 @@ describe("verifyFacts", () => {
     assert.match(report.errors[0], /1700.*contradicted by Estates-General \| Britannica.*1614/);
     assert.deepEqual(report.uncertain, ['blocks[4].text: "Necker was dismissed on 11 July 1789."']);
     assert.deepEqual(report.sources, [{ url: britannica.url, title: britannica.title }]);
+  });
+});
+
+describe("evidenceOnPage", () => {
+  const page =
+    "The Schwarzschild radius of an object is proportional to its mass. Accordingly, the Sun has a Schwarzschild radius of approximately 3.0 km (1.9 mi), [6] whereas Earth's is approximately 9 mm (0.35 in) [6] ... Potential intermediate black";
+
+  it("accepts a quote copied with citation marks dropped or stitched across a gap", () => {
+    assert.equal(evidenceOnPage("Accordingly, the Sun has a Schwarzschild radius of approximately 3.0 km, whereas Earth's is approximately 9 mm.", page), true);
+  });
+
+  it("accepts a short, exact quote (a real one from run 08)", () => {
+    const fizziq = "The range-angle graph has a bell-shaped curve, symmetric about 45°. Maximum range is achieved at 45°. Complementary angles give the same range.";
+    assert.equal(evidenceOnPage("Maximum range is achieved at 45°.", fizziq), true);
+  });
+
+  it("rejects an invented quote, a short one with a changed number, and one too short to mean anything", () => {
+    assert.equal(evidenceOnPage("The Sun's Schwarzschild radius was measured at 30 kilometres by NASA in 1998.", page), false);
+    assert.equal(evidenceOnPage("Schwarzschild radius approximately 30 km", page), false);
+    assert.equal(evidenceOnPage("Schwarzschild radius", page), false);
   });
 });

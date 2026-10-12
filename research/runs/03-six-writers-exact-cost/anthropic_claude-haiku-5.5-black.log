@@ -1,0 +1,5 @@
+■ conceptual science: Black holes (76s, score 7, below bar, $0.0110, 4 calls, 25816 in / 16925 out tokens)
+  approach: discovery (The learner squeezes a mass and watches escape speed change before the horizon is named, so the key idea comes from their own evidence.)
+  blocks:   activity:simulation > explain > check > explain > worked > check > problem > explain > check
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=5.5, lesson.revise, lesson.evaluate=7, lesson.select=7

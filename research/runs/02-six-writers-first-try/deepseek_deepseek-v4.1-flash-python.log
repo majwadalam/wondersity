@@ -1,0 +1,5 @@
+■ programming: Python loops (94s, score 7, below bar)
+  approach: worked_example (An accumulator is a small procedure with a fixed shape, best learned by watching a full trace, then a faded trace, then solving one alone.)
+  blocks:   explain > code:trace > explain > check > worked > activity:sort > check > activity:predict > check > problem
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=7, lesson.revise, lesson.evaluate=7, lesson.select=7

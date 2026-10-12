@@ -1,0 +1,242 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "When Do Probabilities Multiply?",
+    "objective": "Compute the probability that two independent events both happen.",
+    "estimatedMinutes": 8,
+    "approach": "discovery",
+    "approachReason": "Learners first predict an outcome, then use examples to discover what independence means before deriving and applying the multiplication rule.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "What the coin tosses reveal",
+        "body": "The four equally likely results of two tosses are HH, HT, TH, and TT. Only one result is two heads, so the chance of getting heads both times is 1/4.\n\nThe first toss does not change the second toss: it is still a fair coin. When one event does not change the probability of another, the events are independent.",
+        "example": "The word “both” means the first event happens and the second event happens—not either one or the other."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "After the first red marble is replaced, how many red and total marbles are in the bag?",
+          "For two independent events both to happen, multiply their probabilities."
+        ],
+        "retry": "Because the first marble is replaced and the bag is mixed, the chance of red on the second draw remains 3/5. Multiply the two chances: (3/5)(3/5) = 9/25."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "The multiplication rule",
+        "body": "For independent events A and B, the probability that both happen is P(A and B) = P(A) × P(B). Multiplication works because the chance of B stays the same after A happens.\n\nIf the first event changes the chance of the second, they are not independent, so do not use this rule as if nothing changed.",
+        "example": "Drawing a marble, replacing it, and mixing before drawing again keeps the second-draw probabilities unchanged. Drawing without replacement changes the contents of the bag."
+      },
+      {
+        "kind": "worked",
+        "heading": "A coin and a die",
+        "problem": "A fair coin is flipped and a fair six-sided die is rolled. What is the probability of getting tails and rolling a 6?",
+        "steps": [
+          {
+            "title": "Find each chance",
+            "text": "P(tails) = 1/2 and P(rolling a 6) = 1/6.",
+            "why": "There is one tails face out of two coin sides, and one 6 out of six die faces."
+          },
+          {
+            "title": "Check independence",
+            "text": "The coin result does not affect the die roll.",
+            "why": "The chance of rolling a 6 remains 1/6 no matter which side the coin lands on."
+          },
+          {
+            "title": "Multiply",
+            "text": "(1/2) × (1/6) = 1/12.",
+            "why": "This is the probability that both events happen."
+          }
+        ],
+        "answer": "The probability is 1/12."
+      },
+      {
+        "kind": "problem",
+        "heading": "Your turn: two independent checks",
+        "prompt": "A factory estimates that 3% of its parts have a scratch and 2% have a misprinted label. Assume these events are independent. What is the probability that a part has both a scratch and a misprinted label? Enter a decimal.",
+        "answers": [
+          "0.0006"
+        ],
+        "unit": "",
+        "traps": [
+          {
+            "answer": "0.05",
+            "feedback": "This adds the probabilities instead of finding the chance that both happen."
+          }
+        ],
+        "hints": [
+          "Write 3% and 2% as decimals.",
+          "Since the events are independent, multiply their probabilities."
+        ],
+        "solution": "Convert the percentages to decimals and multiply: 0.03 × 0.02 = 0.0006."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Change each percentage into a decimal first.",
+          "Ask for both events, and use the multiplication rule for independent events."
+        ],
+        "retry": "Because the two chances are stated to be independent, multiply 0.04 by 0.25 to get 0.01, or 1%."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Two coin tosses",
+        "prompt": "You flip a fair coin twice. Before listing all the outcomes, what is the chance that both flips land heads?",
+        "reveal": "The chance is 1/4: each flip has a 1/2 chance of heads, and the first flip does not affect the second.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "1/2",
+            "correct": false,
+            "feedback": "That is the chance of heads on one flip, not both."
+          },
+          {
+            "text": "1/3",
+            "correct": false,
+            "feedback": "The possible pairs of results are equally likely, but there are four of them, not three."
+          },
+          {
+            "text": "1/4",
+            "correct": true,
+            "feedback": "Correct. Both flips must be heads, and each independent flip has a 1/2 chance."
+          },
+          {
+            "text": "1/8",
+            "correct": false,
+            "feedback": "This multiplies by an extra factor of 1/2; there are only two required heads."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Independent or dependent?",
+        "prompt": "Sort each pair according to whether the first event changes the probability of the second.",
+        "reveal": "Replacement, separate random devices, and separate coin tosses leave the other event's probability unchanged. Without replacement, the first draw changes what remains in the bag.",
+        "type": "sort",
+        "buckets": [
+          "Independent",
+          "Dependent"
+        ],
+        "items": [
+          {
+            "text": "Flip a coin, then flip it again.",
+            "bucket": "Independent"
+          },
+          {
+            "text": "Roll a die and flip a coin.",
+            "bucket": "Independent"
+          },
+          {
+            "text": "Draw a marble, replace it, mix the bag, then draw again.",
+            "bucket": "Independent"
+          },
+          {
+            "text": "Draw a card, keep it out, then draw another card.",
+            "bucket": "Dependent"
+          },
+          {
+            "text": "It rains, then you check whether the pavement is wet.",
+            "bucket": "Dependent"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A bag contains 3 red and 2 blue marbles. You draw one marble, replace it, mix the bag, and draw again. What is the probability of red on both draws?",
+        "options": [
+          "6/25",
+          "9/25",
+          "3/5",
+          "9/10"
+        ],
+        "correctAnswer": "9/25",
+        "explanation": "Each draw has a 3/5 chance of red because the marble is replaced. The draws are independent, so (3/5) × (3/5) = 9/25."
+      },
+      {
+        "question": "A game uses a fair coin and a fair four-sided spinner. What is the probability of getting heads and landing on the spinner's marked section, which is one of its four equal sections?",
+        "options": [
+          "1/8",
+          "1/4",
+          "3/4",
+          "1/2"
+        ],
+        "correctAnswer": "1/8",
+        "explanation": "The coin and spinner do not affect each other, so multiply the chances: (1/2) × (1/4) = 1/8."
+      }
+    ]
+  },
+  "score": 6.5,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 30267,
+      "approach": "discovery",
+      "blocks": "activity > explain > check > activity > explain > worked > problem > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 6.5,
+      "ms": 10688,
+      "problems": [
+        "The final check has unrelated hints and incorrect retry feedback. Its question concerns a coin and spinner, with answer 1/8, but the hints refer to percentages and the retry calculates 0.04 × 0.25 = 0.01. This would actively confuse learners.",
+        "The first marble check requires the multiplication rule before the lesson explicitly introduces or derives it. The hint supplies the rule rather than helping learners discover why it works.",
+        "The discovery approach is only partially realized: learners predict an answer, but the lesson supplies the outcome list and multiplication rule without asking them to construct or examine a sample space.",
+        "Retry explanations repeat the multiplication calculation rather than offering a genuinely different explanation, such as counting equally likely outcome pairs.",
+        "The final check is easier than the preceding percentage problem, so the assessment sequence does not consistently increase in difficulty."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 36341,
+      "approach": "discovery",
+      "blocks": "activity > explain > activity > explain > check > worked > check > explain > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 8,
+      "ms": 7502,
+      "problems": [
+        "The final check repeats the immediately preceding example with identical numbers and reasoning, so it tests recall more than independent application.",
+        "The sorting activity describes experiments rather than clearly defined events. For example, 'draw a card, keep it out' does not specify which first and second events are being compared.",
+        "The opening activity asks learners to select a completed sample space rather than actually construct one, making the discovery approach somewhat less hands-on than advertised.",
+        "The dependent-events calculation is useful contrast, but making it the final assessment shifts attention away from the module's independent-events goal."
+      ],
+      "factErrors": [
+        "blocks[8].retry: \"12/90 = 2\" is wrong; 12/90 = 0.1333."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 6.5,
+      "passed": false
+    }
+  ]
+}

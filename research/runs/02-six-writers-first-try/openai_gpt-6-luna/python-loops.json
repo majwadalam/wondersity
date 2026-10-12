@@ -1,0 +1,220 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Build a Result, One Loop at a Time",
+    "objective": "Read, predict, and write for loops that update an accumulator to build a result.",
+    "estimatedMinutes": 7,
+    "approach": "worked_example",
+    "approachReason": "A running total is easiest to understand by tracing one complete loop, then filling in more of the reasoning and finally solving one independently.",
+    "blocks": [
+      {
+        "kind": "worked",
+        "heading": "Follow the running total",
+        "problem": "A game records three round scores: 4, 7, and 2. What value does this loop print?",
+        "steps": [
+          {
+            "title": "Start",
+            "text": "Set `total = 0` before the loop.",
+            "why": "This gives the running total a starting value before any scores are added."
+          },
+          {
+            "title": "Visit the first score",
+            "text": "The loop sets `score` to 4, then `total += score` makes `total` equal 4.",
+            "why": "`+=` adds the value on the right to the value already stored in `total`."
+          },
+          {
+            "title": "Visit the next scores",
+            "text": "The next updates are `4 + 7 = 11`, then `11 + 2 = 13`.",
+            "why": "Each pass uses the latest value of `total`, not the original zero."
+          },
+          {
+            "title": "Finish",
+            "text": "After the loop, `total` is 13, so `print(total)` displays 13.",
+            "why": "The loop has added every score exactly once."
+          }
+        ],
+        "answer": "It prints 13. Notice that `total` changes as the loop visits each score."
+      },
+      {
+        "kind": "explain",
+        "heading": "The accumulator pattern",
+        "body": "A variable that keeps a result as a loop runs is called an accumulator. For a running sum, set it to `0` before the loop, then add the current item during each pass with a statement like `total += score`.\n\nIndentation matters: the update belongs inside the loop so it happens for every item. A statement such as `print(total)` can go after the loop to use the finished result.",
+        "example": "For scores `[4, 7, 2]`, the accumulator changes like this: `0 → 4 → 11 → 13`."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Write down the value of `total` after each amount is added.",
+          "The last value is the sum of 4, 3, and 8."
+        ],
+        "retry": "Start with zero, then add each amount once: `0 → 4 → 7 → 15`."
+      },
+      {
+        "kind": "code",
+        "heading": "Predict each update",
+        "prompt": "A shop tracks three small sales. What exactly does this code print?",
+        "language": "python",
+        "code": "total = 0\nfor sale in [2, 5, 1]:\n    total += sale\n    print(total)",
+        "explanation": "It prints `2`, then `7`, then `8`, each on its own line. The print statement is indented, so it runs after every update.",
+        "hints": [
+          "Track `total` after each pass through the loop.",
+          "Check whether `print(total)` is indented inside or outside the loop."
+        ],
+        "mode": "predict",
+        "options": [
+          {
+            "text": "8",
+            "correct": false,
+            "feedback": "That would be the final total, but `print` runs inside the loop, so it displays a value on every pass."
+          },
+          {
+            "text": "2\n7\n8",
+            "correct": true,
+            "feedback": "Correct: the running total is printed after each sale is added."
+          },
+          {
+            "text": "2\n5\n1",
+            "correct": false,
+            "feedback": "Those are the individual sales, but the code prints `total`, not `sale`."
+          },
+          {
+            "text": "0\n2\n7",
+            "correct": false,
+            "feedback": "This misses the update from the final sale: the last printed total is 8."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "The first value of `total` is 12, not zero.",
+          "Add each gift to 12, keeping the updated total each time."
+        ],
+        "retry": "The accumulator already contains 12, so add the three gifts to that amount: `12 + 5 + 3 + 10 = 30`."
+      },
+      {
+        "kind": "problem",
+        "heading": "Your turn: calculate the final value",
+        "prompt": "A player starts with 5 bonus points. What number does this code print?\n\n`points = 5`\n\n`for bonus in [2, 6, 1]:`\n\n`    points += bonus`\n\n`print(points)`",
+        "answers": [
+          "14"
+        ],
+        "unit": "",
+        "traps": [
+          {
+            "answer": "9",
+            "feedback": "This adds the bonuses but forgets the starting 5 points."
+          },
+          {
+            "answer": "19",
+            "feedback": "This adds the starting points twice."
+          }
+        ],
+        "hints": [
+          "Begin with the value already stored in `points`.",
+          "Add each bonus once, updating `points` after every addition."
+        ],
+        "solution": "Start at 5, then update: `5 + 2 = 7`, `7 + 6 = 13`, and `13 + 1 = 14`. The code prints 14."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Assemble a total-sales loop",
+        "prompt": "Put these lines in the order needed to total sales of 3, 5, and 2, then display the result.",
+        "reveal": "Initialize the accumulator before the loop, update it inside the loop, and print the finished total after the loop.",
+        "type": "order",
+        "steps": [
+          "total = 0",
+          "for sale in [3, 5, 2]:",
+          "total += sale",
+          "print(total)"
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "You are totaling three amounts collected at a bake sale: 4, 3, and 8 dollars. A loop starts `total = 0` and adds each amount once. What is the final value of `total`?",
+        "options": [
+          "12",
+          "15",
+          "8",
+          "4"
+        ],
+        "correctAnswer": "15",
+        "explanation": "The accumulator adds each amount in turn: 0 + 4 + 3 + 8 = 15."
+      },
+      {
+        "question": "A fundraiser has already collected $12. The code sets `total = 12`, then loops over gifts `[5, 3, 10]` and runs `total += gift` each time. What is `total` after the loop?",
+        "options": [
+          "18",
+          "30",
+          "12",
+          "42"
+        ],
+        "correctAnswer": "30",
+        "explanation": "The accumulator begins at 12 and then adds all three gifts: 12 + 5 + 3 + 10 = 30."
+      }
+    ]
+  },
+  "score": 7,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 31919,
+      "approach": "worked_example",
+      "blocks": "worked > explain > check > code > activity > check > problem",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 7,
+      "ms": 6064,
+      "problems": [
+        "The worked example describes the loop’s behavior but never shows the loop code, so learners cannot connect the trace to the actual `for`-loop syntax.",
+        "The ordering activity lists `total += sale` without indicating that it must be indented inside the loop, even though indentation is central to the concept.",
+        "Most practice repeats the same running-sum pattern; there is little variation in context or task type."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 29978,
+      "approach": "worked_example",
+      "blocks": "worked > explain > check > code > activity > check > problem",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 7,
+      "ms": 5521,
+      "problems": [
+        "The retry for the distance check gives away the full answer (`0 → 6 → 10 → 17`) instead of helping the learner work it out.",
+        "The lesson gives learners little practice independently writing a loop; the ordering activity is the only writing-oriented task, and it supplies all the code lines."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 7,
+      "passed": false
+    }
+  ]
+}

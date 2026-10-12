@@ -43,6 +43,12 @@ listed. For the full design, read AGENTS.md (how it works) and HARNESS.md
 - Course plans are shared between new learners who ask for the same course, matched by meaning: "stoic philosophy" matches "Stoicism", but "Stoicism for anxiety" doesn't. Lesson 1 of a shared course is shared too, so repeat topics cost almost nothing to start.
 - The OpenRouter key has a spending limit. When it's reached, lessons can't be written until the limit is raised.
 
+- Every model run is recorded in `research/`: what was tested, how, the results, the costs and the raw lessons. Start with `research/model-runs.md`.
+- Every model call sets a maximum output length: without one, OpenRouter reserves the model's largest possible reply against the key's credit, and parallel calls are refused (402).
+- The online fact check runs at most 4 searches at a time, and accepts a quote when its meaningful words are on the returned page, so short exact quotes count. It still confirms few claims and roughly doubles a lesson's cost, which is under review (research/model-runs.md, "Where things stand").
+- Once a lesson is saved, a failure in the tutor's closing note no longer throws the lesson away. An end-to-end test caught this.
+- `scripts/e2e-course.ts` runs a real course through the app, as two throwaway learners, and cleans up afterwards.
+
 ## Accounts and data
 
 - Sign-in is email and password or Google (Supabase Auth). Emailed codes broke when opened in another browser, so they were dropped.

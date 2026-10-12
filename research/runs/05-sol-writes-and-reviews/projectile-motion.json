@@ -1,0 +1,184 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Launch angle and range",
+    "objective": "Explain how changing launch angle changes a projectile’s height and range, including why different angles can produce the same range.",
+    "estimatedMinutes": 7,
+    "approach": "simulation",
+    "approachReason": "Varying the launch angle while holding speed constant lets the learner see the trade-off between a higher path and a longer range.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Higher does not always mean farther",
+        "body": "The launch angle is measured upward from the horizontal. The range is the horizontal distance from launch to landing—the point where the curve returns to ground level.\n\nIncreasing the angle directs more of the launch speed upward and less forward. More upward motion keeps the projectile in the air longer, but less forward motion means it covers less horizontal distance each second. In this model, those competing effects produce the greatest range at 45°.",
+        "example": "These results assume fixed launch speed, no air resistance, and landing at the same height as launch."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Compare the two angles with the angle that gave the greatest range.",
+          "Use the graph to compare both the peak and the landing point."
+        ],
+        "retry": "Below 45°, increasing the angle gives enough extra flight time to more than compensate for the reduced forward speed."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "Same landing point, different journey",
+        "body": "The 30° and 60° launches land at the same horizontal distance, but the 60° launch travels higher and stays airborne longer. Its smaller forward speed is exactly balanced by its longer flight time.\n\nUnder our model’s assumptions, angles that add to 90° have equal ranges at the same launch speed. These are called complementary angles: 20° and 70° are another pair. The special angle 45° is its own partner and gives the greatest range.",
+        "example": "Equal range does not mean equal paths or equal flight times."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Check whether the two launch angles add to 90°.",
+          "Separate the question of where the ball lands from how high it travels."
+        ],
+        "retry": "Two complementary angles can reach the same target. The higher-angle path rises farther above the ground, so it can clear an obstacle that blocks the lower path."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Choose a path, not just a landing point",
+        "prompt": "A launcher can hit the same ground-level target at either 30° or 60°, using the same speed. You want the ball to arrive sooner, and there are no obstacles. Which angle would you choose, and why? Use the graph to support your explanation.",
+        "model": "I would choose 30°. Both angles give the same range, but the 30° launch has less upward motion and a shorter flight time. The 60° path is useful when extra height is needed, not when the goal is quicker arrival."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "One speed, many paths",
+        "prompt": "Drag the launch angle from 15° to 75°. First compare 15°, 45°, and 75°: which path rises highest, and which lands farthest away? Read the landing point where the curve meets the ground again. The launch speed is fixed at 20 m/s; ignore air resistance, and keep launch and landing at ground level.",
+        "reveal": "The steepest launch rises highest, but 45° lands farthest away. A higher peak and a greater range are different goals.",
+        "type": "graph",
+        "expression": "x*tan(k*pi/180)-9.8*x^2/(2*20^2*cos(k*pi/180)^2)",
+        "slider": {
+          "label": "Launch angle",
+          "min": 15,
+          "max": 75,
+          "step": 5,
+          "unit": "°",
+          "initial": 15
+        },
+        "bands": [
+          {
+            "upTo": 40,
+            "title": "Rising higher and landing farther",
+            "detail": "As the angle increases toward 45°, the peak rises and the range increases."
+          },
+          {
+            "upTo": 45,
+            "title": "Greatest range",
+            "detail": "At 45°, the projectile lands about 40.8 m away—the greatest range for this speed under these assumptions."
+          },
+          {
+            "upTo": 75,
+            "title": "Higher, but shorter in range",
+            "detail": "Above 45°, increasing the angle raises the peak but brings the landing point closer to the launcher."
+          }
+        ],
+        "axis": {
+          "xLabel": "Horizontal distance (m)",
+          "yLabel": "Height (m)",
+          "xMin": 0,
+          "xMax": 45,
+          "yMin": 0,
+          "yMax": 21
+        }
+      },
+      {
+        "afterConcept": 0,
+        "title": "Compare 30° with 60°",
+        "prompt": "At the same launch speed, with no air resistance and equal launch and landing heights, how will the ranges at 30° and 60° compare? Make a prediction, then test both angles on the graph.",
+        "reveal": "Both launches land about 35.3 m away. The 60° launch goes higher and takes longer, but it does not land farther away.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "The 30° launch has a greater range.",
+            "correct": false,
+            "feedback": "It has more forward speed, but less time in the air. Test whether that shorter flight cancels its forward-speed advantage."
+          },
+          {
+            "text": "The 60° launch has a greater range.",
+            "correct": false,
+            "feedback": "It stays airborne longer, but moves forward more slowly. Extra flight time alone does not guarantee extra range."
+          },
+          {
+            "text": "Both launches have the same range.",
+            "correct": true,
+            "feedback": "Yes. For this pair, the difference in forward speed exactly balances the difference in flight time."
+          },
+          {
+            "text": "Both launches have the same range and the same peak height.",
+            "correct": false,
+            "feedback": "Their landing points match, but their paths do not. The 60° launch rises much higher."
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A ball launcher changes its angle from 25° to 35° without changing its speed. Ignore air resistance and assume it lands at its launch height. What happens to its path?",
+        "options": [
+          "Its peak gets higher and it lands farther away.",
+          "Its peak gets higher and it lands closer.",
+          "Its peak gets lower and it lands farther away.",
+          "Its peak gets higher but its range stays unchanged."
+        ],
+        "correctAnswer": "Its peak gets higher and it lands farther away.",
+        "explanation": "Increasing the angle raises the peak. Because both angles are below 45°, moving toward 45° also increases the range."
+      },
+      {
+        "question": "A launcher hits a ground-level target at 30°. A fence halfway to the target blocks that path, but the graph shows that a 60° path clears it. With the same speed, no air resistance, and equal launch and landing heights, what should you do?",
+        "options": [
+          "Use 60°: it clears the fence and reaches the same target.",
+          "Keep 30°: equal-range paths must have equal heights.",
+          "Use 45°: it must land at the same target because its range is greatest.",
+          "Use 60°: it clears the fence but must land beyond the target."
+        ],
+        "correctAnswer": "Use 60°: it clears the fence and reaches the same target.",
+        "explanation": "The complementary angles 30° and 60° give equal ranges under these assumptions. The 60° path rises higher, allowing it to clear the fence without changing the landing point."
+      }
+    ]
+  },
+  "score": 8.7,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 50062,
+      "approach": "simulation",
+      "blocks": "activity > explain > check > activity > explain > check > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8.7,
+      "ms": 8269,
+      "problems": [
+        "The graph displays height versus horizontal distance, not time, so learners cannot directly observe or verify the claims about flight duration. The final reflection nevertheless asks them to support a time comparison using that graph.",
+        "The retry explanations mostly restate the original reasoning rather than offering genuinely different explanations.",
+        "The second activity asks learners to test angles on the graph but has no graph of its own, requiring them to return to the earlier activity."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8.7,
+      "passed": true
+    }
+  ]
+}

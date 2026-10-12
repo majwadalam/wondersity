@@ -1,0 +1,5 @@
+■ conceptual science: Black holes (75s, score 7.5, below bar)
+  approach: simulation (Escape depends on how the escape speed changes with distance from the black hole, so the learner should vary the distance and watch the escape speed approach c before the rule is named.)
+  blocks:   explain > activity:simulation > explain > check > problem > explain > compare > check
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=7.5, lesson.revise, lesson.evaluate=7, lesson.select=7.5

@@ -1,0 +1,286 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Why 1789?",
+    "objective": "Explain how debt, food prices and new ideas combined to start the revolution.",
+    "estimatedMinutes": 9,
+    "approach": "mystery",
+    "approachReason": "France in 1789 looked like the strongest state in Europe, so its collapse is a genuine puzzle — and the lesson resolves it one pressure at a time before answering the question at the end.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "The strongest state in Europe",
+        "body": "In 1789 France was the most populous country in Europe — about 28 million people — with the largest army, the richest farmland and the language of European culture. Its king had just helped the American colonies humiliate Britain.\n\nYet within five months a Paris crowd tore down the Bastille, and the king's authority never recovered. A state that strong does not collapse by accident. Three pressures arrived at almost the same time, and together they closed every exit the monarchy had.",
+        "example": "Louis XVI was no doomed tyrant. Many contemporaries saw him as a reforming king who appointed reforming ministers."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Debt, and who was exempt",
+        "body": "Two long wars — the Seven Years' War (1756–63, which cost France Canada and most of India) and the war that helped the American colonies break from Britain (1778–83) — left the crown with a debt whose interest alone swallowed about half of everything it spent.\n\nThe nobles and the clergy were largely exempt from the main direct tax, so the burden fell on peasants and townspeople who had nothing left to give. And in France a new tax was not a royal order: it had to be registered and approved, ultimately by an assembly of the realm. The king could declare war alone; he could not declare a tax alone.",
+        "example": "This is why 1789 begins as a financial story: the crown was solvent enough to fight, but not solvent enough to stop paying interest."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Ask who had to register and approve a new tax before a single livre could be collected.",
+          "If the king could simply decree new taxes, why summon an assembly that had not met since 1614?"
+        ],
+        "retry": "Another way to see it: the monarchy was absolute in theory and paralysed in practice — strong enough to make war, too weak to make a new tax without someone else's consent."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "Hunger in the streets",
+        "body": "In 1788 hail and drought wrecked the grain harvest. By the spring of 1789 a four-pound loaf in Paris cost close to a full day's wage for a labourer, and bread was the bulk of what an ordinary family ate.\n\nWages had not risen. When bread took nearly everything, families stopped buying cloth, candles and wine — so workshops laid off workers at exactly the moment prices peaked. Hunger by itself is not politics, but a city full of hungry people, pamphlets and rumours is a crowd waiting for a reason.",
+        "example": "Unlike 1788, the harvest of 1789 turned out to be good — but it came too late to feed the spring."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Ask what a bread price alone can explain — and what it cannot.",
+          "Ideas don't feed anyone, and hunger doesn't choose a target. What did the news supply?"
+        ],
+        "retry": "Put another way: bread prices supplied the crowd, Enlightenment argument supplied the justification, and the political news supplied the direction to march in."
+      },
+      {
+        "kind": "explain",
+        "heading": "New ideas",
+        "body": "The Enlightenment gave French readers a new way to describe their own kingdom: not a family of subjects under a father-king, but a nation of citizens with rights. Rousseau argued that sovereignty belonged to the people; Sieyès's pamphlet What Is the Third Estate? answered its own question with: everything.\n\nThe American Revolution proved that a republic could actually be built. And when the king invited his subjects to send grievance lists (cahiers de doléances) to Versailles, he invited them to think of themselves as a nation with opinions — a force he could not censor or unmake.",
+        "example": "Cheap print did the work: pamphlets and newspapers spread arguments through Paris faster than the crown could ban them."
+      },
+      {
+        "kind": "activity",
+        "ref": 2
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Take away one cause and ask what the other two would still have done.",
+          "The Estates-General was summoned before the bread crisis peaked — so what would still have happened?"
+        ],
+        "retry": "Historians argue about which cause mattered most precisely because none of them works alone: this is the standard 'conjuncture' argument about 1789."
+      },
+      {
+        "kind": "explain",
+        "heading": "Why 1789?",
+        "body": "Take any one of the pressures alone and France had survived it before. The crown had defaulted on debts and muddled through; bad harvests had caused riots that were put down; new ideas had been argued in salons for decades.\n\nIn 1789 the three arrived together. The debt forced the king to summon an assembly that immediately disputed who he was accountable to; the harvest filled Paris with people who could not wait for that argument to be settled; and the new ideas gave deputies, pamphleteers and crowds a shared language of rights and a target. What made the revolution was not the depth of any single grievance, but the fact that every exit closed in the same year.",
+        "example": "That combination is the answer to the puzzle: France was strong, and it was fragile in exactly three places at once."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "The royal budget, 1788",
+        "prompt": "Before you look, guess: which of these took the biggest share of the French crown's spending?",
+        "reveal": "The biggest single item was not the court but the debt: roughly half of royal spending went to interest payments, which meant the crown could not simply cut its way out of trouble.",
+        "type": "chart",
+        "unit": "% of royal spending (approximate)",
+        "bars": [
+          {
+            "label": "Army and navy",
+            "value": 26,
+            "note": "The price of defending an empire and paying for past wars."
+          },
+          {
+            "label": "The royal court at Versailles",
+            "value": 6,
+            "note": "Famous for its extravagance — and, in budget terms, surprisingly small."
+          },
+          {
+            "label": "Roads, officials, police, poor relief",
+            "value": 18,
+            "note": "Everything else the state actually did."
+          },
+          {
+            "label": "Interest on the debt",
+            "value": 50,
+            "note": "About half of every livre the crown spent went straight to its creditors."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "The price of bread",
+        "prompt": "Drag the slider to change how much of a Paris worker's daily wage a four-pound loaf of bread costs, and watch what happens to a family.",
+        "reveal": "In 1789 bread reached roughly 88% of a labourer's daily wage — the point where eating, not politics, decides what a crowd will do.",
+        "type": "simulation",
+        "slider": {
+          "label": "Bread as a share of a day's wage",
+          "min": 40,
+          "max": 110,
+          "step": 5,
+          "unit": "%",
+          "initial": 60
+        },
+        "bands": [
+          {
+            "upTo": 55,
+            "title": "Bread fits the budget",
+            "detail": "At about half a day's wage, a worker can still buy meat, candles and fuel. Discontent stays grumbling."
+          },
+          {
+            "upTo": 75,
+            "title": "Squeezed",
+            "detail": "Bread takes two-thirds of the wage. Meat leaves the table, families buy less of everything, and the workshops that made those things lay people off."
+          },
+          {
+            "upTo": 90,
+            "title": "Crisis",
+            "detail": "Almost a full day's work buys one loaf. Crowds gather at the bakeries and complaints turn into riots."
+          },
+          {
+            "upTo": 110,
+            "title": "Starvation and revolt",
+            "detail": "A day's wage no longer buys bread at all. Hunger becomes political: crowds seize grain and attack the symbols of authority."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "How three pressures connected",
+        "prompt": "Tap each box to see what it was, then follow the arrows to trace how debt, hunger and new ideas fed into the summer of 1789.",
+        "reveal": "No single arrow starts the revolution: debt forced the assembly, hunger filled the streets, and new ideas gave both a language and a target.",
+        "type": "diagram",
+        "nodes": [
+          {
+            "label": "War debt",
+            "detail": "The Seven Years' War and the American war left the crown borrowing simply to service older loans."
+          },
+          {
+            "label": "Tax privileges",
+            "detail": "Nobles and clergy were largely exempt from the main direct tax, so the burden fell on those least able to pay."
+          },
+          {
+            "label": "Harvest of 1788",
+            "detail": "Hail and drought cut the grain crop; by spring 1789 bread was scarce and dear."
+          },
+          {
+            "label": "Bread price crisis",
+            "detail": "A loaf cost close to a full day's wage, and spending on everything else collapsed."
+          },
+          {
+            "label": "Enlightenment ideas",
+            "detail": "Pamphlets and salons argued that sovereignty belonged to the nation, not to the king."
+          },
+          {
+            "label": "Estates-General, May 1789",
+            "detail": "Summoned to approve new taxes — the first meeting of the realm's assembly since 1614."
+          },
+          {
+            "label": "The Bastille falls, July 1789",
+            "detail": "A Paris crowd turns a fiscal and political crisis into a revolution."
+          }
+        ],
+        "edges": [
+          {
+            "from": 1,
+            "to": 0,
+            "label": "exemptions forced the crown to borrow"
+          },
+          {
+            "from": 0,
+            "to": 5,
+            "label": "the debt forced the king to summon the assembly"
+          },
+          {
+            "from": 2,
+            "to": 3,
+            "label": "poor harvest, dearer bread"
+          },
+          {
+            "from": 3,
+            "to": 6,
+            "label": "hungry crowds ready to act"
+          },
+          {
+            "from": 4,
+            "to": 5,
+            "label": "gave deputies a language of national rights"
+          },
+          {
+            "from": 4,
+            "to": 6,
+            "label": "made royal authority arguable"
+          },
+          {
+            "from": 5,
+            "to": 6,
+            "label": "a disputed assembly, then a crowd in the streets"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "It is 1787. The king's finance minister proposes a single land tax paid by every landowner, nobles and clergy included. The nobles refuse to register it, and the king backs down again. Why could the crown not simply impose the tax?",
+        "options": [
+          "Because France had no written law, so taxes were collected only by local custom.",
+          "Because the king had sworn at his coronation never to tax the nobility.",
+          "Because new taxes needed the consent of the realm's courts and an assembly, and the crown had no way to compel the privileged to pay without one.",
+          "Because the crown's army was too small to collect taxes outside Paris."
+        ],
+        "correctAnswer": "Because new taxes needed the consent of the realm's courts and an assembly, and the crown had no way to compel the privileged to pay without one.",
+        "explanation": "The crown depended on consent — from the parlements and ultimately an assembly of the realm. That dependence is why a fiscal crisis ended in a summons to the Estates-General rather than a royal decree."
+      },
+      {
+        "question": "Paris, early July 1789. A labourer's daily wage buys almost exactly one loaf of bread, and he has sold his tools to eat. Then he hears that the king has dismissed the popular minister Necker and that troops are gathering around the city. Why does this turn hunger into an uprising?",
+        "options": [
+          "Because the dismissal of Necker lowered the price of bread and the crowd came out to celebrate.",
+          "Because the harvest of 1789 had failed a second time.",
+          "Because hungry people with nothing left to lose now had a target, and the argument over the king's authority had already made resistance thinkable.",
+          "Because the army had already mutinied and joined the crowd before the news arrived."
+        ],
+        "correctAnswer": "Because hungry people with nothing left to lose now had a target, and the argument over the king's authority had already made resistance thinkable.",
+        "explanation": "Bread prices supplied the crowd, Enlightenment argument supplied the justification, and the political news supplied the direction to march. No one of the three is enough on its own."
+      },
+      {
+        "question": "Suppose the harvest of 1788 had been excellent and bread had stayed cheap through the spring of 1789. Which outcome is most likely?",
+        "options": [
+          "Nothing would have changed: the debt crisis alone would have toppled the monarchy within a year, hunger or no hunger.",
+          "The nobles would have accepted the new land tax, since they had only refused it out of fear of hungry crowds.",
+          "The fiscal crisis would still have forced the Estates-General and the fight over votes and rights, but the armed Paris crowd of July might never have formed.",
+          "The Enlightenment would have had no audience at all, since only hungry people read pamphlets."
+        ],
+        "correctAnswer": "The fiscal crisis would still have forced the Estates-General and the fight over votes and rights, but the armed Paris crowd of July might never have formed.",
+        "explanation": "Cheap bread removes one pressure without removing the debt or the arguments about rights. That is why historians describe the causes as combining rather than naming one 'real' cause."
+      }
+    ]
+  },
+  "score": 9,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 53884,
+      "approach": "mystery",
+      "blocks": "explain > activity > explain > check > activity > explain > check > explain > activity > check > explain",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 9,
+      "ms": 19765,
+      "problems": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 9,
+      "passed": true
+    }
+  ]
+}

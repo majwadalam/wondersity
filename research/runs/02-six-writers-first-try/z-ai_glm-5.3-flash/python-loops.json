@@ -1,0 +1,217 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "For Loops and Accumulators",
+    "objective": "Read, predict and write for loops that build up a result",
+    "estimatedMinutes": 8,
+    "approach": "discovery",
+    "approachReason": "Learners predict loop output before any explanation, then build the accumulator pattern from evidence of what changes each pass.",
+    "blocks": [
+      {
+        "kind": "code",
+        "heading": "What does this print?",
+        "prompt": "Before we name anything, read this code. What do you think appears when it runs?",
+        "language": "python",
+        "code": "total = 0\nfor n in [1, 2, 3]:\n    total = total + n\nprint(total)",
+        "explanation": "",
+        "hints": [
+          "Trace total's value after each trip through the loop body.",
+          "After the first pass total is 1, after the second it is 3. What after the third?"
+        ],
+        "mode": "predict",
+        "options": [
+          {
+            "text": "0",
+            "correct": false,
+            "feedback": "Not quite — total starts at 0, but the loop changes it before we print."
+          },
+          {
+            "text": "6",
+            "correct": true,
+            "feedback": "Yes: the loop adds 1, then 2, then 3 to total, ending at 6."
+          },
+          {
+            "text": "123",
+            "correct": false,
+            "feedback": "That's the numbers glued together, but + adds values, it doesn't join digits."
+          },
+          {
+            "text": "3",
+            "correct": false,
+            "feedback": "Only the last value of n is 3 — but total kept every addition along the way."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "explain",
+        "heading": "Why 6? The two parts of every for loop",
+        "body": "A for loop runs its body once for each item in a list. The line `for n in [1, 2, 3]:` takes each item in turn, calls it `n`, and runs the indented line below once per item.\n\nHere `total` is an **accumulator**: a variable created before the loop that the body keeps updating. Each pass, `total = total + n` adds the current `n` to what's already there, so after the loop `total` holds the sum of everything seen.",
+        "example": "Run the loop by hand: total starts at 0, becomes 0+1=1, then 1+2=3, then 3+3=6."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [],
+        "retry": ""
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "The accumulator recipe",
+        "body": "Almost every loop that builds a result follows the same three-step recipe: set up the accumulator before the loop (usually 0 for sums, \"\" for text, [] for lists), update it inside the loop body, and use it after the loop ends.\n\nThe update line is the whole trick: it uses the variable's *old* value on the right and stores the *new* one on the left. That self-reference is what lets a loop carry information from one pass to the next.",
+        "example": "`total = total + n` and the shortcut `total += n` mean exactly the same thing."
+      },
+      {
+        "kind": "worked",
+        "heading": "Worked example: doubling prices",
+        "problem": "A shop wants the total of some doubled prices: prices are [2, 5, 7]. Write and run a loop that accumulates `total = total + n * 2`.",
+        "steps": [
+          {
+            "title": "Set up",
+            "text": "Start with `total = 0` before the loop.",
+            "why": "The accumulator must exist before the body can update it — starting at 0 makes 'add to it' mean 'sum it'."
+          },
+          {
+            "title": "First pass",
+            "text": "n = 2: total = 0 + 2*2 = 4.",
+            "why": "The old total (0) is used on the right, then replaced by 4 on the left."
+          },
+          {
+            "title": "Second pass",
+            "text": "n = 5: total = 4 + 10 = 14.",
+            "why": "Note total kept its value from the previous pass — that's the accumulator working."
+          },
+          {
+            "title": "Third pass",
+            "text": "n = 7: total = 14 + 14 = 28.",
+            "why": "The list is exhausted, so the loop ends and total holds 28."
+          }
+        ],
+        "answer": "Final answer: 28"
+      },
+      {
+        "kind": "problem",
+        "heading": "Your turn: predict the total",
+        "prompt": "A script runs:\n\n```\ntotal = 0\nfor n in [2, 5, 7]:\n    total = total + n * 2\nprint(total)\n```\n\nWhat number is printed? Type it in.",
+        "answers": [
+          "28"
+        ],
+        "unit": "",
+        "traps": [],
+        "hints": [
+          "Trace total after each of the three passes, like in the worked example.",
+          "Only the current n gets doubled each time — total carries over unchanged."
+        ],
+        "solution": "Each pass adds the current price doubled: 0 + 4 = 4, then 4 + 10 = 14, then 14 + 14 = 28."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [],
+        "retry": ""
+      },
+      {
+        "kind": "reflect",
+        "heading": "Say it in your own words",
+        "prompt": "Why must the accumulator be created *before* the loop, and what would go wrong if that line were inside the loop body instead?",
+        "model": "A strong answer: the accumulator must exist before the first update, and if `total = 0` were inside the body it would run every pass, wiping out the work of earlier passes — so total would end as just the last item's contribution."
+      },
+      {
+        "kind": "summary",
+        "heading": "What you can now do",
+        "points": [
+          "A for loop runs its body once per item, naming each item (like n) in turn.",
+          "An accumulator is set up before the loop, updated inside it, and holds the result after it.",
+          "Accumulators can build anything: numbers with 0, strings with \"\", lists with []."
+        ]
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "One-time or every time?",
+        "prompt": "In this accumulator loop, some lines run once, some run every pass, and one runs only after the loop. Sort them.",
+        "reveal": "Only the indented body line repeats; the setup, the for header, and the print each run once.",
+        "type": "sort",
+        "buckets": [
+          "Runs once, before the loop",
+          "Runs every pass",
+          "Runs once, after the loop"
+        ],
+        "items": [
+          {
+            "text": "total = 0",
+            "bucket": "Runs once, before the loop"
+          },
+          {
+            "text": "for n in [1, 2, 3]:",
+            "bucket": "Runs once, before the loop"
+          },
+          {
+            "text": "total = total + n",
+            "bucket": "Runs every pass"
+          },
+          {
+            "text": "print(total)",
+            "bucket": "Runs once, after the loop"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A cashier's script starts `total = 0`, then loops over the day's sales list, running `total = total + sale` for each one. After the loop, what does `total` contain?",
+        "options": [
+          "The sum of all the day's sales",
+          "The first sale of the day",
+          "The last sale of the day",
+          "The count of how many sales there were"
+        ],
+        "correctAnswer": "The sum of all the day's sales",
+        "explanation": "Each pass adds one sale to whatever total already held, so after the loop total has accumulated every sale — the running sum."
+      },
+      {
+        "question": "A friend writes a script to build a message from a list of words:\n\n```\ngreeting = \"\"\nfor w in [\"hi\", \" \", \"there\"]:\n    greeting = \"\"\n    greeting = greeting + w\nprint(greeting)\n```\n\nIt prints only \"there\". What's wrong?",
+        "options": [
+          "`greeting = \"\"` is inside the loop body, so it wipes the accumulator every pass",
+          "The list should be written as a string, not a list",
+          "Strings can't be added together with +",
+          "The print statement should be indented inside the loop"
+        ],
+        "correctAnswer": "`greeting = \"\"` is inside the loop body, so it wipes the accumulator every pass",
+        "explanation": "The reset line runs on every pass, erasing earlier work, so only the last word survives. Moving `greeting = \"\"` above the loop fixes it."
+      }
+    ]
+  },
+  "score": 9,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 33677,
+      "approach": "discovery",
+      "blocks": "code > explain > check > activity > explain > worked > problem > check > reflect > summary",
+      "droppedBlocks": 1,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 9,
+      "ms": 2232,
+      "problems": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 9,
+      "passed": true
+    }
+  ]
+}

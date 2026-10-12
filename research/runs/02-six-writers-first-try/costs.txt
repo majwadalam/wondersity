@@ -1,0 +1,6 @@
+openai/gpt-6-luna cost for 3 lessons: $0.0077
+deepseek/deepseek-v4.1-flash cost for 3 lessons: $0.0579
+z-ai/glm-5.3-flash cost for 3 lessons: $0.0202
+anthropic/claude-haiku-5.5 cost for 3 lessons: $0.0254
+openai/gpt-6-sol cost for 3 lessons: $0.1526
+openai/gpt-6.1-sol cost for 3 lessons: $0.1388

@@ -1,0 +1,214 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The Event Horizon: Why a Faster Escape Fails",
+    "objective": "Explain why the event horizon is a boundary beyond which neither light nor a more powerful spacecraft can reach the outside universe.",
+    "estimatedMinutes": 7,
+    "approach": "misconception",
+    "approachReason": "Testing the idea that a stronger engine could beat a black hole replaces an everyday speed-based picture with the correct picture of which future paths are possible.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Not a race against a pull",
+        "body": "The event horizon is the boundary beyond which no signal can reach the distant outside universe. To understand it, we'll consider a simple, non-rotating black hole that is not changing over time.\n\nInside its horizon, every possible future path leads toward a smaller distance from the center—even the path of a light beam aimed outward. Light still travels at the speed of light locally; it is not slowed to a stop by gravity. The problem is not a weak engine or a slow signal: there is no outward escape path available.",
+        "example": "“Outward” describes where you aim the beam. Inside the horizon, that does not mean the beam can move to a larger distance from the center."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "The probe is already inside the boundary, not merely near it.",
+          "Ask whether changing the signal's power changes which future paths are possible."
+        ],
+        "retry": "An engine lets a spacecraft choose among possible paths. It cannot create a path to the outside when none exists—even for light."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "A boundary, not a wall",
+        "body": "The route map changes at the horizon: just outside, an outward-directed light beam can reach a distant observer; inside, it cannot. Exactly on the horizon of our unchanging black hole, outward-directed light remains on the boundary rather than escaping.\n\nThe horizon is not a solid surface that a spacecraft hits. Crossing it need not produce an immediate local warning, especially for a very large black hole. What changes is the spacecraft's ability to send anything back out—not whether its lamp or engine still works locally.",
+        "example": "A one-way boundary need not be a physical barrier: you can cross inward without hitting a wall, yet have no route back out."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Does the event horizon have to be made of material?",
+          "Separate what the astronaut can observe nearby from what a distant observer can receive."
+        ],
+        "retry": "Local operation and distant communication are different tests. A working lamp inside the horizon does not imply that its light can reach an observer outside."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Replace the tempting claim",
+        "prompt": "An engineer says: “Our spacecraft failed because its engine was too weak. Next time, we'll use light instead—it is the fastest thing there is.” In two sentences, explain why this still fails if the signal is sent from inside the horizon.",
+        "model": "Light still travels at its usual speed locally, but inside the horizon even its outward-aimed path leads toward a smaller distance from the center. A stronger engine or a faster signal cannot provide an escape route where no future path reaches the outside universe."
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Trace each beam separately from its emission point.",
+          "One beam begins where an outward escape route exists; the other does not."
+        ],
+        "retry": "The deciding factor is which side of the horizon each emission occurs on, not how close the probes are to one another or how bright their beams are."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "The ultimate escape attempt",
+        "prompt": "A probe has crossed inside a black hole's event horizon. It aims a light beam directly away from the center toward a distant rescue ship. What happens to the beam?",
+        "reveal": "Even light cannot reach the outside from inside the horizon. This is not an engine-strength problem: the available future paths no longer include an escape route.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "It escapes because light is faster than any spacecraft.",
+            "correct": false,
+            "feedback": "Light is the fastest possible signal, but even its path cannot reach the outside from inside the horizon."
+          },
+          {
+            "text": "It escapes if the probe makes the beam bright enough.",
+            "correct": false,
+            "feedback": "Brightness changes how much light is emitted, not whether an escape path exists."
+          },
+          {
+            "text": "It cannot escape, even though it travels at the speed of light locally.",
+            "correct": true,
+            "feedback": "Yes. Its local speed is unchanged, but its future path cannot take it out of the black hole."
+          },
+          {
+            "text": "It strikes the horizon's solid surface and reflects inward.",
+            "correct": false,
+            "feedback": "The horizon is not a material surface. No collision with a wall is needed to prevent escape."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Where can light go next?",
+        "prompt": "Tap Outside, On the horizon, and Inside. Trace their connections and find the only starting region with a route to the distant observer. The map assumes a non-rotating, unchanging black hole.",
+        "reveal": "Outside the horizon, outward light has an escape route. Inside, all future paths lead toward smaller distances from the center; increasing power does not add a missing connection.",
+        "type": "diagram",
+        "nodes": [
+          {
+            "label": "Outside",
+            "detail": "Light aimed directly outward can reach the distant observer. Light aimed inward can cross the horizon."
+          },
+          {
+            "label": "On the horizon",
+            "detail": "Outward-directed light stays on this boundary in our ideal, unchanging black hole. Inward-directed light crosses inside."
+          },
+          {
+            "label": "Inside",
+            "detail": "No future path reaches the distant observer. Even light aimed outward moves toward a smaller distance from the center."
+          },
+          {
+            "label": "Distant observer",
+            "detail": "An observer far outside can receive an outward beam emitted outside the horizon, but not one emitted inside."
+          },
+          {
+            "label": "Smaller distance from center",
+            "detail": "Inside the horizon, moving into the future necessarily takes light and spacecraft toward smaller distances from the center."
+          }
+        ],
+        "edges": [
+          {
+            "from": 0,
+            "to": 3,
+            "label": "Outward light can escape"
+          },
+          {
+            "from": 0,
+            "to": 1,
+            "label": "Inward light reaches the boundary"
+          },
+          {
+            "from": 1,
+            "to": 2,
+            "label": "Inward light crosses inside"
+          },
+          {
+            "from": 2,
+            "to": 4,
+            "label": "Every future path leads inward"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A probe inside the event horizon cannot send a radio message to Earth. Its operator proposes replacing the radio transmitter with a much more powerful laser aimed outward. Would this solve the problem?",
+        "options": [
+          "Yes, because laser light travels faster than radio waves.",
+          "Yes, because enough power lets light cross the horizon outward.",
+          "No, because neither signal has a future path from inside to Earth.",
+          "No, because all transmitters immediately stop working inside the horizon."
+        ],
+        "correctAnswer": "No, because neither signal has a future path from inside to Earth.",
+        "explanation": "Radio waves and laser light both travel at the speed of light in vacuum. Neither can escape from inside the horizon, regardless of transmitter power."
+      },
+      {
+        "question": "An astronaut crosses the horizon of a very large black hole without hitting a surface. Her lamp still illuminates her cabin. Which conclusion is justified?",
+        "options": [
+          "She cannot have crossed the horizon because there was no collision.",
+          "The lamp proves that its light can still reach distant observers.",
+          "The horizon is not a solid wall, and working local equipment does not imply an escape route.",
+          "The horizon only traps spacecraft, while light remains able to escape."
+        ],
+        "correctAnswer": "The horizon is not a solid wall, and working local equipment does not imply an escape route.",
+        "explanation": "Crossing the horizon need not cause an immediate local disruption. Its defining consequence is that signals emitted inside cannot reach the distant outside universe."
+      },
+      {
+        "question": "Two probes near a non-rotating, unchanging black hole emit light directly outward. Probe A emits just outside the horizon; Probe B emits just inside. With no obstacles in the beams' paths, which light can reach a distant observer?",
+        "options": [
+          "Both beams, because they are aimed outward.",
+          "Only A's beam, because its emission point has an outward escape route.",
+          "Only B's beam, because gravity gives it more energy.",
+          "Neither beam, because all light near a black hole is trapped."
+        ],
+        "correctAnswer": "Only A's beam, because its emission point has an outward escape route.",
+        "explanation": "An outward-directed beam emitted outside the horizon can escape. A beam emitted inside cannot, even when it is aimed outward and travels at the speed of light locally."
+      }
+    ]
+  },
+  "score": 8.3,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 65677,
+      "approach": "misconception",
+      "blocks": "activity > explain > check > activity > explain > check > reflect > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8.3,
+      "ms": 11026,
+      "problems": [
+        "The route diagram omits a self-loop for outward light remaining on the horizon, although the node detail and subsequent explanation describe that behavior. The visual connections therefore do not fully represent the lesson's three-way distinction.",
+        "Most tasks repeat the same outward-light scenario. The final question changes the emission location but adds only modest difficulty, limiting evidence that learners can transfer the idea.",
+        "Some hints nearly disclose the answer, particularly the final hint stating that only one beam begins where an escape route exists.",
+        "The lesson correctly states that all future paths inside lead inward, but provides limited support for understanding why spacetime permits no outward future path. The route map mostly restates this claim rather than making the causal geometry more intuitive."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8.3,
+      "passed": true
+    }
+  ]
+}

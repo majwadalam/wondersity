@@ -1,0 +1,215 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The Event Horizon: A Boundary Light Cannot Cross Outward",
+    "objective": "Explain why light moves at its usual speed locally yet cannot escape from inside an event horizon.",
+    "estimatedMinutes": 7,
+    "approach": "misconception",
+    "approachReason": "Testing the claim that gravity stops light reveals that the event horizon limits where a signal can go, not how fast it moves nearby.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Light does not run out of speed",
+        "body": "The event horizon is the boundary beyond which signals cannot reach distant space. It is not a surface that stops light. An astronaut falling through it would still measure a nearby beam moving at the usual speed of light.\n\nThe question is not whether light can move. It is where the beam’s path can lead.",
+        "example": "For a sufficiently large black hole, crossing the horizon need not feel like hitting anything."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "The astronaut measures the beam nearby on both sides of the boundary.",
+          "Ask what crossing changes: the local measurement or the places a signal can eventually reach?"
+        ],
+        "retry": "Imagine drawing two maps of possible destinations: one for signals sent before the astronaut crosses and one for signals sent after. The set of reachable destinations changes at the boundary, even though a nearby speed measurement does not."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "The boundary is about the future",
+        "body": "Outside the horizon, an outward-directed light signal can travel away and reach distant space. At the horizon, outward-directed light can at best stay on the boundary. Inside, even light aimed outward has no future path that crosses the horizon to the outside.\n\nAnything carrying a message must follow a future path. Since even light cannot get out from inside, a rocket or radio signal cannot get out either.",
+        "example": "You can cross the horizon inward, but you cannot send a message back across it outward once you are inside."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Decide where each signal starts relative to the horizon.",
+          "Could adding power create an outward route that light itself cannot follow?"
+        ],
+        "retry": "Compare the two starting points rather than the power of the senders. A signal sent from outside can have distant space as a destination; one sent from inside cannot."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Correct the claim",
+        "prompt": "A friend says, “Gravity slows light to a stop at the event horizon.” In two sentences, correct the claim and explain why a flashlight switched on inside cannot send a signal out.",
+        "model": "Light still moves at its usual speed when measured nearby; the horizon is not a place where it stops. Inside the horizon, even an outward-directed beam has no future path to distant space."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "A flashlight just inside",
+        "prompt": "Someone claims, “Gravity slows light to a stop at the event horizon.” An astronaut who has just crossed inside switches on a flashlight aimed outward. What happens?",
+        "reveal": "Light does not stop or slow down when measured nearby. The surprising part is that moving at light speed still does not give the beam a path to distant space.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "The beam stops moving as soon as the astronaut switches it on.",
+            "correct": false,
+            "feedback": "The astronaut can measure the nearby beam moving at the usual speed of light."
+          },
+          {
+            "text": "The beam moves at the usual speed of light nearby, but never reaches distant space.",
+            "correct": true,
+            "feedback": "Yes. Its speed nearby and its eventual destination are different questions."
+          },
+          {
+            "text": "The beam reaches distant space because light is faster than anything else.",
+            "correct": false,
+            "feedback": "Being the fastest does not help if no future path from inside reaches distant space."
+          },
+          {
+            "text": "The beam crosses out of the horizon but then slows to a stop.",
+            "correct": false,
+            "feedback": "A light signal sent from inside cannot cross the horizon outward."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Predict the routes",
+        "prompt": "Before tapping, predict which starting places let an outward light signal reach distant space: outside, exactly at the horizon, or inside? Then tap each place and trace the arrows to test your prediction.",
+        "reveal": "Only the signal starting outside has a route to distant space. At the horizon, outward light stays on the boundary; inside, its future path leads deeper, not outward across the boundary.",
+        "type": "diagram",
+        "nodes": [
+          {
+            "label": "Outside",
+            "detail": "From here, outward-directed light can travel away and eventually reach distant space."
+          },
+          {
+            "label": "At the horizon",
+            "detail": "Light aimed outward from exactly here can at best remain on the boundary."
+          },
+          {
+            "label": "Inside",
+            "detail": "Light can move outward nearby, but its future path cannot cross the horizon to the outside."
+          },
+          {
+            "label": "Distant space",
+            "detail": "An observer far away can receive a signal that escapes."
+          },
+          {
+            "label": "Deeper inside",
+            "detail": "Future paths from inside lead farther into the black hole."
+          }
+        ],
+        "edges": [
+          {
+            "from": 0,
+            "to": 3,
+            "label": "outward light can reach"
+          },
+          {
+            "from": 0,
+            "to": 1,
+            "label": "infall can cross inward"
+          },
+          {
+            "from": 1,
+            "to": 2,
+            "label": "infall can continue inward"
+          },
+          {
+            "from": 2,
+            "to": 4,
+            "label": "future paths lead deeper"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A falling astronaut measures the speed of a beam passing close by, first just outside the event horizon and then just inside. What happens to the astronaut’s local speed measurements?",
+        "options": [
+          "The measurement is the usual speed of light on both sides.",
+          "The measurement drops to zero exactly at the horizon.",
+          "The measurement is higher inside because the beam is falling.",
+          "The measurement gradually decreases as the astronaut approaches the horizon."
+        ],
+        "correctAnswer": "The measurement is the usual speed of light on both sides.",
+        "explanation": "The astronaut measures light moving at its usual speed nearby on either side of the horizon. Crossing changes which distant places a signal can reach, not its locally measured speed."
+      },
+      {
+        "question": "A probe outside the event horizon sends an outward radio pulse toward a distant spacecraft. A probe inside fires a powerful rocket outward and sends an outward radio pulse too. Which pulse can reach the spacecraft?",
+        "options": [
+          "Both pulses, because radio waves travel at the speed of light.",
+          "Only the pulse sent from outside the horizon.",
+          "Only the pulse sent from inside, because its rocket adds speed.",
+          "Neither pulse, because the horizon blocks signals in both directions."
+        ],
+        "correctAnswer": "Only the pulse sent from outside the horizon.",
+        "explanation": "An outward signal from outside can reach distant space. From inside, no outward signal has a future path across the horizon, and the rocket cannot change that."
+      }
+    ]
+  },
+  "score": 8.5,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 35483,
+      "approach": "misconception",
+      "blocks": "activity > explain > check > activity > explain > check > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 7.5,
+      "ms": 4976,
+      "problems": [
+        "The first check largely repeats the opening flashlight activity rather than testing a new application of the idea.",
+        "The diagram asks learners to trace paths, but its labels and details supply the conclusions, leaving little to work out.",
+        "The retry explanations restate the lesson’s distinction rather than offering a genuinely different way to understand it."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 21208,
+      "approach": "misconception",
+      "blocks": "activity > explain > check > activity > explain > check > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 8.5,
+      "ms": 4802,
+      "problems": [
+        "The route diagram says light at the horizon stays on the boundary, but provides no arrow showing that path, making the central visual test incomplete.",
+        "The two checks are useful but both mainly test the same outside-versus-inside distinction. Neither asks learners to reconcile an outward-pointed flashlight with a future path leading deeper inside."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8.5,
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,273 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The Point of No Return",
+    "objective": "Explain why the event horizon is a one-way boundary: spacetime allows light and spacecraft to cross inward, but no future path from inside reaches the outside.",
+    "estimatedMinutes": 8,
+    "approach": "discovery",
+    "approachReason": "Learners predict an outcome, investigate possible future paths in a diagram, and make a communication decision before the lesson names the spacetime idea behind each result.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "A boundary, not a wall",
+        "body": "The event horizon is a boundary around a black hole, not a solid surface. A probe and an inward-pointing beam can cross it. The puzzle is why crossing back is impossible, even for light aimed outward.",
+        "example": ""
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Which direction would the incoming signal have to cross the boundary?",
+          "The boundary is one-way, not closed to everything."
+        ],
+        "retry": "Picture a doorway that permits entry but not return. The horizon is not a physical door, but this picture helps separate the two directions of crossing."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "What the future allows",
+        "body": "A light cone is a sketch of the directions light can travel into the future from one event. Outside the horizon, that cone includes paths leading away toward distant space. At the horizon, even its most outward-directed path does not get farther away; inside, the whole future light cone leads toward smaller distances from the black hole. This is a feature of spacetime, not a force that slows light: someone beside the beam still measures it moving at light speed.",
+        "example": "The cone describes possible destinations, while a nearby measurement describes speed. Those are different questions."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Separate the measurement made beside the beam from the beam’s eventual destination.",
+          "Look back at what the inside light cone permits, without changing light’s locally measured speed."
+        ],
+        "retry": "A speedometer beside a traveler tells you how fast they move; a map of possible routes tells you where they can end up. A nearby speed measurement cannot, by itself, show that an outward route exists."
+      },
+      {
+        "kind": "activity",
+        "ref": 2
+      },
+      {
+        "kind": "explain",
+        "heading": "Make contact before crossing",
+        "body": "A relay just outside the horizon can receive an outward message sent from outside, even if the sender is very close to crossing. Once the sender is inside, its future light cone contains no route to that relay. A spacecraft has no faster-than-light option hidden in its engines, either: turning up the thrust cannot create an outward future path.",
+        "example": ""
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Check when each action starts relative to the crossing.",
+          "Could either a light signal or a spacecraft take a route that the inside future light cone does not contain?"
+        ],
+        "retry": "Imagine marking the moment of crossing on the crew’s timeline. Messages sent before that mark start outside; messages and engine burns after it start inside. Their starting points determine which future routes are available."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Aim the beam outward",
+        "prompt": "A probe has fallen just inside a black hole’s event horizon. It points a laser directly outward. What can a distant observer eventually receive from that beam?",
+        "reveal": "The observer receives no light from that beam. To see why an outward aim is not enough, investigate which future paths are possible from different starting points.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "The beam, because light is fast enough to escape",
+            "correct": false,
+            "feedback": "Light’s speed does not guarantee that its path can reach distant space."
+          },
+          {
+            "text": "The beam, if the laser is powerful enough",
+            "correct": false,
+            "feedback": "More power makes a brighter beam, not a new path."
+          },
+          {
+            "text": "No light from that beam",
+            "correct": true,
+            "feedback": "Correct. Even the outward-aimed beam cannot reach a distant observer from inside."
+          },
+          {
+            "text": "The beam, after it slows at the horizon",
+            "correct": false,
+            "feedback": "The beam does not escape, but light does not have to slow down locally to be trapped."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Explore the future paths",
+        "prompt": "Before tapping, predict which starting point has a future light path to distant space. Then tap the two starting points and trace their connections. The arrows show possible future paths, not the beam’s speed.",
+        "reveal": "From outside, a future light path can lead to distant space. From inside, even the outwardmost possible light path leads toward a smaller distance from the black hole; the change is in the available future paths, not light’s local speed.",
+        "type": "diagram",
+        "nodes": [
+          {
+            "label": "Start outside",
+            "detail": "Launch an outward beam just outside the horizon."
+          },
+          {
+            "label": "Outside future light cone",
+            "detail": "This represents the directions light can take into the future from that launch."
+          },
+          {
+            "label": "Distant space",
+            "detail": "A possible destination far from the black hole."
+          },
+          {
+            "label": "Start inside",
+            "detail": "Launch an outward beam just inside the horizon."
+          },
+          {
+            "label": "Inside future light cone",
+            "detail": "This represents the directions light can take into the future from this launch."
+          },
+          {
+            "label": "Smaller distance",
+            "detail": "A destination deeper inside the black hole."
+          }
+        ],
+        "edges": [
+          {
+            "from": 0,
+            "to": 1,
+            "label": "possible future directions"
+          },
+          {
+            "from": 1,
+            "to": 2,
+            "label": "outward path"
+          },
+          {
+            "from": 3,
+            "to": 4,
+            "label": "possible future directions"
+          },
+          {
+            "from": 4,
+            "to": 5,
+            "label": "even the outwardmost path"
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Send a message to the relay",
+        "prompt": "You are aboard a probe approaching the event horizon. A relay waits outside, farther from the black hole than you are. You must choose when to send one outward-pointing laser message so the relay can receive it.",
+        "reveal": "Send it while the probe is still outside. After crossing, the relay is no longer on any future path available to light from your probe.",
+        "type": "scenario",
+        "options": [
+          {
+            "text": "Send the outward message just before crossing",
+            "correct": true,
+            "feedback": "The beam starts outside, where an outward path to the relay is still possible."
+          },
+          {
+            "text": "Wait until just after crossing so the relay is nearby",
+            "correct": false,
+            "feedback": "Nearby is not enough: a beam starting inside has no future path out to the relay."
+          },
+          {
+            "text": "Cross first, then make the laser brighter",
+            "correct": false,
+            "feedback": "Brightness changes how much light you send, not where its future paths can lead."
+          },
+          {
+            "text": "Cross first, then fire the engines outward while transmitting",
+            "correct": false,
+            "feedback": "Thrust cannot give either the probe or its message a path back across the horizon."
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A researcher outside the event horizon aims a light signal inward toward a probe that has already crossed. Can the signal cross the horizon to reach the probe?",
+        "options": [
+          "Yes; light can cross the horizon inward.",
+          "Yes, but only if the signal is unusually bright.",
+          "No; the horizon blocks light in both directions.",
+          "No; light stops moving when it reaches the horizon."
+        ],
+        "correctAnswer": "Yes; light can cross the horizon inward.",
+        "explanation": "The horizon is one-way, not a solid barrier. An inward-going signal from outside can cross it."
+      },
+      {
+        "question": "A scientist inside the horizon measures a laser beam passing right beside her. What would explain both her measurement and the beam’s failure to escape?",
+        "options": [
+          "She measures the usual speed of light, but the beam’s future paths lead inward.",
+          "She measures the usual speed of light, so the beam must escape.",
+          "She measures the beam slowing to a stop because it points outward.",
+          "She measures the beam moving faster than light to resist gravity."
+        ],
+        "correctAnswer": "She measures the usual speed of light, but the beam’s future paths lead inward.",
+        "explanation": "Light still moves at its usual speed when measured nearby. Inside the horizon, the future directions available to it all lead deeper in."
+      },
+      {
+        "question": "A crew sends one outward message just before crossing the horizon and another just after. It then fires its engines outward. A relay waits outside. Which outcome is possible?",
+        "options": [
+          "The relay receives the first message, but not the second; the ship cannot return.",
+          "The relay receives both messages, but the ship cannot return.",
+          "The relay receives neither message, because light cannot travel near the horizon.",
+          "The relay receives the second message only after the ship fires its engines."
+        ],
+        "correctAnswer": "The relay receives the first message, but not the second; the ship cannot return.",
+        "explanation": "The first message starts outside and can follow an outward path. After crossing, neither the second message nor the ship has a future path back to the relay."
+      }
+    ]
+  },
+  "score": 8.5,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 38329,
+      "approach": "discovery",
+      "blocks": "activity > explain > check > activity > explain > check > activity > explain > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 6.8,
+      "ms": 7408,
+      "problems": [
+        "The lesson repeatedly states that no path leads outward from inside the horizon, but does little to explain why. Learners may leave knowing the rule without understanding the role of spacetime.",
+        "The diagram activity gives away the paths in its node and edge labels, so tracing them requires little reasoning.",
+        "The retry explanations largely restate the original explanation rather than offering a genuinely different way to understand it. The second hint for the first check nearly supplies the answer.",
+        "The final sorting activity repeats earlier cases more than it extends the learner’s understanding."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 34648,
+      "approach": "discovery",
+      "blocks": "activity > explain > check > activity > explain > check > activity > explain > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 8.5,
+      "ms": 4776,
+      "problems": [
+        "The path diagram compares starts outside and inside but omits a start at the horizon, leaving the boundary case described rather than explored.",
+        "The opening prediction reveals its answer before learners investigate the paths, slightly weakening the discovery sequence."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8.5,
+      "passed": true
+    }
+  ]
+}

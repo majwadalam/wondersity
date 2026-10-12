@@ -1,0 +1,240 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Build a Result with a For Loop",
+    "objective": "Read, predict, debug, and write a for loop that accumulates a total.",
+    "estimatedMinutes": 8,
+    "approach": "worked_example",
+    "approachReason": "A fully traced total-building loop provides a model, then progressively lighter scaffolding leads to writing a new loop independently.",
+    "blocks": [
+      {
+        "kind": "worked",
+        "heading": "One total, three updates",
+        "problem": "A shop sells items costing 2, 4, and 3 dollars. Read this loop and follow how it builds the total:\n\n```python\ntotal = 0\nfor price in [2, 4, 3]:\n    total = total + price\nprint(total)\n```",
+        "steps": [
+          {
+            "title": "Start",
+            "text": "Set total to 0 before the loop.",
+            "why": "No prices have been added yet."
+          },
+          {
+            "title": "First item",
+            "text": "price is 2. Calculate 0 + 2 and store 2 in total.",
+            "why": "The right side is calculated before the variable on the left is updated."
+          },
+          {
+            "title": "Second item",
+            "text": "price is 4. Calculate 2 + 4 and store 6 in total.",
+            "why": "The running total carries over from the first iteration."
+          },
+          {
+            "title": "Third item and finish",
+            "text": "price is 3. Calculate 6 + 3 and store 9 in total. Then print 9.",
+            "why": "The unindented print runs after the loop has finished."
+          }
+        ],
+        "answer": "The output is 9. Each update uses the total left by the previous update."
+      },
+      {
+        "kind": "explain",
+        "heading": "Two variables, two jobs",
+        "body": "In `for price in [2, 4, 3]:`, Python gives `price` each value in the list, in order, and runs the indented body once for each value. The loop variable `price` holds the current item; `total` holds the result built so far.\n\nA variable that builds up a result is called an **accumulator**. Set its starting value before the loop, then update it inside the loop. For a sum with nothing already included, start at `0`.",
+        "example": "`total = total + price` means “calculate the old total plus this price, then replace total with that result.”"
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Write down the value of total before the loop starts.",
+          "There is only one item, so the update runs once."
+        ],
+        "retry": "The starting value is already part of the result. The loop adds to it; it does not automatically replace it."
+      },
+      {
+        "kind": "code",
+        "heading": "Your turn to trace",
+        "prompt": "A player earns points in three rounds. What does this code print?",
+        "language": "python",
+        "code": "total = 0\nfor points in [4, 1, 3]:\n    total = total + points\nprint(total)",
+        "explanation": "The running totals are 4, then 5, then 8. The loop variable changes each round, but the accumulator keeps the points already earned.",
+        "hints": [
+          "Keep a running total on paper after each item."
+        ],
+        "mode": "predict",
+        "options": [
+          {
+            "text": "8",
+            "correct": true,
+            "feedback": "Correct: 0 + 4 + 1 + 3 = 8."
+          },
+          {
+            "text": "3",
+            "correct": false,
+            "feedback": "3 is the last value of points, not the accumulated total."
+          },
+          {
+            "text": "0",
+            "correct": false,
+            "feedback": "0 is only the starting value. Each iteration updates it."
+          },
+          {
+            "text": "4\n5\n8",
+            "correct": false,
+            "feedback": "Those are the running totals, but print is outside the loop, so only the final total is printed."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Indentation decides what repeats",
+        "body": "The accumulator's starting assignment belongs before the loop, so it happens once. The update belongs inside the loop, so it happens for every item.\n\nTo display just the finished result, put `print(total)` after the loop without indentation. Indenting that print would display a running total after every update instead.",
+        "example": "Think: start once → update repeatedly → use the finished result once."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Which line should run once for every price?",
+          "Which line should run only when there are no prices left?"
+        ],
+        "retry": "Indented statements belong to the loop body. Move a statement out of that body when it should happen only after all items have been processed."
+      },
+      {
+        "kind": "code",
+        "heading": "Why did the earlier points disappear?",
+        "prompt": "This should print the sum of all three scores, but it prints 1. Choose the fix that preserves every score.",
+        "language": "python",
+        "code": "for score in [2, 5, 1]:\n    total = 0\n    total = total + score\nprint(total)",
+        "explanation": "Move `total = 0` before the loop. Inside the loop, it erases the accumulated result on every iteration; outside, it initializes the result just once.",
+        "hints": [
+          "Look for a line that throws away the previous iteration's work."
+        ],
+        "mode": "bug",
+        "options": [
+          {
+            "text": "Move total = 0 before the for line, without indentation.",
+            "correct": true,
+            "feedback": "Correct. Start once, then preserve and update the total across all three iterations."
+          },
+          {
+            "text": "Indent print(total) inside the loop.",
+            "correct": false,
+            "feedback": "That prints 2, 5, and 1 separately, but the reset still prevents accumulation."
+          },
+          {
+            "text": "Replace total = total + score with total = score.",
+            "correct": false,
+            "feedback": "That stores only the current score, not the sum."
+          },
+          {
+            "text": "Replace total = 0 with total = 1, keeping it inside the loop.",
+            "correct": false,
+            "feedback": "That still resets the total every time, just to a different starting value."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "The delivery fee must be included exactly once.",
+          "Check both where total starts and where print runs."
+        ],
+        "retry": "A fee charged once belongs in the starting value. Add each item price to that value, then print after all updates."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Write a loop without the scaffold",
+        "prompt": "You already have 2 points. Three rounds earn you 3, 4, and 1 more points.\n\nWrite Python code that starts with the existing points, uses a for loop to add the round scores, and prints only the final total. Before comparing with the model, predict your output.",
+        "model": "One solution is:\n\n```python\ntotal = 2\nfor score in [3, 4, 1]:\n    total = total + score\nprint(total)\n```\n\nThe output is `10`. Different variable names are fine: check that you initialize once, add each score without resetting, and print outside the loop."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Put the total-building steps in order",
+        "prompt": "Arrange the steps for adding a list of prices and displaying one final total.",
+        "reveal": "Initialize before the loop, update inside it, and display the result after it. This arrangement lets each iteration build on the last.",
+        "type": "order",
+        "steps": [
+          "Set total to 0 before the loop.",
+          "Begin a for loop that takes each price from the list.",
+          "Inside the loop, add the current price to total.",
+          "After the loop finishes, print total."
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "You have 3 dollars saved and add one payment of 2 dollars. What does this code print?\n\n```python\ntotal = 3\nfor payment in [2]:\n    total = total + payment\nprint(total)\n```",
+        "options": [
+          "5",
+          "2",
+          "3",
+          "0"
+        ],
+        "correctAnswer": "5",
+        "explanation": "The accumulator starts at 3, and the single iteration adds 2. The final total is 5."
+      },
+      {
+        "question": "A receipt should show just one final total. This code currently prints a running total after each price. What change should you make?\n\n```python\ntotal = 0\nfor price in [2, 4, 3]:\n    total = total + price\n    print(total)\n```",
+        "options": [
+          "Remove the indentation from print(total), leaving it after the update line.",
+          "Remove the indentation from total = total + price.",
+          "Move total = 0 inside the loop.",
+          "Replace print(total) with print(price), keeping it indented."
+        ],
+        "correctAnswer": "Remove the indentation from print(total), leaving it after the update line.",
+        "explanation": "An unindented print after the loop runs once, when all prices have been added. The update must stay inside the loop."
+      },
+      {
+        "question": "An order has a delivery fee of 5 dollars and item prices of 6, 2, and 4 dollars. Which program prints the complete bill once, including the fee exactly once?",
+        "options": [
+          "total = 5\nfor price in [6, 2, 4]:\n    total = total + price\nprint(total)",
+          "total = 0\nfor price in [6, 2, 4]:\n    total = total + price\nprint(total)",
+          "for price in [6, 2, 4]:\n    total = 5\n    total = total + price\nprint(total)",
+          "total = 5\nfor price in [6, 2, 4]:\n    total = total + price\n    print(total)"
+        ],
+        "correctAnswer": "total = 5\nfor price in [6, 2, 4]:\n    total = total + price\nprint(total)",
+        "explanation": "Starting at 5 includes the fee once, and each update adds an item price without resetting. The unindented print displays the final bill of 17 once."
+      }
+    ]
+  },
+  "score": 8.5,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 57970,
+      "approach": "worked_example",
+      "blocks": "worked > explain > check > code > activity > explain > check > code > check > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8.5,
+      "ms": 5975,
+      "problems": [
+        "The ordering activity offers limited challenge: its steps explicitly say 'before the loop,' 'inside the loop,' and 'after the loop,' so learners can arrange them without understanding accumulation.",
+        "Most retry explanations restate the same procedural rule rather than offering a genuinely different representation of why accumulation works.",
+        "The final writing task relies on self-comparison with a model; there is no execution or targeted feedback to verify that learners can independently write a working loop."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8.5,
+      "passed": true
+    }
+  ]
+}

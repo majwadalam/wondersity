@@ -1,0 +1,5 @@
+■ conceptual science: Black holes (45s, score 8)
+  approach: misconception (Testing the claim that a black hole slows light to a stop reveals the more useful idea: the horizon marks where outward escape paths end.)
+  blocks:   activity:predict > explain > check > activity:simulation > explain > check > activity:diagram > check > reflect
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=8, lesson.select=8

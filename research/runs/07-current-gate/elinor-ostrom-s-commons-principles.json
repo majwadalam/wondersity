@@ -1,0 +1,189 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Who May Pick—and From Which Trees?",
+    "objective": "Explain how clear boundaries around both eligible users and the resource reduce uncertainty and help a commons endure.",
+    "estimatedMinutes": 7,
+    "approach": "scenario",
+    "approachReason": "The learner helps a fictional neighborhood resolve one orchard dispute by specifying who may harvest and which trees belong to the commons.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "A commons needs two kinds of boundary",
+        "body": "Ostrom's principle of clearly defined boundaries asks two questions: who is entitled to use the commons, and what resource is included? A user boundary identifies eligible users; a resource boundary identifies the shared resource.\n\nFor Willow Lane, the neighbors choose the 12 households on a current membership register as eligible harvesters. They identify apples from the ten trees labeled A1–A10 inside the fence as the shared resource. Now “our orchard” has a meaning that users and visitors can understand.",
+        "example": "One boundary answers “Who may pick?” The other answers “Which apples may they pick?” Neither answer replaces the other."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "The tree labels already answer one of the two boundary questions.",
+          "Imagine a visitor asking whether they are entitled to harvest."
+        ],
+        "retry": "A map can identify the resource without identifying its users. The orchard needs both answers."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "Why clarity helps the orchard last",
+        "body": "Before the agreement, a visitor might think an open path means free apples, while a neighbor might think only the people who planted the trees may harvest. Clear boundaries reduce these conflicting expectations and identify the group whose shared resource needs care.\n\nIf people expect unidentified users to take the benefits, they may be less willing to contribute effort. Knowing who shares the resource can support continued cooperation—but boundaries alone do not guarantee that the orchard will last. A clear boundary also need not mean closing every gate: permission to walk through can differ from permission to harvest.",
+        "example": "The fence helps locate the trees. It does not, by itself, explain who may take their apples."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Separate walking through the orchard from harvesting its apples.",
+          "Look for a response that clarifies both boundaries without promising that clarity solves every problem."
+        ],
+        "retry": "Different uses can have different permissions. Public access to a footpath does not automatically create a right to harvest a shared crop."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Write the orchard's welcome sign",
+        "prompt": "The neighbors ask you to write a short sign. State who may harvest, identify the shared apples, and make clear that the path remains public. Then add one sentence explaining to the neighbors why this clarity can help the orchard endure.",
+        "model": "Model answer: “The footpath is open to everyone. Apple harvesting from the ten labeled trees A1–A10 inside the fence is for the 12 households on the current Willow Lane membership register; trees beyond the fence are not included.” This reduces uncertainty about who shares which resource, making cooperation easier without guaranteeing long-term success."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Settle the harvest disagreement",
+        "prompt": "You help organize Willow Lane's shared orchard, but the neighbors have never agreed who may harvest or which trees are included. A visitor says the public footpath makes the apples public, while a neighbor claims the trees beyond the fence are shared too. Which proposal best resolves both uncertainties?",
+        "reveal": "The strongest proposal identifies both eligible harvesters and the trees included in the commons. A fence or a friendly slogan cannot answer both questions on its own.",
+        "type": "scenario",
+        "options": [
+          {
+            "text": "Put up a sign saying “Please respect our orchard.”",
+            "correct": false,
+            "feedback": "Visitors still have to guess what respect means, who may harvest, and which trees are shared."
+          },
+          {
+            "text": "Label the shared trees, but leave harvesting open to interpretation.",
+            "correct": false,
+            "feedback": "Tree labels clarify the resource, but the disagreement over eligible harvesters remains."
+          },
+          {
+            "text": "Name the eligible households and label the trees their harvesting rights cover.",
+            "correct": true,
+            "feedback": "You resolve both uncertainties: who may harvest and where that right applies."
+          },
+          {
+            "text": "List eligible households, but describe the resource only as “the nearby apples.”",
+            "correct": false,
+            "feedback": "The list clarifies users, but “nearby” still leaves the trees beyond the fence in dispute."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Separate people from the resource",
+        "prompt": "Sort each item under the agreement. “Neither” means it is neither an eligible harvesting household nor part of the shared apple resource—not that it is forbidden to be there.",
+        "reveal": "The user boundary covers eligible households; the resource boundary covers apples from specified trees. Walkers and neighboring trees do not become part of the harvesting commons merely by being nearby.",
+        "type": "sort",
+        "buckets": [
+          "Eligible users",
+          "Shared resource",
+          "Neither"
+        ],
+        "items": [
+          {
+            "text": "A Willow Lane household listed on the current register",
+            "bucket": "Eligible users"
+          },
+          {
+            "text": "Another of the 12 registered Willow Lane households",
+            "bucket": "Eligible users"
+          },
+          {
+            "text": "Apples growing on labeled tree A3",
+            "bucket": "Shared resource"
+          },
+          {
+            "text": "Apples growing on labeled tree A10",
+            "bucket": "Shared resource"
+          },
+          {
+            "text": "A visiting household using the public footpath",
+            "bucket": "Neither"
+          },
+          {
+            "text": "Apples on a tree in the orchard beyond the fence",
+            "bucket": "Neither"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "The neighbors label trees A1–A10 and publish a map showing them. A visitor still asks, “May my household pick these apples?” What is missing?",
+        "options": [
+          "A user boundary stating which households may harvest.",
+          "A taller fence around the labeled trees.",
+          "A second map showing the same ten trees.",
+          "A statement that everyone should be considerate."
+        ],
+        "correctAnswer": "A user boundary stating which households may harvest.",
+        "explanation": "The labels and map identify the resource, but they do not identify eligible users. A clear user boundary answers the visitor's question."
+      },
+      {
+        "question": "A neighbor says, “Keeping the path public means anyone can take the apples. We must close the path to make the orchard last.” Which response best applies the boundary principle?",
+        "options": [
+          "Agree: a commons can endure only if nonmembers cannot enter it.",
+          "Keep the path public and let every walker harvest, regardless of the membership agreement.",
+          "Keep the path public, clarify that registered households may harvest from A1–A10, and recognize that boundaries alone do not ensure success.",
+          "Close the path and remove the membership register because the fence now identifies eligible users."
+        ],
+        "correctAnswer": "Keep the path public, clarify that registered households may harvest from A1–A10, and recognize that boundaries alone do not ensure success.",
+        "explanation": "Walking access and harvesting rights can be different. Specifying users and the resource reduces uncertainty, but does not by itself guarantee a lasting commons."
+      }
+    ]
+  },
+  "score": 8.5,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 62837,
+      "approach": "scenario",
+      "blocks": "activity > explain > check > activity > explain > check > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.verify_failed",
+      "iteration": 1,
+      "ms": 1291,
+      "error": "OpenRouter 402: {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhausted\",\"limit_source\":\"openrouter_in_flight_budget\",\"remedy_hint\":\"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.\",\"headers\":{\"Retry-After\":\"120\"},\"provider_name\":null}},\"user_id\":\"user_[redacted]\"}"
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8.5,
+      "ms": 7962,
+      "problems": [
+        "Most incorrect options are conspicuously incomplete or extreme, so learners can often identify the answer without deeply understanding the principle.",
+        "The sorting activity includes near-duplicate households and apple examples, adding repetition rather than meaningful difficulty.",
+        "The lesson explains reduced uncertainty well, but the connection to durability remains somewhat abstract: learners never examine a concrete consequence for maintenance effort or resource depletion.",
+        "The retry explanations mostly restate the original distinction rather than offering a genuinely different explanatory approach."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8.5,
+      "passed": true,
+      "sources": 0
+    }
+  ]
+}

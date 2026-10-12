@@ -1,0 +1,217 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The Prisoner's Dilemma",
+    "objective": "See why a dominant individual choice can lead both players to a worse outcome than mutual cooperation.",
+    "estimatedMinutes": 8,
+    "approach": "misconception",
+    "approachReason": "The lesson tests the belief that individually sensible choices must produce the best shared result, then replaces it with the precise incentives and outcomes that define a prisoner's dilemma.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "Does the best choice for each person mean the best result for both?",
+        "body": "Two suspects are questioned separately and cannot coordinate. Each can confess or stay quiet: if both stay quiet, each gets 1 year; if one confesses and the other stays quiet, the confessor gets 0 years and the quiet suspect gets 5; if both confess, each gets 3 years.\nMake a prediction: if each suspect chooses what seems safest for themselves, will they end up with the best outcome for both?",
+        "example": "Fewer years is a better outcome for a suspect."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "worked",
+        "heading": "Build the payoff table and mark the incentives",
+        "problem": "Complete the two-by-two table by pairing the suspects' choices, then compare your own sentence for each possible choice by the other suspect. (Payoffs are years for Suspect A, Suspect B; fewer is better.)",
+        "steps": [
+          {
+            "title": "Fill the both-quiet cell",
+            "text": "If both stay quiet, each gets 1 year: (1, 1).",
+            "why": "This is the outcome when both choose the cooperative action."
+          },
+          {
+            "title": "Fill the one-confesses cells",
+            "text": "If A confesses alone, the outcome is (0, 5); if B confesses alone, it is (5, 0).",
+            "why": "The person who confesses alone gets 0 years; the quiet person gets 5."
+          },
+          {
+            "title": "Fill the both-confess cell",
+            "text": "If both confess, each gets 3 years: (3, 3).",
+            "why": "These are the outcomes when both choose to defect."
+          },
+          {
+            "title": "Mark each suspect's best response",
+            "text": "If the other stays quiet, confessing gives you 0 instead of 1 year. If the other confesses, confessing gives you 3 instead of 5 years.",
+            "why": "Confessing is the better response in both cases, for either suspect."
+          }
+        ],
+        "answer": "The completed table is: both stay quiet (1, 1); A confesses and B stays quiet (0, 5); A stays quiet and B confesses (5, 0); both confess (3, 3). For either suspect, confessing is the best response whether the other stays quiet or confesses."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Compare your sentence if you confess with your sentence if you stay quiet, first when the other suspect stays quiet.",
+          "Repeat the comparison when the other suspect confesses."
+        ],
+        "retry": "Try comparing the choices one situation at a time: hold the other suspect's choice fixed, then see which option gives you fewer years."
+      },
+      {
+        "kind": "explain",
+        "heading": "The dilemma is in the incentives",
+        "body": "A dominant strategy is a choice that gives a player a better outcome no matter what the other player chooses. Here, confessing is dominant for each suspect, so both confessing is the outcome their individual incentives point toward.\nBut each suspect would get a better outcome if both stayed quiet: 1 year each rather than 3. From mutual quiet, either suspect could improve their own sentence by confessing alone (0 rather than 1); from mutual confession, confessing is still better for each than switching to quiet (3 rather than 5).",
+        "example": "In game theory, the suspects' years in prison are costs, so a lower number is better."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Check whether undercutting is better for a shop in both cases: when the rival keeps a fair price and when the rival undercuts.",
+          "Then compare each shop's payoff under both fair prices with its payoff under both undercutting."
+        ],
+        "retry": "To qualify, each player's defection must be better against either action by the other player, while both cooperating must give each a better outcome than both defecting."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Find the better response",
+        "prompt": "Sort each sentence outcome by whether it is the better choice for you, holding the other suspect's choice fixed. Use fewer years as the better outcome.",
+        "reveal": "Confessing is your best response whether the other suspect stays quiet or confesses. The same comparison works for the other suspect, so both have confess as a dominant strategy.",
+        "type": "sort",
+        "buckets": [
+          "Best response",
+          "Not the best response"
+        ],
+        "items": [
+          {
+            "text": "The other stays quiet; you confess and get 0 years.",
+            "bucket": "Best response"
+          },
+          {
+            "text": "The other stays quiet; you stay quiet and get 1 year.",
+            "bucket": "Not the best response"
+          },
+          {
+            "text": "The other confesses; you confess and get 3 years.",
+            "bucket": "Best response"
+          },
+          {
+            "text": "The other confesses; you stay quiet and get 5 years.",
+            "bucket": "Not the best response"
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Fair prices or undercutting?",
+        "prompt": "You run one of two neighboring shops, and both shops choose to keep a fair price or undercut. The payoffs below are points for each shop, with more points better: both fair prices give each shop 3; if one undercuts while the other stays fair, the undercutter gets 4 and the fair-price shop gets 1; if both undercut, each gets 0. Does this have the defining incentive pattern of a prisoner's dilemma?",
+        "reveal": "No. If the other shop keeps a fair price, undercutting is better (4 rather than 3); but if the other shop undercuts, keeping a fair price is better (1 rather than 0). Undercutting is not a dominant strategy, so this example does not have the defining prisoner's dilemma pattern.",
+        "type": "scenario",
+        "options": [
+          {
+            "text": "Yes: both shops have a dominant strategy to undercut, even though both fair prices are better.",
+            "correct": false,
+            "feedback": "Undercutting is not better when the other shop undercuts; keeping a fair price gives 1 point rather than 0."
+          },
+          {
+            "text": "No: undercutting is better if the rival keeps a fair price, but keeping a fair price is better if the rival undercuts.",
+            "correct": true,
+            "feedback": "Correct. The best choice changes with the rival's action, so there is no dominant strategy to undercut."
+          },
+          {
+            "text": "Yes: any situation where both players can choose to cooperate or defect is a prisoner's dilemma.",
+            "correct": false,
+            "feedback": "The labels alone are not enough; the payoff comparisons must give each player a dominant strategy to defect."
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "You and a project partner choose whether to share a useful discovery before a deadline. If both share, each gets a score of 2; if you share and your partner withholds, you get 0 while your partner gets 4; if you withhold while your partner shares, you get 4 while your partner gets 0; if both withhold, each gets 1. Which choice is dominant for you?",
+        "options": [
+          "Share, because it gives you the higher score whether your partner shares or withholds",
+          "Withhold, because it gives you the higher score whether your partner shares or withholds",
+          "Share only if your partner shares first",
+          "Neither choice is dominant because the scores are equal in every outcome"
+        ],
+        "correctAnswer": "Withhold, because it gives you the higher score whether your partner shares or withholds",
+        "explanation": "If your partner shares, withholding gives you 4 rather than 2; if your partner withholds, withholding gives you 1 rather than 0. Withholding is therefore your dominant choice."
+      },
+      {
+        "question": "Two delivery firms choose whether to cooperate on a shared route or act independently. Each firm would earn 5 points if both cooperate and 2 if both act independently; a firm that acts independently while the other cooperates earns 7, while the cooperating firm earns 0. Which conclusion best fits these incentives?",
+        "options": [
+          "It is a prisoner's dilemma: acting independently is dominant for each firm, yet mutual cooperation gives each more than mutual independence.",
+          "It is not a prisoner's dilemma: mutual independence gives each firm a better result than mutual cooperation.",
+          "It is not a prisoner's dilemma: cooperation is dominant because it gives 5 points when both cooperate.",
+          "It is a prisoner's dilemma only if the firms can communicate before choosing."
+        ],
+        "correctAnswer": "It is a prisoner's dilemma: acting independently is dominant for each firm, yet mutual cooperation gives each more than mutual independence.",
+        "explanation": "Acting independently gives a firm 7 rather than 5 when the other cooperates, and 2 rather than 0 when the other acts independently, so it is dominant. Yet both cooperating gives each 5 rather than the 2 each gets when both act independently."
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 34321,
+      "approach": "misconception",
+      "blocks": "explain > activity > explain > check > worked > check > problem > explain",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 7,
+      "ms": 10434,
+      "problems": [
+        "The opening activity, first explanation, first check, and first two worked steps repeat essentially the same comparison. This slows the progression without adding much conceptual depth.",
+        "Interactivity is limited to multiple-choice selection and a simple arithmetic calculation. Learners never construct the outcome table or independently justify both players' choices.",
+        "The retry explanations mostly restate the correct answer rather than offer a genuinely different explanation.",
+        "The final definition is somewhat broad: individually protective choices producing a worse group outcome alone do not distinguish the prisoner's dilemma from other social dilemmas. The defining dominant-strategy incentive and the fact that mutual cooperation is better for each player should remain explicit.",
+        "The worked example's first 'why' refers to avoiding being the only quiet suspect, even though that step assumes the other suspect stays quiet. The relevant reason in that case is gaining 0 rather than 1 year.",
+        "The final calculation tests addition and subtraction more than strategic understanding, so the checks do not consistently become conceptually harder."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 36183,
+      "approach": "misconception",
+      "blocks": "explain > activity > worked > check > explain > activity > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 8,
+      "ms": 7276,
+      "problems": [
+        "The worked example promises a two-by-two payoff table but presents only a list of outcomes. An actual matrix would make the paired choices and best responses easier to inspect.",
+        "The opening prediction is not captured or explicitly revisited, weakening the intended misconception-based arc.",
+        "The first sorting activity and the worked example repeat essentially the same comparisons, adding limited challenge.",
+        "The retry guidance mostly restates the original comparison method rather than offering a genuinely different explanation."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true
+    }
+  ]
+}

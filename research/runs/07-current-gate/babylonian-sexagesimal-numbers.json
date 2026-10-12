@@ -1,0 +1,220 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Place value in base 60",
+    "objective": "Read whole numbers written in base 60, convert them to base 10, and write base-10 whole numbers as base-60 digit groups.",
+    "estimatedMinutes": 7,
+    "approach": "worked_example",
+    "approachReason": "Fully worked conversions establish the method, then progressively reduced scaffolding lets the learner read and write base-60 numbers independently.",
+    "blocks": [
+      {
+        "kind": "worked",
+        "heading": "Two groups, one number",
+        "problem": "Imagine a storekeeper recording a quantity as [2, 15] in base 60. What quantity is that in base 10?\n\nWe will use a modern bracket notation: commas separate base-60 digits, each ranging from 0 to 59. These brackets are not Babylonian symbols.",
+        "steps": [
+          {
+            "title": "Read the rightmost group",
+            "text": "The 15 represents 15 ones.",
+            "why": "The rightmost whole-number position has value 1."
+          },
+          {
+            "title": "Read the next group",
+            "text": "The 2 represents 2 × 60 = 120.",
+            "why": "Moving one position left multiplies the place value by 60."
+          },
+          {
+            "title": "Combine the values",
+            "text": "120 + 15 = 135.",
+            "why": "Add the contribution from each position."
+          }
+        ],
+        "answer": "[2, 15] in base 60 represents 135 in base 10—not 215."
+      },
+      {
+        "kind": "explain",
+        "heading": "Each step left is worth 60 times more",
+        "body": "In base 10, whole-number places run from ones to tens to hundreds. In base 60, they run from ones to sixties to 3,600s, because 60 × 60 = 3,600.\n\nRead our bracket notation from right to left to assign those weights: [a, b, c] means a × 3,600 + b × 60 + c. Each group is one base-60 digit, even when we write it using two decimal characters, such as 15.",
+        "example": "In this modern notation, a zero keeps a position open: [1, 0] means 1 × 60 + 0 = 60, whereas [1] means 1."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Which group counts ones, and which counts sixties?",
+          "Multiply the left group by 60 before adding the right group."
+        ],
+        "retry": "Think of [3, 4] as three bundles of 60 plus four loose items. The comma separates positions; it does not join the groups into 34."
+      },
+      {
+        "kind": "problem",
+        "heading": "Now read three positions",
+        "prompt": "A fictional inventory entry is [1, 2, 3] in base 60. Convert it to base 10.\n\nFrom left to right, the place values are 3,600, 60, and 1.",
+        "answers": [
+          "3723",
+          "3,723"
+        ],
+        "unit": "",
+        "traps": [
+          {
+            "answer": "123",
+            "feedback": "That joins the groups as decimal characters instead of giving each group its base-60 place value."
+          },
+          {
+            "answer": "183",
+            "feedback": "The leftmost group is worth 3,600, not 60. Each additional position is another factor of 60."
+          }
+        ],
+        "hints": [
+          "Find each group's contribution separately.",
+          "Start with 3,600, then add two sixties and three ones."
+        ],
+        "solution": "The three contributions are 1 × 3,600 = 3,600; 2 × 60 = 120; and 3 × 1 = 3. Their sum is 3,600 + 120 + 3 = 3,723."
+      },
+      {
+        "kind": "worked",
+        "heading": "Run the method backward",
+        "problem": "The storekeeper now has 145 items, counted in base 10. Write that quantity in base 60.",
+        "steps": [
+          {
+            "title": "Choose the largest place needed",
+            "text": "145 is less than 3,600 but at least 60, so start with the sixties place.",
+            "why": "Use the largest place value that fits into the number. A number of at least 3,600 would start with the 3,600s place or a larger place."
+          },
+          {
+            "title": "Count whole sixties",
+            "text": "2 × 60 = 120, while 3 × 60 = 180 is too much.",
+            "why": "The sixties digit is 2: use as many whole sixties as fit."
+          },
+          {
+            "title": "Keep the remainder",
+            "text": "145 − 120 = 25.",
+            "why": "The leftover amount belongs in the ones place. It is below 60, so it fits in one digit."
+          },
+          {
+            "title": "Write the groups",
+            "text": "Write [2, 25].",
+            "why": "For larger numbers, repeat this process at each smaller place, keeping a zero group if a position contributes nothing."
+          }
+        ],
+        "answer": "145 in base 10 is [2, 25] in base 60. Check: 2 × 60 + 25 = 120 + 25 = 145."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Every base-60 digit must be between 0 and 59.",
+          "Split 65 ones into one group of 60 and five remaining ones."
+        ],
+        "retry": "A group cannot contain 60 or more in our standard base-60 notation. Exchange 60 ones for one extra sixty, leaving the total unchanged."
+      },
+      {
+        "kind": "problem",
+        "heading": "Write the final inventory entry",
+        "prompt": "An inventory contains 7,388 items in base 10. Write this number in base 60 using our bracket notation, such as [a, b, c].\n\nUse the place values 3,600, 60, and 1. Every digit must be between 0 and 59.",
+        "answers": [
+          "[2, 3, 8]",
+          "[2,3,8]",
+          "2,3,8"
+        ],
+        "unit": "",
+        "traps": [
+          {
+            "answer": "[2, 188]",
+            "feedback": "188 does not fit in one base-60 digit. Also, with only two groups, the left group would count sixties rather than 3,600s."
+          },
+          {
+            "answer": "[123, 8]",
+            "feedback": "123 sixties plus 8 ones gives the right total, but 123 exceeds the digit limit. Exchange 120 of those sixties for two groups of 3,600."
+          }
+        ],
+        "hints": [
+          "First find how many whole groups of 3,600 fit, then subtract their contribution.",
+          "Divide the remainder into whole groups of 60 and leftover ones."
+        ],
+        "solution": "Two groups of 3,600 contribute 2 × 3,600 = 7,200, leaving 7,388 − 7,200 = 188. Three groups of 60 contribute 3 × 60 = 180, leaving 188 − 180 = 8. Therefore the answer is [2, 3, 8]. Check: 7,200 + 180 + 8 = 7,388."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Convert 3,674 to base 60",
+        "prompt": "Put these steps in order to convert a fictional stock count of 3,674 into base 60. Work from the largest place value down to the ones.",
+        "reveal": "3,674 becomes [1, 1, 14]: 3,600 + 60 + 14 = 3,674. Writing base 60 means separating a total into contributions from successive place values.",
+        "type": "order",
+        "steps": [
+          "Start with the 3,600s place: one group fits, since 1 × 3,600 = 3,600 and 2 × 3,600 = 7,200 is too much.",
+          "Subtract that contribution: 3,674 − 3,600 = 74.",
+          "Use one sixty from the remainder: 74 − 60 = 14.",
+          "Write the 3,600s, sixties, and ones digits in order: [1, 1, 14]."
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A storekeeper writes [3, 4] in our base-60 notation. How many items does this represent in base 10?",
+        "options": [
+          "34 items",
+          "184 items",
+          "43 items",
+          "244 items"
+        ],
+        "correctAnswer": "184 items",
+        "explanation": "The left group counts sixties and the right group counts ones: 3 × 60 + 4 = 180 + 4 = 184."
+      },
+      {
+        "question": "A trainee records 245 items as [3, 65], meaning three sixties plus 65 ones. The total is right, but one digit is too large. Which standard base-60 entry preserves the total?",
+        "options": [
+          "[3, 5]",
+          "[4, 5]",
+          "[4, 65]",
+          "[2, 45]"
+        ],
+        "correctAnswer": "[4, 5]",
+        "explanation": "Exchange 60 of the 65 ones for one extra sixty, producing four sixties and five ones. Check: 4 × 60 + 5 = 240 + 5 = 245."
+      }
+    ]
+  },
+  "score": 8.5,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 63382,
+      "approach": "worked_example",
+      "blocks": "worked > explain > check > problem > worked > activity > check > problem",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.verify_failed",
+      "iteration": 1,
+      "ms": 1262,
+      "error": "OpenRouter 402: {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhausted\",\"limit_source\":\"openrouter_in_flight_budget\",\"remedy_hint\":\"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.\",\"headers\":{\"Retry-After\":\"120\"},\"provider_name\":null}},\"user_id\":\"user_[redacted]\"}"
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8.5,
+      "ms": 6982,
+      "problems": [
+        "The ordering activity supplies all calculations and the final answer, so learners can complete it through procedural sequencing without independently performing a conversion.",
+        "The second hint for the digit-normalization check largely gives away the required exchange, reducing the diagnostic value of a retry.",
+        "Zero placeholders are explained but never practiced, leaving an important place-value misconception untested."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8.5,
+      "passed": true,
+      "sources": 0
+    }
+  ]
+}

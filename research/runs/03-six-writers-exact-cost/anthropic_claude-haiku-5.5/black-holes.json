@@ -1,0 +1,244 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The Event Horizon",
+    "objective": "Understand why nothing, not even light, can escape from inside the event horizon.",
+    "estimatedMinutes": 8,
+    "approach": "discovery",
+    "approachReason": "The learner squeezes a mass and watches escape speed change before the horizon is named, so the key idea comes from their own evidence.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Escape speed",
+        "body": "To leave a planet or star for good, a rocket must reach the escape speed, the speed at which it coasts away and never falls back. The more mass an object has, and the closer you are to its centre, the higher that speed.\n\nEscape speed is v = √(2GM/r), where M is the object's mass, r is your distance from its centre, and G is a fixed constant. Squeezing the same mass into a smaller radius raises the escape speed.",
+        "example": "Earth's escape speed at its surface is about 11.2 km/s. A rocket launched at 5 km/s falls back."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Compare the launch speed with Earth's escape speed of about 11.2 km/s.",
+          "Ask whether the rocket has enough speed to keep moving away forever."
+        ],
+        "retry": "Escape speed depends on how fast you need to go, compared with what gravity can supply. Try asking: is the launch speed above or below the escape speed?"
+      },
+      {
+        "kind": "explain",
+        "heading": "The horizon: where escape speed reaches light speed",
+        "body": "Keep squeezing the Sun and the escape speed keeps rising. At one special radius it equals the speed of light, c. That radius is the Schwarzschild radius, rs = 2GM/c². For the Sun it is about 3 km. The surface where escape speed equals c is called the event horizon.\n\nOutside the horizon, escaping is possible if you move fast enough. The horizon marks the point where that is no longer true for anything.",
+        "example": "The Sun's actual radius is about 700,000 km, so the Sun is nowhere near its horizon. A black hole of solar mass would need to be squeezed to about 3 km."
+      },
+      {
+        "kind": "worked",
+        "heading": "Worked example: horizon size of a heavier black hole",
+        "problem": "Find the event horizon radius of a black hole with 10 times the Sun's mass.",
+        "steps": [
+          {
+            "title": "Start from the Sun's horizon",
+            "text": "The Sun's Schwarzschild radius is about 2.95 km.",
+            "why": "This comes from rs = 2GM/c² with the Sun's mass."
+          },
+          {
+            "title": "Scale by mass",
+            "text": "rs is proportional to mass, so multiply by 10.",
+            "why": "Doubling the mass doubles the horizon radius, so a 10× heavier object has a 10× larger horizon."
+          },
+          {
+            "title": "Compute",
+            "text": "rs = 10 × 2.95 km = 29.5 km.",
+            "why": "The horizon radius is about 29.5 km, so its diameter is about 59 km."
+          }
+        ],
+        "answer": "The horizon radius is about 29.5 km, so the horizon is about 59 km across."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Ask where each flashlight sits compared with the horizon radius.",
+          "Remember that the horizon is the boundary, not the centre."
+        ],
+        "retry": "Light can escape from anywhere outside the horizon, but only from points farther out than the horizon radius. Inside, no outward path exists."
+      },
+      {
+        "kind": "problem",
+        "heading": "Problem: Earth as a black hole",
+        "prompt": "Earth has mass M = 5.97 × 10²⁴ kg. Use G = 6.67 × 10⁻¹¹ N·m²/kg² and c = 3.00 × 10⁸ m/s. Find the Schwarzschild radius rs = 2GM/c² in millimetres (mm). Give your answer to 2 or 3 significant figures; anything from 8.8 to 8.9 mm is accepted.",
+        "answers": [
+          "8.85",
+          "8.8",
+          "8.9"
+        ],
+        "unit": "mm",
+        "traps": [
+          {
+            "answer": "4.4",
+            "feedback": "You computed GM/c² and forgot the factor of 2 in rs = 2GM/c². Include the 2 and recompute."
+          },
+          {
+            "answer": "0.00885",
+            "feedback": "That is the right number but in metres. Convert to millimetres by multiplying by 1000."
+          },
+          {
+            "answer": "885",
+            "feedback": "885 is 100 times too large. The result is 8.85×10⁻³ m, and multiplying 0.00885 by 1000 gives 8.85 mm, not 885. Check the powers of ten once more."
+          }
+        ],
+        "hints": [
+          "Start by computing GM, then multiply by 2 and divide by c².",
+          "Your result should be a few millimetres, so check that the exponent is right."
+        ],
+        "solution": "rs = 2 × 6.67×10⁻¹¹ × 5.97×10²⁴ / (3.00×10⁸)² ≈ 8.85×10⁻³ m ≈ 8.85 mm. Earth would have to be squeezed to about 9 mm across to become a black hole."
+      },
+      {
+        "kind": "explain",
+        "heading": "Why nothing gets out from inside",
+        "body": "Inside the horizon, the escape speed would have to exceed c. Nothing can travel faster than light, so no light beam or object inside the horizon can move to a larger radius.\n\nEvery outward-pointing direction still leads to smaller radius, so only inward paths remain. This is what makes the horizon one-way. It is not a solid surface. It is a boundary you can cross inward but never outward.",
+        "example": "Think of a ball thrown upward inside a hole so deep that the throw is always pulled downward faster than the ball can climb. Here, even light is like that ball."
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Think about whether any speed you can produce is enough to escape.",
+          "Ask what the horizon does to every possible direction of travel."
+        ],
+        "retry": "Once inside the horizon, every outward-pointing direction still decreases your distance from the centre. Engines cannot change that, because they cannot exceed light speed."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Squeeze the Sun",
+        "prompt": "Drag the radius of a mass equal to the Sun, from 2 km up to 30 km. Watch how the escape speed changes at each size.",
+        "reveal": "The escape speed climbs toward light speed as the radius shrinks. Below about 3 km, it would exceed light speed, and nothing could escape.",
+        "type": "simulation",
+        "slider": {
+          "label": "Radius of Sun-mass object",
+          "min": 2,
+          "max": 30,
+          "step": 1,
+          "unit": "km",
+          "initial": 10
+        },
+        "bands": [
+          {
+            "upTo": 2.9,
+            "title": "Inside the horizon",
+            "detail": "Escape speed exceeds light speed. No object or light can escape."
+          },
+          {
+            "upTo": 5,
+            "title": "Hugging the edge",
+            "detail": "Escape speed is about 0.77c to 0.99c. Only very fast objects, and light aimed outward, can get away."
+          },
+          {
+            "upTo": 15,
+            "title": "Strong but escapable",
+            "detail": "Escape speed is about 0.44c to 0.77c. Fast objects can escape, but gravity is very strong."
+          },
+          {
+            "upTo": 30,
+            "title": "Weak gravity",
+            "detail": "Escape speed is about 0.31c to 0.44c, a far gentler pull than at the horizon."
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A rocket is launched straight up from Earth's surface at 5 km/s. Earth's escape speed there is about 11.2 km/s. What happens to the rocket?",
+        "options": [
+          "It escapes Earth and keeps going forever",
+          "It goes into orbit around Earth at a fixed height",
+          "It falls back down, because its speed is below escape speed",
+          "It stops instantly because Earth's gravity is too strong for any launch"
+        ],
+        "correctAnswer": "It falls back down, because its speed is below escape speed",
+        "explanation": "Escape speed is the minimum speed needed to coast away forever. At 5 km/s the rocket is below 11.2 km/s, so gravity wins and it returns."
+      },
+      {
+        "question": "Two flashlights both point outward. Flashlight A sits at four times the horizon radius. Flashlight B sits at 0.8 times the horizon radius. Which light can reach a distant observer?",
+        "options": [
+          "Only A's light, because A is outside the horizon",
+          "Only B's light, because B is closer to the black hole's pull",
+          "Both lights, because light always escapes",
+          "Neither light, because both are near a black hole"
+        ],
+        "correctAnswer": "Only A's light, because A is outside the horizon",
+        "explanation": "Light can escape only from outside the horizon. A is outside, so its light can get out; B is inside, so every outward path of its light leads inward."
+      },
+      {
+        "question": "An astronaut has fallen inside the event horizon and fires her rockets at full power straight outward. What is true?",
+        "options": [
+          "She will hover at a fixed distance from the centre",
+          "She will slowly climb back out, given enough fuel",
+          "Her path still leads toward smaller radius, no matter what she does",
+          "She will escape if she reaches light speed"
+        ],
+        "correctAnswer": "Her path still leads toward smaller radius, no matter what she does",
+        "explanation": "Inside the horizon, escape would require faster-than-light travel, which is impossible. Every future path, including outward thrust, leads inward."
+      }
+    ]
+  },
+  "score": 7,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 38654,
+      "approach": "discovery",
+      "blocks": "activity > explain > check > explain > worked > check > problem > explain > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 5.5,
+      "ms": 9988,
+      "problems": [
+        "The activity's band text is numerically wrong. Escape speed as a fraction of c is sqrt(rs/r), so at 15 km it is about 0.44c, not 0.31c. The 'Strong but escapable' band should read about 0.44c to 0.77c, and the 'Weak gravity' band should read about 0.31c to 0.44c, not '0.31c or lower'.",
+        "The worked example says the 29.5 km horizon is 'about 30 km across in radius'. That is contradictory: 29.5 km is the radius, so the diameter is about 59 km.",
+        "The trap feedback for '885' says to check powers of ten, but 885 mm is what you get by multiplying by 1000 in the wrong direction. The explanation is vague and does not identify the actual error.",
+        "The check on the horizon radius of Earth gives only two answers (8.85 and 8.9) with no tolerance note, so rounding variants such as 8.8 could be marked wrong.",
+        "The 'Why nothing gets out' explanation says 'no light beam can reach a radius greater than the horizon radius and stay there'. This is loose: light outside the horizon can still move outward, and the sentence should say that light cannot move outward from inside the horizon."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 18155,
+      "approach": "discovery",
+      "blocks": "activity > explain > check > explain > worked > check > problem > explain > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 7,
+      "ms": 8949,
+      "problems": [
+        "The Earth problem solution says Earth would have to be squeezed 'to about 9 mm across'. The computed value is the radius (8.85 mm), so the diameter is about 18 mm. This is a factual wording error in a quantitative lesson.",
+        "The 'ball thrown upward inside a hole' analogy is loose. It suggests a pit with a depth, which the horizon is not, and it could mislead learners about why the horizon is a one-way boundary.",
+        "The first check (rocket below escape speed) and the Question 1 quiz item test nearly the same idea, so the first knowledge check adds little new practice."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 7,
+      "passed": false
+    }
+  ]
+}

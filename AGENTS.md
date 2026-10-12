@@ -317,6 +317,8 @@ staged, so it opens instantly.
 - `src/lib/factCheck.ts` — recomputes a lesson's stated arithmetic
 - `src/lib/factVerify.ts` — checks a lesson's factual claims against web search
 - `scripts/judge-lessons.ts` — re-scores saved sample lessons with one reviewer, to compare writers
+- `research/` — every model run: method, results, costs and raw outputs (`research/model-runs.md`)
+- `scripts/e2e-course.ts` — a real course through the running app's HTTP API with two throwaway learners
 - `src/lib/progress.ts` — quiz grading and course progression
 - `src/lib/courseView.ts` — client-facing course shape: levels, modules, lessons
 - `src/lib/coursePlan.ts` — course plan schema, planning guide, validation

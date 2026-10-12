@@ -1,0 +1,290 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The Event Horizon",
+    "objective": "Understand why nothing, not even light, escapes from inside the event horizon.",
+    "estimatedMinutes": 9,
+    "approach": "simulation",
+    "approachReason": "The event horizon emerges from a quantity the learner can vary and see change — squeeze a mass smaller and the escape speed climbs until it passes the speed of light — so the lesson is built around varying that quantity and interpreting what happens.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "The speed you need to leave",
+        "body": "Throw a ball up and it falls back. Throw it hard enough — about 11.2 km/s from Earth's surface — and it never returns. That threshold is the escape speed, set by how strongly gravity pulls at the surface.\n\nGravity depends on mass, but the escape speed depends on something else too: how tightly that mass is packed. The same amount of stuff squeezed into a smaller sphere grips its surface much harder, so the escape speed climbs.",
+        "example": "The Sun's escape speed is 617 km/s — over a hundred times faster than a passenger jet, and still only 0.2% of the speed of light."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Escape speed is fixed by the radius as well as the mass: v ∝ 1/√R.",
+          "The radius is divided by 4. What is √4?"
+        ],
+        "retry": "Shrinking the radius always raises the escape speed: halve the radius and the escape speed grows by 1/√(1/2) ≈ 1.41."
+      },
+      {
+        "kind": "explain",
+        "heading": "When the escape speed hits the limit",
+        "body": "Light travels at 300,000 km/s, and nothing in the universe goes faster. So if you compress an object until its escape speed reaches the speed of light, nothing can leave it — not a rocket, not a rock, not a laser beam. That object is a black hole.\n\nThe radius at which escape speed equals c is the event horizon. For the Sun's mass it is about 3 km, and the horizon radius grows in direct proportion to mass: 10 solar masses give a 30 km horizon.",
+        "example": "Rule of thumb: about 3 km of horizon radius per solar mass. A one-solar-mass black hole would sit comfortably inside a small town."
+      },
+      {
+        "kind": "worked",
+        "heading": "How wide is the horizon of a 10-solar-mass black hole?",
+        "problem": "Astronomers spot a black hole with 10 times the Sun's mass. How big is its event horizon — the radius inside which nothing can escape?",
+        "steps": [
+          {
+            "title": "Start from the rule of thumb",
+            "text": "A black hole of one solar mass has an event horizon radius of about 3 km.",
+            "why": "That figure comes from setting the escape speed equal to the speed of light for the Sun's mass; it works out to 2.95 km."
+          },
+          {
+            "title": "Scale with mass",
+            "text": "Horizon radius is proportional to mass: 3 km × 10 = 30 km.",
+            "why": "Double the mass and the horizon doubles. The relation is a straight line: R ≈ 3 km × (M / M_sun)."
+          },
+          {
+            "title": "Sanity-check the size",
+            "text": "30 km is about the width of a small city.",
+            "why": "Compare that with the Sun itself, roughly 700,000 km across. Same amount of matter, wildly different geometry — that is what makes an event horizon possible."
+          }
+        ],
+        "answer": "About 30 km. A probe hovering 30 km from the centre would have to fly at the speed of light to get away."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "You don't need the 3 km figure at all — just compare the two masses.",
+          "R ∝ M, so the answer is the ratio 40 ÷ 5."
+        ],
+        "retry": "5 solar masses gives a 15 km horizon; 40 solar masses gives 120 km. Eight times wider."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "Not a wall — a one-way boundary",
+        "body": "The event horizon is not a surface you would feel or bump into. An astronaut crossing it would notice nothing unusual at that instant, and no alarm would sound.\n\nWhat changes is which futures are still available. Outside, a rocket can still turn around and climb away and a laser beam can still reach the stars. Inside, every route that leads outward has been cut off, so every path — including every light-speed path — bends further in. The horizon is simply the last moment at which escape is still possible.",
+        "example": "Picture a river flowing toward a waterfall. Far upstream you can still paddle to shore; past a certain point, even at full power, every stroke leaves you drifting downstream. The horizon is that point — except here the current moves at the speed of light."
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Ask which side of the horizon still has outward paths available at all.",
+          "Light emitted inside the horizon has every possible future path leading further in."
+        ],
+        "retry": "The beam fired inside still travels inward no matter which way it is aimed: inside, 'outward' is not a direction light can take."
+      },
+      {
+        "kind": "activity",
+        "ref": 2
+      },
+      {
+        "kind": "problem",
+        "heading": "How small would Earth have to be?",
+        "prompt": "Earth's escape speed at the surface is 11.2 km/s and Earth's radius is 6,371 km. Escape speed depends on radius as v ∝ 1/√R, so two sizes compare as v_new / v_old = √(R_old / R_new).\n\nCompress Earth, keeping all of its mass, until even light (300,000 km/s) can no longer escape. Roughly how small is that ball, in millimetres?",
+        "answers": [
+          "8.9",
+          "9",
+          "8.88"
+        ],
+        "unit": "mm",
+        "traps": [
+          {
+            "answer": "238",
+            "feedback": "That is the radius if you divide by the speed ratio once. Because v ∝ 1/√R, the radius shrinks by the square of the speed ratio, not by the ratio itself."
+          },
+          {
+            "answer": "0.009",
+            "feedback": "Right size, wrong unit: that number is 0.009 kilometres, which is about 9 mm."
+          }
+        ],
+        "hints": [
+          "Step one: how many times faster must the escape speed be? 300,000 ÷ 11.2.",
+          "That ratio is about 26,800. The radius must shrink by the square of that factor: 6,371 ÷ 26,800²."
+        ],
+        "solution": "300,000 ÷ 11.2 ≈ 26,800. Squaring gives ≈ 7.2 × 10^8. Then 6,371 km ÷ 7.2 × 10^8 ≈ 8.9 × 10^-6 km ≈ 9 mm. Earth's event horizon would be about the size of a large marble."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Squeeze the Sun",
+        "prompt": "You have exactly one Sun's worth of matter. Drag the slider to change the radius you pack it into, and watch how hard it becomes to escape from its surface. Find the radius where light itself can no longer get away.",
+        "reveal": "Escape speed does not depend on mass alone — it depends on how tightly the mass is squeezed. Shrink the radius and the escape speed climbs without limit.",
+        "type": "simulation",
+        "slider": {
+          "label": "Radius of one solar mass",
+          "min": 1,
+          "max": 100,
+          "step": 1,
+          "unit": "km",
+          "initial": 50
+        },
+        "bands": [
+          {
+            "upTo": 3,
+            "title": "Light itself is trapped",
+            "detail": "At 3 km the escape speed reaches the speed of light. Anything inside — even a laser beam aimed outward — is sealed in. You have made a black hole."
+          },
+          {
+            "upTo": 20,
+            "title": "Light escapes, matter does not",
+            "detail": "Here the escape speed is between 40% and 100% of light speed. No rocket, atom or planet could ever leave, but light still gets away."
+          },
+          {
+            "upTo": 100,
+            "title": "Still not a black hole",
+            "detail": "At 100 km the escape speed is about 17% of light speed — far beyond any spacecraft, yet light leaves easily."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "The laser inside",
+        "prompt": "A doomed astronaut crosses the event horizon of a black hole and, just inside, aims a laser straight outward toward the stars. What happens to that light?",
+        "reveal": "Inside the horizon, outward is no longer a direction that leads anywhere. Every future path, including light's, points further in.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "It escapes outward, but redshifted to a dim red glow.",
+            "correct": false,
+            "feedback": "Reddening does happen to light climbing away from a black hole — but light emitted inside the horizon has no outward path at all, so none of it reaches the outside."
+          },
+          {
+            "text": "It never gets out: inside the horizon, every path — even a light beam's — leads further in.",
+            "correct": true,
+            "feedback": "Exactly. The horizon is the boundary beyond which all possible routes, including light-speed ones, point inward."
+          },
+          {
+            "text": "It hovers at the horizon forever, frozen in place.",
+            "correct": false,
+            "feedback": "Nothing hangs at the horizon. A beam emitted just inside it still travels inward at full speed."
+          },
+          {
+            "text": "It circles the black hole just outside the horizon and never leaves.",
+            "correct": false,
+            "feedback": "That describes the photon sphere, which lies outside the horizon — a beam fired outward from inside never gets near it."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Which of these traps light?",
+        "prompt": "Escape speed settles it: if a light beam can still reach infinity, the object traps nothing; if it cannot, the object has an event horizon. Sort each object by what happens to light leaving its surface.",
+        "reveal": "Mass alone never traps light — only squeezing an object small enough for its mass does. Compress any of the 'escapes' objects far enough and it would switch columns.",
+        "type": "sort",
+        "buckets": [
+          "Light escapes",
+          "Light is trapped"
+        ],
+        "items": [
+          {
+            "text": "Earth (escape speed 11.2 km/s)",
+            "bucket": "Light escapes"
+          },
+          {
+            "text": "The Sun as it is (617 km/s)",
+            "bucket": "Light escapes"
+          },
+          {
+            "text": "A white dwarf (about 5,000 km/s)",
+            "bucket": "Light escapes"
+          },
+          {
+            "text": "A neutron star (about 60% of light speed)",
+            "bucket": "Light escapes"
+          },
+          {
+            "text": "The Sun squeezed to a 3 km radius",
+            "bucket": "Light is trapped"
+          },
+          {
+            "text": "A 10-solar-mass black hole (30 km horizon)",
+            "bucket": "Light is trapped"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A team of engineers compresses an Earth-like planet, keeping all of its mass, until its radius is one quarter of the original. Escape speed depends on radius as v ∝ 1/√R. What happens to the escape speed at the surface?",
+        "options": [
+          "It is unchanged, because the mass has not changed.",
+          "It doubles, because the radius is four times smaller and √4 = 2.",
+          "It is quartered, because the surface is now much closer to the centre.",
+          "It grows by a factor of 16, because the radius is divided by 4."
+        ],
+        "correctAnswer": "It doubles, because the radius is four times smaller and √4 = 2.",
+        "explanation": "Escape speed depends on radius as v ∝ 1/√R, so a radius four times smaller multiplies the escape speed by √4 = 2. Mass alone does not decide it — the squeeze matters just as much."
+      },
+      {
+        "question": "Astronomers find two black holes: one with 5 times the Sun's mass and one with 40 times the Sun's mass. Using the rule that a one-solar-mass black hole has a horizon radius of about 3 km, how much wider is the larger hole's event horizon?",
+        "options": [
+          "About 8 times wider.",
+          "About 35 times wider.",
+          "About 3 times wider.",
+          "The same width — horizons depend only on density, not mass."
+        ],
+        "correctAnswer": "About 8 times wider.",
+        "explanation": "Horizon radius is proportional to mass, so you only compare the masses: 40 ÷ 5 = 8. The larger hole's horizon is about eight times wider (roughly 120 km against 15 km)."
+      },
+      {
+        "question": "A probe hovers one centimetre outside a black hole's event horizon and fires a laser straight outward. A twin probe one centimetre inside fires an identical laser outward at the same moment. Which beams reach telescopes far away?",
+        "options": [
+          "Both beams reach the telescopes, because the horizon is not a physical wall.",
+          "Only the beam fired from outside the horizon gets away; the one fired inside cannot escape.",
+          "Neither beam gets away, because light emitted anywhere near a horizon is turned back.",
+          "Both beams get away, but the inside beam arrives first."
+        ],
+        "correctAnswer": "Only the beam fired from outside the horizon gets away; the one fired inside cannot escape.",
+        "explanation": "The horizon marks exactly where outward escape stops being possible: light fired outward from just outside it can still climb away, while light fired inside has every future path leading further in."
+      }
+    ]
+  },
+  "score": 7,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 138993,
+      "approach": "simulation",
+      "blocks": "explain > activity > check > explain > worked > check > activity > explain > check > activity > problem",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 7,
+      "ms": 10246,
+      "problems": [
+        "Unit-conversion error in the first trap of the final problem: dividing 6,371 km by the speed ratio 26,800 once gives about 0.238 km = 238 m, not 238 mm. The listed trap answer ('238') and its feedback ('That is the radius if you divide by the speed ratio once') are off by a factor of 1000.",
+        "Second trap feedback is factually wrong: 'that number is 0.009 kilometres, which is about 9 mm'. 0.009 km is 9 metres; 9 mm equals 0.009 m (or 8.9 × 10^-6 km). The metre/kilometre conversion is conflated.",
+        "Slider band boundary is slightly off: the 3–20 km band claims escape speed is 'between 40% and 100% of light speed', but at 20 km it is about 38% of c (v = √(2GM/R) with M = 1 M_sun).",
+        "Weak comparison in Explain 1: the Sun's 617 km/s is described as 'over a hundred times faster than a passenger jet'. True but misleading — a jet at ~0.25 km/s makes this roughly 2500 times, so the stated factor understates it by more than an order of magnitude."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise_skipped",
+      "iteration": 1,
+      "reason": "time budget"
+    },
+    {
+      "step": "lesson.select",
+      "score": 7,
+      "passed": false
+    }
+  ]
+}

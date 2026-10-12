@@ -1,0 +1,221 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The Elenchus: Testing a Claim Together",
+    "objective": "Follow and run a questioning sequence that draws out a claim, tests it against agreed premises, and reaches an honest recognition of uncertainty.",
+    "estimatedMinutes": 7,
+    "approach": "socratic",
+    "approachReason": "The learner participates in a questioning exchange, choosing questions and tracing commitments before constructing a short elenchus of their own.",
+    "blocks": [
+      {
+        "kind": "dialogue",
+        "heading": "What makes a good teammate?",
+        "turns": [
+          {
+            "speaker": "Alex",
+            "text": "A good teammate always agrees with the team's plan."
+          },
+          {
+            "speaker": "Questioner",
+            "text": "By 'agrees,' do you mean saying the plan should go ahead—even if the teammate has doubts?"
+          },
+          {
+            "speaker": "Alex",
+            "text": "Yes. A good teammate should always say the plan should go ahead."
+          }
+        ]
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Test with commitments, not accusations",
+        "body": "This kind of examination is called an elenchus: a claim is tested against other commitments the speaker accepts. Those accepted starting points are the agreed premises.\n\nSuppose Alex answers your question: 'Yes—if a plan would cause avoidable harm to the team, a good teammate should say it should not go ahead.' You now have two commitments to compare, rather than simply your opinion against Alex's. Keep the wording steady: both commitments concern whether the teammate should say the plan should go ahead.",
+        "example": "A question is not an agreed premise until the other person accepts its answer. If Alex says no, you must explore that answer rather than pretend agreement."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "The word 'always' includes plans that would cause avoidable harm.",
+          "Compare 'should go ahead' with 'should not go ahead' in that case."
+        ],
+        "retry": "Apply both commitments to the very same harmful plan. What would each commitment require the teammate to say?"
+      },
+      {
+        "kind": "dialogue",
+        "heading": "Bring the conflict back to the speaker",
+        "turns": [
+          {
+            "speaker": "Questioner",
+            "text": "Suppose the team's plan would cause avoidable harm. Your first claim says a good teammate should say it should go ahead. Your second says they should say it should not go ahead. Can both requirements hold here?"
+          },
+          {
+            "speaker": "Alex",
+            "text": "No. Those requirements conflict."
+          },
+          {
+            "speaker": "Questioner",
+            "text": "Then can we keep both commitments unchanged?"
+          },
+          {
+            "speaker": "Alex",
+            "text": "No. I thought I knew what being a good teammate meant. Now I'm not sure how to state it."
+          }
+        ]
+      },
+      {
+        "kind": "explain",
+        "heading": "Aporia: a productive impasse",
+        "body": "Alex has reached aporia: puzzlement or an impasse after recognizing that their commitments do not fit together. The original confidence has given way to an honest 'I'm not sure.'\n\nThe conflict shows that the commitments cannot all be kept unchanged; it does not by itself establish a complete account of good teamwork. An elenchus can lead to aporia, but not every questioning exchange must end there. Here, the achievement is recognizing the problem without rushing to pretend it is solved.",
+        "example": "The target is the claim's consistency, not the speaker's dignity. 'These commitments conflict' is different from 'You are foolish.'"
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Separate what the exchange established from what still needs investigation.",
+          "Alex has recognized a conflict, not settled every question about teamwork."
+        ],
+        "retry": "Finding a conflict narrows what can be accepted together. It does not automatically tell you which commitment to revise or supply a complete new answer."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "reflect",
+        "heading": "Run a short elenchus yourself",
+        "prompt": "In another fictional conversation, Sam says, 'A reliable person never changes their mind.' Write three questions: one to clarify the claim, one to seek an agreed premise about discovering a mistake, and one to test whether the commitments fit together.\n\nAssume Sam accepts your premise. Finish with a possible reply from Sam that expresses aporia rather than a finished new definition.",
+        "model": "One possible exchange:\n\n1. 'By never changing their mind, do you mean keeping a judgment even after discovering that it is mistaken?' Sam: 'Yes.'\n2. 'Should a reliable person correct a judgment once they know it is mistaken?' Sam: 'Yes.'\n3. 'In that case, can they both keep the mistaken judgment and correct it?' Sam: 'No. I can't keep both commitments. I'm no longer sure how to describe reliability.'\n\nIf Sam rejects the second premise, you have not established this conflict. You would need to explore what Sam does accept."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Seek an agreed premise",
+        "prompt": "You are questioning Alex, who says a good teammate should always say the team's plan should go ahead. You want to test that claim without replacing it with your own opinion. Which question is the best next move?",
+        "reveal": "The useful question invites Alex to accept or reject a specific commitment that can be compared with the original claim. Asking it does not guarantee agreement—you must listen to the answer.",
+        "type": "scenario",
+        "options": [
+          {
+            "text": "If a plan would cause avoidable harm to the team, should a good teammate say it should not go ahead?",
+            "correct": true,
+            "feedback": "This tests a specific case and seeks a commitment Alex can accept or reject."
+          },
+          {
+            "text": "Why are you such a blindly obedient teammate?",
+            "correct": false,
+            "feedback": "This attacks Alex and assumes a judgment about their character instead of testing the claim."
+          },
+          {
+            "text": "Don't you agree that a good teammate is someone who always challenges the team?",
+            "correct": false,
+            "feedback": "This tries to replace Alex's absolute claim with a different absolute claim, rather than examine it."
+          },
+          {
+            "text": "Who is your favorite teammate?",
+            "correct": false,
+            "feedback": "Alex might name someone, but the answer would not yet test whether the original claim is consistent."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "From confidence to aporia",
+        "prompt": "Arrange the moves in this questioning exchange. Track what must be established before the next move is justified.",
+        "reveal": "The conflict becomes meaningful because the claim is clear and the other commitments are genuinely accepted. Aporia follows recognition of that conflict, not merely being asked a difficult question.",
+        "type": "order",
+        "steps": [
+          "Draw out and clarify Alex's claim about always agreeing with the team's plan.",
+          "Ask whether a good teammate should oppose a plan that would cause avoidable harm, and hear Alex agree.",
+          "Apply both commitments to the same harmful plan and ask whether they can both hold.",
+          "Have Alex acknowledge that the commitments conflict and cannot both remain unchanged.",
+          "Allow Alex to recognize uncertainty about what makes a good teammate, without supplying a finished answer."
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "Alex accepts both commitments: a good teammate should always say the plan should go ahead; a good teammate should say a plan should not go ahead if it would cause avoidable harm. You now consider a plan that would cause avoidable harm. What does this test reveal?",
+        "options": [
+          "The commitments require opposing responses to the same plan.",
+          "Alex must believe that every team plan causes harm.",
+          "The commitments fit together because one concerns teamwork and the other concerns harm.",
+          "Alex has proved that good teammates should never agree with a plan."
+        ],
+        "correctAnswer": "The commitments require opposing responses to the same plan.",
+        "explanation": "In the harmful case, one commitment requires saying the plan should go ahead and the other requires saying it should not. The commitments therefore cannot both hold unchanged."
+      },
+      {
+        "question": "Alex says, 'I see the conflict, but now I don't know what makes a good teammate.' Which response best recognizes what the elenchus has achieved?",
+        "options": [
+          "We have found that these commitments cannot all stand; a better account remains to be worked out.",
+          "We have proved that a good teammate must oppose every team plan.",
+          "Your uncertainty means the questioning achieved nothing.",
+          "Since you are uncertain, my definition of a good teammate must be correct."
+        ],
+        "correctAnswer": "We have found that these commitments cannot all stand; a better account remains to be worked out.",
+        "explanation": "Alex's uncertainty is aporia arising from a recognized conflict. The exchange exposes a problem in the accepted commitments without proving a complete replacement account."
+      }
+    ],
+    "sources": [
+      {
+        "url": "https://en.wikipedia.org/wiki/%E1%BC%88%CF%80%CE%BF%CF%81%CE%AF%CE%B1",
+        "title": "Aporia"
+      }
+    ]
+  },
+  "score": 8.7,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 66630,
+      "approach": "socratic",
+      "blocks": "dialogue > activity > explain > check > dialogue > explain > check > activity > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 1,
+      "ms": 20601,
+      "claims": 6,
+      "supported": 1,
+      "contradicted": [],
+      "unclear": 5,
+      "downgraded": [
+        "An elenchus is an examination that tests a speaker's claim against other commitments the speaker accepts.: the quoted evidence isn't on the cited page",
+        "An elenchus can lead to aporia, but not every questioning exchange must end in aporia.: search failed: OpenRouter 402: {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhausted\",\"limit_source\":\"openrouter_in_flight_budget\",\"remedy_hint\":\"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.\",\"headers\":{\"Retry-After\":\"120\"},\"provider_name\":null}},\"user_id\":\"user_[redacted]\"}",
+        "In an elenchus, agreed premises are starting points accepted by the person whose claim is being examined.: search failed: OpenRouter 402: {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhausted\",\"limit_source\":\"openrouter_in_flight_budget\",\"remedy_hint\":\"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.\",\"headers\":{\"Retry-After\":\"120\"},\"provider_name\":null}},\"user_id\":\"user_[redacted]\"}",
+        "Exposing a conflict among accepted commitments does not by itself establish a complete replacement account of the subject being examined.: the quoted evidence isn't on the cited page",
+        "Finding a conflict among commitments does not automatically determine which commitment should be revised.: search failed: OpenRouter 402: {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhausted\",\"limit_source\":\"openrouter_in_flight_budget\",\"remedy_hint\":\"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.\",\"headers\":{\"Retry-After\":\"120\"},\"provider_name\":null}},\"user_id\":\"user_[redacted]\"}"
+      ]
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8.7,
+      "ms": 20603,
+      "problems": [
+        "The multiple-choice distractors are mostly obvious attacks or extreme conclusions, so learners can often choose correctly without closely tracing the commitments.",
+        "The hints largely disclose the reasoning needed for the correct answers rather than offering progressively lighter support.",
+        "The retry explanations repeat the same logical comparison rather than providing a genuinely different explanation or representation.",
+        "The ordering activity rehearses the completed example rather than testing transfer to a new situation."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8.7,
+      "passed": true,
+      "sources": 1
+    }
+  ]
+}

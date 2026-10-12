@@ -1,0 +1,256 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "For Loops That Build a Result",
+    "objective": "Trace a for loop's changing result, predict its output, and write an accumulator update.",
+    "estimatedMinutes": 7,
+    "approach": "worked_example",
+    "approachReason": "A fully traced loop makes each update visible before learners predict, repair, and write accumulator code themselves.",
+    "blocks": [
+      {
+        "kind": "code",
+        "heading": "Watch a total grow",
+        "prompt": "Trace the program line by line. Each time line 3 runs, what changes?",
+        "language": "python",
+        "code": "total = 0\nfor n in [2, 3]:\n    total += n\nprint(total)",
+        "explanation": "The program prints 5. The variable `total` keeps the result built so far.",
+        "hints": [],
+        "mode": "trace",
+        "options": [],
+        "trace": [
+          {
+            "line": 1,
+            "note": "Set total to 0.",
+            "state": "total = 0"
+          },
+          {
+            "line": 2,
+            "note": "Give n the value 2.",
+            "state": "n = 2, total = 0"
+          },
+          {
+            "line": 3,
+            "note": "Add n to total.",
+            "state": "n = 2, total = 2"
+          },
+          {
+            "line": 2,
+            "note": "Give n the value 3.",
+            "state": "n = 3, total = 2"
+          },
+          {
+            "line": 3,
+            "note": "Add n to total again.",
+            "state": "n = 3, total = 5"
+          },
+          {
+            "line": 4,
+            "note": "Print the final total.",
+            "state": "total = 5; output: 5"
+          }
+        ]
+      },
+      {
+        "kind": "explain",
+        "heading": "Keep what you have built",
+        "body": "`total` is an accumulator: a variable that stores a result as the loop builds it. It starts at 0 before the loop. The indented line `total += n` means “add `n` to the current total,” so each pass keeps the previous work instead of starting over.",
+        "example": "After adding 2, the total is 2. Adding 3 changes that same total to 5."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Start with `total = 0`.",
+          "Add 5 first, then add 2 to that result."
+        ],
+        "retry": "Think of `total` as a running tally: each item changes the tally you already have."
+      },
+      {
+        "kind": "code",
+        "heading": "Predict before revealing",
+        "prompt": "This time the accumulator does not start at zero. What exactly does the program print?",
+        "language": "python",
+        "code": "total = 10\nfor n in [1, 2, 3]:\n    total += n\nprint(total)",
+        "explanation": "It prints 16: the starting 10 is kept, then 1, 2, and 3 are added.",
+        "hints": [
+          "Write down total after each pass through the loop."
+        ],
+        "mode": "predict",
+        "options": [
+          {
+            "text": "16",
+            "correct": true,
+            "feedback": "Correct: 10 + 1 + 2 + 3 = 16."
+          },
+          {
+            "text": "6",
+            "correct": false,
+            "feedback": "That adds the list items but leaves out the starting 10."
+          },
+          {
+            "text": "13",
+            "correct": false,
+            "feedback": "That adds only the last item to 10; all three updates run."
+          },
+          {
+            "text": "10",
+            "correct": false,
+            "feedback": "The loop changes total before print runs."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Notice that `print(total)` is indented.",
+          "Find the total after each item, not just after the last one."
+        ],
+        "retry": "Indentation decides whether `print` runs on every pass or once after the loop finishes."
+      },
+      {
+        "kind": "code",
+        "heading": "Repair a total that forgets",
+        "prompt": "A shop wants to add three prices, but this program prints only the last price. Which single change fixes it?",
+        "language": "python",
+        "code": "total = 0\nfor n in [4, 1, 3]:\n    total = n\nprint(total)",
+        "explanation": "`total = n` replaces the old result on every pass. `total += n` keeps the old result and adds the new price.",
+        "hints": [
+          "The old total must survive each pass."
+        ],
+        "mode": "bug",
+        "options": [
+          {
+            "text": "Replace `total = n` with `total += n`.",
+            "correct": true,
+            "feedback": "Correct: each price is added to the result so far."
+          },
+          {
+            "text": "Replace `total = n` with `total += 1`.",
+            "correct": false,
+            "feedback": "That counts prices instead of adding their values."
+          },
+          {
+            "text": "Replace `total = 0` with `total = 4`.",
+            "correct": false,
+            "feedback": "The update would still replace the total with each new price."
+          },
+          {
+            "text": "Replace `print(total)` with `print(n)`.",
+            "correct": false,
+            "feedback": "That still prints only the last price."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "explain",
+        "heading": "The three parts you need",
+        "body": "To build a sum, set an accumulator before the loop, update it inside the loop, and use the finished result after the loop. The loop variable can have any useful name: `price` works just as well as `n`. What matters is adding that variable to the result you already have.",
+        "example": "For prices, the update could be `total += price`."
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Keep the initial 2 in your calculation.",
+          "The two loop passes add 6 and then 4."
+        ],
+        "retry": "A starting value is part of the accumulator. The loop adds to it; it does not silently reset it."
+      },
+      {
+        "kind": "problem",
+        "heading": "Write the missing update",
+        "prompt": "A delivery costs 2 before adding item prices of 5 and 3. Type the single Python statement that replaces the blank so this program prints 10:\n\ncost = 2\nfor price in [5, 3]:\n    ______\nprint(cost)",
+        "answers": [
+          "cost += price",
+          "cost = cost + price"
+        ],
+        "unit": "",
+        "traps": [
+          {
+            "answer": "cost = price",
+            "feedback": "This replaces the previous cost with the current price."
+          },
+          {
+            "answer": "cost += 1",
+            "feedback": "This counts items rather than adding their prices."
+          }
+        ],
+        "hints": [
+          "Use both the existing `cost` and the current `price`.",
+          "Write an update that adds `price` without discarding `cost`."
+        ],
+        "solution": "`cost` starts at 2. Inside the loop, `cost += price` adds 5 and then 3, leaving 10."
+      }
+    ],
+    "activities": [],
+    "questions": [
+      {
+        "question": "A program starts with `total = 0`, adds each number in `[5, 2]` using `total += n`, then prints `total`. What does it print?",
+        "options": [
+          "2",
+          "5",
+          "7",
+          "10"
+        ],
+        "correctAnswer": "7",
+        "explanation": "The total becomes 5 after the first pass and 7 after the second."
+      },
+      {
+        "question": "A learner runs `total = 0`, then loops through `[2, 1]` with the indented lines `total += n` and `print(total)`. What is the output?",
+        "options": [
+          "2\n3",
+          "3",
+          "2\n1",
+          "0\n2\n3"
+        ],
+        "correctAnswer": "2\n3",
+        "explanation": "Because `print(total)` is inside the loop, it prints once after adding 2 and again after adding 1."
+      },
+      {
+        "question": "A delivery program sets `total = 2` for a fixed fee, loops through `[6, 4]` with `total += price`, then prints `total` after the loop. What does it print?",
+        "options": [
+          "10",
+          "12",
+          "6",
+          "4"
+        ],
+        "correctAnswer": "12",
+        "explanation": "The accumulator keeps its starting value: 2 + 6 + 4 = 12."
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 37915,
+      "approach": "worked_example",
+      "blocks": "code > explain > check > code > check > code > explain > check > problem",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8,
+      "ms": 6073,
+      "problems": [
+        "The checks mostly repeat short addition traces, so they test limited transfer beyond the worked examples.",
+        "Some hints reveal the key observation rather than nudging learners to find it, especially the hint that explicitly points out `print(total)` is indented.",
+        "The retry explanations largely restate the original reasoning rather than offering a genuinely different way to understand it."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true
+    }
+  ]
+}

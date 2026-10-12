@@ -1,0 +1,5 @@
+■ programming: Python loops (37s, score 7, below bar)
+  approach: worked_example (The accumulator pattern is a procedure, so the lesson walks through one fully worked accumulation step by step, fades steps out, then has the learner write and trace their own.)
+  blocks:   explain > worked > code:predict > check > activity:order > explain > check > problem > code:bug > reflect
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=7, lesson.revise, lesson.evaluate=6, lesson.select=7

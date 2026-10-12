@@ -1,0 +1,241 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Build a Result with a for Loop",
+    "objective": "Read, predict, and write Python for loops that accumulate a result across several values.",
+    "estimatedMinutes": 7,
+    "approach": "worked_example",
+    "approachReason": "A fully traced total-building loop gives learners a model, then prediction and repair tasks gradually prepare them to write their own loop.",
+    "blocks": [
+      {
+        "kind": "code",
+        "heading": "One total, built in three passes",
+        "prompt": "In this fictional game, you earn 2, 4, and 3 points. Follow the steps to see how this loop builds your total.",
+        "language": "python",
+        "code": "total = 0\nfor points in [2, 4, 3]:\n    total = total + points\nprint(total)",
+        "explanation": "The loop uses each list value once, in order. Each update keeps the points already earned and adds the next value. After the loop finishes, print(total) displays 9.",
+        "hints": [],
+        "mode": "trace",
+        "options": [],
+        "trace": [
+          {
+            "line": 1,
+            "note": "Create the running total before the loop starts.",
+            "state": "total = 0"
+          },
+          {
+            "line": 2,
+            "note": "Take the first value from the list.",
+            "state": "points = 2, total = 0"
+          },
+          {
+            "line": 3,
+            "note": "Calculate 0 + 2 and store the result in total.",
+            "state": "points = 2, total = 2"
+          },
+          {
+            "line": 2,
+            "note": "Take the next value from the list.",
+            "state": "points = 4, total = 2"
+          },
+          {
+            "line": 3,
+            "note": "Calculate 2 + 4 and store the result in total.",
+            "state": "points = 4, total = 6"
+          },
+          {
+            "line": 2,
+            "note": "Take the final value from the list.",
+            "state": "points = 3, total = 6"
+          },
+          {
+            "line": 3,
+            "note": "Calculate 6 + 3 and store the result in total.",
+            "state": "points = 3, total = 9"
+          },
+          {
+            "line": 4,
+            "note": "The list is exhausted. Display the final total.",
+            "state": "total = 9; output: 9"
+          }
+        ]
+      },
+      {
+        "kind": "explain",
+        "heading": "Two variables, two jobs",
+        "body": "In `for points in [2, 4, 3]:`, the loop variable `points` takes each list value in order. The colon and indentation mark the loop body—the code that runs once for each value.\n\nThe variable `total` is an accumulator: it stores a result built across repeated updates. In `total = total + points`, Python calculates the right-hand side using the old total, then stores the result back in `total`.",
+        "example": "Think of points as the next contribution and total as everything collected so far."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Track pages and total separately.",
+          "After adding 3, use that new total when you add 5."
+        ],
+        "retry": "The loop variable changes to the next list value, but the accumulator keeps its previous result until the update changes it."
+      },
+      {
+        "kind": "code",
+        "heading": "Start with something already collected",
+        "prompt": "You already have 10 tokens and collect three more batches. What does this code output?",
+        "language": "python",
+        "code": "tokens = 10\nfor batch in [4, 1, 3]:\n    tokens = tokens + batch\nprint(tokens)",
+        "explanation": "The starting amount counts too: 10 + 4 = 14, then 14 + 1 = 15, then 15 + 3 = 18. An accumulator does not have to start at zero.",
+        "hints": [
+          "Write down the value of tokens after each update."
+        ],
+        "mode": "predict",
+        "options": [
+          {
+            "text": "8",
+            "correct": false,
+            "feedback": "That adds the new batches but leaves out the 10 tokens you already had."
+          },
+          {
+            "text": "13",
+            "correct": false,
+            "feedback": "That adds only the final batch to the starting amount. Earlier updates are kept too."
+          },
+          {
+            "text": "18",
+            "correct": true,
+            "feedback": "Correct: the running amounts are 14, 15, and 18."
+          },
+          {
+            "text": "10",
+            "correct": false,
+            "feedback": "The indented assignment changes tokens on every pass through the loop."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "explain",
+        "heading": "Set up once, update repeatedly",
+        "body": "Put the starting assignment before the loop so it runs once. Put the accumulating update inside the loop so it runs for every list value.\n\nIf you reset the accumulator inside the loop, you erase earlier progress on every pass. To display just the final result, put `print` after the loop, without the loop body's indentation.",
+        "example": "The pattern is: set up → repeat updates → use the completed result."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Which assignment runs again at the beginning of every pass?",
+          "Move the starting assignment to a place where it runs only once."
+        ],
+        "retry": "Indentation decides what repeats. A reset inside the loop runs again for every value, so the total cannot preserve earlier additions."
+      },
+      {
+        "kind": "code",
+        "heading": "Repair the update",
+        "prompt": "This program should add the minutes from three practice sessions, but it outputs only 15. Which replacement for line 3 fixes the bug?",
+        "language": "python",
+        "code": "total = 0\nfor minutes in [5, 10, 15]:\n    total = minutes\nprint(total)",
+        "explanation": "Assigning minutes directly overwrites the earlier result. The fixed update uses both the previous total and the current session: 0 + 5 = 5, 5 + 10 = 15, and 15 + 15 = 30.",
+        "hints": [
+          "The right-hand side needs the result so far and the current list value."
+        ],
+        "mode": "bug",
+        "options": [
+          {
+            "text": "total = total + minutes",
+            "correct": true,
+            "feedback": "Correct: each update preserves the previous total and adds the current session."
+          },
+          {
+            "text": "total = 0 + minutes",
+            "correct": false,
+            "feedback": "This still stores only the current session's minutes, because it always starts the addition from zero."
+          },
+          {
+            "text": "minutes = total + minutes",
+            "correct": false,
+            "feedback": "This changes minutes, not total. The printed total stays at zero."
+          },
+          {
+            "text": "total = total + 1",
+            "correct": false,
+            "feedback": "This counts the three sessions instead of adding their minutes."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "reflect",
+        "heading": "Write your own accumulator",
+        "prompt": "You read 6, 2, and 5 pages in three sessions. Write a complete Python program that starts `total_pages` at zero, uses `for pages in [6, 2, 5]:` to accumulate the pages, and prints only the final total. Before comparing with the model answer, predict the output.",
+        "model": "One solution:\n```python\ntotal_pages = 0\nfor pages in [6, 2, 5]:\n    total_pages = total_pages + pages\nprint(total_pages)\n```\nIt prints 13: 0 + 6 = 6, then 6 + 2 = 8, then 8 + 5 = 13. Check that your setup and print are outside the loop, while your update is indented inside it."
+      }
+    ],
+    "activities": [],
+    "questions": [
+      {
+        "question": "A reading tracker runs this code:\n```python\ntotal = 0\nfor pages in [3, 5]:\n    total = total + pages\nprint(total)\n```\nWhat does it print?",
+        "options": [
+          "3",
+          "5",
+          "8",
+          "0"
+        ],
+        "correctAnswer": "8",
+        "explanation": "The accumulator keeps both contributions: 0 + 3 = 3, then 3 + 5 = 8. The print runs after both updates."
+      },
+      {
+        "question": "A donation tracker should add all three donations, but this code prints only 7:\n```python\nfor donation in [4, 6, 7]:\n    total = 0\n    total = total + donation\nprint(total)\n```\nWhich change makes it print the sum of all donations?",
+        "options": [
+          "Move total = 0 before the for line, with no indentation.",
+          "Indent print(total) so it is inside the loop.",
+          "Replace total = total + donation with total = donation.",
+          "Move total = 0 after the loop, just before print(total)."
+        ],
+        "correctAnswer": "Move total = 0 before the for line, with no indentation.",
+        "explanation": "Initializing before the loop lets the total survive between passes: 0 + 4 = 4, 4 + 6 = 10, and 10 + 7 = 17. The original code resets the total on every pass."
+      }
+    ]
+  },
+  "score": 8.5,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 67820,
+      "approach": "worked_example",
+      "blocks": "code > explain > check > code > explain > check > code > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 1,
+      "ms": 12599,
+      "claims": 1,
+      "supported": 0,
+      "contradicted": [],
+      "unclear": 1,
+      "downgraded": [
+        "An accumulator is a variable that stores a result built across repeated updates.: the quoted evidence isn't on the cited page"
+      ]
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8.5,
+      "ms": 12608,
+      "problems": [
+        "The retry explanations mostly restate the original accumulator and indentation explanations rather than offering a genuinely different way to understand the mistakes.",
+        "The final writing task supplies the variable names, list, starting value, and loop header, so it tests completing a familiar pattern more than independently designing an accumulator.",
+        "Most tasks use nearly identical addition scenarios, limiting transfer beyond summing short lists."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8.5,
+      "passed": true,
+      "sources": 0
+    }
+  ]
+}

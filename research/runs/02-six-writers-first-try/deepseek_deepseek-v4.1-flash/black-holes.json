@@ -1,0 +1,229 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The Event Horizon",
+    "objective": "Understand why nothing, not even light, escapes from inside the event horizon.",
+    "estimatedMinutes": 8,
+    "approach": "discovery",
+    "approachReason": "The learner predicts and experiments with escape speed before the terms 'speed of light limit' and 'event horizon' are ever named, so the key insight is earned rather than told.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "The speed you need to leave forever",
+        "body": "Throw a ball up and gravity pulls it back. Throw it faster and it climbs higher before turning around. Past a certain speed — the escape speed — it never turns around at all: it coasts away and simply never returns.\n\nFor any object that speed is set by only two things: how much mass is pulling, and how close to the center you start. Escape speed grows as 1/√r. Halve the radius and you need 1.41× the speed; quarter the radius and you need 2×. Make the radius tiny and the required speed climbs without limit.",
+        "example": "Earth's escape speed is 11.2 km/s (about 40,000 km/h). A rocket doesn't have to hit that in one instant — it can keep burning — but a thrown ball, or a beam of light, only gets one shot."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Escape speed depends on mass and on how close you start to the center — not on how far you have to travel.",
+          "If two objects have the same mass, the smaller one has the higher escape speed, and the gap grows as 1/√r."
+        ],
+        "retry": "Picture the gravity well as a valley. Same mass means the same depth, but a smaller radius puts your feet on a steeper wall — a short climb, but a brutal one."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "The one speed nothing can beat",
+        "body": "Escape speed grows without limit as you squeeze — but the universe has a ceiling. Nothing can travel faster than the speed of light: c = 300,000 km/s.\n\nSo something remarkable happens if you compress an object enough. There is a radius where the escape speed equals c. At that radius — and everywhere inside it — no rocket, no particle, and no beam of light can ever climb out. That boundary is the event horizon.\n\nAn event horizon is not a surface or a wall. It is a region of space where every route outward is closed. Light inside it can still move — it just can't move outward.",
+        "example": "The horizon is small for stellar masses: roughly 3 km for every solar mass. A 10-solar-mass black hole has a horizon about 30 km in radius — the size of a small city, yet completely sealed."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Ask what the escape speed is at that radius, and compare it with the fastest speed anything can have.",
+          "The horizon is a boundary in space, not an object with a surface — matter passing it notices nothing solid."
+        ],
+        "retry": "Think of a one-way door built into space itself. Outside it you can still leave if you are fast enough; at the door, the exit speed required is the fastest speed the universe allows; inside, every road bends back toward the center."
+      },
+      {
+        "kind": "problem",
+        "heading": "How fast is escape from a crushed Earth?",
+        "prompt": "Earth's escape speed at its present radius is 11.2 km/s. Suppose the whole Earth — same mass — were somehow squeezed down to one hundredth of its current radius. What would the escape speed from its new surface be, in km/s?",
+        "answers": [
+          "112"
+        ],
+        "unit": "km/s",
+        "traps": [
+          {
+            "answer": "1120",
+            "feedback": "You scaled linearly with the radius change. Escape speed goes as 1/√r, so a 100× shrink is only a 10× increase."
+          },
+          {
+            "answer": "1.12",
+            "feedback": "That divides by 100. Squeezing the same mass smaller makes escape harder, not easier."
+          },
+          {
+            "answer": "22.4",
+            "feedback": "That is the answer for a 4× shrink. Here the radius drops by a factor of 100, so √100 = 10."
+          }
+        ],
+        "hints": [
+          "Escape speed scales with 1/√r: a factor-of-4 shrink only doubles it.",
+          "The radius shrinks by 100, and √100 = 10, so multiply 11.2 km/s by 10."
+        ],
+        "solution": "Escape speed is √(2GM/r), so it changes as 1/√r. Shrinking the radius by 100 multiplies the speed by √100 = 10: 11.2 × 10 = 112 km/s. Even that is less than 0.04% of the speed of light — you would have to shrink the Earth by hundreds of millions of times more before your planet became a black hole."
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Compare 250,000 km/s with the speed of light, 300,000 km/s.",
+          "Escape speed rises with mass. What happens when it finally passes c?"
+        ],
+        "retry": "Escape speed is a tug-of-war: mass pulls harder, distance from the center weakens the pull. Add mass, or shrink the radius, and you tip the balance toward trapping light."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Why is a black hole black?",
+        "prompt": "Explain to a friend, in your own words, why a black hole looks black. Use the idea of escape speed — and don't just say \"because its gravity is strong.\"",
+        "model": "A strong model answer: escape speed depends on mass and on how close you start to the center. Pack enough mass into a small enough radius and, at some distance, the speed needed to get away reaches the speed of light. Inside that distance, even a beam aimed straight outward makes no headway — it is like swimming against a current faster than you can swim. No light ever reaches our telescopes from inside, so we see nothing there: a black hole."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Escape speeds, from the Moon to a neutron star",
+        "prompt": "Here are six real objects, sorted by nothing at all. Before you see the numbers, guess which one has the highest escape speed — then check the bars.",
+        "reveal": "Even the Sun, with 333,000 Earth-masses, only needs 617.5 km/s to escape — about 0.2% of light speed. It takes a fantastically compressed object, like a neutron star, to push escape speed anywhere near c. Compress a little further and you cross the line.",
+        "type": "chart",
+        "unit": "km/s",
+        "bars": [
+          {
+            "label": "Moon",
+            "value": 2.4,
+            "note": "A small, light world — a modest 2.4 km/s gets you away."
+          },
+          {
+            "label": "Mars",
+            "value": 5,
+            "note": "Roughly twice the Moon's escape speed at 5.0 km/s."
+          },
+          {
+            "label": "Earth",
+            "value": 11.2,
+            "note": "11.2 km/s — the fastest any crewed rocket has ever needed to reach."
+          },
+          {
+            "label": "Jupiter",
+            "value": 59.5,
+            "note": "318 Earth-masses, but a huge radius too: escape speed is 59.5 km/s."
+          },
+          {
+            "label": "Sun",
+            "value": 617.5,
+            "note": "617.5 km/s — still only about 0.2% of the speed of light."
+          },
+          {
+            "label": "Neutron star (1.4 solar masses, 10 km radius)",
+            "value": 190000,
+            "note": "About 190,000 km/s — over 60% of light speed, from an object the size of a city."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Squeeze a 10-solar-mass core",
+        "prompt": "Drag the slider to set the radius of a collapsed core holding 10 times the Sun's mass. Watch how the escape speed changes as you crush it smaller.",
+        "reveal": "There is a critical radius — 30 km here — where the escape speed exactly equals the speed of light. At that radius and anything inside it, nothing gets out. That radius is the event horizon.",
+        "type": "simulation",
+        "slider": {
+          "label": "Radius of the core",
+          "min": 1,
+          "max": 100,
+          "step": 1,
+          "unit": "km",
+          "initial": 100
+        },
+        "bands": [
+          {
+            "upTo": 30,
+            "title": "Inside the horizon",
+            "detail": "At 30 km the escape speed is exactly 300,000 km/s — the speed of light. Crush it further and the escape speed exceeds c: not even a beam of light can climb out."
+          },
+          {
+            "upTo": 60,
+            "title": "Relativistic escape",
+            "detail": "Between 30 and 60 km, escape needs 0.7 to 1.0 times the speed of light. No rocket could ever do it, but light still gets out."
+          },
+          {
+            "upTo": 100,
+            "title": "Fast, but well below light speed",
+            "detail": "At 100 km the escape speed is about 163,000 km/s — roughly half of light speed. Extreme, but this core is not yet a black hole."
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A cargo hauler must launch a pod off the surface of one of two moons so that it never falls back. Both moons have exactly the same mass: Moon Barek has a radius of 500 km and Moon Tolan has a radius of 2,000 km. Which launch needs the higher escape speed?",
+        "options": [
+          "Moon Barek — same mass but a smaller radius means a higher escape speed",
+          "Moon Tolan — the pod has farther to climb, so it needs more speed",
+          "They are identical, because escape speed depends only on the moon's mass",
+          "Neither is fixed — the escape speed depends on the pod's own mass"
+        ],
+        "correctAnswer": "Moon Barek — same mass but a smaller radius means a higher escape speed",
+        "explanation": "Escape speed is √(2GM/r): it depends on the mass pulling and on how close you start to the center, not on how far you travel. With equal masses, shrinking the radius by 4 raises the required speed by √4 = 2, so tiny Barek is the harder launch."
+      },
+      {
+        "question": "A 10-solar-mass star collapses until its surface sits 30 km from the center. At that radius the escape speed is 300,000 km/s — the speed of light. Which statement is correct?",
+        "options": [
+          "Light can still leave the surface, but it will be strongly redshifted",
+          "Nothing that starts at or inside 30 km can get out — no rocket, no particle, no light",
+          "A powerful enough rocket can still escape, because rockets carry their own fuel",
+          "The 30 km boundary is a solid surface that light bounces off"
+        ],
+        "correctAnswer": "Nothing that starts at or inside 30 km can get out — no rocket, no particle, no light",
+        "explanation": "At 30 km the escape speed equals the fastest speed the universe allows, so anything starting there or deeper cannot reach the outside. The boundary is the event horizon — a region of space, not a solid shell."
+      },
+      {
+        "question": "A collapsed star has a surface escape speed of 250,000 km/s. Astronomers then add mass to it while its radius stays the same. What is true now?",
+        "options": [
+          "It is already a black hole — nothing can escape from its surface",
+          "Light can still escape right now, but a little more mass or a little more squeezing would push the escape speed past the speed of light",
+          "Escape speed can never exceed the speed of light, so it can never become a black hole",
+          "Adding mass has no effect on escape speed; only the radius matters"
+        ],
+        "correctAnswer": "Light can still escape right now, but a little more mass or a little more squeezing would push the escape speed past the speed of light",
+        "explanation": "Escape speed is √(2GM/r), so it rises with mass and rises as the radius shrinks. At 250,000 km/s light still gets out — barely — and pushing past 300,000 km/s is exactly what creates an event horizon."
+      }
+    ]
+  },
+  "score": 9,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 52465,
+      "approach": "discovery",
+      "blocks": "explain > check > activity > explain > activity > check > problem > check > reflect",
+      "droppedBlocks": 1,
+      "droppedActivities": 1,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 9,
+      "ms": 14159,
+      "problems": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 9,
+      "passed": true
+    }
+  ]
+}

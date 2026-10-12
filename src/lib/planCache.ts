@@ -60,7 +60,7 @@ Reply with the matching course's key exactly as given, or "none".`,
       .join("\n")}`,
     judgeJsonSchema,
     deadline,
-    { model: judgeModel(), timeoutMs: 20_000 }
+    { model: judgeModel(), timeoutMs: 20_000, maxTokens: 1_000 }
   );
   const { match } = JudgeSchema.parse(raw);
   // Only a key that was offered counts; anything else is "none".

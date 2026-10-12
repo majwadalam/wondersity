@@ -1,0 +1,250 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "For loops and accumulators",
+    "objective": "Read and predict for loops over lists, then write a loop that builds a total.",
+    "estimatedMinutes": 8,
+    "approach": "discovery",
+    "approachReason": "Learners predict and trace real Python code before naming the loop mechanics and accumulator pattern they have uncovered.",
+    "blocks": [
+      {
+        "kind": "code",
+        "heading": "What will Python print?",
+        "prompt": "This list contains three numbers. Predict the output before running the code.",
+        "language": "python",
+        "code": "for number in [2, 4, 6]:\n    print(number)",
+        "explanation": "Python takes the numbers from the list in order. Each time, number receives the next value and the indented print runs.",
+        "hints": [
+          "The indented line runs once for each item in the list."
+        ],
+        "mode": "predict",
+        "options": [
+          {
+            "text": "2\n4\n6",
+            "correct": true,
+            "feedback": "Correct. The indented print runs once for each number, in list order."
+          },
+          {
+            "text": "[2, 4, 6]",
+            "correct": false,
+            "feedback": "The loop gives number one item at a time, not the whole list."
+          },
+          {
+            "text": "6",
+            "correct": false,
+            "feedback": "Because print is inside the loop, it runs for every item—not just the last one."
+          },
+          {
+            "text": "12",
+            "correct": false,
+            "feedback": "Nothing in this code adds the numbers. It prints each number separately."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "explain",
+        "heading": "One item per turn",
+        "body": "A for loop visits the items in a list in order. In `for number in [2, 4, 6]:`, the variable `number` receives 2, then 4, then 6.\n\nThe colon introduces the loop's body: the indented instructions that run for each item. One trip through that body is an iteration. A line after the loop that is no longer indented runs after all the items have been visited.",
+        "example": "The variable name is your choice: `number`, `price`, or another useful name. Use the same name in the body when you want the current item."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Follow the names in list order.",
+          "Which print is inside the loop, and which is after it?"
+        ],
+        "retry": "Use indentation to find what repeats. The indented print repeats for each name; the unindented print happens once after the loop."
+      },
+      {
+        "kind": "code",
+        "heading": "Watch a result grow",
+        "prompt": "A fictional shop has two prices: 3 and 5. Before stepping through, predict the final total. Then track how total changes.",
+        "language": "python",
+        "code": "total = 0\nfor price in [3, 5]:\n    total = total + price\nprint(total)",
+        "explanation": "The output is 8. Unlike price, which receives a new list item each turn, total carries the result from one turn into the next.",
+        "hints": [
+          "For each update, use the total left by the previous step."
+        ],
+        "mode": "trace",
+        "options": [],
+        "trace": [
+          {
+            "line": 1,
+            "note": "Create the starting total.",
+            "state": "total = 0"
+          },
+          {
+            "line": 2,
+            "note": "Take the first price from the list.",
+            "state": "price = 3, total = 0"
+          },
+          {
+            "line": 3,
+            "note": "Calculate 0 + 3 and store the result in total.",
+            "state": "price = 3, total = 3"
+          },
+          {
+            "line": 2,
+            "note": "Take the next price from the list.",
+            "state": "price = 5, total = 3"
+          },
+          {
+            "line": 3,
+            "note": "Calculate 3 + 5 and store the result in total.",
+            "state": "price = 5, total = 8"
+          },
+          {
+            "line": 2,
+            "note": "There are no more items, so leave the loop.",
+            "state": "price = 5, total = 8"
+          },
+          {
+            "line": 4,
+            "note": "Print 8 once, after the loop.",
+            "state": "price = 5, total = 8; output: 8"
+          }
+        ]
+      },
+      {
+        "kind": "explain",
+        "heading": "You have discovered an accumulator",
+        "body": "An accumulator is a variable that keeps a result as a loop builds it up. Here, `total` starts at 0 before the loop and gains the current price inside the loop.\n\nIn `total = total + price`, Python first calculates the right-hand side using the old total, then stores the result back in total. The pattern is: initialize once, update for each item, then use the finished result after the loop.",
+        "example": "For a sum with no existing amount, 0 is a useful starting value: adding the first item to 0 preserves that item's value."
+      },
+      {
+        "kind": "code",
+        "heading": "Why did the earlier points disappear?",
+        "prompt": "This code should add all three scores and print 8, but it prints 1. Choose the single fix that preserves the running total.",
+        "language": "python",
+        "code": "for points in [2, 5, 1]:\n    total = 0\n    total = total + points\nprint(total)",
+        "explanation": "Move `total = 0` before the loop, without indentation. Otherwise each iteration erases the previous total: the updates become 0 + 2 = 2, 0 + 5 = 5, and 0 + 1 = 1.",
+        "hints": [
+          "Which line discards the result from the previous iteration?",
+          "Should the starting value be assigned once or once per item?"
+        ],
+        "mode": "bug",
+        "options": [
+          {
+            "text": "Move total = 0 to an unindented line before the for loop.",
+            "correct": true,
+            "feedback": "Correct. Initialize once, so each update can build on the previous total."
+          },
+          {
+            "text": "Indent print(total) so it is inside the loop.",
+            "correct": false,
+            "feedback": "This prints 2, 5, and 1 separately. It does not stop the total from being reset."
+          },
+          {
+            "text": "Replace total = total + points with total = points.",
+            "correct": false,
+            "feedback": "This stores only the current score. The final total is still 1."
+          },
+          {
+            "text": "Replace total = 0 with total = 1, keeping it inside the loop.",
+            "correct": false,
+            "feedback": "This still resets total every turn. The final update is 1 + 1 = 2."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Write down the starting score before visiting either item.",
+          "Carry the updated score into the second iteration."
+        ],
+        "retry": "An accumulator does not have to start at 0. Starting at 10 keeps the existing score, and the loop adds the new points to it."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Your turn: write the loop",
+        "prompt": "A fictional learner completed study sessions lasting 10, 15, and 5 minutes. Write Python code that starts `total_minutes` at 0, visits `[10, 15, 5]` with a for loop, adds each session's minutes to the running total, and prints the finished total once.\n\nUse `minutes` for the current item. Before comparing with the model, check your indentation and predict the output.",
+        "model": "One solution:\n```python\ntotal_minutes = 0\nfor minutes in [10, 15, 5]:\n    total_minutes = total_minutes + minutes\nprint(total_minutes)\n```\nThe output is 30: 0 + 10 = 10, 10 + 15 = 25, and 25 + 5 = 30. Initialization and printing are outside the loop; only the update repeats."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Arrange the accumulator pattern",
+        "prompt": "You want to write a loop that adds a list of costs and prints one final total. Arrange these code-writing steps in order.",
+        "reveal": "The starting value belongs before the loop, the update belongs inside it, and the final output belongs after it. This placement lets the total survive from one iteration to the next.",
+        "type": "order",
+        "steps": [
+          "Write total = 0 without indentation.",
+          "Write a for line that visits each cost in the list, ending with a colon.",
+          "Write total = total + cost, indented inside the loop.",
+          "Write print(total) without indentation, after the loop."
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A receptionist runs this code to announce two visitors and then close the list. What is the output?\n```python\nfor name in [\"Ava\", \"Bo\"]:\n    print(name)\nprint(\"Done\")\n```",
+        "options": [
+          "Ava\nBo\nDone",
+          "Ava\nDone\nBo\nDone",
+          "Bo\nDone",
+          "Done\nAva\nBo"
+        ],
+        "correctAnswer": "Ava\nBo\nDone",
+        "explanation": "The indented print runs for Ava and then Bo. The unindented print runs once after the loop, so Done comes last."
+      },
+      {
+        "question": "A game player already has 10 points and earns two new rewards. What does this code print?\n```python\nscore = 10\nfor points in [2, 3]:\n    score = score + points\nprint(score)\n```",
+        "options": [
+          "15",
+          "5",
+          "13",
+          "10"
+        ],
+        "correctAnswer": "15",
+        "explanation": "The accumulator starts at 10 and keeps both updates: 10 + 2 = 12, then 12 + 3 = 15. The final score is printed once after the loop."
+      }
+    ]
+  },
+  "score": 8.7,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 74789,
+      "approach": "discovery",
+      "blocks": "code > explain > check > code > explain > code > activity > check > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.verify_failed",
+      "iteration": 1,
+      "ms": 807,
+      "error": "OpenRouter 402: {\"error\":{\"message\":\"This request would exceed your available credits given your current in-flight requests. Retry after in-flight requests settle, or add credits.\",\"code\":402,\"metadata\":{\"reason\":\"in_flight_budget_exhausted\",\"limit_source\":\"openrouter_in_flight_budget\",\"remedy_hint\":\"Retry after your in-flight requests settle (see the Retry-After header). Adding credits at https://openrouter.ai/settings/credits raises your in-flight budget, up to a capped ceiling.\",\"headers\":{\"Retry-After\":\"120\"},\"provider_name\":null}},\"user_id\":\"user_[redacted]\"}"
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8.7,
+      "ms": 6941,
+      "problems": [
+        "The retry explanations mostly repeat the original explanations rather than offering genuinely different ways to understand the code.",
+        "The final writing task specifies nearly every implementation choice, so it tests reproduction more strongly than independent application."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8.7,
+      "passed": true,
+      "sources": 0
+    }
+  ]
+}

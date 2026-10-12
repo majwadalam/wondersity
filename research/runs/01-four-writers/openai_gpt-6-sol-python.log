@@ -1,0 +1,5 @@
+■ programming: Python loops (71s, score 7, below bar)
+  approach: worked_example (A fully traced loop makes each update visible before the learner predicts output, repairs a reset, and writes an update independently.)
+  blocks:   worked > explain > check > code:predict > activity:order > check > code:bug > problem
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=6.5, lesson.revise, lesson.evaluate=7, lesson.select=7

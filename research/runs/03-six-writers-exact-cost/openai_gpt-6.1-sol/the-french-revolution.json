@@ -1,0 +1,209 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Why 1789?",
+    "objective": "Explain how royal debt, expensive food and new political ideas combined to turn a financial crisis into a revolution.",
+    "estimatedMinutes": 7,
+    "approach": "mystery",
+    "approachReason": "The lesson opens with the puzzle of why long-standing problems became revolutionary in 1789, then uncovers the interacting causes before resolving it.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Clue 1: the king needed more than money",
+        "body": "Decades of warfare, including French support for American independence, had left the monarchy heavily indebted. Interest payments consumed a large share of royal income, and obtaining more loans became increasingly difficult.\n\nRaising taxes was politically difficult too: privileged groups resisted reforms that threatened their advantages. To seek agreement on the financial crisis, Louis XVI called the Estates-General—a representative assembly that had not met since 1614—to meet in May 1789. A money problem had opened a debate about who could authorize change.",
+        "example": "The issue was not simply that France had no wealth. The monarchy struggled to collect enough revenue through a tax system that distributed burdens unevenly."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Look for the obstacle between needing money and collecting more taxes.",
+          "Which option connects resistance to tax reform with the calling of an assembly?"
+        ],
+        "retry": "Imagine needing more income but being unable to change the rules for collecting it without opposition. The dispute becomes about who has the authority to change those rules."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "Hardship supplied urgency; ideas supplied arguments",
+        "body": "A poor harvest in 1788 and a harsh winter helped push bread prices upward. Because bread was a staple food, higher prices squeezed household budgets and made anger about inequality more urgent.\n\nMeanwhile, Enlightenment ideas offered ways to question inherited privilege and unchecked royal authority. These ideas circulated through books, pamphlets and public discussion, especially among educated readers; people did not all agree on a single program. Food shortages created pressure for action, while ideas helped people argue that the political rules—not just the price of bread—needed to change.",
+        "example": "Wanting cheaper bread and demanding fairer representation were different demands, but they could reinforce each other."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Separate the immediate pressure on households from the argument about political power.",
+          "Which answer explains how the two demands reinforce one another without making them identical?"
+        ],
+        "retry": "A hardship explains why change feels urgent. A political argument explains what people believe should change. Neither, by itself, fully explains the crisis."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Solve the mystery yourself",
+        "prompt": "A visitor says, “The revolution started because bread became expensive.” Improve that explanation in two or three sentences. Connect royal debt, food prices and new ideas, and explain why the Estates-General mattered.",
+        "model": "Debt pushed the monarchy to seek tax reform and call the Estates-General, opening a struggle over political authority. High bread prices made hardship and inequality urgent, while new ideas helped people challenge privilege and demand a greater voice. These pressures converged in 1789 rather than operating separately."
+      },
+      {
+        "kind": "explain",
+        "heading": "The answer: pressures met an opening",
+        "body": "1789 was not the year France first encountered debt, hunger or criticism of power. It was the year these pressures converged with a political opening: the calling of the Estates-General brought arguments about taxation, privilege and representation into a national confrontation.\n\nDebt weakened the government's ability to carry on as before; expensive bread intensified popular anger; new ideas made alternatives to the old order thinkable. Their interaction helps explain the revolution's beginning—without making its course inevitable.",
+        "example": ""
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Choose an explanation to investigate",
+        "prompt": "France had faced debt and hunger before. Which explanation best accounts for why a revolutionary crisis began in 1789?",
+        "reveal": "The strongest explanation connects several pressures rather than choosing one trigger. Follow the clues to see how financial trouble opened a political dispute that hardship and new ideas intensified.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "Bread prices alone automatically caused a revolution.",
+            "correct": false,
+            "feedback": "Expensive bread caused serious hardship, but hardship alone does not explain why royal authority and political rules came under challenge."
+          },
+          {
+            "text": "New ideas suddenly appeared for the first time in 1789.",
+            "correct": false,
+            "feedback": "Ideas questioning authority and privilege had circulated for decades. We need to explain why they gained force at this particular moment."
+          },
+          {
+            "text": "Debt opened a political crisis that food hardship and new ideas intensified.",
+            "correct": true,
+            "feedback": "This connects the government's financial problem with people's urgent grievances and arguments for political change."
+          },
+          {
+            "text": "The king deliberately called an assembly to abolish the monarchy.",
+            "correct": false,
+            "feedback": "Louis XVI sought help resolving the financial crisis, not the abolition of his own monarchy."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Two paths toward demands for change",
+        "prompt": "Tap the nodes and trace two paths: one from the poor harvest, and one from new ideas. Where do they meet? Then trace how royal debt created an opportunity for those demands to be heard.",
+        "reveal": "Hardship made change urgent, while new ideas helped people question political arrangements. The Estates-General gave these demands a national arena because the monarchy needed a solution to its debt crisis.",
+        "type": "diagram",
+        "nodes": [
+          {
+            "label": "Royal debt",
+            "detail": "Heavy debts and difficulty raising revenue pushed the monarchy to seek agreement on financial reform."
+          },
+          {
+            "label": "Estates-General",
+            "detail": "Called to meet in May 1789, the assembly created an arena for arguments about taxes, representation and authority."
+          },
+          {
+            "label": "Poor harvest",
+            "detail": "The poor harvest of 1788 reduced food supplies. The harsh winter that followed added to the hardship."
+          },
+          {
+            "label": "Costly bread",
+            "detail": "Bread was a staple. Rising prices left many households struggling to afford other necessities."
+          },
+          {
+            "label": "New political ideas",
+            "detail": "Enlightenment arguments encouraged criticism of inherited privilege and arbitrary power, though readers disagreed about the changes needed."
+          },
+          {
+            "label": "Demands for change",
+            "detail": "Grievances included material hardship as well as demands for fairer taxation, representation and limits on authority."
+          }
+        ],
+        "edges": [
+          {
+            "from": 0,
+            "to": 1,
+            "label": "prompted the calling of"
+          },
+          {
+            "from": 2,
+            "to": 3,
+            "label": "helped raise prices"
+          },
+          {
+            "from": 3,
+            "to": 5,
+            "label": "made grievances urgent"
+          },
+          {
+            "from": 4,
+            "to": 5,
+            "label": "supplied political arguments"
+          },
+          {
+            "from": 1,
+            "to": 5,
+            "label": "provided a national arena"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "You are advising Louis XVI as his government struggles to pay its debts. Powerful groups resist changes to their tax privileges. Why might calling the Estates-General make this more than a financial problem?",
+        "options": [
+          "It would automatically erase the government's debts.",
+          "It would invite disputes about who should pay and who could authorize reform.",
+          "It would guarantee that bread prices immediately fell.",
+          "It would prevent anyone from criticizing the tax system."
+        ],
+        "correctAnswer": "It would invite disputes about who should pay and who could authorize reform.",
+        "explanation": "Resolving the debt required contested decisions about taxation. Calling a representative assembly opened wider questions about privilege, representation and political authority."
+      },
+      {
+        "question": "In a French town in early 1789, workers complain that bread is unaffordable, while a pamphlet argues that inherited privilege is unjust and the nation deserves a political voice. How do these demands help explain the growing crisis?",
+        "options": [
+          "The pamphlet caused the poor harvest, which then raised bread prices.",
+          "Both demands concern only food supplies, not political authority.",
+          "Food hardship made change urgent, while political ideas helped turn grievances into challenges to the old order.",
+          "The demands prove that everyone wanted exactly the same political changes."
+        ],
+        "correctAnswer": "Food hardship made change urgent, while political ideas helped turn grievances into challenges to the old order.",
+        "explanation": "High bread prices intensified immediate hardship, while arguments against privilege supplied reasons to change political arrangements. These pressures could reinforce one another without everyone sharing the same goals."
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 60736,
+      "approach": "mystery",
+      "blocks": "activity > explain > check > activity > explain > check > reflect > explain",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8,
+      "ms": 7711,
+      "problems": [
+        "The opening prediction reveals the complete causal explanation immediately, weakening the mystery and reducing the need to investigate the later clues.",
+        "Most incorrect answer options are obviously implausible or absolute, so learners can pass the checks without a strong understanding of how the causes interacted.",
+        "The diagram asks learners to trace existing connections rather than construct or test them, making this activity more guided reading than hands-on reasoning.",
+        "The lesson explains why the Estates-General created a political opening but gives little concrete detail about how disputes over representation turned that opening into a challenge to royal authority."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true
+    }
+  ]
+}

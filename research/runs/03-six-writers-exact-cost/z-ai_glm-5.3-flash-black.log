@@ -1,0 +1,5 @@
+■ conceptual science: Black holes (44s, score 9, $0.0062, 4 calls, 14253 in / 8025 out tokens)
+  approach: simulation (The event horizon is a quantity-driven boundary: shrinking a fixed mass and watching surface escape velocity climb toward light speed makes the idea concrete and physically honest.)
+  blocks:   explain > activity:simulation > check > explain > explain > activity:sort > check > check > summary
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=6, lesson.revise, lesson.evaluate=9, lesson.select=9

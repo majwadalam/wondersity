@@ -1,0 +1,330 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "For Loops and Accumulators",
+    "objective": "Read, predict and write for loops that build up a result.",
+    "estimatedMinutes": 8,
+    "approach": "discovery",
+    "approachReason": "The accumulator pattern is best learned by predicting what a loop does first and naming the pattern only after the learner has seen the evidence in traces and outputs.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "A for loop walks through a sequence",
+        "body": "for n in [3, 5, 2]: sets n to each value in turn — 3, then 5, then 2. The indented body runs once per value, top to bottom, and the same variable n is reused each trip. When the sequence runs out, the loop stops and the first unindented line runs next.",
+        "example": "for letter in \"cat\": runs the body with letter = \"c\", then \"a\", then \"t\" — three trips, one per character."
+      },
+      {
+        "kind": "code",
+        "heading": "Trace a loop that adds things up",
+        "prompt": "Step through the code one line at a time and watch the variables change.",
+        "language": "python",
+        "code": "nums = [4, 1, 6]\ntotal = 0\nfor n in nums:\n    total = total + n\nprint(total)",
+        "explanation": "total is the accumulator. It starts at 0, is updated once per item, and holds 11 when the loop ends.",
+        "hints": [],
+        "mode": "trace",
+        "options": [],
+        "trace": [
+          {
+            "line": 2,
+            "note": "total starts at 0 before the loop.",
+            "state": "total = 0"
+          },
+          {
+            "line": 3,
+            "note": "First trip: n takes the first value.",
+            "state": "n = 4, total = 0"
+          },
+          {
+            "line": 4,
+            "note": "total grows by that value.",
+            "state": "n = 4, total = 4"
+          },
+          {
+            "line": 3,
+            "note": "Second trip: n moves to the next item.",
+            "state": "n = 1, total = 4"
+          },
+          {
+            "line": 4,
+            "note": "total grows again, keeping the old value.",
+            "state": "n = 1, total = 5"
+          },
+          {
+            "line": 3,
+            "note": "Third trip: n takes the last item.",
+            "state": "n = 6, total = 5"
+          },
+          {
+            "line": 4,
+            "note": "total absorbs the last value.",
+            "state": "n = 6, total = 11"
+          },
+          {
+            "line": 5,
+            "note": "The loop is done, so print runs once.",
+            "state": "output: 11"
+          }
+        ]
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "How many items are in the list?",
+          "count changes by the same amount on every trip."
+        ],
+        "retry": "A counter is just an accumulator that adds 1 each trip instead of adding the item."
+      },
+      {
+        "kind": "explain",
+        "heading": "The accumulator: one variable that grows across trips",
+        "body": "An accumulator is a variable created before the loop, updated inside the loop, and used after the loop ends. Before the loop it holds a starting value — 0 for a sum. Inside, each trip folds one item into it with a line like total = total + n. After the loop, that single variable holds the combined result, which is why you print it outside the body.",
+        "example": "For a product you would start at 1, not 0, because multiplying by 0 would wipe out everything on the first trip."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "worked",
+        "heading": "Worked example: counting the even numbers",
+        "problem": "Problem: write a loop that counts how many numbers in [4, 9, 2, 7, 10] are even.",
+        "steps": [
+          {
+            "title": "Start the counter",
+            "text": "count = 0 before the loop.",
+            "why": "The variable must exist before the first trip, or there is nothing to add to."
+          },
+          {
+            "title": "Walk through the numbers",
+            "text": "for n in [4, 9, 2, 7, 10]:",
+            "why": "n takes each value in turn — five trips in total."
+          },
+          {
+            "title": "Test each number",
+            "text": "if n % 2 == 0: count = count + 1",
+            "why": "% gives the remainder; a remainder of 0 means even. The update only happens on trips where the test passes."
+          },
+          {
+            "title": "Report once",
+            "text": "print(count) after the loop.",
+            "why": "Printing inside the body would show a running count each trip; outside shows only the final result."
+          }
+        ],
+        "answer": "Final answer: only 4, 2 and 10 are even, so the loop prints 3."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Which values make s > 10 true?",
+          "big only changes on the trips where the test passes."
+        ],
+        "retry": "Anything that survives to the print line is the sum of the items whose test passed — nothing else."
+      },
+      {
+        "kind": "code",
+        "heading": "Find the bug",
+        "prompt": "This loop should add 3 + 6 + 9 and print 18, but it prints 9. One line needs to change.",
+        "language": "python",
+        "code": "nums = [3, 6, 9]\ntotal = 0\nfor n in nums:\n    total = 0\n    total = total + n\nprint(total)",
+        "explanation": "Diagnosis rule: if an accumulator never grows past a single item, look for a line inside the loop that resets it.",
+        "hints": [
+          "Read the body line by line: what happens after total is updated?",
+          "Trace it manually for nums = [3, 6, 9]."
+        ],
+        "mode": "bug",
+        "options": [
+          {
+            "text": "Delete the total = 0 inside the loop, keeping the one above it.",
+            "correct": true,
+            "feedback": "Correct. Then each trip adds to what the previous trips built: 3, then 9, then 18."
+          },
+          {
+            "text": "Change total = total + n to total = n + total.",
+            "correct": false,
+            "feedback": "Addition order makes no difference here. The reset is what destroys the running total."
+          },
+          {
+            "text": "Move print(total) inside the loop.",
+            "correct": false,
+            "feedback": "That would print 3, 6 and 9 each trip — still no accumulation, and the final value stays wrong."
+          },
+          {
+            "text": "Replace nums with range(3).",
+            "correct": false,
+            "feedback": "range(3) gives 0, 1, 2 rather than 3, 6, 9, and the reset inside the loop is untouched."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "problem",
+        "heading": "Compute the final total",
+        "prompt": "What does this loop print?\n\ntotal = 0\nfor n in range(1, 5):\n    total = total + n\nprint(total)\n\nType the number only.",
+        "answers": [
+          "10"
+        ],
+        "unit": "",
+        "traps": [
+          {
+            "answer": "4",
+            "feedback": "4 is how many numbers the range gives (and also the last value), not their sum."
+          },
+          {
+            "answer": "9",
+            "feedback": "That is 2 + 3 + 4 — range(1, 5) starts at 1, not 2."
+          },
+          {
+            "answer": "5",
+            "feedback": "range(1, 5) stops before 5, so 5 is never added."
+          }
+        ],
+        "hints": [
+          "range(1, 5) gives 1, 2, 3, 4 — the stop value is excluded.",
+          "Add one at a time: 1, then 1 + 2, then ..."
+        ],
+        "solution": "1 + 2 + 3 + 4 = 10, so the loop prints 10."
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "text starts as an empty string, so the very first trip writes the first word.",
+          "Each trip puts its piece after everything already stored in text."
+        ],
+        "retry": "Strings accumulate the same way numbers do: start empty, append one piece per trip, print once at the end."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "What does this loop print?",
+        "prompt": "Look at the code below and predict the output before reading anything else.\n\ntotal = 0\nfor n in [3, 5, 2]:\n    total = total + n\nprint(total)",
+        "reveal": "It prints 10. The line total = total + n runs once per item, so total grows: 3, then 8, then 10.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "10",
+            "correct": true,
+            "feedback": "Right — one trip per item, each folding the item into total."
+          },
+          {
+            "text": "3 5 2",
+            "correct": false,
+            "feedback": "That would need print(n) inside the loop. The print here is outside, so it runs once with the final total."
+          },
+          {
+            "text": "0",
+            "correct": false,
+            "feedback": "total starts at 0, but the loop changes it on every trip."
+          },
+          {
+            "text": "The code crashes",
+            "correct": false,
+            "feedback": "Nothing is wrong with the code — total is defined before it is used, and the indent is correct."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Outside the loop or inside the body?",
+        "prompt": "This loop adds up the numbers in nums. Decide where each line belongs.",
+        "reveal": "Set up before, update inside, report after — that is the accumulator pattern, and the placement of each line is what makes it work.",
+        "type": "sort",
+        "buckets": [
+          "Outside the loop (runs once)",
+          "Inside the loop body (runs each trip)"
+        ],
+        "items": [
+          {
+            "text": "total = 0",
+            "bucket": "Outside the loop (runs once)"
+          },
+          {
+            "text": "for n in nums:",
+            "bucket": "Outside the loop (runs once)"
+          },
+          {
+            "text": "total = total + n",
+            "bucket": "Inside the loop body (runs each trip)"
+          },
+          {
+            "text": "print(total)",
+            "bucket": "Outside the loop (runs once)"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "Maya writes:\n\ncount = 0\nfor word in [\"hi\", \"there\", \"friend\", \"ok\"]:\n    count = count + 1\nprint(count)\n\nWhat does it print?",
+        "options": [
+          "4",
+          "0",
+          "1",
+          "hi there friend ok"
+        ],
+        "correctAnswer": "4",
+        "explanation": "count starts at 0 and increases by 1 on each of the four trips, so the final value is 4."
+      },
+      {
+        "question": "A shop's sales list is [12, 5, 30, 8]. Sam writes:\n\nbig = 0\nfor s in [12, 5, 30, 8]:\n    if s > 10:\n        big = big + s\nprint(big)\n\nWhat does it print?",
+        "options": [
+          "42",
+          "55",
+          "2",
+          "12"
+        ],
+        "correctAnswer": "42",
+        "explanation": "Only 12 and 30 satisfy s > 10, and only those trips add to big, giving 12 + 30 = 42."
+      },
+      {
+        "question": "Ravi builds a string from words:\n\ntext = \"\"\nfor w in [\"go\", \"run\", \"fly\"]:\n    text = text + w + \"!\"\nprint(text)\n\nWhat is printed?",
+        "options": [
+          "go!run!fly!",
+          "!",
+          "fly!",
+          "go run fly"
+        ],
+        "correctAnswer": "go!run!fly!",
+        "explanation": "text starts empty and each trip appends the current word plus \"!\", so the pieces pile up in order as go!run!fly!."
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 24257,
+      "approach": "discovery",
+      "blocks": "activity > explain > code > check > explain > activity > worked > check > code > problem > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8,
+      "ms": 6826,
+      "problems": [
+        "The module objective includes 'write' for loops that build up a result, but no activity asks the learner to actually compose a loop: prediction, sorting, and multiple-choice bug-fixing cover reading and predicting, while writing is only modeled in the worked example.",
+        "The sort activity's prompt says 'This loop adds up the numbers in nums' but never displays the code, and placing the line 'for n in nums:' in the 'Outside the loop (runs once)' bucket is defensible yet ambiguous — the loop header could reasonably be read as part of the loop, which may confuse rather than clarify.",
+        "The third check's retry ('Strings accumulate the same way numbers do: start empty, append one piece per trip, print once at the end') restates the same pattern structure as the first check's retry; it is a fair hint but not a distinctly different explanation angle."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true
+    }
+  ]
+}

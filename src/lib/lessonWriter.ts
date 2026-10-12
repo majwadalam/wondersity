@@ -85,8 +85,10 @@ ${b.previousApproaches?.length ? `Approaches used in earlier modules: ${b.previo
 // and retried from scratch (3 of 10 sample generations failed that way). The
 // run's hard deadline still bounds the total.
 const LESSON_CALL_TIMEOUT_MS = 90_000;
-const WRITER_OPTIONS = { reasoningEffort: "medium", timeoutMs: LESSON_CALL_TIMEOUT_MS } as const;
-const EVALUATOR_OPTIONS = { reasoningEffort: "low", timeoutMs: LESSON_CALL_TIMEOUT_MS } as const;
+// Output caps (reasoning included), well above what's been measured: lessons
+// use 3-9k output tokens with GPT-6.1 Sol, a review about 1-2k.
+const WRITER_OPTIONS = { reasoningEffort: "medium", timeoutMs: LESSON_CALL_TIMEOUT_MS, maxTokens: 24_000 } as const;
+const EVALUATOR_OPTIONS = { reasoningEffort: "low", timeoutMs: LESSON_CALL_TIMEOUT_MS, maxTokens: 6_000 } as const;
 
 // The model occasionally ignores the rules. Retry once on a validation
 // failure (bounded), then give up with a clear error.

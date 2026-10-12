@@ -1,0 +1,5 @@
+■ history: The French Revolution (56s, score 9)
+  approach: mystery (The timing itself is the puzzle: France was the strongest kingdom in Europe, so why did it collapse in a single year? Each section resolves one part, and the final block assembles the answer.)
+  blocks:   explain > activity:chart > explain > check > activity:simulation > explain > activity:sort > check > activity:order > check > reflect > summary
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=7, lesson.revise, lesson.evaluate=9, lesson.select=9

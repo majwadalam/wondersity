@@ -1,0 +1,5 @@
+■ conceptual science: Black holes (66s, score 8.5, $0.0851, 4 calls, 14548 in / 6626 out tokens)
+  approach: misconception (Testing the claim that gravity stops light reveals that the event horizon limits where a signal can go, not how fast it moves nearby.)
+  blocks:   activity:predict > explain > check > activity:diagram > explain > check > reflect
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=7.5, lesson.revise, lesson.evaluate=8.5, lesson.select=8.5

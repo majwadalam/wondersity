@@ -1,0 +1,292 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The Event Horizon",
+    "objective": "Understand why nothing, not even light, escapes from inside the event horizon.",
+    "estimatedMinutes": 8,
+    "approach": "simulation",
+    "approachReason": "The event horizon is a threshold defined by a quantity (escape velocity) that changes as an object is compressed, so the clearest path is to let the learner squeeze a star and watch the threshold appear.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Escape velocity",
+        "body": "Every massive object has an escape velocity: the speed you need to break free of its gravity from a given distance. For Earth at the surface, that's about 11 km/s. The key insight is that escape velocity depends on how tightly the mass is packed — the same mass squeezed into a smaller radius pulls harder at its surface.\n\nThis means a star's escape velocity isn't fixed. Compress the star, and the speed needed to leave its surface climbs.",
+        "example": "A white dwarf packs the Sun's mass into an Earth-sized ball: its surface escape velocity is thousands of km/s. A neutron star, just 20 km across, is close to half the speed of light."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Think about which object packs its mass closer together.",
+          "Escape velocity depends on distance from the mass, not the total amount of mass alone."
+        ],
+        "retry": "Escape velocity scales as 1/√r: halving the radius multiplies the escape velocity by about 1.4, not 2."
+      },
+      {
+        "kind": "explain",
+        "heading": "The line light cannot cross",
+        "body": "In your simulation, at about 3 km the escape velocity reached 300,000 km/s — the speed of light. That's the crucial threshold: light itself is the fastest thing there is, so if even light can't reach escape velocity, nothing can.\n\nThe sphere around a mass where the escape velocity equals the speed of light is called the event horizon. Its radius depends only on the mass: for the Sun's mass it's about 3 km, for a ten-solar-mass black hole about 30 km. Inside it, every path leading outward — even a straight beam of light — bends back inward.",
+        "example": "This radius was first calculated from Einstein's equations by Karl Schwarzschild in 1916, in the middle of World War I — the Schwarzschild radius is named for him."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Use the threshold you found in the simulation.",
+          "The Sun's mass doesn't change — only how tightly it's packed."
+        ],
+        "retry": "The horizon appears when the escape velocity at the surface hits the speed of light — for the Sun's mass, that happens at about 3 km."
+      },
+      {
+        "kind": "problem",
+        "heading": "Earth as a black hole",
+        "prompt": "You now have the rule: an event horizon appears when escape velocity reaches the speed of light. Earth's mass is 6.0 × 10²⁴ kg, G = 6.7 × 10⁻¹¹ N·m²/kg², and c = 3.0 × 10⁸ m/s. Setting escape velocity v = √(2GM/r) equal to c, calculate the event horizon radius Earth would have if it were compressed into a black hole. Give your answer in meters.",
+        "answers": [
+          "0.0089",
+          "0.009",
+          "8.9e-3"
+        ],
+        "unit": "m",
+        "traps": [
+          {
+            "answer": "8900",
+            "feedback": "That's the radius in millimeters — Earth's Schwarzschild radius is under a centimeter, about 0.009 m."
+          },
+          {
+            "answer": "9",
+            "feedback": "You likely kept G and c but forgot to square c: r = 2GM/c², not 2GM/c."
+          }
+        ],
+        "hints": [
+          "Rearrange √(2GM/r) = c to solve for r.",
+          "You should get a number much smaller than 1."
+        ],
+        "solution": "Solve c = √(2GM/r) for r: r = 2GM/c² = 2 × (6.7×10⁻¹¹)(6.0×10²⁴) / (3.0×10⁸)² = 8.0×10¹⁴ / 9.0×10¹⁶ ≈ 0.0089 m — under a centimeter. Earth's entire mass, collapsed into a marble, would trap light."
+      },
+      {
+        "kind": "explain",
+        "heading": "Why nothing gets out",
+        "body": "It's tempting to picture the horizon as a wall that things bump into — but there's no wall. It's a surface in space where the geometry of spacetime itself tips over.\n\nThink of it like a river heading toward a waterfall. Outside the horizon, some currents (directions in space) still flow back upstream, so a powerful enough swimmer — even light — can escape. Inside, every current, even the one pointing 'outward', flows toward the falls faster than anyone can swim. Light isn't slow inside a black hole; it travels at full speed. It's just that space itself funnels inward more steeply than light can climb.",
+        "example": "This is why the flashlight experiment from the start of the lesson has only one answer: a beam aimed straight out from inside simply curves back toward the center. There is no outward path left to follow."
+      },
+      {
+        "kind": "activity",
+        "ref": 2
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Remember the flashlight experiment from the beginning of the lesson.",
+          "Light travels at full speed inside — the problem isn't its speed, it's the direction space allows."
+        ],
+        "retry": "Inside the horizon, all directions in space lead toward the center — there is no outward path for anything, including light, to follow."
+      },
+      {
+        "kind": "summary",
+        "heading": "What you now know",
+        "points": [
+          "Escape velocity grows as an object is compressed — same mass, smaller radius, higher speed needed to escape.",
+          "The event horizon is the surface where escape velocity equals the speed of light; its radius scales with mass (~3 km per solar mass).",
+          "Inside the horizon, nothing can escape — not because things get slow, but because every path through space leads inward."
+        ]
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "The flashlight experiment",
+        "prompt": "You hover just inside a black hole's event horizon and shine a flashlight straight outward, away from the center. What happens to the beam of light?",
+        "reveal": "Inside the horizon, even a beam pointed straight outward curves back inward — light itself cannot reach escape velocity, so nothing can.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "It travels outward forever, since nothing slows light down",
+            "correct": false,
+            "feedback": "Light's speed never changes — but escape velocity here is the speed of light, so traveling outward fast enough isn't possible even for light."
+          },
+          {
+            "text": "It curves back around and falls toward the center",
+            "correct": true,
+            "feedback": "Exactly. Inside the horizon there is no outward path — even light aimed straight out bends back inward."
+          },
+          {
+            "text": "It slows down, stops, and falls back like a thrown ball",
+            "correct": false,
+            "feedback": "Close on the ending, wrong on the mechanism: light always moves at full speed. It doesn't slow — its path bends back inward."
+          },
+          {
+            "text": "It is instantly absorbed by the horizon surface",
+            "correct": false,
+            "feedback": "There is no surface or wall at the horizon — it's a boundary in space, not a physical object."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Squeeze a star",
+        "prompt": "Drag the radius of this object (mass = one Sun) and watch how the escape velocity at its surface changes.",
+        "reveal": "As the radius shrinks, escape velocity climbs without limit — and at about 3 km it hits the speed of light. That's where an event horizon appears.",
+        "type": "simulation",
+        "slider": {
+          "label": "Radius",
+          "min": 1,
+          "max": 5000,
+          "step": 10,
+          "unit": "km",
+          "initial": 3500
+        },
+        "bands": [
+          {
+            "upTo": 3,
+            "title": "Event horizon: nothing escapes",
+            "detail": "Escape velocity here is 300,000 km/s — the speed of light. Even light can't leave. This object is now a black hole."
+          },
+          {
+            "upTo": 50,
+            "title": "Extreme gravity",
+            "detail": "Escape velocity is a large fraction of light speed. Matter this compact is a neutron star — gravity strong enough to bend light noticeably."
+          },
+          {
+            "upTo": 2000,
+            "title": "Very dense star",
+            "detail": "Escape velocity is tens of thousands of km/s — far beyond any rocket, though still well below light speed."
+          },
+          {
+            "upTo": 5000,
+            "title": "Ordinary star",
+            "detail": "Escape velocity around 600–700 km/s. Enormous by human standards, yet easy compared to what's coming as you compress further."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "The edge of no return",
+        "prompt": "You're piloting a ship on a path that will cross a black hole's event horizon. You have fuel for exactly one powerful burn of your engines. What's your best move?",
+        "reveal": "Outside the horizon, escape is still possible — barely — because the escape velocity hasn't yet reached the speed of light. Once you cross, no engine, however powerful, can change that.",
+        "type": "scenario",
+        "options": [
+          {
+            "text": "Burn everything now, while you're still outside the horizon",
+            "correct": true,
+            "feedback": "Correct. Outside the horizon, escape velocity is still finite — a strong enough burn can still get you out. It's your only window."
+          },
+          {
+            "text": "Wait until you're just inside the horizon, then burn — a powerful engine can exceed light speed briefly",
+            "correct": false,
+            "feedback": "No engine exceeds light speed, and inside the horizon the escape velocity already exceeds it. Inside, escape is impossible no matter how you burn."
+          },
+          {
+            "text": "Cross the horizon and turn around — pointing away from the hole is what matters",
+            "correct": false,
+            "feedback": "Direction doesn't save you. Inside the horizon, even 'straight out' bends back toward the center."
+          },
+          {
+            "text": "Turn off the engines — the black hole's pull is weakest at the horizon, so you'll naturally drift away",
+            "correct": false,
+            "feedback": "The opposite is true: at the horizon the escape velocity is the speed of light, the strongest gravity threshold there is."
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A white dwarf and a neutron star both contain roughly 1.4 times the Sun's mass. The neutron star is about 500 times smaller in radius. Which statement is right?",
+        "options": [
+          "The neutron star has a higher escape velocity, because the same mass is packed into a smaller radius",
+          "They have the same escape velocity, because escape velocity depends only on mass",
+          "The white dwarf has a higher escape velocity, because it is less dense and gravity spreads out more gently",
+          "Neither has an escape velocity, because they are too massive for rockets to leave"
+        ],
+        "correctAnswer": "The neutron star has a higher escape velocity, because the same mass is packed into a smaller radius",
+        "explanation": "Escape velocity rises as radius shrinks at fixed mass — that's exactly what the simulation showed. The tightly packed neutron star's surface escape velocity approaches half the speed of light."
+      },
+      {
+        "question": "Suppose the Sun were magically compressed to a radius of 2 km. What would we observe from a safe distance?",
+        "options": [
+          "An extremely bright, dense star, since the same mass is squeezed harder",
+          "A black hole with an event horizon about 3 km across, from which no light escapes",
+          "An ordinary-looking but very red star, since gravity stretches light's wavelength",
+          "Nothing at all — an object that compact would vanish from the universe entirely"
+        ],
+        "correctAnswer": "A black hole with an event horizon about 3 km across, from which no light escapes",
+        "explanation": "At 2 km, the escape velocity at the surface exceeds the speed of light, so the object sits inside its own event horizon (about 3 km for one solar mass). Light from its surface can never reach us — though the hole's gravity itself is still felt from outside."
+      },
+      {
+        "question": "An astronaut drifts just inside a black hole's event horizon and radios a rescue ship waiting outside, using a powerful transmitter. What reaches the rescuers?",
+        "options": [
+          "A normal message, since radio waves travel at light speed and the astronaut is only just inside",
+          "A stretched, fading signal, but the words still get through if the transmitter is strong enough",
+          "A redshifted signal that arrives after a long delay — possible with a powerful enough transmitter",
+          "Nothing: the signal, like the astronaut, can only follow paths that lead deeper inside"
+        ],
+        "correctAnswer": "Nothing: the signal, like the astronaut, can only follow paths that lead deeper inside",
+        "explanation": "Inside the horizon, the escape velocity exceeds the speed of light, so no signal — no matter how powerful — can reach outward. Every path, including light's, leads inward."
+      }
+    ]
+  },
+  "score": 7,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 33906,
+      "approach": "simulation",
+      "blocks": "activity > explain > activity > check > explain > check > problem > explain > activity > check > summary",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 7,
+      "ms": 16337,
+      "problems": [
+        "Simulation flaw: the slider has min=1, step=10, so reachable values are 1, 11, 21... — the 3 km horizon band (upTo: 3) is unreachable, yet the lesson tells the learner they watched escape velocity hit light speed at ~3 km in the simulation. The lesson's central claim about the sim never actually happens.",
+        "Activity ordering: the flashlight experiment (activity 0) is placed first, before the escape-velocity concept it depends on, and its predict immediately reveals the correct answer — making the later check (ref 2) largely a repeat of what was already given away rather than a genuine test.",
+        "Trap feedback error in the Earth problem: 8900 is described as 'the radius in millimeters', but Earth's Schwarzschild radius is ~8.9 mm; 8900 mm would be ~9 m. The feedback's arithmetic is wrong.",
+        "The 'edge of no return' scenario (activity 2) is somewhat redundant with the flashlight experiment — both test 'inside = no escape' with the same mechanism, reducing variety.",
+        "Minor: check ref 2 tests the flashlight outcome again after the 'Why nothing gets out' explain already states it, so it's a third pass over the same idea."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 26705,
+      "approach": "simulation",
+      "blocks": "activity > explain > check > activity > explain > check > problem > explain > check > summary",
+      "droppedBlocks": 1,
+      "droppedActivities": 1,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 7,
+      "ms": 5384,
+      "problems": [
+        "Simulation band fact error: at the slider's initial 5000 km radius (one solar mass), the surface escape velocity is ~7,300 km/s (v = c·√(r_s/r) = 3×10⁵·√(2.95/5000)), not '600–700 km/s' as the 'Ordinary star' band claims — that figure only applies at the Sun's actual ~700,000 km radius. This directly contradicts what a learner reading the live simulation would see.",
+        "Check ref 1's correct answer says 'an event horizon about 3 km across' — 3 km is the Schwarzschild radius, so the diameter is ~6 km. Minor wording slip that could confuse after the lesson carefully established ~3 km as the radius.",
+        "The 'Why nothing gets out' river analogy is good, but the promise 'You'll test this directly at the end of the lesson with a flashlight experiment' points to an activity that doesn't exist — check ref 2 is a spaceship-burn multiple-choice, not a flashlight experiment. A dangling forward reference."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 7,
+      "passed": false
+    }
+  ]
+}

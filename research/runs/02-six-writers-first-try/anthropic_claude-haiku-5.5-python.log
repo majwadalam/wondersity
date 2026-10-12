@@ -1,0 +1,5 @@
+■ programming: Python loops (96s, score 8)
+  approach: discovery (Learners predict the output of an accumulator loop, and predict the running total mid-loop, before the pattern is named, so the idea comes from evidence they gathered themselves.)
+  blocks:   code:predict > explain > activity:predict > check > explain > code:bug > check > problem > activity:order > problem > check
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=6, lesson.revise, lesson.evaluate=8, lesson.select=8

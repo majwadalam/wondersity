@@ -1,0 +1,236 @@
+{
+  "a": {
+    "topic": "Stoicism",
+    "onboarding": 200,
+    "learn": {
+      "status": 200,
+      "seconds": 14,
+      "kind": "lesson"
+    },
+    "course": {
+      "title": "Stoicism: Clear Thinking and Everyday Practice",
+      "levels": 3,
+      "lessons": 8
+    },
+    "lesson1": {
+      "title": "What Stoicism Is—and Is Not",
+      "score": 8.5,
+      "passed": true,
+      "approach": "misconception",
+      "blocks": "activity > explain > check > activity > explain > check > reflect > explain > check",
+      "sources": 3,
+      "cachedCopy": false
+    },
+    "trace": [
+      {
+        "step": "load_course",
+        "found": false,
+        "currentModule": null
+      },
+      {
+        "step": "plan_cache",
+        "ms": 242,
+        "hit": true,
+        "via": "exact"
+      },
+      {
+        "step": "agent.turn",
+        "turn": 1,
+        "ms": 5890,
+        "toolCalls": [
+          "write_module"
+        ]
+      },
+      {
+        "step": "lesson_cache",
+        "hit": true
+      },
+      {
+        "step": "save_lesson",
+        "lessonId": 11
+      },
+      {
+        "step": "save_progress",
+        "saved": true
+      },
+      {
+        "step": "agent.tool",
+        "turn": 1,
+        "tool": "write_module",
+        "ok": true
+      },
+      {
+        "step": "agent.turn",
+        "turn": 2,
+        "ms": 3679,
+        "toolCalls": []
+      },
+      {
+        "step": "agent.finish",
+        "turn": 2
+      },
+      {
+        "step": "run.cost",
+        "usd": 0.00659,
+        "calls": 2,
+        "tokensIn": 2186,
+        "tokensOut": 164
+      }
+    ],
+    "stage": {
+      "status": 200,
+      "seconds": 29,
+      "guide": "Epictetus",
+      "scenes": 3,
+      "painted": 0,
+      "portrait": false,
+      "goDeeper": {
+        "videos": 3,
+        "articles": 3,
+        "books": 3,
+        "images": 3
+      }
+    },
+    "voice": {
+      "status": 500,
+      "seconds": 1,
+      "url": false
+    },
+    "world": {
+      "status": 500,
+      "seconds": 2,
+      "painted": false
+    },
+    "runs": [
+      {
+        "kind": "learn",
+        "outcome": "lesson",
+        "ok": true,
+        "ms": 13264,
+        "cost_usd": 0.00659,
+        "calls": 2,
+        "tokens_in": 2186,
+        "tokens_out": 164,
+        "error": null
+      },
+      {
+        "kind": "stage",
+        "outcome": "staged",
+        "ok": true,
+        "ms": 27602,
+        "cost_usd": 0.01704,
+        "calls": 4,
+        "tokens_in": 6947,
+        "tokens_out": 4371,
+        "error": null
+      },
+      {
+        "kind": "cover",
+        "outcome": "failed",
+        "ok": false,
+        "ms": 936,
+        "cost_usd": 0,
+        "calls": 0,
+        "tokens_in": 0,
+        "tokens_out": 0,
+        "error": "Error: image: HTTP 402"
+      }
+    ]
+  },
+  "b": {
+    "topic": "stoic philosophy",
+    "onboarding": 200,
+    "learn": {
+      "status": 200,
+      "seconds": 19,
+      "kind": "lesson"
+    },
+    "course": {
+      "title": "Stoicism: Clear Thinking and Everyday Practice",
+      "levels": 3,
+      "lessons": 8
+    },
+    "lesson1": {
+      "title": "What Stoicism Is—and Is Not",
+      "score": 8.5,
+      "passed": true,
+      "approach": "misconception",
+      "blocks": "activity > explain > check > activity > explain > check > reflect > explain > check",
+      "sources": 3,
+      "cachedCopy": false
+    },
+    "trace": [
+      {
+        "step": "load_course",
+        "found": false,
+        "currentModule": null
+      },
+      {
+        "step": "plan_cache",
+        "ms": 6014,
+        "hit": true,
+        "via": "similar",
+        "nearest": [
+          "Stoicism (0.79)"
+        ],
+        "matched": "stoicism"
+      },
+      {
+        "step": "agent.turn",
+        "turn": 1,
+        "ms": 5199,
+        "toolCalls": [
+          "write_module"
+        ]
+      },
+      {
+        "step": "lesson_cache",
+        "hit": true
+      },
+      {
+        "step": "save_lesson",
+        "lessonId": 12
+      },
+      {
+        "step": "save_progress",
+        "saved": true
+      },
+      {
+        "step": "agent.tool",
+        "turn": 1,
+        "tool": "write_module",
+        "ok": true
+      },
+      {
+        "step": "agent.turn",
+        "turn": 2,
+        "ms": 3391,
+        "toolCalls": []
+      },
+      {
+        "step": "agent.finish",
+        "turn": 2
+      },
+      {
+        "step": "run.cost",
+        "usd": 0.0067,
+        "calls": 4,
+        "tokensIn": 2439,
+        "tokensOut": 202
+      }
+    ],
+    "runs": [
+      {
+        "kind": "learn",
+        "outcome": "lesson",
+        "ok": true,
+        "ms": 18207,
+        "cost_usd": 0.0067,
+        "calls": 4,
+        "tokens_in": 2439,
+        "tokens_out": 202,
+        "error": null
+      }
+    ]
+  }
+}

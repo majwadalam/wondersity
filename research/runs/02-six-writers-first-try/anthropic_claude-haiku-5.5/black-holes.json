@@ -1,0 +1,228 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The Event Horizon: Where Escape Becomes Impossible",
+    "objective": "Explain why nothing, not even light, can escape from inside the event horizon, using escape speed and the Schwarzschild radius.",
+    "estimatedMinutes": 8,
+    "approach": "simulation",
+    "approachReason": "Escape depends on how the escape speed changes with distance from the black hole, so the learner should vary the distance and watch the escape speed approach c before the rule is named.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "Throwing something away from a planet",
+        "body": "Throw a ball upward and it falls back, because gravity pulls it down. Throw it harder and it goes higher, but gravity still wins. Above a certain speed, the ball never comes back. That speed is the escape speed.\n\nThe escape speed depends on the mass of the object you're leaving and on how far you are from its centre. Closer to the centre, gravity is stronger, so the escape speed is higher.",
+        "example": "Escaping Earth's surface requires about 11.2 km/s. Escaping the Moon's surface requires only about 2.4 km/s, because the Moon has less mass."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "The critical radius",
+        "body": "The escape speed at distance r from a mass M is v = √(2GM/r). As r grows, v shrinks. For a black hole, there is a radius where this escape speed equals the speed of light: r_s = 2GM/c². This is the Schwarzschild radius.\n\nAt r_s, escaping requires exactly c, and light is already moving at c. Inside r_s, the required speed is greater than c, which is impossible, so nothing that starts there can climb out. The event horizon is the surface at this radius.",
+        "example": "Because r_s depends on mass, the Sun's would be about 3 km across the horizon's radius, while a black hole with the Earth's mass would have a radius under 9 mm."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "At 1.5 r_s, the escape speed is c × √(r_s / r). Calculate it.",
+          "Compare that escape speed with the engine's 0.9c."
+        ],
+        "retry": "The escape speed at a radius is the speed needed to climb to infinity. Compare it with the engine speed, not with c alone."
+      },
+      {
+        "kind": "problem",
+        "heading": "How big is the horizon of Earth's mass?",
+        "prompt": "Suppose Earth's mass (5.972 × 10²⁴ kg) were squeezed into a black hole. Find its Schwarzschild radius r_s = 2GM/c² in millimetres. Use G = 6.674 × 10⁻¹¹ m³ kg⁻¹ s⁻² and c = 2.998 × 10⁸ m/s.",
+        "answers": [
+          "8.87",
+          "8.9"
+        ],
+        "unit": "mm",
+        "traps": [
+          {
+            "answer": "17.7",
+            "feedback": "That is the diameter, 2r_s. The horizon's radius is r_s = 2GM/c², so the answer is half of this."
+          },
+          {
+            "answer": "0.00887",
+            "feedback": "You got the right number but in metres. The question asks for millimetres, so multiply by 1000."
+          }
+        ],
+        "hints": [
+          "Start with r_s = 2GM/c², and write the numbers into the formula.",
+          "The result comes out in metres. Convert to millimetres at the end."
+        ],
+        "solution": "r_s = 2 × 6.674 × 10⁻¹¹ × 5.972 × 10²⁴ / (2.998 × 10⁸)² ≈ 8.87 × 10⁻³ m = 8.87 mm."
+      },
+      {
+        "kind": "explain",
+        "heading": "Why light can't get out",
+        "body": "Inside r_s, the escape speed is more than c, so even the fastest possible motion is not enough. Light is special here: it always moves at c, and it cannot slow down, speed up, or change direction on purpose to escape.\n\nThe deeper reason is that spacetime itself is curved so strongly inside the horizon that every possible path, including a light beam pointed outward, bends toward the centre. The horizon is a one-way boundary, not a physical surface you could stand on.",
+        "example": "A flashlight beam shone outward from just inside the horizon still ends up at the centre. A flashlight shone outward from just outside the horizon escapes."
+      },
+      {
+        "kind": "compare",
+        "heading": "Two pictures of escape",
+        "intro": "The escape-speed picture gets the horizon's location right, but it misses why light is trapped.",
+        "columns": [
+          "Escape-speed guess",
+          "General relativity"
+        ],
+        "rows": [
+          {
+            "label": "What sets the horizon",
+            "a": "The radius where escape speed equals c",
+            "b": "The radius where spacetime is curved so that all future paths point inward"
+          },
+          {
+            "label": "Can light escape from inside?",
+            "a": "Only if it is fast enough, and light is already at c",
+            "b": "No. Every light path inside the horizon points toward the centre."
+          },
+          {
+            "label": "Is the horizon a surface?",
+            "a": "Yes, a boundary you could touch",
+            "b": "No. It is a one-way boundary with no solid surface there."
+          },
+          {
+            "label": "Does a stronger engine help inside?",
+            "a": "Yes, if it is powerful enough",
+            "b": "No. No engine can get out from inside, not even one that moves at c."
+          }
+        ]
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Ask whether any path from that point leads to a distance greater than r_s.",
+          "Compare the position with the Schwarzschild radius."
+        ],
+        "retry": "The horizon is not a location where light stops. Light outside the horizon can still escape, but nothing inside any outgoing path leads away."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "How escape speed changes with distance",
+        "prompt": "Drag the distance from the centre outward, starting at the horizon. Watch how the escape speed, as a fraction of the speed of light, changes at each setting.",
+        "reveal": "Escape speed falls as you move outward and reaches exactly c at the Schwarzschild radius. Inside that radius, no speed is enough to escape.",
+        "type": "simulation",
+        "slider": {
+          "label": "Distance from centre (in units of r_s)",
+          "min": 1,
+          "max": 5,
+          "step": 0.1,
+          "unit": "r_s",
+          "initial": 2
+        },
+        "bands": [
+          {
+            "upTo": 1.25,
+            "title": "Right at the horizon: escape speed ≈ 0.9c or more",
+            "detail": "Escape speed is c at exactly r = r_s and only slightly lower just outside it, so escaping needs almost light speed."
+          },
+          {
+            "upTo": 2,
+            "title": "Close to the horizon: escape speed ≈ 0.71c to 0.89c",
+            "detail": "Gravity is still very strong here. A probe needs a large fraction of light speed to climb away."
+          },
+          {
+            "upTo": 3,
+            "title": "A few horizon radii out: escape speed ≈ 0.58c to 0.71c",
+            "detail": "The required speed drops quickly as you move away from the black hole."
+          },
+          {
+            "upTo": 5,
+            "title": "Far out: escape speed ≈ 0.45c to 0.58c",
+            "detail": "Gravity weakens with distance, so the escape speed keeps falling, but it never reaches zero at any finite distance from the black hole's horizon."
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A probe orbits a black hole at 1.5 times its Schwarzschild radius. Its engines can give it a speed of 0.9c. Mission control asks whether it can burn its engines outward and climb away to a great distance. What is the right assessment?",
+        "options": [
+          "Yes, its escape speed there is about 0.82c, so 0.9c is enough",
+          "No, nothing can escape from any black hole at all",
+          "Only if it switches off its engines and falls first",
+          "No, the escape speed is exactly c everywhere outside the horizon"
+        ],
+        "correctAnswer": "Yes, its escape speed there is about 0.82c, so 0.9c is enough",
+        "explanation": "The escape speed at r is c√(r_s/r), which at 1.5 r_s is about 0.82c. Since 0.9c exceeds that, the probe can escape."
+      },
+      {
+        "question": "A pulse of light is emitted outward from a point at 0.9 times the Schwarzschild radius from the centre. What happens to it?",
+        "options": [
+          "It bends and falls inward, because no path from that point leads outward past the horizon",
+          "It escapes, because light always travels outward at c",
+          "It hovers at that radius indefinitely",
+          "It escapes, but slightly slower than c"
+        ],
+        "correctAnswer": "It bends and falls inward, because no path from that point leads outward past the horizon",
+        "explanation": "Inside the horizon, spacetime is curved so that every future-directed path, including an outward light beam, leads toward the centre. Light can't escape from inside r_s."
+      }
+    ]
+  },
+  "score": 7.5,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 36546,
+      "approach": "simulation",
+      "blocks": "explain > activity > explain > check > problem > explain > compare > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 7.5,
+      "ms": 9825,
+      "problems": [
+        "The Sun example is garbled: \"the Sun's would be about 3 km across the horizon's radius\" mixes diameter and radius. The Sun's Schwarzschild radius is about 3 km.",
+        "The first activity band says escape speed is \"≈ 0.9c or more\" for distances up to 1.25 r_s. At 1.25 r_s it is about 0.89c and it falls as r grows, so the label is loose.",
+        "The slider's initial value (2) and the prompt's \"starting at the horizon\" do not match, since the slider's minimum is 1 r_s.",
+        "The last band's detail says escape speed \"never reaches zero at any finite distance from the black hole's horizon\", which is awkward; it should refer to the distance from the centre."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 18499,
+      "approach": "simulation",
+      "blocks": "explain > activity > explain > check > problem > explain > compare > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 7,
+      "ms": 9630,
+      "problems": [
+        "The second check is nearly answered by the preceding explanation ('Inside r_s... light can't escape'), so it tests recall rather than application. It is not harder than the first check.",
+        "The 'Why light can't get out' block relies on an unsupported assertion that every path bends toward the centre. It never explains why, so the module goal of understanding why light is trapped is only partly met.",
+        "The simulation's bands are fixed text tied to slider ranges. The learner reads outcomes rather than predicting them, so the interactivity is weaker than the 'simulation' approach promises.",
+        "Only one activity appears, and it comes early. The lesson has no hands-on moment after the Schwarzschild radius or the light-trapping explanation, where the key idea is most in need of testing.",
+        "The lesson includes several blocks (explain, activity, explain, check, problem, explain, compare, check) within an 8-minute estimate, which is tight."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 7.5,
+      "passed": false
+    }
+  ]
+}

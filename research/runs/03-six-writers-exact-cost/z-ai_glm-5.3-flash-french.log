@@ -1,0 +1,5 @@
+■ history: The French Revolution (56s, score 8, $0.0079, 4 calls, 17526 in / 10571 out tokens)
+  approach: scenario (The revolution makes sense as one lived situation: you are a Parisian worker in 1788, and every cause — debt, bread, ideas — arrives as a pressure on your own life and choices.)
+  blocks:   explain > activity:chart > check > explain > check > activity:order > explain > problem > activity:scenario > check > summary
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=6, lesson.revise, lesson.evaluate=8, lesson.select=8

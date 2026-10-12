@@ -1,0 +1,262 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Why 1789?",
+    "objective": "Explain how debt, food prices and new ideas combined to start the revolution.",
+    "estimatedMinutes": 8,
+    "approach": "scenario",
+    "approachReason": "The revolution makes sense as one lived situation: you are a Parisian worker in 1788, and every cause — debt, bread, ideas — arrives as a pressure on your own life and choices.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "Paris, spring 1788. You are Jean, a printer's assistant.",
+        "body": "You earn 30 sous a day. A four-pound loaf of bread costs 9 sous, so a loaf for each member of your family takes roughly a third of your wages — tight, but you manage, because the rest covers rent, fuel and whatever else you can eat.\n\nOver the next eighteen months, you will watch that number climb until bread consumes nearly half of everything you earn, leaving nothing for anything else. You have no political power: France is an absolute monarchy, and you belong to the Third Estate, the estate of everyone who is not a noble or a clergyman. Yet by July 1789 you will be part of a crowd that changes history. This lesson follows your year, and asks at each step what you would do.",
+        "example": "Roughly 600,000 people lived in Paris in 1789, and most of them, like Jean, spent the majority of their income on bread."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [],
+        "retry": "When bread absorbs nearly the whole surplus of a wage, ordinary people have nothing left to lose by taking to the streets — that is why historians watch bread prices, not just politics."
+      },
+      {
+        "kind": "explain",
+        "heading": "But wait: why can't the kingdom pay for bread?",
+        "body": "France was not a poor country — it was one of the richest in Europe. The problem was the state's finances. Decades of war, especially backing the American Revolution (1778–1783), had left the treasury deep in debt, and roughly half of government revenue went to paying interest on that debt.\n\nThe obvious fix — taxing the nobility, who paid almost no direct tax — kept failing, because parlements (law courts dominated by nobles) refused to register new tax laws. In August 1788, out of money and options, Louis XVI did something no king had done since 1614: he called the Estates-General, an assembly of the three estates, to meet in May 1789.",
+        "example": "Calling the Estates-General was an admission that the king could not solve the crisis alone — and it opened a door to politics that would not easily close."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [],
+        "retry": "Every reform route was blocked by privileged groups, which is why calling the Estates-General — a body that could override them — became the only option left."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "The third ingredient: ideas",
+        "body": "Hunger and debt alone had produced riots before, in 1709 and 1775 — and the monarchy survived them. What was different in 1789 was a language for the anger. For decades, Enlightenment writers — Voltaire, Rousseau, Montesquieu — had argued that sovereignty lived in the nation, not the king; that privileges were unjust; that laws should be made by consent.\n\nJean can read — he works in a print shop. Pamphlets are everywhere. When the Estates-General meets, the Third Estate's deputies don't just demand cheaper bread. They demand a constitution.",
+        "example": "Over 3,000 political pamphlets were published in France in the first half of 1789 alone — and Jean may well have set some of the type."
+      },
+      {
+        "kind": "problem",
+        "heading": "The vote that changed everything",
+        "prompt": "The Estates-General meets in May 1789. Under the old rule, each estate casts one vote, so clergy (291 deputies) plus nobility (270) always outvote the Third Estate (578 deputies) two votes to one. The Third Estate demands instead one vote per deputy — so all 1,139 deputies vote individually.\n\nUnder one vote per deputy, by how many votes would the Third Estate's bloc outnumber the clergy and nobility combined?",
+        "answers": [
+          "17"
+        ],
+        "unit": "votes",
+        "traps": [
+          {
+            "answer": "561",
+            "feedback": "That's the combined size of the other two estates, not the margin. Subtract to find how far ahead the Third Estate would be."
+          },
+          {
+            "answer": "1139",
+            "feedback": "That's the total number of deputies, not the difference between the two blocs."
+          },
+          {
+            "answer": "2",
+            "feedback": "That's the old rule's margin (2 votes to 1). The dispute was about switching to one vote per deputy."
+          }
+        ],
+        "hints": [
+          "First work out how many votes the clergy and nobility would have together under one deputy, one vote.",
+          "The margin is the Third Estate's votes minus the other two estates combined."
+        ],
+        "solution": "578 against 561 — a margin of just 17. When the counting was refused in June 1789, the Third Estate declared itself the National Assembly: the first open act of the Revolution."
+      },
+      {
+        "kind": "activity",
+        "ref": 2
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [],
+        "retry": "This is the module's core claim: the Revolution happened when a structural fiscal crisis, an immediate subsistence crisis and a new political vocabulary reinforced each other at the same moment."
+      },
+      {
+        "kind": "summary",
+        "heading": "Why 1789?",
+        "points": [
+          "Debt: wars, especially the American one, bankrupted the state, and resistance to taxing the privileged forced Louis XVI to call the Estates-General.",
+          "Food: the 1788 harvest crisis pushed bread to nearly half a worker's daily wage — from a third in 1787 to about 48% by July 1789 — leaving nothing for rent, fuel or clothing, and turning a political crisis into a street crisis.",
+          "Ideas: Enlightenment concepts of national sovereignty gave the crowd and the Assembly a shared language for demanding a constitution, not just bread."
+        ]
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Bread's share of Jean's daily wage",
+        "prompt": "Bread prices surged between 1787 and July 1789 while wages stayed fixed at 30 sous. Which moment saw the biggest jump in the share of the daily wage that a four-pound loaf cost? Guess the biggest increase first.",
+        "reveal": "In a normal year bread took a third of the wage; by July 1789 it took nearly half. That growth stripped away everything a family spent on rent, fuel and clothing — hunger turned a financial crisis into a street crisis.",
+        "type": "chart",
+        "unit": "% of daily wage",
+        "bars": [
+          {
+            "label": "1774 (normal year)",
+            "value": 30,
+            "note": "About 30% — a four-pound loaf at 9 sous out of a 30-sous wage. Tight, but survivable: this was the French worker's normal."
+          },
+          {
+            "label": "1787 (first bad harvest)",
+            "value": 38,
+            "note": "Around 38% — noticeably painful, sparking local unrest in some regions."
+          },
+          {
+            "label": "Spring 1789 (after the great hail and drought)",
+            "value": 44,
+            "note": "Around 44% — families began skipping meals and eating substitutes."
+          },
+          {
+            "label": "July 1789 (Revolution begins)",
+            "value": 48,
+            "note": "Roughly 48% — a loaf at 14.5 sous against a 30-sous wage. Bread still bought, but nothing was left for rent, fuel or clothing."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "The road to May 1789",
+        "prompt": "These are the steps by which a debt crisis turned into a political one. Drag them into the order they happened.",
+        "reveal": "The money problem came first; the political crisis came when the only solution left was to ask the nation for help.",
+        "type": "order",
+        "steps": [
+          "France funds the American war effort, borrowing heavily (1778–83)",
+          "Half of state revenue goes to interest on the debt",
+          "Parlements refuse to register new taxes on the nobility",
+          "Louis XVI calls the Estates-General for May 1789"
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "July 1789: your choice",
+        "prompt": "June 1789: the Third Estate has declared itself the National Assembly. The king dismisses his reforming finance minister Necker and moves troops around Paris. Bread costs 14.5 sous — nearly half of your 30-sous wage, leaving nothing for rent or fuel. Your children are hungry. A neighbour is heading to the Invalides to look for weapons. What do you do?",
+        "reveal": "Thousands made the choice you faced. The crowd that seized weapons and then took the Bastille on 14 July 1789 was driven by hunger, suspicion of the troops, and the new conviction that the nation's fate was theirs to decide.",
+        "type": "scenario",
+        "options": [
+          {
+            "text": "Join the crowd heading to the Invalides for weapons",
+            "correct": true,
+            "feedback": "You join thousands of workers and shopkeepers. Weapons found there (and later at the Bastille) turn Paris's hunger and fear into the storming of 14 July — the Revolution's first armed victory."
+          },
+          {
+            "text": "Stay home and trust the king to lower bread prices",
+            "correct": false,
+            "feedback": "The king does not act in time. Troops ring the city, and prices keep rising. Waiting leaves you hungry and powerless — and history is made without you."
+          },
+          {
+            "text": "Emigrate to the countryside until prices fall",
+            "correct": false,
+            "feedback": "Rural areas have the same harvest failure and the same prices — and the Great Fear of armed peasant bands is spreading through the countryside."
+          },
+          {
+            "text": "Petition the Estates-General directly for cheaper bread",
+            "correct": false,
+            "feedback": "A worthy instinct — but the Estates-General is deadlocked over voting rules and has no mechanism to fix prices overnight. Food relief is not coming from the assembly this month."
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "By July 1789, a Parisian labourer earning 30 sous a day pays 14.5 sous for a four-pound loaf — nearly half his wage, where a loaf had once cost 9 sous. Historians consider this situation politically explosive mainly because...",
+        "options": [
+          "a wage that leaves almost nothing after bread means families cannot pay rent or fuel, making hunger riots — and revolutionary crowds — probable",
+          "bread prices had never been higher at any point in French history",
+          "the labourer could no longer afford to buy any bread at all",
+          "bread prices varied wildly between Paris and the countryside"
+        ],
+        "correctAnswer": "a wage that leaves almost nothing after bread means families cannot pay rent or fuel, making hunger riots — and revolutionary crowds — probable",
+        "explanation": "The danger was the arithmetic of survival: when bread consumes close to half the wage and the rest must cover rent and fuel, ordinary people have nothing left to lose by taking to the streets."
+      },
+      {
+        "question": "You advise Louis XVI in 1787. The treasury is insolvent. Which measure is realistically available to you, given that parlements refuse to register taxes on the privileged?",
+        "options": [
+          "immediately tax the nobility directly by royal decree, bypassing the parlements",
+          "take out new loans to cover the deficit, since lenders still trust the crown",
+          "repudiate the national debt and cancel all interest payments",
+          "call a meeting of the nation's estates to authorise new taxes"
+        ],
+        "correctAnswer": "call a meeting of the nation's estates to authorise new taxes",
+        "explanation": "Blocking every other route, the crown's last resort was the Estates-General — the only body that could legitimately approve taxes the parlements had refused. That decision opened the door to revolution."
+      },
+      {
+        "question": "A wealthy French merchant in 1788 says: \"The bread crisis is just a harvest problem — the kingdom has seen worse and stayed loyal.\" Which reply best explains why 1789 was different?",
+        "options": [
+          "The harvests of 1788 were actually the worst of the century, so the merchant is simply wrong about the facts.",
+          "This crisis hit Paris, whose population was far larger than during earlier famines.",
+          "He is right: bread prices alone started the Revolution, exactly as in 1775.",
+          "True, hunger riots happened before — but this time the crisis met a bankrupt state and a public debate about national sovereignty, so the anger turned political."
+        ],
+        "correctAnswer": "True, hunger riots happened before — but this time the crisis met a bankrupt state and a public debate about national sovereignty, so the anger turned political.",
+        "explanation": "1789 was different because three pressures arrived together: a state too broke to respond, people too hungry to comply, and a new language of rights and national sovereignty that turned hunger into revolution."
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 29207,
+      "approach": "scenario",
+      "blocks": "explain > activity > check > explain > check > activity > explain > problem > activity > check > summary",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 6,
+      "ms": 5190,
+      "problems": [
+        "Internal factual contradiction on bread prices: the intro (9 sous), the July 1789 scenario (14 sous vs a 30-sous wage) and the summary claim (~88% of wage) cannot all be true — 14/30 is about 47%, not 88%. The chart's 88% figure also conflicts with the activity's own reveal ('roughly doubled') and the problem statement 'bread costs more than you earn'.",
+        "The scenario option text says 'Bread costs 14 sous — more than your daily wage', which is arithmetically false given the established 30-sous wage; learners will catch this.",
+        "The first check (ref 0) sits before the bread-price data is actually introduced — it follows the chart but tests a rule (harvest share heuristic) never explained in the body, so learners may be guessing blindly.",
+        "The 'problem' block asks a trivial read-back of 578, and its hint 'No addition needed' gives the answer away almost completely.",
+        "The 1774 bar (50%) labeled 'the French worker's normal' clashes with the intro's 'roughly a third... manage' framing, muddying the baseline story."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 16079,
+      "approach": "scenario",
+      "blocks": "explain > activity > check > explain > check > activity > explain > problem > activity > check > summary",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 8,
+      "ms": 5684,
+      "problems": [
+        "Minor arithmetic inconsistency: the explain block says a 9-sous loaf out of 30 sous is 'roughly a third' (33%), but the chart labels the normal year as 30% — small but the lesson leans heavily on this exact arithmetic.",
+        "The three checks are effectively scenario questions with no distinct hint arrays (empty hints), so hints-that-help-without-giving-away are absent; the retry text partially compensates but is generic.",
+        "The scenario activity funnels toward a single 'correct' choice — a stronger design would reward reasoning about historical plausibility rather than guessing the intended answer."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true
+    }
+  ]
+}

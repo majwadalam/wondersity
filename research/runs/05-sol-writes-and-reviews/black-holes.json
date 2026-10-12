@@ -1,0 +1,176 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The Event Horizon: Why Light Cannot Escape",
+    "objective": "Explain why the event horizon is a boundary of possible escape, not a solid surface, and why even outward-directed light cannot escape from inside it.",
+    "estimatedMinutes": 6,
+    "approach": "misconception",
+    "approachReason": "The lesson tests the tempting belief that a powerful enough beam could escape, then replaces it with a model based on which paths through spacetime are possible.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "The problem is not a lack of power",
+        "body": "A brighter laser sends more light; it does not make that light travel faster. Every nearby observer measuring light locally finds the same speed, even near a black hole.\n\nThe key is spacetime: the combined structure of space and time that determines where motion can lead. Inside the event horizon, every possible future path—including that of light aimed outward—leads farther inward rather than toward the outside universe. Light is not stopped or slowed by a wall; there is no outward escape path available to it. For this lesson, picture an ideal, nonrotating black hole.",
+        "example": "“Pointed outward” describes how a beam is launched locally. It does not guarantee that the beam can reach a greater distance from the black hole."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Does increasing a laser’s brightness increase the speed of its light?",
+          "Would extra brightness create a future path that was not available before?"
+        ],
+        "retry": "Think of escape as a question about available paths, not a contest between the beam’s brightness and gravity’s strength."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "A boundary, not a shell",
+        "body": "The event horizon is the boundary separating events that can send a signal to the distant outside universe from events that cannot. It is not a material shell that light must punch through.\n\nJust outside the horizon, an outward-directed light beam can escape in our ideal black-hole model. Inside, no direction works—not for visible light, radio waves, or a spacecraft. Being outside makes escape possible, but does not guarantee it: a beam aimed inward can still cross the horizon and lose its chance to escape.",
+        "example": "Visible light and radio waves are both forms of light. Changing the signal’s type does not change which side of the escape boundary it starts on."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Is the horizon made of something that absorbs visible light?",
+          "Compare the possible future paths of radio waves and visible light."
+        ],
+        "retry": "Radio can pass through some materials that block visible light. But an event horizon is not a material obstacle, so that advantage does not help."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Replace the tempting explanation",
+        "prompt": "A friend says: “A black hole is like a prison with extremely thick walls. A strong enough laser could break through.” Rewrite their explanation in two or three sentences. Include what the horizon is and why increasing the laser’s power would not help.",
+        "model": "The event horizon is an escape boundary, not a wall. Inside it, every possible future path—including an outward-directed light beam’s path—leads inward rather than out to the distant universe. A stronger laser sends more light, but it cannot create an escape path."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "The escape attempt",
+        "prompt": "A probe has crossed inside a black hole’s event horizon. It points a laser outward, toward a distant receiver. If it increases the laser’s power enormously, what happens? Assume the laser does not significantly change the black hole itself.",
+        "reveal": "Even outward-directed light cannot escape from inside the horizon. The obstacle is not insufficient brightness: no possible future path from there reaches the distant outside universe.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "The brighter beam travels faster and escapes.",
+            "correct": false,
+            "feedback": "Brightness changes how much light is emitted, not its local speed."
+          },
+          {
+            "text": "The beam escapes once its power exceeds gravity’s strength.",
+            "correct": false,
+            "feedback": "Escape is not a contest between laser power and gravity. Increasing brightness does not open an escape path."
+          },
+          {
+            "text": "The beam cannot escape, regardless of its brightness.",
+            "correct": true,
+            "feedback": "Correct. Once the emission happens inside the horizon, even light has no future path to the distant outside universe."
+          },
+          {
+            "text": "The beam hits the horizon’s solid surface and reflects inward.",
+            "correct": false,
+            "feedback": "The event horizon is not a solid surface. The beam does not need to hit or bounce off anything to be unable to escape."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Sort the escape attempts",
+        "prompt": "For an ideal, nonrotating black hole, sort these signals by whether they can reach a distant receiver outside. Assume empty space, negligible effects from the signals themselves, and that “directly outward” means straight away from the center.",
+        "reveal": "Outside the horizon, suitable paths to the distant universe exist. Inside it, neither changing the signal nor aiming it outward provides an escape path.",
+        "type": "sort",
+        "buckets": [
+          "Can reach the receiver",
+          "Cannot reach the receiver"
+        ],
+        "items": [
+          {
+            "text": "A light pulse emitted just outside the horizon, directly outward",
+            "bucket": "Can reach the receiver"
+          },
+          {
+            "text": "A radio pulse emitted just outside the horizon, directly outward",
+            "bucket": "Can reach the receiver"
+          },
+          {
+            "text": "A light pulse emitted just inside the horizon, aimed outward",
+            "bucket": "Cannot reach the receiver"
+          },
+          {
+            "text": "A much brighter laser pulse emitted inside the horizon",
+            "bucket": "Cannot reach the receiver"
+          },
+          {
+            "text": "A radio pulse emitted inside the horizon",
+            "bucket": "Cannot reach the receiver"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A probe inside the event horizon doubles the brightness of an outward-directed laser without significantly affecting the black hole. Why does the message still fail to escape?",
+        "options": [
+          "The laser needs to become brighter than the black hole.",
+          "Light has no possible future path from there to the distant outside universe.",
+          "The horizon absorbs the beam like a dark metal shell.",
+          "Gravity reduces the locally measured speed of light to zero."
+        ],
+        "correctAnswer": "Light has no possible future path from there to the distant outside universe.",
+        "explanation": "Inside the horizon, even light’s possible future paths lead inward. Extra brightness does not change that, and light still travels at its usual speed when measured locally."
+      },
+      {
+        "question": "An engineer proposes using radio instead of visible light to send a message from inside the horizon: “Radio passes through barriers better.” What is the best response?",
+        "options": [
+          "It will work because radio waves are faster than visible light.",
+          "It will work if the radio signal is aimed directly outward.",
+          "It will fail because the horizon is not a material barrier, and radio has no escape path either.",
+          "It will fail because the horizon’s solid surface reflects every kind of wave."
+        ],
+        "correctAnswer": "It will fail because the horizon is not a material barrier, and radio has no escape path either.",
+        "explanation": "Radio and visible light both follow the escape limits set by spacetime. The horizon is a boundary of possible escape, not a substance that a different wavelength can penetrate."
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 53553,
+      "approach": "misconception",
+      "blocks": "activity > explain > check > activity > explain > check > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8,
+      "ms": 9231,
+      "problems": [
+        "The central physical explanation is accurate for the stated ideal, nonrotating black hole, but mostly asserts that all future paths lead inward. Learners may memorize this without understanding how locally outward-moving light can still move toward smaller distances from the center.",
+        "The first knowledge check closely repeats the opening prediction, and the second mainly substitutes radio for visible light. Assessment difficulty increases little.",
+        "The retries largely restate the original explanation rather than offering a genuinely different explanatory model."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true
+    }
+  ]
+}

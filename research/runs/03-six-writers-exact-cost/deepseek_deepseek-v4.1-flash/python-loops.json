@@ -1,0 +1,336 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "For Loops and Accumulators: Building Up an Answer",
+    "objective": "Read, predict and write for loops that use an accumulator to build up a result.",
+    "estimatedMinutes": 9,
+    "approach": "discovery",
+    "approachReason": "The accumulator pattern is best learned by predicting what a loop produces before it is named, so every idea here is first met as a prediction to make and only then explained.",
+    "blocks": [
+      {
+        "kind": "code",
+        "heading": "What does this print?",
+        "prompt": "A loop doesn't just repeat work — it can build up an answer as it goes. Before running this, make a prediction.",
+        "language": "python",
+        "code": "total = 0\nfor n in [3, 5, 2]:\n    total = total + n\nprint(total)",
+        "explanation": "total starts at 0 and each pass adds the next number: 0 + 3 = 3, 3 + 5 = 8, 8 + 2 = 10.",
+        "hints": [
+          "Watch the variable total: it changes on every pass through the loop.",
+          "The print sits after the loop, so it runs once, with the value total ended up with."
+        ],
+        "mode": "predict",
+        "options": [
+          {
+            "text": "10",
+            "correct": true,
+            "feedback": "Right: 0 + 3 = 3, 3 + 5 = 8, 8 + 2 = 10, and then print shows 10."
+          },
+          {
+            "text": "0",
+            "correct": false,
+            "feedback": "total doesn't stay at 0 — every pass adds the next number into it."
+          },
+          {
+            "text": "3 5 2",
+            "correct": false,
+            "feedback": "That output would come from printing n inside the loop, not total after it."
+          },
+          {
+            "text": "15",
+            "correct": false,
+            "feedback": "15 comes from multiplying 3 × 5. The update line adds, so all three numbers go in."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "explain",
+        "heading": "The accumulator pattern",
+        "body": "That pattern has a name: an accumulator. It is a variable created before the loop, changed on every pass, and read after the loop finishes.\n\nThere are always three parts, in this order: set up (total = 0), update inside the loop (total = total + n), and use after the loop (print(total)). The update line is the heart of it — it says \"take what I already have and add this new item to it\", so the variable grows instead of being replaced.\n\nPut the set-up inside the loop and the accumulator is wiped clean on every pass, leaving you with only the last item.",
+        "example": "total = total + n is so common that Python lets you write it as total += n. Same thing, fewer keystrokes."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "code",
+        "heading": "Step through the running total",
+        "prompt": "Run this loop in your head, one line at a time, and watch what total holds after each line.",
+        "language": "python",
+        "code": "total = 0\nfor n in [2, 5, 1]:\n    total = total + n\nprint(total)",
+        "explanation": "The accumulator keeps its value from one pass to the next — that is exactly what makes it an accumulator instead of a fresh value each time.",
+        "hints": [
+          "On line 3, total appears on both sides: the right side is worked out first, then stored back into total.",
+          "After the first pass total is 2, so the next pass adds 5 to that 2 — not to 0."
+        ],
+        "mode": "trace",
+        "options": [],
+        "trace": [
+          {
+            "line": 1,
+            "note": "Create total and set it to 0.",
+            "state": "total = 0"
+          },
+          {
+            "line": 2,
+            "note": "Start the loop; n takes the first item, 2.",
+            "state": "n = 2, total = 0"
+          },
+          {
+            "line": 3,
+            "note": "Add n to total and store the result back in total.",
+            "state": "total = 0 + 2 = 2"
+          },
+          {
+            "line": 2,
+            "note": "Loop again; n takes the next item, 5.",
+            "state": "n = 5, total = 2"
+          },
+          {
+            "line": 3,
+            "note": "Add 5 to what total already holds.",
+            "state": "total = 2 + 5 = 7"
+          },
+          {
+            "line": 2,
+            "note": "Loop again; n takes the last item, 1.",
+            "state": "n = 1, total = 7"
+          },
+          {
+            "line": 3,
+            "note": "Add 1 to total.",
+            "state": "total = 7 + 1 = 8"
+          },
+          {
+            "line": 4,
+            "note": "The loop ends, so print runs once with the final value.",
+            "state": "prints 8"
+          }
+        ]
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Ask where each line has to sit: set up before, update inside, use after.",
+          "If a line runs on every pass, it cannot be the set-up."
+        ],
+        "retry": "A counter is just an accumulator whose update is count = count + 1 — starting at 0 and growing by one per pass."
+      },
+      {
+        "kind": "worked",
+        "heading": "Worked example: the shopping basket",
+        "problem": "A basket holds prices = [4, 6, 3, 7]. Write a loop that builds the total cost, then prints the average price.",
+        "steps": [
+          {
+            "title": "Set up",
+            "text": "Write total = 0 before the loop.",
+            "why": "The accumulator must exist before the first pass, and it starts empty at 0."
+          },
+          {
+            "title": "Loop",
+            "text": "Write for price in prices: and indent the body under it.",
+            "why": "Each pass, price becomes the next value in the list."
+          },
+          {
+            "title": "Update",
+            "text": "Inside the loop write total = total + price.",
+            "why": "This adds the current price to whatever total already holds."
+          },
+          {
+            "title": "Use it",
+            "text": "After the loop, unindented, write print(total).",
+            "why": "Only here does total hold the whole basket: 4 + 6 + 3 + 7 = 20."
+          },
+          {
+            "title": "Average",
+            "text": "Print total / len(prices).",
+            "why": "len(prices) is 4, so 20 / 4 = 5.0 — an ordinary expression that uses the accumulator."
+          }
+        ],
+        "answer": "Final code: total = 0 / for price in prices: /     total = total + price / print(total) / print(total / len(prices)) — it prints 20 and then 5.0."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Count how many times the indented print runs, and what total is at each moment.",
+          "The last line is not indented, so it sees the same total the loop finished with."
+        ],
+        "retry": "Indentation is the clue: an indented print runs once per pass, an unindented print runs once when the loop is over."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "total does not start at 0 here, so read its starting value first.",
+          "Only the trays that go through the loop get added — the 100 is already inside total."
+        ],
+        "retry": "The starting value is part of the answer: an accumulator beginning at 100 already contains the stock that was there before the loop."
+      },
+      {
+        "kind": "problem",
+        "heading": "Your turn: what does this print?",
+        "prompt": "Read the loop carefully and work out the final value. Type just the number.\n\ntotal = 1\nfor n in [2, 3, 4]:\n    total = total * n\nprint(total)",
+        "answers": [
+          "24"
+        ],
+        "unit": "",
+        "traps": [
+          {
+            "answer": "9",
+            "feedback": "That's 2 + 3 + 4. The update line multiplies, so the numbers build a product, not a sum."
+          },
+          {
+            "answer": "6",
+            "feedback": "6 is total after only two passes (1 × 2 × 3). The loop makes a third pass with 4."
+          }
+        ],
+        "hints": [
+          "Track total the way the trace did: write down its value after each pass.",
+          "After n = 2, total is 2. After n = 3, total is 6. What does the last pass do to 6?"
+        ],
+        "solution": "Trace it: total = 1, then 1 × 2 = 2, then 2 × 3 = 6, then 6 × 4 = 24, and print shows 24."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Sort the lines of an accumulator loop",
+        "prompt": "Every accumulator loop has three phases. Drag each line of code into the phase where it belongs.",
+        "reveal": "Set the accumulator before the loop, change it on every pass, read it after the loop ends — that is the whole pattern.",
+        "type": "sort",
+        "buckets": [
+          "Set up before the loop",
+          "Repeat inside the loop",
+          "Use after the loop"
+        ],
+        "items": [
+          {
+            "text": "total = 0",
+            "bucket": "Set up before the loop"
+          },
+          {
+            "text": "count = 0",
+            "bucket": "Set up before the loop"
+          },
+          {
+            "text": "total = total + n",
+            "bucket": "Repeat inside the loop"
+          },
+          {
+            "text": "count = count + 1",
+            "bucket": "Repeat inside the loop"
+          },
+          {
+            "text": "print(total)",
+            "bucket": "Use after the loop"
+          },
+          {
+            "text": "print(count)",
+            "bucket": "Use after the loop"
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Order matters",
+        "prompt": "This loop builds a word instead of a number. Before you run it, predict the output:\n\nresult = \"\"\nfor ch in \"abc\":\n    result = ch + result\nprint(result)",
+        "reveal": "The same accumulate-on-every-pass idea works with any type: numbers add, strings join up, and the order inside the update line decides the final result.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "abc",
+            "correct": false,
+            "feedback": "That is what result = result + ch would give — here the new letter is put in front."
+          },
+          {
+            "text": "cba",
+            "correct": true,
+            "feedback": "Correct: 'a', then 'b' + 'a' = 'ba', then 'c' + 'ba' = 'cba'."
+          },
+          {
+            "text": "(an empty line)",
+            "correct": false,
+            "feedback": "result is reassigned every pass, so the starting empty string is replaced on the first pass."
+          },
+          {
+            "text": "a b c",
+            "correct": false,
+            "feedback": "Nothing ever adds a space — only letters are joined."
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "Maya has a list of songs called playlist and wants to know how many songs it holds. Which loop prints the correct count?",
+        "options": [
+          "count = 0\nfor song in playlist:\n    count = count + 1\nprint(count)",
+          "for song in playlist:\n    count = 0\n    count = count + 1\nprint(count)",
+          "count = 0\nfor song in playlist:\n    count = count + 1",
+          "for song in playlist:\n    print(count)"
+        ],
+        "correctAnswer": "count = 0\nfor song in playlist:\n    count = count + 1\nprint(count)",
+        "explanation": "The counter is set to 0 before the loop, grows by one on every pass, and the final value is printed after the loop. The others reset the counter each pass, never print, or print a variable that was never created."
+      },
+      {
+        "question": "A student runs this code and watches the output:\n\ntotal = 0\nfor n in [1, 2, 3]:\n    total = total + n\n    print(total)\nprint(\"done:\", total)\n\nWhat appears on screen?",
+        "options": [
+          "1\n3\n6\ndone: 6",
+          "6\ndone: 6",
+          "1\n2\n3\ndone: 6",
+          "0\n1\n3\n6\ndone: 6"
+        ],
+        "correctAnswer": "1\n3\n6\ndone: 6",
+        "explanation": "The indented print runs on every pass, showing the running total 1, then 3, then 6. The unindented print runs once after the loop, when total still holds 6."
+      },
+      {
+        "question": "A bakery starts the day with 100 loaves in stock and then bakes three more trays:\n\ntotal = 100\nfor tray in [10, 20, 30]:\n    total = total + tray\nprint(total)\n\nWhat is printed?",
+        "options": [
+          "160",
+          "60",
+          "100",
+          "130"
+        ],
+        "correctAnswer": "160",
+        "explanation": "The accumulator starts at 100 rather than 0, so it already contains the existing stock: 100 + 10 + 20 + 30 = 160."
+      }
+    ]
+  },
+  "score": 9,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 31477,
+      "approach": "discovery",
+      "blocks": "code > explain > activity > code > check > worked > check > activity > check > problem",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 9,
+      "ms": 16647,
+      "problems": [
+        "The lesson objective includes 'write' loops, but most learner practice is prediction, sorting, tracing and multiple-choice checks; there is no independent code-writing exercise.",
+        "The distractor feedback for the answer '15' in the first prediction is slightly confusing: it says 15 comes from multiplying 3 × 5, but the list also contains 2."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 9,
+      "passed": true
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+■ conceptual science: Black holes (89s, score 9)
+  approach: discovery (The learner builds the horizon themselves — predicting what sets escape speed, watching light get trapped as a mass is squeezed, and only then naming the boundary — so the rule is discovered before it is defined.)
+  blocks:   activity:predict > explain > activity:chart > check > activity:simulation > worked > explain > check > dialogue > check > problem
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=9, lesson.select=9

@@ -1,0 +1,5 @@
+■ programming: Python loops (51s, score 8.5, $0.0592, 2 calls, 6540 in / 5172 out tokens)
+  approach: worked_example (A fully traced sum gives learners a model they can use to predict, repair, and finally write an accumulator loop themselves.)
+  blocks:   worked > activity:sort > check > code:predict > explain > check > code:bug > reflect > check
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=8.5, lesson.select=8.5

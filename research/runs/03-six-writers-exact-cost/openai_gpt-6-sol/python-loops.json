@@ -1,0 +1,251 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "For Loops That Build a Result",
+    "objective": "Read, predict, and write for loops that accumulate a result across iterations.",
+    "estimatedMinutes": 8,
+    "approach": "worked_example",
+    "approachReason": "A fully traced sum gives learners a model they can use to predict, repair, and finally write an accumulator loop themselves.",
+    "blocks": [
+      {
+        "kind": "worked",
+        "heading": "Build a total, one number at a time",
+        "problem": "What does this program print?\n\n```python\ntotal = 0\nfor number in [2, 4, 6]:\n    total = total + number\nprint(total)\n```",
+        "steps": [
+          {
+            "title": "Start",
+            "text": "Set total to 0 before the loop.",
+            "why": "There is no sum yet."
+          },
+          {
+            "title": "First trip",
+            "text": "Add 2: total becomes 0 + 2 = 2.",
+            "why": "The updated value is kept for the next trip."
+          },
+          {
+            "title": "Second trip",
+            "text": "Add 4: total becomes 2 + 4 = 6.",
+            "why": "The right side uses the current total, not the original 0."
+          },
+          {
+            "title": "Third trip",
+            "text": "Add 6: total becomes 6 + 6 = 12.",
+            "why": "The loop ends, then print displays the completed total."
+          }
+        ],
+        "answer": "It prints 12. Each trip through the loop adds the next number to the total already built."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "What is total after the first trip through the loop?",
+          "Use that value, not 0, when the loop reaches 5."
+        ],
+        "retry": "Imagine carrying a running balance: start at 0, add the first amount, then add the second to that new balance."
+      },
+      {
+        "kind": "code",
+        "heading": "What if the total does not start at zero?",
+        "prompt": "Predict the exact number printed. Try tracking total after each trip before choosing.",
+        "language": "python",
+        "code": "total = 10\nfor number in [2, 3]:\n    total = total + number\nprint(total)",
+        "explanation": "The starting value stays in the running total: 10 becomes 12, then 15.",
+        "hints": [
+          "Begin your trace at total = 10, not at zero."
+        ],
+        "mode": "predict",
+        "options": [
+          {
+            "text": "15",
+            "correct": true,
+            "feedback": "Correct: the loop adds 2 and 3 to the starting 10."
+          },
+          {
+            "text": "5",
+            "correct": false,
+            "feedback": "That adds the list values but leaves out the starting 10."
+          },
+          {
+            "text": "13",
+            "correct": false,
+            "feedback": "That includes the starting value and 3, but misses the first addition."
+          },
+          {
+            "text": "10",
+            "correct": false,
+            "feedback": "The loop changes total twice before print runs."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "explain",
+        "heading": "The accumulator pattern",
+        "body": "An accumulator is a variable that keeps a result built over several loop iterations. Give it a starting value before the loop, then update it inside the loop using its current value. To print only the finished result, put print after the loop. The update can add each list value, or it can add 1 each time to count items.",
+        "example": "For a count, `count = count + 1` means “one more item seen,” regardless of the item’s value."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "The loop visits three names.",
+          "Start with the person already present, then add one for each name."
+        ],
+        "retry": "A count is also a running result. Adding 1 once per loop trip counts how many items the loop visits."
+      },
+      {
+        "kind": "code",
+        "heading": "Repair a total that forgets",
+        "prompt": "This program should print the combined price of three items, but it prints only the last price. Which single change fixes it?",
+        "language": "python",
+        "code": "total = 0\nfor price in [4, 7, 2]:\n    total = price\nprint(total)",
+        "explanation": "With the corrected update, total goes from 0 to 4 to 11 to 13.",
+        "hints": [
+          "After the second trip, where has the first price gone?",
+          "The new total must use both the old total and the current price."
+        ],
+        "mode": "bug",
+        "options": [
+          {
+            "text": "Replace `total = price` with `total = total + price`.",
+            "correct": true,
+            "feedback": "Correct: this keeps the previous total and adds the next price."
+          },
+          {
+            "text": "Move `total = 0` inside the loop.",
+            "correct": false,
+            "feedback": "Resetting total on every trip would discard earlier prices."
+          },
+          {
+            "text": "Replace `print(total)` with `print(price)`.",
+            "correct": false,
+            "feedback": "That still prints only the last price."
+          },
+          {
+            "text": "Change `total = 0` to `total = 1`.",
+            "correct": false,
+            "feedback": "A different starting value does not fix the update that overwrites total."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "reflect",
+        "heading": "Write the loop yourself",
+        "prompt": "You have scores `[3, 5, 1]`. What Python program would you write to print their total once? Explain why you place the starting value where you do.",
+        "model": "One solution is:\n\n```python\ntotal = 0\nfor score in [3, 5, 1]:\n    total = total + score\nprint(total)\n```\n\nIt prints 9. Starting `total` before the loop lets every score contribute to the same running result."
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "The combined sales must include the values, not just the number of sales.",
+          "Look for a program that keeps its earlier total and has `print` outside the loop."
+        ],
+        "retry": "Check three positions: initialize before the loop, update inside it, and print after it."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Sort the actions in the total-building loop",
+        "prompt": "For the worked program, sort each action by when it happens. Notice which actions happen once and which repeat.",
+        "reveal": "The starting value is set once. Each loop trip updates the same total; only after the loop do we report it.",
+        "type": "sort",
+        "buckets": [
+          "Once before",
+          "Each trip",
+          "Once after"
+        ],
+        "items": [
+          {
+            "text": "`total = 0`",
+            "bucket": "Once before"
+          },
+          {
+            "text": "`number` gets the next list value",
+            "bucket": "Each trip"
+          },
+          {
+            "text": "`total = total + number`",
+            "bucket": "Each trip"
+          },
+          {
+            "text": "`print(total)`",
+            "bucket": "Once after"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A shopper uses `total = 0`, then loops over `[3, 5]` with `total = total + price`. What is `total` after the loop?",
+        "options": [
+          "0",
+          "3",
+          "5",
+          "8"
+        ],
+        "correctAnswer": "8",
+        "explanation": "The first trip makes total 3. The second adds 5 to that running total, making 8."
+      },
+      {
+        "question": "One volunteer is already at a booth. A program sets `count = 1`, then loops over three arriving names, running `count = count + 1` for each name. What does it print after the loop?",
+        "options": [
+          "1",
+          "3",
+          "4",
+          "5"
+        ],
+        "correctAnswer": "4",
+        "explanation": "The count starts at 1 for the volunteer already there and increases once for each of the three arrivals."
+      },
+      {
+        "question": "A food stand needs to print the combined sales in `[6, 1, 3]` exactly once, after processing all three sales. Which program does that?",
+        "options": [
+          "total = 0\nfor sale in [6, 1, 3]:\n    total = total + sale\nprint(total)",
+          "for sale in [6, 1, 3]:\n    total = 0\n    total = total + sale\nprint(total)",
+          "total = 0\nfor sale in [6, 1, 3]:\n    total = total + sale\n    print(total)",
+          "total = 0\nfor sale in [6, 1, 3]:\n    total = total + 1\nprint(total)"
+        ],
+        "correctAnswer": "total = 0\nfor sale in [6, 1, 3]:\n    total = total + sale\nprint(total)",
+        "explanation": "It initializes the total once, adds each sale to the running result, then prints the completed total once."
+      }
+    ]
+  },
+  "score": 8.5,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 47528,
+      "approach": "worked_example",
+      "blocks": "worked > activity > check > code > explain > check > code > reflect > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8.5,
+      "ms": 3471,
+      "problems": [
+        "The sorting activity is useful but closely repeats the worked example, so it offers limited independent practice.",
+        "Some hints nearly supply the method, especially for the counting question and final check."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8.5,
+      "passed": true
+    }
+  ]
+}

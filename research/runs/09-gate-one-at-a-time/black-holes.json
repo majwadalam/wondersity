@@ -1,0 +1,219 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The Event Horizon: Why Light Cannot Escape",
+    "objective": "Explain why light still travels at its usual local speed inside a black hole, yet cannot carry a signal back outside the event horizon.",
+    "estimatedMinutes": 7,
+    "approach": "misconception",
+    "approachReason": "Testing the idea that a stronger flashlight could overcome gravity replaces a misleading tug-of-war picture with the idea that escape is no longer a possible future path.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Light does not lose a race",
+        "body": "In a vacuum, a nearby observer measures light moving at the usual speed of light—even inside a black hole. A brighter flashlight does not make its light travel faster.\n\nThe event horizon is the boundary beyond which no signal can escape to distant observers. Inside it, the problem is not that light becomes too slow: the geometry of spacetime leaves no future-directed path back outside. “Future-directed” simply means a path something can follow as time moves forward.",
+        "example": "Changing the brightness adds more light; it does not create an escape route."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Separate the speed measured nearby from the question of where a path can lead.",
+          "Look for the answer that changes the available paths, rather than the speed of light."
+        ],
+        "retry": "Speed tells you how quickly light travels nearby. Escape also requires an allowed route to the outside, and no such future-directed route exists from inside the horizon."
+      },
+      {
+        "kind": "explain",
+        "heading": "A boundary, not a solid shell",
+        "body": "The event horizon is not a material surface that absorbs light or blocks it like a wall. Objects and light can cross it inward, but a signal that is already inside cannot cross back outward.\n\nThis also explains how a black hole can have bright surroundings. Light emitted by matter outside the horizon can reach us along escaping paths; that is not light escaping from the interior.",
+        "example": "The crucial question is not “Is the source near a black hole?” but “Was the signal emitted inside or outside the horizon?”"
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Separate the glowing gas from the black hole’s interior.",
+          "The no-escape rule depends on where a signal is emitted."
+        ],
+        "retry": "An image can contain light from the black hole’s surroundings without containing any signal emitted from inside its event horizon."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Repair the original explanation",
+        "prompt": "A friend says, “Inside a black hole, gravity slows light to a stop. A stronger flashlight might push it out.” Rewrite their explanation in two sentences, keeping both light’s local speed and the event horizon in your answer.",
+        "model": "Light still travels at its usual speed when measured nearby in a vacuum; a stronger flashlight does not make it faster. Inside the event horizon, no future-directed path leads back outside, so no light signal can escape."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "The flashlight test",
+        "prompt": "Imagine a small probe already inside a black hole’s event horizon. It aims a flashlight away from the center, then switches to a brighter flashlight. Neither flashlight changes the black hole appreciably. Which signal can reach a distant observer outside?",
+        "reveal": "Neither signal can escape. The obstacle is not insufficient brightness: from inside the horizon, no future-directed path carries a signal back outside.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "Only the brighter flashlight’s signal.",
+            "correct": false,
+            "feedback": "Greater brightness supplies more light, not an outward escape route."
+          },
+          {
+            "text": "Both signals, because they are aimed away from the center.",
+            "correct": false,
+            "feedback": "Aiming away from the center cannot create a path from inside the horizon to the outside."
+          },
+          {
+            "text": "Neither signal, regardless of brightness.",
+            "correct": true,
+            "feedback": "Correct. Being inside the horizon rules out escape for either light signal."
+          },
+          {
+            "text": "Only the dimmer signal, because it experiences less gravity.",
+            "correct": false,
+            "feedback": "Making a signal dimmer does not exempt it from the causal boundary."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Which way can the future lead?",
+        "prompt": "Tap each node and trace the arrows. First find a possible route from outside to a distant observer. Then start inside: is there any route back out? This schematic shows selected allowed paths for a simple, nonrotating black hole, not every possible path.",
+        "reveal": "Outside, an escaping path is possible. Inside a nonrotating black hole, every future-directed path moves toward smaller radius—even for light aimed away from the center.",
+        "type": "diagram",
+        "nodes": [
+          {
+            "label": "Outside",
+            "detail": "Some light emitted here can reach distant observers. Other light can head inward and cross the horizon."
+          },
+          {
+            "label": "Event horizon",
+            "detail": "This is a causal boundary, not a solid shell. Inward crossings are possible; an outward crossing from the interior is not."
+          },
+          {
+            "label": "Inside",
+            "detail": "For this nonrotating black hole, all future-directed paths lead toward smaller radius. A local measurement still gives the usual speed of light."
+          },
+          {
+            "label": "Deeper inside",
+            "detail": "This represents a smaller radius within the horizon. Moving forward in time does not offer a return path to the outside."
+          },
+          {
+            "label": "Distant observer",
+            "detail": "This observer can receive escaping light emitted outside the horizon, but cannot receive a signal emitted inside it."
+          }
+        ],
+        "edges": [
+          {
+            "from": 0,
+            "to": 4,
+            "label": "An escaping light path is possible"
+          },
+          {
+            "from": 0,
+            "to": 1,
+            "label": "An inward path can reach the horizon"
+          },
+          {
+            "from": 1,
+            "to": 2,
+            "label": "An inward crossing is allowed"
+          },
+          {
+            "from": 2,
+            "to": 3,
+            "label": "Future paths lead toward smaller radius"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A tiny laboratory inside the horizon of a nonrotating black hole measures a light pulse moving at the usual speed of light. Why can that pulse still fail to escape?",
+        "options": [
+          "Its speed becomes zero as soon as it leaves the laboratory.",
+          "The horizon is a solid surface that reflects it inward.",
+          "Its future-directed path cannot lead from the interior back outside.",
+          "The laboratory must be wrong, because light cannot move inside a black hole."
+        ],
+        "correctAnswer": "Its future-directed path cannot lead from the interior back outside.",
+        "explanation": "Normal local light speed does not guarantee an escape route. Inside the horizon, no future-directed light path reaches the outside."
+      },
+      {
+        "question": "An astronomer detects bright light from hot gas outside a black hole’s event horizon. A colleague says this proves light can escape from inside. Which response is best?",
+        "options": [
+          "The colleague is right: sufficiently hot gas makes light fast enough to escape.",
+          "The light was emitted outside the horizon, so it can reach us without escaping from the interior.",
+          "The horizon temporarily opens whenever nearby gas becomes bright.",
+          "The detection must be false, because no light near a black hole can reach us."
+        ],
+        "correctAnswer": "The light was emitted outside the horizon, so it can reach us without escaping from the interior.",
+        "explanation": "Light from outside the horizon can follow escaping paths. Detecting that light does not contradict the rule that signals emitted inside cannot escape."
+      }
+    ],
+    "sources": [
+      {
+        "url": "https://science.nasa.gov/universe/black-holes/anatomy/",
+        "title": "Black Hole Anatomy - NASA Science"
+      }
+    ]
+  },
+  "score": 8.2,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 66788,
+      "approach": "misconception",
+      "blocks": "activity > explain > activity > check > explain > check > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 1,
+      "ms": 34202,
+      "claims": 8,
+      "supported": 1,
+      "contradicted": [],
+      "unclear": 7,
+      "downgraded": [
+        "Inside the event horizon of a nonrotating black hole, every future-directed causal path moves toward smaller radius, including paths followed by light aimed away from the center.: the quoted evidence isn't on the cited page",
+        "A local observer measures light in a vacuum traveling at the usual speed of light even inside a black hole.: the quoted evidence isn't on the cited page",
+        "No future-directed causal path from inside a black hole’s event horizon leads back outside the horizon.: the quoted evidence isn't on the cited page",
+        "The event horizon is the boundary beyond which no signal can escape to distant observers.: the quoted evidence isn't on the cited page",
+        "A black hole’s event horizon is not a material surface that absorbs light or blocks light like a wall.: the quoted evidence isn't on the cited page",
+        "Objects and light can cross a black hole’s event horizon inward.: the quoted evidence isn't on the cited page",
+        "Increasing a flashlight’s brightness does not increase the speed of the light the flashlight emits in a vacuum.: the quoted evidence isn't on the cited page"
+      ]
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8.2,
+      "ms": 34208,
+      "problems": [
+        "The lesson accurately describes the no-escape condition but largely asserts why it holds. The arrow diagram illustrates the conclusion without explaining how spacetime geometry restricts even outward-directed light.",
+        "The retry explanations mostly repeat the original explanations rather than offering a genuinely different way to understand the ideas.",
+        "The second check applies a useful distinction but is not clearly harder than the first; several distractors are too implausible to strongly test understanding."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8.2,
+      "passed": true,
+      "sources": 1
+    }
+  ]
+}

@@ -1,0 +1,189 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The Boundary Light Cannot Cross Back",
+    "objective": "Understand why nothing inside an event horizon can escape, while light still travels locally at its usual speed.",
+    "estimatedMinutes": 7,
+    "approach": "misconception",
+    "approachReason": "The lesson tests the idea that a black hole traps light by slowing it, then uses evidence and a causal-path model to replace that explanation.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "The first guess—and what it misses",
+        "body": "It is natural to imagine that a black hole traps light by slowing it down. But an observer making a small, local measurement near a black hole still measures light moving at the usual speed of light.\n\nThe important distinction is between how light moves nearby and whether its route can reach faraway space. Gravity shapes spacetime, and therefore which future routes are available.",
+        "example": "A local laboratory measures what passes by it; it does not, by itself, tell you whether that light can travel all the way back to a distant observer."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Separate what the astronaut measures nearby from what a distant observer can receive.",
+          "Ask whether the light's future route can reach the distant observer."
+        ],
+        "retry": "Picture future paths like the directions in which a signal can send news. Inside the horizon, none of the available future paths reaches the distant universe—even though light still moves locally at light-speed."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "What the event horizon means",
+        "body": "The event horizon is not a solid surface. It is a boundary in spacetime: outside it, some future paths can reach distant space; inside it, no future path—including one taken by light—can get there.\n\nA Newtonian escape-speed picture is a limited analogy: its escape speed reaches light-speed at the horizon and would exceed light-speed inside. That does not mean light literally slows down or has to outrun itself; the deeper point is that spacetime inside the horizon offers no route out.",
+        "example": "At the horizon, the limiting outward light path lies along the boundary rather than escaping to distant space. Just inside, even light sent in the most outward direction cannot get away."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Use the escape-speed picture only as a heuristic, not as a claim that light changes its local speed.",
+          "Compare what the heuristic says at the horizon with what it says just inside."
+        ],
+        "retry": "The escape-speed picture is only a rough Newtonian analogy. It points to a boundary: at the horizon its estimate reaches light-speed, and inside it would exceed light-speed; the actual reason no signal escapes is the structure of spacetime paths."
+      },
+      {
+        "kind": "explain",
+        "heading": "Resolve the misconception",
+        "body": "A black hole does not trap light by making it crawl. Light continues to move locally at light-speed, but inside the event horizon every possible future route fails to reach the distant universe.\n\nThat is why crossing inward makes the horizon a one-way boundary: no object, light ray, or other signal can return to faraway space.",
+        "example": ""
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Does the laser slow down?",
+        "prompt": "A probe just outside a black hole’s event horizon shines a laser inside its small onboard laboratory. What speed does the local lab measure for the light?",
+        "reveal": "The local measurement is still the usual speed of light. What the black hole changes is which paths can lead back to distant space, not light’s locally measured speed.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "The usual speed of light",
+            "correct": true,
+            "feedback": "Correct. A local measurement still gives the usual speed of light."
+          },
+          {
+            "text": "A little slower than the usual speed of light",
+            "correct": false,
+            "feedback": "That is the tempting picture, but light does not locally slow down near the horizon."
+          },
+          {
+            "text": "Zero, because gravity stops the beam",
+            "correct": false,
+            "feedback": "The beam is not locally stopped; the question of escape is separate from its local speed."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "The outward-pointing beacon",
+        "prompt": "You are helping an astronaut who has just crossed inside an event horizon. They switch on a powerful beacon and aim it straight outward toward your distant spacecraft. What should you expect?",
+        "reveal": "No signal from inside can reach your spacecraft, even when the beacon points outward and is very powerful. Its local motion is not the issue: no future path leads back to distant space.",
+        "type": "scenario",
+        "options": [
+          {
+            "text": "Receive the signal because it points outward",
+            "correct": false,
+            "feedback": "Pointing outward does not create a path to distant space from inside the horizon."
+          },
+          {
+            "text": "Receive it if the beacon is powerful enough",
+            "correct": false,
+            "feedback": "More power cannot change which future paths are available."
+          },
+          {
+            "text": "Receive it after a delay because the light moves more slowly",
+            "correct": false,
+            "feedback": "The local speed of light has not changed, and waiting cannot make a non-escaping path reach you."
+          },
+          {
+            "text": "Never receive it; no signal from inside can escape to you",
+            "correct": true,
+            "feedback": "Correct. No future path from inside the horizon reaches the distant universe."
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "An astronaut inside an event horizon shines a laser in a small local laboratory. The astronaut measures the light, while a distant observatory waits for the beam. Which account is correct?",
+        "options": [
+          "The astronaut measures light at its usual local speed, but the observatory cannot receive the beam.",
+          "The astronaut measures light moving more slowly, and the observatory receives it after a long delay.",
+          "The astronaut measures the light at zero speed, but the observatory receives it if the beam is bright enough.",
+          "The astronaut measures light at its usual local speed, so the observatory must eventually receive it."
+        ],
+        "correctAnswer": "The astronaut measures light at its usual local speed, but the observatory cannot receive the beam.",
+        "explanation": "Light still moves at the usual speed in a local measurement. Inside the horizon, however, its future path cannot reach the distant observatory."
+      },
+      {
+        "question": "A science team uses the Newtonian escape-speed picture as a rough guide while comparing two locations: the event horizon and a point just inside it. Which statement matches that heuristic?",
+        "options": [
+          "The estimate reaches light-speed at the horizon and exceeds light-speed just inside.",
+          "The estimate is below light-speed at the horizon and reaches light-speed just inside.",
+          "The estimate is greater than light-speed at the horizon but returns below it inside.",
+          "The estimate shows that light locally slows to zero at the horizon."
+        ],
+        "correctAnswer": "The estimate reaches light-speed at the horizon and exceeds light-speed just inside.",
+        "explanation": "In the Newtonian heuristic, escape speed equals light-speed at the horizon and would be greater just inside. This is only an analogy; the full explanation is that no future path inside reaches distant space."
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 33266,
+      "approach": "misconception",
+      "blocks": "activity > explain > check > activity > explain > check > explain",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 6,
+      "ms": 5762,
+      "problems": [
+        "The escape-speed analogy is stated inaccurately: at the horizon, the Newtonian escape-speed picture gives a speed equal to light speed, not more than light speed. It is greater than light speed inside the horizon.",
+        "The two activities and two checks largely repeat the same local-speed-versus-escape distinction, so the lesson offers limited progression or varied practice.",
+        "The diagram activity asks learners to trace connections, but its nodes and edges already state the intended relationships; it provides little meaningful problem-solving.",
+        "The check retries mostly restate the answer rather than offering a genuinely different explanation."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 29821,
+      "approach": "misconception",
+      "blocks": "activity > explain > check > activity > explain > check > explain",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 8,
+      "ms": 6289,
+      "problems": [
+        "The retry explanations mostly restate the lesson’s causal-path explanation rather than offering a genuinely different way to understand the idea.",
+        "The hints for the escape-speed question nearly state the answer directly, reducing the value of the knowledge check."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true
+    }
+  ]
+}

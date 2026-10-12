@@ -27,6 +27,9 @@ const EXPR = String.raw`${NUM}(?:\s*${OP}\s*${NUM})*`;
 // "v^2 / 10 = ...".
 const CHAIN = new RegExp(String.raw`(?<![\w.])(?<![)^*/×÷+\-−]\s*)${EXPR}(?:\s*=(?!=)\s*${EXPR})+${END}`, "g");
 const CONTINUATION = new RegExp(String.raw`^\s*[,;]?\s*(${OP})\s*(${NUM})\s*=(?!=)\s*(${EXPR})${END}`);
+// More of a number right after a match: a comma or point and a digit, a
+// spaced group of three digits, or a letter glued to digits that were dropped.
+const CUT_SHORT = /^(?:[,.]\d|[\s\u00a0\u2009\u202f]\d{3}(?!\d)|\d)/;
 // "400 ÷ 60 = 6 remainder 40" is integer division, not a wrong quotient.
 const REMAINDER = /^\s*(?:r\b|rem\b|remainder\b|with (?:a )?remainder\b|and \d+ left)/i;
 const SHARE = new RegExp(String.raw`(?<![\w.])(${NUM})(?:\s+[a-z]+)?\s*(?:out of|of|/)\s*(?:an?\s+|the\s+)?(${NUM})\b[^.;:]{0,40}?\b(?:is|=|are|makes|comes to)\s*(?:about\s+|roughly\s+|around\s+|nearly\s+)?(\d+(?:\.\d+)?)\s*%`, "gi");
@@ -82,6 +85,9 @@ function checkText(raw: string, where: string, out: string[]) {
     const whole = m[0];
     const after = text.slice((m.index ?? 0) + whole.length);
     if (REMAINDER.test(after)) continue;
+    // The last number was cut short ("3,600s", "3 600", base-60 "1,0,0"): the
+    // match stopped inside a longer number, so the claim can't be read; skip it.
+    if (CUT_SHORT.test(after)) continue;
     const parts = whole.split(/=(?!=)/).map((p) => p.trim());
     // Only a claim with arithmetic in it; a percentage on one side only
     // ("20% + 5 = ...") is ambiguous.

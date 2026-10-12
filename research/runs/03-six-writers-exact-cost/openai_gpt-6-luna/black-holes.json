@@ -1,0 +1,193 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The Event Horizon: A One-Way Boundary",
+    "objective": "Understand why light—and anything else—cannot escape from inside a black hole’s event horizon.",
+    "estimatedMinutes": 7,
+    "approach": "misconception",
+    "approachReason": "The lesson opens with the tempting idea that a black hole slows or catches light, then tests that belief and replaces it with a model based on which future paths are possible.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "A claim worth testing",
+        "body": "A common picture is that a black hole grabs light and slows it until it stops at the event horizon. But light’s speed, measured by someone nearby, is always the speed of light.\n\nIf the light is not simply slowing down, what prevents it from escaping? Make a prediction before we build a better explanation.",
+        "example": "The event horizon is the boundary around a black hole beyond which escape is impossible."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "The boundary changes the possible paths",
+        "body": "An event horizon is not a solid surface that catches light. It is a boundary in spacetime: outside it, some future paths can lead away from the black hole; inside it, every possible future path stays inside.\n\nLight still travels at light speed when measured locally. Inside the horizon, pointing a beam outward does not make escape possible, because no future path from there reaches the outside.",
+        "example": "The problem is not that light loses speed. It is that escape is no longer one of the possible destinations."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Separate what happens at the boundary from what happens to future paths after crossing it.",
+          "Could a signal travel outward locally and still fail to reach the outside?"
+        ],
+        "retry": "An event horizon is not a material shell. Crossing it changes which future paths are possible."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "Outside does not mean guaranteed escape",
+        "body": "Outside the horizon, some outward light paths can reach a distant observer. But a signal’s starting location alone does not tell you whether it will escape: its direction, trajectory, and the surrounding spacetime geometry matter.\n\nThe horizon marks the decisive one-way limit. From inside, no signal can get out; from outside, escape is possible along some paths, but not guaranteed along every path.",
+        "example": "For example, a signal just outside the horizon that is directed inward is not on an outward route to a distant receiver."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Being outside is not enough to determine the signal’s destination.",
+          "Use the stated direction of the pulse to assess whether its route leads to the receiver."
+        ],
+        "retry": "Being outside the horizon allows some escape paths, but an inward-pointing signal is not thereby guaranteed to reach a distant observer."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Point a flashlight outward",
+        "prompt": "A spaceship is just inside a black hole’s event horizon. An astronaut points a flashlight directly away from the black hole. What do you predict happens to the light?",
+        "reveal": "The light travels at light speed locally, but it cannot reach the outside. Pointing outward is not enough when no future path from inside the horizon leads out.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "It slows down until it stops at the horizon.",
+            "correct": false,
+            "feedback": "Light does not locally slow to a stop, and the horizon is not a surface that catches it."
+          },
+          {
+            "text": "It travels at light speed locally, but cannot reach the outside.",
+            "correct": true,
+            "feedback": "Right. Inside the horizon, even an outward-pointing light ray cannot follow a path to the outside."
+          },
+          {
+            "text": "It escapes because it is pointed away from the black hole.",
+            "correct": false,
+            "feedback": "Pointing outward does not create an escape path once the astronaut is inside the horizon."
+          },
+          {
+            "text": "It bounces off the event horizon.",
+            "correct": false,
+            "feedback": "The event horizon is not a solid surface for light to bounce off."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Trace two signals",
+        "prompt": "You are a distant receiver comparing two planned light signals. Signal A starts just inside the event horizon and points outward; Signal B starts outside, and its outward route is known to reach you. Which forecast fits both paths?",
+        "reveal": "Signal A cannot reach you, even though it points outward; no future path from inside the horizon gets out. Signal B can reach you because its route is specified as an outward path that reaches the receiver.",
+        "type": "scenario",
+        "options": [
+          {
+            "text": "Both signals can reach you because both point outward.",
+            "correct": false,
+            "feedback": "Signal A cannot escape from inside the horizon, even when pointed outward."
+          },
+          {
+            "text": "Neither signal can reach you because both are near a black hole.",
+            "correct": false,
+            "feedback": "Signal B is outside, and its route is explicitly known to reach the receiver."
+          },
+          {
+            "text": "Signal A cannot reach you, but Signal B can.",
+            "correct": true,
+            "feedback": "Correct. The horizon prevents every signal from inside from reaching the outside, while the specified outward path from outside does reach you."
+          },
+          {
+            "text": "Signal A reaches you because light is fast, but Signal B stops at the horizon.",
+            "correct": false,
+            "feedback": "Local light speed does not allow a signal to escape from inside, and the horizon is not a stopping surface for Signal B."
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "An astronaut in a suitable spacesuit crosses the event horizon of a large black hole. Which description best fits what the horizon itself is and what follows?",
+        "options": [
+          "The astronaut hits a solid shell, and light bounces off it.",
+          "The astronaut crosses a boundary that need not be a material surface; afterward, no signal can reach the outside.",
+          "The astronaut crosses a boundary where light locally slows to zero, then can speed up again.",
+          "Nothing changes about possible signal paths after crossing; only the astronaut’s view changes."
+        ],
+        "correctAnswer": "The astronaut crosses a boundary that need not be a material surface; afterward, no signal can reach the outside.",
+        "explanation": "The event horizon is a boundary in spacetime, not necessarily a physical shell. Once inside, no future path—including a light signal’s path—leads back outside."
+      },
+      {
+        "question": "A probe is outside a black hole and sends a radio pulse inward, away from a distant receiver. What is the safest conclusion from the information given?",
+        "options": [
+          "The pulse must reach the receiver because it starts outside the horizon.",
+          "The pulse cannot reach the receiver because every signal near a black hole is trapped.",
+          "Its location alone does not guarantee escape; the stated inward direction is not an outward route to the receiver.",
+          "The pulse escapes only if it travels faster than light."
+        ],
+        "correctAnswer": "Its location alone does not guarantee escape; the stated inward direction is not an outward route to the receiver.",
+        "explanation": "Outside the horizon, escape is possible along some paths, but location alone does not determine a signal’s destination. Here the pulse is directed inward rather than along an outward route to the receiver."
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 29878,
+      "approach": "misconception",
+      "blocks": "explain > activity > explain > check > activity > explain > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 7,
+      "ms": 2784,
+      "problems": [
+        "The opening asks learners to test the misconception, but the flashlight activity immediately supplies the correct explanation in its reveal; the later check largely repeats the same scenario.",
+        "The diagram activity is somewhat decorative: tapping nodes and tracing links offers little reasoning beyond restating the explanations, and its graph structure is not especially intuitive.",
+        "The outside-horizon question overstates what can be concluded from location alone: an outward pulse may reach a distant receiver, but its direction, trajectory, and the spacetime geometry also matter."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 22630,
+      "approach": "misconception",
+      "blocks": "explain > activity > explain > check > activity > explain > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 8,
+      "ms": 5943,
+      "problems": [
+        "The retry explanations mostly restate the original idea rather than offering a genuinely different explanation or analogy.",
+        "The second activity and its following check substantially overlap: both test whether an outside signal directed inward is guaranteed to reach a distant receiver."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true
+    }
+  ]
+}

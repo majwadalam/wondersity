@@ -1,0 +1,5 @@
+■ conceptual science: Black holes (28s, score 8)
+  approach: simulation (The event horizon is a boundary defined by what can and cannot escape, so the fastest way to grasp it is to move a light beam closer and closer to a black hole and watch exactly where escape stops being possible.)
+  blocks:   explain > activity:simulation > explain > check > problem > explain > check > check > summary
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=8, lesson.select=8

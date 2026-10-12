@@ -1,0 +1,5 @@
+■ programming: Python loops (48s, score 9, $0.0209, 2 calls, 6971 in / 16475 out tokens)
+  approach: discovery (The accumulator pattern is best learned by predicting what a loop produces before it is named, so every idea here is first met as a prediction to make and only then explained.)
+  blocks:   code:predict > explain > activity:sort > code:trace > check > worked > check > activity:predict > check > problem
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=9, lesson.select=9

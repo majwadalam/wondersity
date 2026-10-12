@@ -1,0 +1,5 @@
+■ programming: Python loops (64s, score 8.5)
+  approach: worked_example (A fully traced total-building loop provides a model, then progressively lighter scaffolding leads to writing a new loop independently.)
+  blocks:   worked > explain > check > code:predict > activity:order > explain > check > code:bug > check > reflect
+  issues:   none
+  trace:    lesson.generate, lesson.evaluate=8.5, lesson.select=8.5

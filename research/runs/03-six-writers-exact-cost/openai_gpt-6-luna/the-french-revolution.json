@@ -1,0 +1,196 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Why 1789?",
+    "objective": "Explain how government debt, rising food prices, and new political ideas combined to start the French Revolution.",
+    "estimatedMinutes": 7,
+    "approach": "scenario",
+    "approachReason": "A fictional Third Estate deputy’s journey through spring 1789 lets you see how financial, everyday, and political pressures converged.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "A deputy arrives in a troubled kingdom",
+        "body": "Imagine you are a fictional deputy elected by the Third Estate, the vast majority of France’s population. You arrive in spring 1789 to represent people facing high bread prices and unequal taxes, while the monarchy is short of money.\n\nYour task is not just to list complaints. It is to work out why so many different grievances are becoming a crisis at the same time.",
+        "example": "The Estates-General, an assembly representing the three estates, is about to meet for the first time since 1614."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "The crown’s money problem",
+        "body": "France had accumulated heavy debts through costly wars, including its support for the American Revolution. The government borrowed money, but raising more through taxes was difficult: privileged groups, including nobles and clergy, resisted reforms that would make them contribute more.\n\nThe crisis was therefore about more than a shortage of cash. People were also asking who should bear the cost—and who had the authority to decide.",
+        "example": "In 1788, Louis XVI called the Estates-General to address the financial crisis. That gave representatives a chance to raise wider questions about political power."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Separate the need for money from the dispute about who should pay.",
+          "Which groups could block a change to the tax system?"
+        ],
+        "retry": "The state’s debt created pressure to raise revenue, while resistance to taxing privileged groups made reform politically difficult."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "Bread and political ideas sharpen the crisis",
+        "body": "A poor harvest in 1788 and a harsh winter helped drive up the price of bread, a staple food. For many families, the government’s financial troubles were not abstract: they were trying to afford daily food.\n\nAt the same time, Enlightenment ideas encouraged people to question inherited privilege and argue that political authority should serve the nation. These ideas did not cause the food shortage or the debt, but they offered ways to criticize the old system and demand a voice in changing it.",
+        "example": "As a deputy, you hear both immediate demands for affordable bread and broader demands for fairer representation and laws."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Ask what each pressure added: a weakened government, immediate hardship, or a language for political demands.",
+          "Look for the choice that connects the pressures instead of treating one as the sole cause."
+        ],
+        "retry": "Debt strained the government, high bread prices made hardship urgent, and political ideas helped people challenge how the kingdom was governed. Together, these pressures made the dispute harder to contain."
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Consider how hardship can intensify a political dispute.",
+          "Include the monarchy’s financial problem, ordinary people’s food concerns, and demands for political change."
+        ],
+        "retry": "The revolution’s opening crisis grew from pressures working together: a financially strained monarchy, hardship made worse by high food prices, and demands for a fairer political order."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "What explains the growing crisis?",
+        "prompt": "You are a fictional Third Estate deputy in spring 1789. Your fellow deputies ask why grievances have become so urgent. Which explanation best connects what people are experiencing?",
+        "reveal": "No single pressure explains the moment: debt weakened the monarchy, food prices made hardship immediate, and new political ideas strengthened demands for change.",
+        "type": "scenario",
+        "options": [
+          {
+            "text": "The royal debt alone caused the crisis; bread prices and political arguments were separate issues.",
+            "correct": false,
+            "feedback": "Debt mattered, but this leaves out why hardship felt urgent to ordinary people and why political demands gained force."
+          },
+          {
+            "text": "High bread prices alone caused the crisis; the monarchy’s finances and political ideas had little to do with it.",
+            "correct": false,
+            "feedback": "Food hardship was important, but it did not explain the government’s financial impasse or demands to change political power."
+          },
+          {
+            "text": "Debt strained the monarchy, rising bread prices intensified hardship, and new ideas helped people demand political change.",
+            "correct": true,
+            "feedback": "This connects the financial, everyday, and political pressures without reducing the crisis to just one cause."
+          },
+          {
+            "text": "New political ideas alone caused the crisis; people’s material conditions were not important.",
+            "correct": false,
+            "feedback": "Political ideas shaped demands, but they mattered alongside financial strain and the immediate difficulty of affording bread."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Which pressure does each example show?",
+        "prompt": "Sort each example by the pressure it most directly illustrates. Some pressures were connected in real life; choose the clearest fit for each item.",
+        "reveal": "The pressures overlapped, but separating them helps show what each contributed: strain on the state, hardship for households, and arguments for political change.",
+        "type": "sort",
+        "buckets": [
+          "Government debt",
+          "Food prices",
+          "New political ideas"
+        ],
+        "items": [
+          {
+            "text": "The crown had borrowed heavily to fund wars.",
+            "bucket": "Government debt"
+          },
+          {
+            "text": "Reformers faced resistance to making privileged groups pay more tax.",
+            "bucket": "Government debt"
+          },
+          {
+            "text": "A poor harvest and harsh winter helped make bread more expensive.",
+            "bucket": "Food prices"
+          },
+          {
+            "text": "Families struggled to afford a staple food.",
+            "bucket": "Food prices"
+          },
+          {
+            "text": "People questioned whether political authority should serve the nation.",
+            "bucket": "New political ideas"
+          },
+          {
+            "text": "Critics challenged inherited privilege and demanded a greater political voice.",
+            "bucket": "New political ideas"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "You are advising a royal official in 1789. The government needs more revenue, but privileged groups resist paying more. What does this best reveal about the financial crisis?",
+        "options": [
+          "The debt created pressure to raise money, but disputes over who should pay made reform difficult.",
+          "The debt was only a problem because bread had become more expensive.",
+          "The government could resolve its debt simply by asking the Third Estate to pay all taxes.",
+          "The monarchy had no need for tax reform because borrowing had ended the financial problem."
+        ],
+        "correctAnswer": "The debt created pressure to raise money, but disputes over who should pay made reform difficult.",
+        "explanation": "The state’s need for revenue collided with resistance to changing the tax burden. That made financial reform a political conflict as well as a money problem."
+      },
+      {
+        "question": "In 1789, your neighbors face costly bread and hear arguments that inherited privilege should be challenged. Which explanation best connects those experiences?",
+        "options": [
+          "High bread prices caused political ideas to disappear from public discussion.",
+          "Food hardship made daily life more urgent, while political ideas helped people frame demands for change.",
+          "Political ideas caused the poor harvest that raised bread prices.",
+          "Food prices and political demands were unrelated, so neither affected the crisis."
+        ],
+        "correctAnswer": "Food hardship made daily life more urgent, while political ideas helped people frame demands for change.",
+        "explanation": "Rising food costs intensified immediate hardship, while political ideas provided arguments for criticizing privilege and seeking a voice in government."
+      },
+      {
+        "question": "A fellow deputy says, “If bread had stayed affordable, there would have been no revolutionary crisis.” Which response is most accurate?",
+        "options": [
+          "Yes; food prices were the only cause, and the monarchy’s debt did not matter.",
+          "Yes; Enlightenment ideas mattered only after the revolution was over.",
+          "No; food hardship heightened pressure, but debt and political demands also helped turn grievances into a wider crisis.",
+          "No; the harvest alone solved the monarchy’s financial problem."
+        ],
+        "correctAnswer": "No; food hardship heightened pressure, but debt and political demands also helped turn grievances into a wider crisis.",
+        "explanation": "The causes reinforced one another: food hardship added urgency, debt weakened the monarchy, and demands for political change challenged how the kingdom was governed."
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 37532,
+      "approach": "scenario",
+      "blocks": "explain > activity > explain > check > activity > explain > check > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8,
+      "ms": 2235,
+      "problems": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true
+    }
+  ]
+}
