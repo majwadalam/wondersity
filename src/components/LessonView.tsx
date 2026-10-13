@@ -3,7 +3,7 @@
 import { AppError } from "./app/AppState";
 
 import { motion } from "motion/react";
-import { Volume2, VolumeX } from "lucide-react";
+import { Volume2, VolumeX, Award, Flame } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import { APPROACHES, isInteractive, lessonBlocks, type Block } from "@/lib/lessonBlocks";
@@ -553,6 +553,23 @@ function QuizOutcome({
           </span>
         </motion.div>
       ))}
+      {/* The streak this lesson kept going (from the server's saved completions). */}
+      {saved && submission.result.rewards && submission.result.rewards.streak > 0 && (
+        <motion.div
+          className={`relative mt-4 flex items-center gap-3 rounded-xl px-4 py-3 ${submission.result.rewards.streakMilestone ? "bg-[#fff1e6]" : "bg-canvas"}`}
+          initial={{ opacity: 0, y: 6 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ ...spring.gentle, delay: 0.2 }}
+          role="status"
+        >
+          {submission.result.rewards.streakMilestone && <Burst trigger="streak" />}
+          <Flame size={22} className="flex-shrink-0 text-[#f2711c]" />
+          <span className="text-sm text-fg">
+            <span className="font-semibold">{submission.result.rewards.streak}-day streak</span>
+            {submission.result.rewards.streakMilestone ? ". A milestone: keep it going tomorrow." : ". Come back tomorrow to keep it going."}
+          </span>
+        </motion.div>
+      )}
       {saved && latest && (
         <div className="mt-5 flex items-center gap-3">
           <ProgressFill value={doneModules / latest.modules.length} className="flex-1" label="Course progress" />
@@ -577,6 +594,26 @@ function QuizOutcome({
         <div className="mt-5 flex flex-wrap items-center gap-3">
           {finishedCourse ? (
             <>
+              {submission.result.rewards?.certificateId && (
+                <motion.div
+                  className="relative flex w-full items-center gap-4 rounded-2xl bg-navy p-4 text-white"
+                  initial={{ opacity: 0, scale: 0.96 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ ...spring.bouncy, delay: 0.3 }}
+                >
+                  <Burst trigger="certificate" />
+                  <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-full bg-white/10">
+                    <Award size={22} />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-sm font-semibold">Your certificate is ready</span>
+                    <span className="block text-xs text-white/70">Add it to LinkedIn or share it anywhere.</span>
+                  </span>
+                  <a href={`/certificate/${submission.result.rewards.certificateId}`} className="btn-pill bg-white px-4 py-2 text-sm text-fg hover:bg-white/90">
+                    View and share
+                  </a>
+                </motion.div>
+              )}
               <p className="flex-1 text-sm text-muted">You&rsquo;ve finished the whole course.</p>
               <button type="button" onClick={() => onContinue(latest.topic)} className="btn-primary rounded-xl px-5 py-2.5 text-sm font-semibold">
                 See your course →

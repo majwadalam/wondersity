@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { rewardsAfterQuiz } from "@/lib/milestones";
 import { z } from "zod";
 import { asLearner } from "@/lib/auth";
 import { startLessonJob } from "@/lib/jobs";
@@ -44,6 +45,13 @@ export async function POST(request: Request) {
   return asLearner(async (learnerId) => {
     try {
       const result = await recordQuiz(learnerId, lessonId, answers);
+      // The streak and, when this finished the course, the certificate (lib/milestones.ts).
+      const rewards = result.firstCompletion
+        ? await rewardsAfterQuiz(learnerId, result.course).catch((e) => {
+            console.error("rewards after quiz:", e);
+            return null;
+          })
+        : null;
       // If this quiz unlocked a lesson that isn't written yet, write it now on
       // the server (it sees these answers), whether or not the browser stays open.
       const course = result.course;
@@ -51,7 +59,7 @@ export async function POST(request: Request) {
       if (course && next && !next.lesson) {
         await startLessonJob(learnerId, course.topic, "learn").catch((e) => console.error("couldn't start the next lesson", e));
       }
-      return NextResponse.json(result);
+      return NextResponse.json({ ...result, rewards });
     } catch (error) {
       if (error instanceof QuizError) {
         return NextResponse.json({ error: error.message }, { status: error.status });

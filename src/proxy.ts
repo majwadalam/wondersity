@@ -7,7 +7,7 @@ import { REF_COOKIE, REF_DAYS, cleanRefCode } from "@/lib/referrals";
 // app). An optimistic check only: every API route verifies the user again.
 // Also remembers a creator's referral code from ?ref= (see lib/referrals.ts).
 
-const APP = ["/home", "/courses", "/progress", "/library", "/settings", "/welcome"];
+const APP = ["/home", "/courses", "/progress", "/library", "/settings", "/welcome", "/admin"];
 
 export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request });
@@ -45,5 +45,5 @@ export async function proxy(request: NextRequest) {
 
 export const config = {
   // Pages only: not API routes (they check for themselves), static files or images.
-  matcher: ["/((?!api|_next/static|_next/image|art|lottie|audio|favicon|icon|apple-icon|.*\\.(?:svg|png|jpg|webp|json|m4a)$).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|art|lottie|audio|favicon|icon|apple-icon|sw\\.js|.*\\.(?:svg|png|jpg|webp|json|m4a)$).*)"],
 };

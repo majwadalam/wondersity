@@ -452,10 +452,11 @@ export async function insertLessonReport(
 }
 
 // Billing events arrive from Paddle with no signed-in learner, so they are
-// written with the server's secret key. Only the webhook uses this client.
+// written with the server's secret key. The webhook, the shared caches and the
+// admin panel (lib/admin.ts, only after requireAdmin()) use this client.
 let admin: SupabaseClient | null = null;
 
-function adminSupabase(): SupabaseClient {
+export function adminSupabase(): SupabaseClient {
   admin ??= createClient(requireEnv("NEXT_PUBLIC_SUPABASE_URL"), requireEnv("SUPABASE_SECRET_KEY"), {
     auth: { persistSession: false },
   });
@@ -783,4 +784,135 @@ export async function firstMaterials(courseId: number, count = 4) {
     .limit(count);
   if (error) throw new Error(`firstMaterials: ${error.message}`);
   return (data ?? []) as { source: string; chunk_index: number; content: string }[];
+}
+
+// ---------- certificates, notifications, browser push (migration 015) ----------
+
+export type CertificateRow = {
+  id: string;
+  learner_id: string;
+  course_id: number;
+  learner_name: string;
+  course_title: string;
+  topic: string;
+  levels: string[];
+  lessons: number;
+  minutes: number;
+  accuracy: number | null;
+  completed_at: string;
+  created_at: string;
+};
+
+/** The learner's certificate for a course, if issued. */
+export async function getCertificateForCourse(courseId: number) {
+  const { data, error } = await supabase().from("certificates").select("*").eq("course_id", courseId).maybeSingle();
+  if (error) throw new Error(`getCertificateForCourse: ${error.message}`);
+  return data as CertificateRow | null;
+}
+
+/** The signed-in learner's certificates, newest first. */
+export async function listCertificates(learnerId: string) {
+  const { data, error } = await supabase().from("certificates").select("*").eq("learner_id", learnerId).order("completed_at", { ascending: false });
+  if (error) throw new Error(`listCertificates: ${error.message}`);
+  return (data ?? []) as CertificateRow[];
+}
+
+/** Saves a certificate; a course already certified keeps its first one. Returns the stored row. */
+export async function insertCertificate(row: Omit<CertificateRow, "created_at">) {
+  const { error } = await supabase().from("certificates").insert(row);
+  if (error && error.code !== "23505") throw new Error(`insertCertificate: ${error.message}`);
+  return getCertificateForCourse(row.course_id);
+}
+
+/** A certificate by its id, for its public page (server key: certificates can't be listed by anyone else). */
+export async function getPublicCertificate(id: string) {
+  if (!/^[A-Za-z0-9]{10,32}$/.test(id) || !canWriteShared()) return null;
+  const { data, error } = await adminSupabase().from("certificates").select("*").eq("id", id).maybeSingle();
+  if (error) throw new Error(`getPublicCertificate: ${error.message}`);
+  return data as CertificateRow | null;
+}
+
+export type NotificationKind = "lesson_ready" | "streak" | "certificate" | "reminder";
+export type NotificationRow = { id: number; kind: NotificationKind; title: string; body: string; href: string | null; read_at: string | null; created_at: string };
+
+/** Saves a notification for the bell. Uses the learner's own client in a request, the server key otherwise (cron). */
+export async function insertNotification(learnerId: string, n: { kind: NotificationKind; title: string; body: string; href: string | null }, asServer = false) {
+  const client = asServer ? adminSupabase() : supabase();
+  const { error } = await client.from("notifications").insert({ learner_id: learnerId, ...n });
+  if (error) throw new Error(`insertNotification: ${error.message}`);
+}
+
+export async function listNotifications(learnerId: string, limit = 30) {
+  const { data, error } = await supabase().from("notifications").select("id, kind, title, body, href, read_at, created_at").eq("learner_id", learnerId).order("created_at", { ascending: false }).limit(limit);
+  if (error) throw new Error(`listNotifications: ${error.message}`);
+  return (data ?? []) as NotificationRow[];
+}
+
+/** Marks the learner's notifications read (all, or the ones given). */
+export async function markNotificationsRead(learnerId: string, ids?: number[]) {
+  let q = supabase().from("notifications").update({ read_at: new Date().toISOString() }).eq("learner_id", learnerId).is("read_at", null);
+  if (ids?.length) q = q.in("id", ids);
+  const { error } = await q;
+  if (error) throw new Error(`markNotificationsRead: ${error.message}`);
+}
+
+export type PushSubscriptionRow = { endpoint: string; learner_id: string; p256dh: string; auth: string };
+
+export async function savePushSubscription(row: PushSubscriptionRow) {
+  const { error } = await supabase().from("push_subscriptions").upsert(row, { onConflict: "endpoint" });
+  if (error) throw new Error(`savePushSubscription: ${error.message}`);
+}
+
+export async function deletePushSubscription(endpoint: string, asServer = false) {
+  const { error } = await (asServer ? adminSupabase() : supabase()).from("push_subscriptions").delete().eq("endpoint", endpoint);
+  if (error) throw new Error(`deletePushSubscription: ${error.message}`);
+}
+
+export async function listPushSubscriptions(learnerId: string, asServer = false) {
+  const { data, error } = await (asServer ? adminSupabase() : supabase()).from("push_subscriptions").select("endpoint, learner_id, p256dh, auth").eq("learner_id", learnerId);
+  if (error) throw new Error(`listPushSubscriptions: ${error.message}`);
+  return (data ?? []) as PushSubscriptionRow[];
+}
+
+/** Days (in the learner's time zone) on which they finished a lesson, newest first, for the streak. */
+export async function completionTimes(learnerId: string, asServer = false) {
+  const { data, error } = await (asServer ? adminSupabase() : supabase())
+    .from("lessons")
+    .select("completed_at")
+    .eq("learner_id", learnerId)
+    .not("completed_at", "is", null)
+    .order("completed_at", { ascending: false })
+    .limit(400);
+  if (error) throw new Error(`completionTimes: ${error.message}`);
+  return (data ?? []).map((r) => r.completed_at as string);
+}
+
+export type ReminderProfile = { id: string; display_name: string | null; timezone: string | null; reminders: boolean; last_reminded_on: string | null };
+
+/** Profiles that may get today's reminder (server key, for the cron route). */
+export async function reminderCandidates() {
+  const { data, error } = await adminSupabase().from("profiles").select("id, display_name, timezone, reminders, last_reminded_on").eq("reminders", true).limit(5000);
+  if (error) throw new Error(`reminderCandidates: ${error.message}`);
+  return (data ?? []) as ReminderProfile[];
+}
+
+export async function markReminded(learnerId: string, day: string) {
+  const { error } = await adminSupabase().from("profiles").update({ last_reminded_on: day }).eq("id", learnerId);
+  if (error) throw new Error(`markReminded: ${error.message}`);
+}
+
+/** The name a certificate carries: the profile's display name, else the account's (e.g. from Google). */
+export async function learnerName(learnerId: string) {
+  const profile = await getProfileBasics(learnerId).catch(() => null);
+  if (profile?.display_name?.trim()) return profile.display_name.trim();
+  const { data } = await supabase().auth.getUser().catch(() => ({ data: { user: null } }));
+  const meta = data.user?.id === learnerId ? data.user.user_metadata?.full_name : null;
+  return typeof meta === "string" && meta.trim() ? meta.trim().slice(0, 80) : "A Wondersity learner";
+}
+
+/** The learner's time zone and display name (own client in a request). */
+export async function getProfileBasics(learnerId: string, asServer = false) {
+  const { data, error } = await (asServer ? adminSupabase() : supabase()).from("profiles").select("display_name, timezone, reminders").eq("id", learnerId).maybeSingle();
+  if (error) throw new Error(`getProfileBasics: ${error.message}`);
+  return data as { display_name: string | null; timezone: string | null; reminders: boolean } | null;
 }

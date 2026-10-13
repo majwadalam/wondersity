@@ -1,0 +1,82 @@
+[
+  [
+    "lesson 1 graded",
+    true,
+    "status 200"
+  ],
+  [
+    "streak starts at 1",
+    true,
+    "{\"streak\":1,\"streakMilestone\":false,\"certificateId\":null}"
+  ],
+  [
+    "no certificate yet",
+    true,
+    ""
+  ],
+  [
+    "course completed",
+    true,
+    ""
+  ],
+  [
+    "certificate issued",
+    true,
+    "LhMt5PCvmqnSHk"
+  ],
+  [
+    "streak still 1 (same day)",
+    true,
+    ""
+  ],
+  [
+    "a retake doesn't issue another",
+    true,
+    ""
+  ],
+  [
+    "bell has the certificate",
+    true,
+    "1 unread"
+  ],
+  [
+    "marking read clears the badge",
+    true,
+    ""
+  ],
+  [
+    "listed for the learner",
+    true,
+    ""
+  ],
+  [
+    "public page opens signed out",
+    true,
+    ""
+  ],
+  [
+    "page asks not to be indexed",
+    true,
+    ""
+  ],
+  [
+    "unknown certificate is a 404",
+    true,
+    ""
+  ],
+  [
+    "share image is a PNG",
+    true,
+    "78818 bytes"
+  ],
+  [
+    "reminders refuse without the secret",
+    true,
+    ""
+  ],
+  [
+    "reminders run with it",
+    true,
+    "{\"checked\":0,\"sent\":0}"
+  ]
+]

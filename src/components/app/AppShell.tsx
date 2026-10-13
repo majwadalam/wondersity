@@ -1,6 +1,7 @@
 "use client";
 
-import { BarChart3, BookOpen, Bookmark, House, LogOut, Menu, Plus, Settings, X } from "lucide-react";
+import { BarChart3, BookOpen, Bookmark, House, LogOut, Menu, Plus, Settings, Shield, X } from "lucide-react";
+import { NotificationBell } from "./NotificationBell";
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -26,8 +27,9 @@ const NAV = [
 
 const APP_PREFIXES = ["/home", "/courses", "/progress", "/library", "/settings"];
 const isAppPage = (pathname: string) => APP_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`));
-/** A lesson (/courses/:id/:n) or onboarding: nothing around the page. */
-const isFocusPage = (pathname: string) => /^\/courses\/[^/]+\/[^/]+\/?$/.test(pathname) || pathname.startsWith("/welcome");
+/** A lesson (/courses/:id/:n), onboarding or the admin panel (its own frame): nothing around the page. */
+const isFocusPage = (pathname: string) =>
+  /^\/courses\/[^/]+\/[^/]+\/?$/.test(pathname) || pathname.startsWith("/welcome") || pathname === "/admin" || pathname.startsWith("/admin/");
 const isActive = (pathname: string, href: string) => pathname === href || pathname.startsWith(`${href}/`);
 
 /** True once the page has scrolled past the top. */
@@ -204,7 +206,7 @@ export function MarketingFooter({ dark = false }: { dark?: boolean }) {
 // ---------- the app ----------
 
 function UserMenu() {
-  const { profile, signOut } = useAppState();
+  const { profile, loaded, signOut } = useAppState();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -226,8 +228,18 @@ function UserMenu() {
       >
         <Avatar size={32} />
         <span className="min-w-0 flex-1">
-          <span className="block truncate text-sm font-medium text-fg">{profile?.displayName || "Your account"}</span>
-          <span className="block truncate text-xs text-muted">{profile?.email}</span>
+          {loaded ? (
+            <>
+              <span className="block truncate text-sm font-medium text-fg">{profile?.displayName || "Your account"}</span>
+              <span className="block truncate text-xs text-muted">{profile?.email}</span>
+            </>
+          ) : (
+            // The name and email arrive with the learner's courses; until then, placeholders.
+            <>
+              <span className="skeleton block h-3.5 w-20 rounded" />
+              <span className="skeleton mt-1.5 block h-3 w-32 rounded" />
+            </>
+          )}
         </span>
       </button>
       <AnimatePresence>
@@ -254,13 +266,15 @@ function UserMenu() {
 
 function Sidebar() {
   const pathname = usePathname();
+  const { profile } = useAppState();
   return (
     <aside className="fixed inset-y-0 left-0 z-30 hidden w-60 flex-col border-r border-line bg-white px-3 py-4 md:flex">
-      <div className="px-2">
+      <div className="flex items-center justify-between pl-2">
         <Link href="/home" className="flex items-center gap-2" aria-label="Wondersity home">
           <LogoMark />
           <span className="text-[20px] font-semibold tracking-[-0.03em] text-fg">wondersity</span>
         </Link>
+        <NotificationBell />
       </div>
       <Link href="/home?new=1" className="btn-pill btn-pill-accent mt-6 justify-center gap-1.5 py-2.5 text-sm">
         <Plus size={16} strokeWidth={2.5} /> New course
@@ -293,6 +307,11 @@ function Sidebar() {
         >
           <Settings size={18} strokeWidth={1.8} /> Settings
         </Link>
+        {profile?.admin && (
+          <Link href="/admin" className="flex items-center gap-3 rounded-lg px-3 py-2 text-[14.5px] font-medium text-muted hover:bg-canvas hover:text-fg">
+            <Shield size={18} strokeWidth={1.8} /> Admin
+          </Link>
+        )}
         <UserMenu />
       </div>
     </aside>
@@ -309,9 +328,12 @@ function PhoneBars() {
           <LogoMark size={24} />
           <span className="text-lg font-semibold tracking-[-0.03em] text-fg">wondersity</span>
         </Link>
-        <Link href="/settings" aria-label="Settings">
-          <Avatar size={30} />
-        </Link>
+        <div className="flex items-center gap-1">
+          <NotificationBell align="right" />
+          <Link href="/settings" aria-label="Settings">
+            <Avatar size={30} />
+          </Link>
+        </div>
       </header>
       <nav
         className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-4 border-t border-line bg-surface/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden"

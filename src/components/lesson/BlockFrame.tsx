@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import { splitEmbeds } from "@/lib/embeds";
 import { InlineGraph } from "./InlineGraph";
-import { Chunk, chunks, rich } from "./rich";
+import { Chunk, chunks } from "./rich";
 
 /** The frame for hands-on blocks: label, title, prompt, then the block, then the takeaway once done. */
 export function BlockFrame({
@@ -39,7 +39,11 @@ export function BlockFrame({
         )}
       </div>
       {title && <h3 className="font-display relative mt-3 text-2xl leading-snug text-fg sm:text-[28px]">{title}</h3>}
-      {prompt && <p className="relative mt-3 text-[17px] leading-relaxed whitespace-pre-line text-fg/80">{rich(prompt)}</p>}
+      {prompt && (
+        <div className="relative mt-3 text-[17px] leading-relaxed text-fg/80">
+          <Paragraphs text={prompt} />
+        </div>
+      )}
       <div className="relative mt-6">{children}</div>
       {done && takeaway && (
         <div className="activity-reveal relative mt-6 rounded-2xl border border-[#b6e6c8] bg-[#f1fbf5] px-5 py-4">

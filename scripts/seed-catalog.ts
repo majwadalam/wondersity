@@ -1,4 +1,5 @@
-// Seeds the catalog courses (lib/catalog.ts) into the shared cache, so a
+// Seeds the courses we offer (lib/catalog.ts: the catalog, then the landing
+// page's topics) into the shared cache, so a
 // learner who opens one gets its plan, painted world and first lessons (with
 // their scenes) at once, for under a cent. For each topic, a throwaway learner
 // takes the course through the running app's real API, exactly as a learner
@@ -17,7 +18,7 @@
 // the current lesson guide are skipped.
 
 import { createClient, type Session } from "@supabase/supabase-js";
-import { CATALOG } from "../src/lib/catalog";
+import { OFFERED_TOPICS } from "../src/lib/catalog";
 import { PLANNER_VERSION } from "../src/lib/coursePlan";
 import { lessonVersion } from "../src/lib/lessonWriter";
 
@@ -144,10 +145,23 @@ async function seedWithRetry(topic: string) {
   return `${first}\n  second try: ${await seed(topic)}`;
 }
 
+/** What's left on the OpenRouter key's own limit (null when it has none or can't be read). */
+async function keyRemaining(): Promise<number | null> {
+  const res = await fetch("https://openrouter.ai/api/v1/key", { headers: { Authorization: `Bearer ${process.env.OPENROUTER_API_KEY}` } }).catch(() => null);
+  const data = res?.ok ? await res.json().catch(() => null) : null;
+  return typeof data?.data?.limit_remaining === "number" ? data.data.limit_remaining : null;
+}
+
 async function main() {
   const t = Date.now();
   // One at a time: each course holds credit while it's written and painted.
-  for (const { topic } of CATALOG.filter((c) => !only || c.topic.toLowerCase().includes(only))) {
+  for (const topic of OFFERED_TOPICS.filter((t) => !only || t.toLowerCase().includes(only))) {
+    // A course needs about $0.25 of headroom (images need $1 free on the key): stop cleanly before running dry.
+    const left = await keyRemaining();
+    if (left !== null && left < 0.6) {
+      console.log(`stopped before ${topic}: $${left.toFixed(2)} left on the OpenRouter key; raise its limit and run this again`);
+      break;
+    }
     console.log(await seedWithRetry(topic).catch((e) => `${topic}: FAILED ${e instanceof Error ? e.message : e}`));
   }
   const { data } = await admin.from("runs").select("cost_usd").gte("created_at", new Date(t).toISOString());

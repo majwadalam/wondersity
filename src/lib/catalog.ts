@@ -1,4 +1,5 @@
-// The courses we offer on the home, Courses and welcome pages. They are seeded
+// The courses we offer on the home, Courses and welcome pages, and the topics
+// in the landing page's scrolling rows. They are seeded
 // into the shared cache (scripts/seed-catalog.ts), so opening one is instant:
 // the shared plan, its painted world and its cached lessons. Unlike a topic a
 // learner types, a catalog course uses the shared plan even for learners with
@@ -17,5 +18,16 @@ export const CATALOG = [
   { topic: "Supply and demand", blurb: "The invisible tug-of-war behind prices." },
 ];
 
-/** Whether a topic key (lowercase, single spaces) is one of the catalog's courses. */
-export const isCatalogTopic = (key: string) => CATALOG.some((c) => c.topic.toLowerCase() === key);
+/** The topics in the landing page's two scrolling rows; each starts a course. */
+export const MARQUEE_ROWS = [
+  ["The Socratic method", "Reading a cap table", "Black holes", "SQL window functions", "Jazz harmony", "Negotiating a raise", "Babylonian numbers", "Kubernetes networking", "Stoicism", "Freelance taxes"],
+  ["Byzantine iconoclasm", "Unit economics", "Sourdough hydration", "Game theory", "Writing a design doc", "The Silk Road", "GDPR basics", "Baroque music", "Bayes' theorem", "Running a retrospective"],
+];
+
+/** Every course we offer by name: the catalog first, then the landing page's topics not already in it. */
+export const OFFERED_TOPICS = [...new Set([...CATALOG.map((c) => c.topic), ...MARQUEE_ROWS.flat()].map((t) => t))].filter(
+  (t, i, all) => all.findIndex((x) => x.toLowerCase() === t.toLowerCase()) === i
+);
+
+/** Whether a topic key (lowercase, single spaces) is one of the courses we offer by name. */
+export const isCatalogTopic = (key: string) => OFFERED_TOPICS.some((t) => t.toLowerCase() === key);

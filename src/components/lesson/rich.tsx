@@ -41,6 +41,24 @@ const listItem = (l: string) => l.trim().match(/^(?:([-*•])|(\d+)[.)])\s+(.*)$
 const cells = (l: string) => l.trim().replace(/^\||\|$/g, "").split("|").map((c) => c.trim());
 
 /**
+ * A table written on one line ("Records: | A | B | |---|---| | 1 | 2 | Which…"):
+ * the text before it, one line per row, then the text after it. Only when an
+ * inline separator row shows it's meant as a table (a delivery-times table
+ * in a predict prompt, 2026-10-13).
+ */
+function unflatten(line: string): string[] {
+  const first = line.indexOf("|");
+  const last = line.lastIndexOf("|");
+  if (first < 0 || !/\|\s*\|\s*:?-{3,}/.test(line)) return [line];
+  const rows = line
+    .slice(first, last + 1)
+    .split(/\|\s+\|/)
+    .map((r) => `| ${r.replace(/^\s*\|?\s*|\s*\|?\s*$/g, "")} |`);
+  if (rows.length < 3) return [line];
+  return [line.slice(0, first), ...rows, line.slice(last + 1)].filter((l) => l.trim());
+}
+
+/**
  * Splits one paragraph into the markdown writers reach for: tables (lines
  * between pipes), lists ("- " or "1. ") and plain lines. Models write these
  * even when not asked, and shown raw they are a row of pipes (a game-theory
@@ -48,7 +66,7 @@ const cells = (l: string) => l.trim().replace(/^\||\|$/g, "").split("|").map((c)
  */
 export function chunks(paragraph: string): Chunk[] {
   const out: Chunk[] = [];
-  for (const line of paragraph.split("\n")) {
+  for (const line of paragraph.split("\n").flatMap(unflatten)) {
     const last = out[out.length - 1];
     const item = listItem(line);
     if (isTableLine(line)) {

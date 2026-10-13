@@ -64,11 +64,16 @@ In Coolify:
    - `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
    - `NEXT_PUBLIC_SITE_URL` (your domain, for share images)
    - `NEXT_PUBLIC_PADDLE_*` once billing is set up
+   - `NEXT_PUBLIC_VAPID_PUBLIC_KEY` (browser notifications)
 
    The rest are only needed when the container runs:
    - `OPENROUTER_API_KEY`, `OPENROUTER_MODEL`, `REVIEW_MODEL`
    - `SUPABASE_SECRET_KEY`
    - `PADDLE_API_KEY`, `PADDLE_WEBHOOK_SECRET` once billing is set up
+   - `VAPID_PRIVATE_KEY` (browser notifications) and `CRON_SECRET` (the daily reminder)
+
+   Make the push keys once with `npx web-push generate-vapid-keys`; keep the
+   same pair afterwards, or browsers that turned notifications on stop getting them.
 
    `.env.example` lists them all.
 3. Add your domain and deploy. The image's health check loads the landing
@@ -76,6 +81,10 @@ In Coolify:
    the OpenRouter account is empty, and isn't used to restart the container.
 4. In Supabase → Authentication → URL configuration, add the domain to the
    site URL and redirect URLs, so sign-in links and Google sign-in return to it.
+5. The daily streak reminder: in Coolify → the resource → Scheduled Tasks, add
+   one that runs every hour (`0 * * * *`) with
+   `wget -qO- --header="Authorization: Bearer $CRON_SECRET" http://localhost:3000/api/cron/reminders`.
+   It sends each learner at most one reminder a day, in their evening.
 
 Database migrations are applied separately, from a developer machine, with
 `pnpm db:push`.

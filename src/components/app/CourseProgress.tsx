@@ -1,11 +1,12 @@
 "use client";
 
-import { Play } from "lucide-react";
+import { Award, Play } from "lucide-react";
 import Link from "next/link";
 import { levelsOf } from "@/lib/courseHierarchy";
 import { HoverArrow } from "../landing/HoverArrow";
 import type { Course } from "../types";
 import { StarButton, courseProgress } from "./CourseCards";
+import { useCertificates } from "./Certificates";
 import { LEVEL_TINTS, stateOf } from "./CourseJourney";
 
 /**
@@ -21,6 +22,9 @@ export function CourseProgress({ course, onStart, busy, writing }: { course: Cou
   const finished = course.status === "completed" || done === total;
   const current = Math.min(course.currentModule, total - 1);
   const next = course.modules[current];
+  // A finished course links to its certificate (issued by the server if it's missing).
+  const certificates = useCertificates(course.status === "completed");
+  const certificate = certificates?.find((c) => c.course_id === course.id) ?? null;
   const r = 26;
   const c = 2 * Math.PI * r;
 
@@ -72,9 +76,15 @@ export function CourseProgress({ course, onStart, busy, writing }: { course: Cou
 
       <div className="mt-4">
         {finished ? (
-          <Link href={`/courses/${course.id}/1`} className="btn-pill btn-pill-accent w-full justify-center">
-            Review the course <HoverArrow />
-          </Link>
+          certificate ? (
+            <Link href={`/certificate/${certificate.id}`} className="btn-pill btn-pill-accent w-full justify-center">
+              <Award size={16} /> Your certificate <HoverArrow />
+            </Link>
+          ) : (
+            <Link href={`/courses/${course.id}/1`} className="btn-pill btn-pill-accent w-full justify-center">
+              Review the course <HoverArrow />
+            </Link>
+          )
         ) : next?.lesson ? (
           <Link href={`/courses/${course.id}/${current + 1}`} className="btn-pill btn-pill-accent w-full justify-center" title={next.title}>
             <span className="truncate">

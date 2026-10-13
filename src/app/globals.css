@@ -1220,6 +1220,28 @@ a:hover > .hover-arrow .head {
   animation: scene-pan 24s ease-out both;
 }
 
+/* The mascot (PaintingOwl): a flapping back wing and eyes that blink.
+   Both end at rest, so with reduced motion the owl simply stands still. */
+.owl-wing {
+  transform-box: fill-box;
+  transform-origin: 50% 10%;
+  animation: owl-flap 0.32s ease-in-out infinite;
+}
+@keyframes owl-flap {
+  0%, 100% { transform: rotate(0deg) scaleY(1); }
+  50% { transform: rotate(28deg) scaleY(0.8); }
+}
+.owl-lid {
+  transform-box: fill-box;
+  transform-origin: 50% 0%;
+  transform: scaleY(0);
+  animation: owl-blink 4.2s ease-in-out infinite;
+}
+@keyframes owl-blink {
+  0%, 92%, 100% { transform: scaleY(0); }
+  95% { transform: scaleY(1); }
+}
+
 /* Diagram nodes: a numbered dot with its label underneath. */
 .diagram-index {
   fill: var(--accent);
@@ -1470,4 +1492,25 @@ a:hover > .hover-arrow .head {
   outline: none;
   border-color: var(--accent);
   box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+/* Printing a certificate ("PDF" on its page): only the certificate, on white. */
+@media print {
+  :root:has(.certificate) header,
+  :root:has(.certificate) footer,
+  :root:has(.certificate) .certificate-share,
+  :root:has(.certificate) .certificate-extras,
+  :root:has(.certificate) .certificate ~ * {
+    display: none !important;
+  }
+  :root:has(.certificate) body {
+    background: #fff !important;
+  }
+  :root:has(.certificate) main > div {
+    display: block !important;
+  }
+  .certificate {
+    box-shadow: none !important;
+    break-inside: avoid;
+  }
 }

@@ -35,7 +35,8 @@ const portraitPrompt = (p: string) =>
 
 export type StageResult =
   | { ok: true; staging: Staging; resources: Resources | null }
-  | { ok: false; status: number; error: string };
+  /** error is shown to the learner; detail (the real reason) is only recorded with the run. */
+  | { ok: false; status: number; error: string; detail?: string };
 
 /**
  * Stages a lesson and records what it cost as a run. Throws on infrastructure
@@ -47,7 +48,7 @@ export async function stageLesson(learnerId: string, lessonId: number, topic: st
   try {
     const { result } = await withUsage(() => stageSavedLesson(learnerId, lessonId, topic), usage);
     if (usage.calls > 0) {
-      await recordRun(learnerId, { kind: "stage", topic, lessonId, outcome: result.ok ? "staged" : `http ${result.status}`, ok: result.ok, ms: Date.now() - started, usage });
+      await recordRun(learnerId, { kind: "stage", topic, lessonId, outcome: result.ok ? "staged" : `http ${result.status}`, ok: result.ok, error: result.ok ? undefined : (result.detail ?? result.error), ms: Date.now() - started, usage });
     }
     return result;
   } catch (error) {
@@ -77,6 +78,7 @@ export async function stageSavedLesson(learnerId: string, lessonId: number, topi
   const blockCount = lessonBlocks(lesson).length;
   // A lesson already staged but missing a painting only gets the missing ones repainted.
   let staging: Staging | null = existing ?? null;
+  let rejected = "";
   // The guide earlier lessons of this course used: kept if it still fits, and its portrait reused.
   const earlier = row.course_id ? (await getCourseGuides(row.course_id, learnerId)).find((g) => g.portrait) : undefined;
   // One retry: a malformed script is common enough to be worth it.
@@ -84,12 +86,15 @@ export async function stageSavedLesson(learnerId: string, lessonId: number, topi
     const raw = await callStructured(STAGING_SYSTEM, stagingInput(lesson, topic, earlier), STAGING_SCHEMA, deadline, { timeoutMs: 90_000, model: stagingModel(), maxTokens: 10_000 });
     const result = normalizeStaging(raw, blockCount);
     if (result.ok) staging = result.staging;
-    else console.error("staging rejected:", result.error);
+    else {
+      rejected = result.error;
+      console.error("staging rejected:", result.error);
+    }
   }
   if (!staging) {
     const found = await resources;
     if (found) await updateLessonData(lessonId, { ...lesson, resources: found });
-    return { ok: false, status: 502, error: "Couldn't stage this lesson." };
+    return { ok: false, status: 502, error: "Couldn't stage this lesson.", detail: `The guide's script was rejected twice. Last reason: ${rejected || "unknown"}` };
   }
   if (!staging.guide.portrait && earlier?.portrait && earlier.name === staging.guide.name) staging.guide.portrait = earlier.portrait;
 

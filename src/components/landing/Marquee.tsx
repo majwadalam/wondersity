@@ -1,15 +1,14 @@
 "use client";
 
 import { useAppState, useStartCourse } from "../app/AppState";
+import { MARQUEE_ROWS } from "@/lib/catalog";
 import { Kicker } from "./Primitives";
 
 // Topics drifting across the page in two rows, each a button that starts
 // that course. They're examples, not a list of what's on offer: Wondersity plans
-// a course for anything you can name.
-const ROWS = [
-  ["The Socratic method", "Reading a cap table", "Black holes", "SQL window functions", "Jazz harmony", "Negotiating a raise", "Babylonian numbers", "Kubernetes networking", "Stoicism", "Freelance taxes"],
-  ["Byzantine iconoclasm", "Unit economics", "Sourdough hydration", "Game theory", "Writing a design doc", "The Silk Road", "GDPR basics", "Baroque music", "Bayes' theorem", "Running a retrospective"],
-];
+// a course for anything you can name. They live in lib/catalog.ts, so they're
+// seeded into the shared cache like the catalog and open at once.
+const ROWS = MARQUEE_ROWS;
 
 export function TopicMarquee() {
   const start = useStartCourse();

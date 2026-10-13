@@ -1,6 +1,7 @@
 "use client";
 
 import { Award, BookOpen, Crosshair, Flame, Map as MapIcon, Sprout, type LucideIcon } from "lucide-react";
+import { CertificateList } from "@/components/app/Certificates";
 import Image from "next/image";
 import Link from "next/link";
 import { useSyncExternalStore } from "react";
@@ -58,6 +59,8 @@ export default function ProgressPage() {
         <Heatmap courses={courses} />
         <Badges courses={courses} done={done} streak={stats.streak} />
       </div>
+
+      <CertificateList />
 
       <section className="mt-12">
         <div className="flex items-end justify-between">

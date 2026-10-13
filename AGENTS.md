@@ -223,7 +223,9 @@ with shared timing in `components/motion/presets.ts`. `MotionConfig
 reducedMotion="user"` plus a global CSS rule honour reduced motion; path
 drawing, bursts and springs check it too. Lottie animations (`components/motion/Lottie.tsx`,
 files in `public/lottie/`, recoloured to the accent) are decorative: they load
-when near the screen, play once, and stay still with reduced motion.
+when near the screen, play once, and stay still with reduced motion. The mascot, an owl in a beret (`components/mascot/PaintingOwl.tsx`, SVG in
+the colour tokens), paints the lesson's picture onto an easel while it is
+staged; with reduced motion it shows the finished painting.
 
 **Design.** Wondersity is white and calm with one accent (Aegean blue). Colours are
 tokens in `globals.css` (`bg-canvas`, `bg-surface`, `border-line`, `text-fg`,
@@ -364,7 +366,8 @@ painting is stored in `runs` with its trace, time and OpenRouter's reported
 cost (paintings included); metrics.sql queries 10-13 read it.
 
 **Catalog courses are seeded.** The courses offered on the home, Courses and
-welcome pages (`lib/catalog.ts`) use the shared plan for every learner, not
+welcome pages and the landing page's scrolling topics (`lib/catalog.ts`,
+`OFFERED_TOPICS`) use the shared plan for every learner, not
 only first-time ones, since they're our curated versions; topics a learner
 types still get tailored plans. `scripts/seed-catalog.ts` takes each catalog
 course through the running app with a throwaway learner, so its plan, world
@@ -373,7 +376,33 @@ deletes the learner afterwards. Re-run it after the lesson guide or models
 change, since that retires cached lessons. When the next lesson can come
 straight from the cache (shared plan, no check answered wrong, a cached copy),
 the run serves it without the agent's turns (`fast_path` in the trace).
-`scripts/check-cache.ts` checks hits from a learner's side.
+`scripts/check-cache.ts` checks hits from a learner's side. The seeding script
+stops cleanly when the OpenRouter key has less than $0.60 left.
+
+**Certificates, streaks and notifications.** Finishing a course's last
+lesson issues a certificate (`lib/milestones.ts`, `certificates` table,
+migration 015): a random 14-character id, the learner's name, the course, its
+levels, lessons, time and first-try accuracy. `/certificate/<id>` is public
+to anyone with the link (read with the server key, so certificates can't be
+listed; `noindex`): an A4 landscape document (1.414 : 1 at every width; its
+type and spacing are in container query units, so it scales as one sheet and
+prints on one A4 page) in Fraunces (`public/fonts`, SIL OFL) with a seal, a
+QR code that opens the page to verify it (`lib/certificateLink.ts`, `qrcode`), share links (Add to LinkedIn profile, LinkedIn, X, Facebook,
+WhatsApp, copy, image, print to PDF) and a "Start this course" card for
+visitors; `opengraph-image.tsx` draws the same design for link previews and
+the image download. `/api/certificates` lists a learner's and issues any a
+completed course is missing. The streak (`lib/streak.ts`) counts days with a
+finished lesson in the learner's time zone (`profiles.timezone`, sent by the
+browser); `/api/attempts` returns it with the certificate as `rewards`, and
+the lesson's finish screen shows them. Notifications (`lib/notify.ts`,
+`notifications` table) go to the bell in the sidebar and, when the learner
+turns them on in Settings, to the browser by Web Push (`lib/push.ts`,
+`public/sw.js`, VAPID keys; no outside service; the worker skips a push while
+the app is open in front of them): a lesson they asked for is ready, a streak
+milestone (3, 7, 14, 30…), a certificate, and a daily reminder that
+`/api/cron/reminders` (hourly scheduled task, `CRON_SECRET`) sends once in
+the learner's evening if they have a streak and haven't learned today.
+`scripts/e2e-certificate.ts` checks it all end to end without model calls.
 
 **Creator partners.** `?ref=CODE` on any page (src/proxy.ts) or a visit to a
 companion page `/c/<slug>` sets a 30-day `agora_ref` cookie; the first
@@ -382,6 +411,33 @@ profile if it's an active partner; checkout sends it in Paddle `customData`
 with the partner's discount code, and the webhook saves it on the
 subscription. Partners and companions are rows we add with SQL
 (docs/CREATORS.md); metrics.sql query 9 estimates what we owe each one.
+
+**Admin panel.** `/admin` has tabs: Overview (four numbers, what needs
+attention, four per-day charts), Money (by day, by kind of job, inside a
+lesson, by learner; 7/30/90 days), Learners, Courses, AI activity (every job,
+each opening to the steps it took and its cost by part), Problems (failed AI
+jobs, lessons that couldn't be written, mistake reports, lessons below the
+bar, and how each is recorded), Saved for reuse and Subscriptions. Long lists
+are paginated. Names are plain English (`components/admin/labels.ts`: job
+outcomes, trace steps, cost steps, report kinds, and `plainError()` for common
+provider errors; the raw error stays on the job's page). It's server
+components reading with `SUPABASE_SECRET_KEY` (`lib/admin.ts`), only for
+learners with the admin role (`user_roles`, migration 016); anyone else gets a
+404, and every page and action checks (`requireAdmin()`). Roles are their own
+table, not a profile column, because learners write their own profile. The
+first admin is granted with `scripts/grant-role.ts <email>`; after that, "Make
+admin" on a learner's page (never on yourself). Otherwise read-only. Admins see
+an "Admin" link in the sidebar (`admin` on the profile, read from their own
+role row).
+
+**How failures are recorded.** Every AI job (tutor run, staging, painting)
+is a `runs` row with ok, the error text, time, cost and, for tutor runs, the
+trace. A failed staging records the real reason (`detail` on `StageResult`)
+while the learner still sees a plain message. A failed lesson job keeps the
+learner's message and a log reference (`jobs.error`, `jobs.ref`); the full
+error is in the server log under that reference and in the matching run.
+Learner reports are `lesson_reports`. Browser errors and server errors outside
+jobs are only in the server log.
 
 **Mistake reports and age.** A flag in the lesson's top bar saves a report
 (`lesson_reports`) with the step it was made on; metrics.sql lists them.
@@ -430,6 +486,12 @@ staged, so it opens instantly.
 - `scripts/e2e-course.ts` — a real course through the running app's HTTP API with two throwaway learners
 - `scripts/seed-catalog.ts`, `src/lib/catalog.ts` — the catalog courses, and seeding them into the shared cache
 - `scripts/check-cache.ts` — throwaway learners start courses; prints plan and lesson cache hits, time and cost
+- `src/lib/milestones.ts`, `src/lib/streak.ts` — certificates and streaks after a quiz
+- `src/lib/notify.ts`, `src/lib/push.ts`, `public/sw.js` — notifications: the bell and browser push
+- `src/app/certificate/[id]/` (page, opengraph-image), `src/components/certificate/` — the public certificate
+- `src/app/api/notifications`, `src/app/api/push`, `src/app/api/certificates`, `src/app/api/cron/reminders` — their routes
+- `src/components/app/NotificationBell.tsx`, `NotificationSettings.tsx`, `Certificates.tsx` — the bell, Settings → Notifications, certificates on Progress
+- `scripts/e2e-certificate.ts` — certificates, streak and notifications end to end with a throwaway learner
 - `scripts/e2e-tailored.ts` — a tailored course end to end (upload, brief, plan rules, materials, lesson) with a throwaway learner
 - `src/lib/progress.ts` — quiz grading and course progression
 - `src/lib/courseView.ts` — client-facing course shape: levels, modules, lessons
@@ -490,7 +552,7 @@ staged, so it opens instantly.
 
 Bookmarks are stored in the browser (localStorage, per learner id); they are
 not in Supabase yet.
-- `supabase/migrations/` — SQL migrations (001 lessons and progress, 002 courses and attempts, 003 covers, 004 accounts: own-rows rules, profiles, claiming old progress, 005 lesson views, 006 subscriptions, lesson reports, age confirmation, 007 creator partners and companion pages, referrals, 008 shared course plans and run logs, 009 matching plans by meaning and sharing lesson 1, 010 asking before claiming pre-account progress, 011 lesson jobs, 012 shared lessons beyond lesson 1, 013 the road traced in a course's world, 014 tailored courses: intake, outcomes, course materials); apply with `pnpm db:push`
+- `supabase/migrations/` — SQL migrations (001 lessons and progress, 002 courses and attempts, 003 covers, 004 accounts: own-rows rules, profiles, claiming old progress, 005 lesson views, 006 subscriptions, lesson reports, age confirmation, 007 creator partners and companion pages, referrals, 008 shared course plans and run logs, 009 matching plans by meaning and sharing lesson 1, 010 asking before claiming pre-account progress, 011 lesson jobs, 012 shared lessons beyond lesson 1, 013 the road traced in a course's world, 014 tailored courses: intake, outcomes, course materials, 015 certificates, notifications, push subscriptions, profile time zone and reminders, 016 user roles: who may open the admin panel); apply with `pnpm db:push`
 - `src/lib/plans.ts` — what each plan allows; `src/lib/billing.ts` — Paddle webhook checks and portal links
 - `src/app/api/billing/` — the learner's plan, the Paddle webhook, the customer portal
 - `src/components/billing/` — checkout button, Settings plan section
@@ -499,6 +561,8 @@ not in Supabase yet.
 - `docs/MARKET_RESEARCH.md`, `docs/GTM.md`, `ECONOMICS.md` — market, go-to-market plan, costs and pricing
 - `docs/CREATORS.md` — creator partnership playbook: offer, terms, outreach, setup, payouts
 - `src/app/c/[slug]/page.tsx`, `src/components/companion/` — public companion course pages; `src/lib/referrals.ts` — referral codes and cookie
+- `src/app/admin/`, `src/components/admin/`, `src/lib/admin.ts` — the admin panel: learners, courses, lessons, AI jobs and their steps, lesson queue, reuse, reports, subscriptions, spend
+- `scripts/grant-role.ts` — gives an account the admin role (or `--remove`)
 - `src/lib/planCache.ts` — finding a shared course plan for a topic (exact, by meaning, confirmed by a model)
 - `src/lib/database.types.ts` — generated by `pnpm db:types`; don't edit by hand
 - `scripts/sample-lessons.ts` — writes sample modules for several subjects to compare their shapes
@@ -590,6 +654,9 @@ created_at. Learners can insert and read their own.
 **partners** — code (primary key), name, url, commission_pct,
 commission_months, discount_code, contact_email, active, created_at. Signed
 out, only code, name, url and discount_code of active rows can be read.
+
+**user_roles** — user_id (primary key, cascade), role ('admin'), granted_by,
+created_at. A user reads only their own row; written only with the server key.
 
 **companions** — slug (primary key), partner_code, topic, title, blurb,
 video_url, active, created_at. Public when active.

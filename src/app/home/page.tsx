@@ -59,7 +59,8 @@ function Home() {
         ) : (
           <NewCourse autoFocus={focusNew || courses.length === 0} big />
         )}
-        <Today minutes={minutesToday} goal={goal} streak={stats.streak} />
+        {/* Until the learner's data arrives, a placeholder, not a "0 minutes, 0-day streak" that's about to change. */}
+        {loaded ? <Today minutes={minutesToday} goal={goal} streak={stats.streak} /> : <div className="skeleton h-[260px] rounded-2xl" />}
       </div>
 
       {loaded && active[0] && !focusNew && (
@@ -87,7 +88,7 @@ function Home() {
         </section>
       )}
 
-      {explore.length > 0 && (
+      {loaded && explore.length > 0 && (
         <section className="mt-12">
           <h2 className="text-[15px] font-semibold text-fg">Popular on Wondersity</h2>
           <div className="mt-3 grid grid-cols-2 gap-4 lg:grid-cols-4">

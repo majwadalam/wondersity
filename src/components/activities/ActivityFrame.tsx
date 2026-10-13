@@ -2,7 +2,7 @@
 
 import type { ReactNode } from "react";
 import type { ActivityType } from "@/lib/activities";
-import { rich } from "../lesson/rich";
+import { Paragraphs } from "../lesson/BlockFrame";
 
 export const ACTIVITY_META: Record<ActivityType, { label: string; icon: string }> = {
   predict: { label: "Predict first", icon: "?" },
@@ -48,12 +48,18 @@ export function ActivityFrame({
         )}
       </div>
       <h3 className="font-display relative mt-3 text-2xl leading-snug text-fg sm:text-[28px]">{title}</h3>
-      {prompt && <p className="relative mt-3 text-[17px] leading-relaxed text-fg/80">{rich(prompt)}</p>}
+      {prompt && (
+        <div className="relative mt-3 text-[17px] leading-relaxed text-fg/80">
+          <Paragraphs text={prompt} />
+        </div>
+      )}
       <div className="relative mt-6">{children}</div>
       {done && reveal && (
         <div className="activity-reveal relative mt-6 rounded-2xl border border-[#b6e6c8] bg-[#f1fbf5] px-5 py-4">
           <p className="text-xs font-semibold text-good">Key insight</p>
-          <p className="mt-1 text-[15px] leading-relaxed text-fg">{rich(reveal)}</p>
+          <div className="mt-1 text-[15px] leading-relaxed text-fg">
+            <Paragraphs text={reveal} />
+          </div>
         </div>
       )}
     </section>

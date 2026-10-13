@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { NotificationSettings } from "@/components/app/NotificationSettings";
 import { Avatar } from "@/components/app/AppShell";
 import { useAppState } from "@/components/app/AppState";
 import { PlanSection } from "@/components/billing/PlanSection";
@@ -123,6 +124,12 @@ export default function SettingsPage() {
           />
         </label>
       </Section>
+
+      <div id="notifications" className="scroll-mt-20">
+        <Section title="Notifications" note="The bell in the app shows these too.">
+          <NotificationSettings />
+        </Section>
+      </div>
 
       <Section title="Account">
         <form action="/auth/signout" method="post" onSubmit={(e) => (e.preventDefault(), signOut())}>

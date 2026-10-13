@@ -30,7 +30,14 @@ export type Answer = { questionIndex: number; chosen: string };
 export type PrefetchState = "pending" | "ready";
 
 /** Server's verdict on a finished quiz. */
-export type QuizResult = { correct: number; total: number; firstCompletion: boolean; course: Course | null };
+export type QuizResult = {
+  correct: number;
+  total: number;
+  firstCompletion: boolean;
+  course: Course | null;
+  /** What the first completion earned (lib/milestones.ts): the streak, and the certificate if it finished the course. */
+  rewards?: { streak: number; streakMilestone: boolean; certificateId: string | null } | null;
+};
 
 /** What the page is showing below the hero. */
 export type View =

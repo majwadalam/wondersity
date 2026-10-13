@@ -30,7 +30,10 @@ export function courseArtSrc(topic: string) {
   return `/art/${key}.${ART[key]}`;
 }
 
-/** The cover image, filling its (relatively positioned) parent. */
-export function CourseArt({ topic, sizes = "(min-width: 1024px) 33vw, 100vw", priority = false }: { topic: string; sizes?: string; priority?: boolean }) {
-  return <Image unoptimized src={courseArtSrc(topic)} alt="" fill sizes={sizes} priority={priority} className="object-cover" />;
+/**
+ * The cover image, filling its (relatively positioned) parent. `eager` for art
+ * above the fold (Next.js 16 deprecated `priority` for loading and fetchPriority).
+ */
+export function CourseArt({ topic, sizes = "(min-width: 1024px) 33vw, 100vw", eager = false }: { topic: string; sizes?: string; eager?: boolean }) {
+  return <Image unoptimized src={courseArtSrc(topic)} alt="" fill sizes={sizes} loading={eager ? "eager" : "lazy"} {...(eager ? { fetchPriority: "high" as const } : {})} className="object-cover" />;
 }

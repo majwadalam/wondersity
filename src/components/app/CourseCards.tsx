@@ -104,7 +104,8 @@ export function CatalogTile({ topic, blurb }: { topic: string; blurb: string }) 
   const body = (
     <>
       <div className="art-zoom relative aspect-[4/3] w-full flex-shrink-0 overflow-hidden rounded-2xl bg-canvas">
-        <CourseArt topic={topic} sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw" />
+        {/* Catalog tiles are often the largest thing on a new learner's home page. */}
+        <CourseArt topic={topic} sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw" eager />
       </div>
       <div className="flex flex-1 flex-col px-1 pt-3.5 text-left">
         <h3 className="font-display text-base text-fg">{topic}</h3>

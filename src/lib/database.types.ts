@@ -52,6 +52,59 @@ export type Database = {
           },
         ]
       }
+      certificates: {
+        Row: {
+          accuracy: number | null
+          completed_at: string
+          course_id: number
+          course_title: string
+          created_at: string
+          id: string
+          learner_id: string
+          learner_name: string
+          lessons: number
+          levels: Json
+          minutes: number
+          topic: string
+        }
+        Insert: {
+          accuracy?: number | null
+          completed_at: string
+          course_id: number
+          course_title: string
+          created_at?: string
+          id: string
+          learner_id: string
+          learner_name: string
+          lessons: number
+          levels?: Json
+          minutes: number
+          topic: string
+        }
+        Update: {
+          accuracy?: number | null
+          completed_at?: string
+          course_id?: number
+          course_title?: string
+          created_at?: string
+          id?: string
+          learner_id?: string
+          learner_name?: string
+          lessons?: number
+          levels?: Json
+          minutes?: number
+          topic?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "certificates_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: true
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       companions: {
         Row: {
           active: boolean
@@ -407,6 +460,39 @@ export type Database = {
           },
         ]
       }
+      notifications: {
+        Row: {
+          body: string
+          created_at: string
+          href: string | null
+          id: number
+          kind: string
+          learner_id: string
+          read_at: string | null
+          title: string
+        }
+        Insert: {
+          body?: string
+          created_at?: string
+          href?: string | null
+          id?: never
+          kind: string
+          learner_id: string
+          read_at?: string | null
+          title: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          href?: string | null
+          id?: never
+          kind?: string
+          learner_id?: string
+          read_at?: string | null
+          title?: string
+        }
+        Relationships: []
+      }
       partners: {
         Row: {
           active: boolean
@@ -450,10 +536,13 @@ export type Database = {
           daily_goal_minutes: number
           display_name: string | null
           id: string
+          last_reminded_on: string | null
           onboarded_at: string | null
           reason: string | null
           referred_at: string | null
           referred_by: string | null
+          reminders: boolean
+          timezone: string | null
           updated_at: string
           voice_on: boolean
         }
@@ -463,10 +552,13 @@ export type Database = {
           daily_goal_minutes?: number
           display_name?: string | null
           id: string
+          last_reminded_on?: string | null
           onboarded_at?: string | null
           reason?: string | null
           referred_at?: string | null
           referred_by?: string | null
+          reminders?: boolean
+          timezone?: string | null
           updated_at?: string
           voice_on?: boolean
         }
@@ -476,10 +568,13 @@ export type Database = {
           daily_goal_minutes?: number
           display_name?: string | null
           id?: string
+          last_reminded_on?: string | null
           onboarded_at?: string | null
           reason?: string | null
           referred_at?: string | null
           referred_by?: string | null
+          reminders?: boolean
+          timezone?: string | null
           updated_at?: string
           voice_on?: boolean
         }
@@ -527,6 +622,30 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      push_subscriptions: {
+        Row: {
+          auth: string
+          created_at: string
+          endpoint: string
+          learner_id: string
+          p256dh: string
+        }
+        Insert: {
+          auth: string
+          created_at?: string
+          endpoint: string
+          learner_id: string
+          p256dh: string
+        }
+        Update: {
+          auth?: string
+          created_at?: string
+          endpoint?: string
+          learner_id?: string
+          p256dh?: string
+        }
+        Relationships: []
       }
       runs: {
         Row: {
@@ -677,6 +796,27 @@ export type Database = {
             referencedColumns: ["code"]
           },
         ]
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          granted_by: string | null
+          role: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          granted_by?: string | null
+          role: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          granted_by?: string | null
+          role?: string
+          user_id?: string
+        }
+        Relationships: []
       }
     }
     Views: {

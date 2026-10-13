@@ -1,15 +1,14 @@
 "use client";
 
-import Image from "next/image";
-import { isRemote } from "@/lib/remoteImage";
 import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import { stageLesson, useAppState } from "@/components/app/AppState";
 import type { VoiceControl } from "@/components/lesson/Scene";
 import { LessonView } from "@/components/LessonView";
-import { Lottie } from "@/components/motion/Lottie";
+import { PaintingOwl } from "@/components/mascot/PaintingOwl";
 import { BackLink } from "@/components/app/BackLink";
+import { courseArtSrc } from "@/components/app/CourseArt";
 import type { View } from "@/components/types";
 import { levelsOf, lessonLabel } from "@/lib/courseHierarchy";
 import type { Staging } from "@/lib/staging";
@@ -92,7 +91,8 @@ export default function ModulePage() {
       <StagedLesson
         key={view.key}
         view={view}
-        cover={course.modules[index].cover}
+        // The module's own cover (older courses), else the course's world, else its catalog art.
+        cover={course.modules[index].cover ?? course.cover ?? courseArtSrc(course.topic)}
         render={(v, voice) => (
           <LessonView
             view={v}
@@ -209,11 +209,8 @@ function StagedLesson({
 function SettingTheScene({ title, cover }: { title: string; cover: string | null }) {
   return (
     <div className="flex min-h-screen flex-col items-center justify-center bg-surface px-6 text-center">
-      <div className="relative h-40 w-56 overflow-hidden rounded-2xl bg-canvas shadow-[var(--shadow-lg)]">
-        {cover && <Image unoptimized={isRemote(cover)} src={cover} alt="" fill sizes="224px" className="scene-pan object-cover" />}
-      </div>
-      <Lottie name="thinking" loop={3} className="mt-8 h-10 w-10" />
-      <p className="font-display mt-3 text-2xl text-fg">Setting the scene</p>
+      <PaintingOwl src={cover} className="w-full max-w-[22rem]" />
+      <p className="font-display mt-4 text-2xl text-fg">Setting the scene</p>
       <p className="mt-2 max-w-sm text-[15px] text-muted">
         Casting your guide and painting the scenes for &ldquo;{title}&rdquo;. This takes about half a minute, once.
       </p>

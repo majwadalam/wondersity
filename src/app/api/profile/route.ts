@@ -1,3 +1,4 @@
+import type { SupabaseClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { currentLearner } from "@/lib/auth";
@@ -14,6 +15,20 @@ const Patch = z.object({
   voiceOn: z.boolean().optional(),
   onboarded: z.literal(true).optional(),
   ageConfirmed: z.literal(true).optional(),
+  // The browser's IANA time zone, so "today" for the streak and reminders is the learner's day.
+  timezone: z
+    .string()
+    .max(64)
+    .refine((tz) => {
+      try {
+        new Intl.DateTimeFormat("en", { timeZone: tz });
+        return true;
+      } catch {
+        return false;
+      }
+    })
+    .optional(),
+  reminders: z.boolean().optional(),
 });
 
 export async function GET() {
@@ -22,7 +37,7 @@ export async function GET() {
   try {
     const { data, error } = await session.db.from("profiles").select("*").eq("id", session.user.id).maybeSingle();
     if (error) throw error;
-    return NextResponse.json({ profile: view(session.user, data) });
+    return NextResponse.json({ profile: view(session.user, data, await hasAdminRole(session.db, session.user.id)) });
   } catch (error) {
     return serverError(error, "Couldn't load your profile.");
   }
@@ -44,6 +59,8 @@ export async function PATCH(request: Request) {
       ...(p.voiceOn !== undefined ? { voice_on: p.voiceOn } : {}),
       ...(p.onboarded ? { onboarded_at: new Date().toISOString() } : {}),
       ...(p.ageConfirmed ? { age_confirmed_at: new Date().toISOString() } : {}),
+      ...(p.timezone !== undefined ? { timezone: p.timezone } : {}),
+      ...(p.reminders !== undefined ? { reminders: p.reminders } : {}),
     };
     // Finishing onboarding records the creator who referred the learner, if any:
     // only a real, active partner, and never replacing an earlier referral.
@@ -57,15 +74,21 @@ export async function PATCH(request: Request) {
     }
     const { data, error } = await session.db.from("profiles").upsert(row).select("*").single();
     if (error) throw error;
-    return NextResponse.json({ profile: view(session.user, data) });
+    return NextResponse.json({ profile: view(session.user, data, await hasAdminRole(session.db, session.user.id)) });
   } catch (error) {
     return serverError(error, "Couldn't save your profile.");
   }
 }
 
-type Row = { display_name: string | null; reason: string | null; daily_goal_minutes: number; voice_on: boolean; onboarded_at: string | null } | null;
+type Row = { display_name: string | null; reason: string | null; daily_goal_minutes: number; voice_on: boolean; onboarded_at: string | null; reminders?: boolean } | null;
 
-function view(user: { email?: string; user_metadata?: Record<string, unknown> }, row: Row) {
+/** Whether the learner has the admin role. They can read only their own row (migration 016). */
+async function hasAdminRole(db: SupabaseClient, userId: string) {
+  const { data } = await db.from("user_roles").select("role").eq("user_id", userId).maybeSingle();
+  return data?.role === "admin";
+}
+
+function view(user: { email?: string; user_metadata?: Record<string, unknown> }, row: Row, admin: boolean) {
   const metaName = typeof user.user_metadata?.full_name === "string" ? user.user_metadata.full_name : null;
   return {
     email: user.email ?? null,
@@ -74,6 +97,9 @@ function view(user: { email?: string; user_metadata?: Record<string, unknown> },
     reason: row?.reason ?? null,
     dailyGoalMinutes: row?.daily_goal_minutes ?? 10,
     voiceOn: row?.voice_on ?? true,
+    reminders: row?.reminders ?? true,
     onboarded: !!row?.onboarded_at,
+    // Only shows the Admin link; the panel checks the role itself.
+    admin,
   };
 }

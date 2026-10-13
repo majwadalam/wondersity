@@ -39,6 +39,10 @@ export type Profile = {
   dailyGoalMinutes: number;
   voiceOn: boolean;
   onboarded: boolean;
+  /** Whether the daily streak reminder may be sent. */
+  reminders?: boolean;
+  /** Has the admin role (user_roles): the sidebar links to /admin. */
+  admin?: boolean;
 };
 
 function readBrowserId() {
@@ -465,6 +469,13 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       applyLibrary(data);
       if (prof?.profile) {
         setProfile(prof.profile);
+        // The learner's time zone, so the streak and reminders follow their day (once per load).
+        try {
+          const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+          if (timezone) void fetch("/api/profile", { method: "PATCH", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ timezone }) }).catch(() => {});
+        } catch {
+          /* no Intl time zone */
+        }
         // The account's voice choice wins on a new device (the lesson player reads it from here).
         try {
           if (localStorage.getItem("agora:voice") === null) localStorage.setItem("agora:voice", prof.profile.voiceOn ? "on" : "off");

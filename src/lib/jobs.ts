@@ -16,6 +16,7 @@
 // lesson) waits for the earlier one to finish first.
 
 import { after } from "next/server";
+import { notify } from "./notify";
 import { toCourseView } from "./courseView";
 import { paintCourseWorld } from "./courseWorld";
 import * as db from "./db";
@@ -110,6 +111,17 @@ async function runLessonJob(learnerId: string, job: db.JobRow) {
     }
     // The brief's materials now live with the course; the job doesn't keep a copy.
     await db.updateJob(job.id, { status: "done", result, ...(job.intake ? { intake: null } : {}) });
+    // A lesson the learner asked for (not one written ahead while they learn) may be waited on
+    // with the app closed: tell them it's ready (the service worker skips the push if they're looking).
+    if (job.kind === "learn" && result.kind === "lesson" && result.lessonId && !result.resumed) {
+      const n = result.moduleIndex + 1;
+      await notify(learnerId, {
+        kind: "lesson_ready",
+        title: `Lesson ${n} is ready`,
+        body: `${result.lesson.title} · ${result.course.title}`,
+        href: `/courses/${result.course.id}/${n}`,
+      });
+    }
   } catch (error) {
     const failure = describeFailure(error, "Failed to prepare your lesson. Please try again.");
     await db

@@ -16,6 +16,11 @@ listed. For the full design, read AGENTS.md (how it works) and HARNESS.md
 - The main pictures at the top of pages load first (`loading="eager"`, `fetchPriority="high"`), replacing `priority`, which Next.js 16 deprecated.
 - Raised panels (course map, progress card, spotlight, course and progress cards) have a crisper shadow: a faint navy edge, a tight contact shadow and a soft lift, instead of a large grey blur.
 - Course page polish: the progress card's main button is the brand purple (one purple primary per page), the journey's stops have a firmer shadow so they stand out on pale paintings, and the level key and the sidebar's account area have a little more room.
+- The home page and sidebar show placeholders until the learner's data arrives, instead of flashing "0-day streak", "Your account" and the catalog first.
+- Finishing a course earns a certificate with its own shareable page: an A4 landscape document (standard certificate size, printed on one A4 page) with a seal and a QR code to verify it, "Add to LinkedIn profile", share links, an image and print-to-PDF, and a link preview in the same design. Visitors can start the same course from it.
+- A bell in the app lists notifications: a lesson ready, a streak milestone, a certificate, the daily reminder. Learners can also turn on browser notifications in Settings (Web Push, no outside service).
+- The lesson's finish screen shows the streak it kept going (highlighted at milestones) and, at the end of a course, the certificate.
+- A daily streak reminder is sent once in the learner's evening, only if they have a streak and haven't learned that day; it needs an hourly scheduled task in Coolify (README).
 
 ## Lessons
 
@@ -101,6 +106,8 @@ listed. For the full design, read AGENTS.md (how it works) and HARNESS.md
 - The catalog courses on the home page are seeded into the shared cache, so clicking one opens its plan, painted world and lesson 1 at once for under a cent. Catalog courses use the shared version for everyone; topics people type still get tailored plans. Re-run `scripts/seed-catalog.ts` after the lesson guide or models change.
 - Checked from a learner's side (scripts/check-cache.ts): a seeded catalog course, the same course in other words, and a catalog course for a learner with other courses all come from the cache (plan, lesson 1, scenes and world) for under a tenth of a cent.
 - A cached lesson is served without the tutor agent's turns, since there's nothing to decide: a cached start went from 12s to 7s on the dev machine, almost all of it database round trips that are much shorter on the production server.
+- The landing page's scrolling topics are offered courses too: they use the shared cache like the catalog and are seeded with it (25 courses in all). The seeding script stops before the key runs dry.
+- Seeded 23 of the 25 offered courses (plan, world, lesson 1 and its scenes) for about $6.60 in all, about $0.20 a course that passes first time. Not cached yet: lesson 1 of Byzantine iconoclasm (7.6) and Baroque music (5), and the world of Unit economics.
 
 ## Accounts and data
 
@@ -140,3 +147,16 @@ listed. For the full design, read AGENTS.md (how it works) and HARNESS.md
 - Diagram panel sits beside the map only when the activity is wide (container query), else below; connections are chips, and a relationship label that repeats the node's name is hidden. The map is capped at 560px wide.
 - Reflect model answers show only the answer: a lead-in like "One possible caption:" and its quotes are stripped in code (modelAnswerText, also for saved lessons), and the writing guide asks for the answer alone.
 - Guide voice lines no longer overlap: one line plays at a time on the page, and a line whose audio arrives after its step (or lesson) closed is dropped instead of played (SpeakButton in Scene.tsx).
+- "Setting the scene" shows a picture while a lesson is staged: the module's cover, else the course's painted world, else its catalog art (default cover for typed topics). It was an empty box for every course planned after modules stopped getting their own covers.
+- Activity and block prompts (and activity insights) now draw tables, lists and paragraphs instead of inline text only, and a table the writer put on one line (rows joined by "| |", with a separator row) is rebuilt into rows (unflatten in lesson/rich.tsx).
+- Admin panel at /admin: learners, courses, lessons (outline, checks and answers, how far they got), every run with its trace and cost by step, jobs, the shared cache, mistake reports, subscriptions and partners, and AI spend by day, kind, step and learner. Read-only.
+- Admin access is a role in the database (user_roles, migration 016), not an env list. It's its own table because learners can edit their own profile row and could give themselves a role. Everyone without it gets a 404 rather than "forbidden", so the panel doesn't reveal it exists.
+- The first admin is granted with scripts/grant-role.ts; after that, admins use "Make admin" on a learner's page. You can't remove your own role, so the last admin can't lock everyone out.
+- The admin panel speaks plain English: "Wrote a lesson" instead of "learn · lesson", "Fact-checking online" instead of "verify", "Usual time" instead of p50. The overview starts with a written summary and a "Needs attention" box.
+- Mascot: a small owl in a beret (Athena's owl), drawn in SVG with the colour tokens (components/mascot/PaintingOwl.tsx). On "Setting the scene" it flies in front of an easel and paints the lesson's picture onto the canvas stroke by stroke over a pencil sketch, then does touch-ups; wing flap and blink are CSS. Reduced motion shows the finished painting with the owl still. Replaces the sparkle Lottie there.
+- The admin panel is split into tabs: Overview is four numbers, a "needs attention" box and four per-day charts. Money (by day, kind of job, inside a lesson, by learner, over 7/30/90 days), Problems, Learners, Courses and AI activity have their own tabs, charts and pages of 25.
+- Problems collects everything that went wrong: failed AI jobs, lessons that couldn't be written, mistake reports, and lessons that never reached 8/10. It explains how each is recorded.
+- Mistake report types read as words ("Wrong fact", "Confusing", "Something broken"), and common errors as a sentence ("The OpenRouter key ran out of credit…"); the raw error stays on the job's page.
+- A failed staging now records why it failed (the guide script's rejection reason). Before, those runs had no error text.
+- Admin panel layout: content starts right after the sidebar instead of being centred with a gap on wide screens; "Back to the app" sits at the bottom of the sidebar; per-day charts start at the first day with any data (at least a week) instead of 30 days of empty bars, and the day-by-day table skips the zero days before that.
+- Admin charts and tiles redesigned: each chart is a card with its title, the period total and a Details link; bars are slimmer and rounded, today is the solid one, empty days show a faint stub, and only the highest day and today carry a value. Number tiles have an icon, larger figures and a mini chart of recent days. The value axis is as wide as its labels.
