@@ -1,0 +1,6 @@
+■ mathematics: Probability (88s, score 8, $0.0524, 6 calls, 14650 in / 4945 out tokens)
+  approach: discovery (The learner first counts possible outcome pairs, discovers the multiplication rule, and then tests when its independence assumption is justified.)
+  blocks:   activity:predict > explain > check > worked > activity:sort > explain > check > problem
+  issues:   Question 2 ("A treasure-game bag holds three gold tokens and seven blu…"): the right answer is clearly the longest option; make the options similar in length and detail.
+  trace:    lesson.generate, lesson.blind, lesson.verify, lesson.evaluate=8, lesson.select=8
+  cost:     write $0.0390 (4899 in / 3828 out) · blind $0.0001 (323 in / 168 out) · verify $0.0031 (6640 in / 631 out) · review $0.0101 (2788 in / 318 out)

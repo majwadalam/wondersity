@@ -43,8 +43,9 @@ export async function DELETE() {
   if (!session) return NextResponse.json({ error: "Please sign in." }, { status: 401 });
   try {
     const id = session.user.id;
-    // Reports and step views go with their lessons, materials with their courses (on delete cascade).
-    for (const table of ["jobs", "attempts", "progress", "runs", "lessons", "courses"] as const) {
+    // Reports, ratings, step views and cleared reviews go with their lessons; materials and
+    // certificates with their courses (on delete cascade).
+    for (const table of ["jobs", "attempts", "progress", "runs", "notifications", "push_subscriptions", "bookmarks", "support_messages", "lessons", "courses"] as const) {
       const { error } = await session.db.from(table).delete().eq("learner_id", id);
       if (error) throw error;
     }

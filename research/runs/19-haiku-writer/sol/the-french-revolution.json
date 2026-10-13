@@ -1,0 +1,319 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Why 1789?",
+    "objective": "Explain how royal debt, rising bread prices and new ideas about political authority combined to create a revolutionary crisis.",
+    "estimatedMinutes": 7,
+    "approach": "mystery",
+    "approachReason": "The lesson opens with the puzzle of how a financial crisis became a challenge to royal authority, then connects the fiscal, food and political clues to resolve it.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "How did a money crisis become a revolution?",
+        "body": "A government short of money might borrow or raise taxes. People facing expensive food might demand relief.\n\nIn France in 1789, these problems helped produce something bigger: a challenge to who could speak for the nation and exercise political authority. Your task is to connect the clues—not just collect a list of causes.",
+        "example": "",
+        "layout": "spotlight"
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Debt opened a political door",
+        "body": "Costly wars, including French support for the American Revolution, had added heavily to royal debt. Paying interest strained the treasury, while unequal taxation and resistance to reform made raising revenue difficult.\n\nTo seek support for dealing with the crisis, Louis XVI called the **Estates-General**, a meeting of representatives of the three estates. It met in May 1789, creating an opportunity to raise grievances and question how the kingdom should be governed.",
+        "example": "",
+        "layout": "steps",
+        "points": [
+          {
+            "title": "Debt",
+            "text": "Past borrowing left the monarchy with costly payments and a need for more revenue."
+          },
+          {
+            "title": "Blocked reform",
+            "text": "Privileged groups enjoyed important tax advantages, and attempts to change taxation faced resistance."
+          },
+          {
+            "title": "Political opening",
+            "text": "Calling representatives together turned a royal financial problem into a wider debate."
+          }
+        ]
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Separate the need for revenue from the obstacles to obtaining it.",
+          "What would bringing representatives together offer that another loan would not?"
+        ],
+        "retry": "Needing money and being able to raise it are different problems. The monarchy's financial difficulty became political because changing taxation meant confronting privileges and resistance."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "Hunger supplied urgency; ideas supplied arguments",
+        "body": "A poor harvest in 1788 helped push bread prices upward, placing severe pressure on households that depended on bread. This made the crisis immediate: people needed food, not just a long-term repair of royal finances.\n\nEnlightenment debates about rights, equality before the law and the basis of legitimate government offered arguments for challenging inherited privilege and unchecked authority. These ideas did not give everyone the same goals, and many reformers initially wanted changes within a monarchy. But they helped turn grievances into demands about how power should work.",
+        "example": "Keep the roles distinct: debt helped force a political meeting; expensive bread intensified distress; political ideas helped people explain why the existing system should change.",
+        "layout": "split"
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Match each piece of evidence to what it helps explain.",
+          "Distinguish the pressure to act from the arguments about what should change."
+        ],
+        "retry": "A cause can play a different role from another cause. Food prices help explain the urgency of protest, while arguments about rights and privilege help explain why protest could challenge political arrangements."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Solve the mystery",
+        "prompt": "A visitor says, “The French Revolution happened because bread was expensive.” Write two or three sentences that improve this explanation. Connect royal debt, food prices and political ideas, and explain why calling the Estates-General mattered.",
+        "model": "Expensive bread made hardship urgent, but it was not the whole cause. Royal debt and resistance to tax reform led Louis XVI to call the Estates-General, giving representatives an opening to raise grievances. Ideas about rights and legitimate government helped turn those grievances into challenges to privilege and royal authority."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "A royal adviser’s dilemma",
+        "prompt": "Imagine you are advising Louis XVI as the financial crisis deepens. More borrowing is becoming difficult, and efforts to broaden taxation face resistance from privileged groups and institutions. You need a way to seek wider support for reform: what do you recommend?",
+        "reveal": "Louis XVI called the Estates-General to help address the financial crisis. Bringing representatives together also opened a space for demands that went beyond balancing the treasury.",
+        "type": "scenario",
+        "options": [
+          {
+            "text": "Seek another loan while leaving the tax arrangements unchanged.",
+            "correct": false,
+            "feedback": "A loan might buy time, but it adds debt and leaves the resistance to tax reform unresolved."
+          },
+          {
+            "text": "Call representatives of the three estates to discuss the crisis.",
+            "correct": true,
+            "feedback": "This seeks wider political support—but the representatives can also bring grievances and challenge existing arrangements."
+          },
+          {
+            "text": "Announce broader taxes without addressing opposition to reform.",
+            "correct": false,
+            "feedback": "An announcement does not remove the resistance that has already obstructed reform."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Three routes into one crisis",
+        "prompt": "Tap the nodes and trace the arrows. Find the route that opens a political debate, the route that makes daily life harder, and the route that supplies arguments for change.",
+        "reveal": "The causes did different jobs: financial trouble opened a political debate, food prices intensified distress, and ideas provided arguments against privilege and unchecked authority.",
+        "type": "diagram",
+        "nodes": [
+          {
+            "label": "Royal financial crisis",
+            "detail": "Debt payments strained the treasury. Tax reform faced resistance."
+          },
+          {
+            "label": "Estates-General",
+            "detail": "Representatives gathered to address the crisis, bringing grievances and questions about government."
+          },
+          {
+            "label": "Poor harvest",
+            "detail": "The poor harvest of 1788 contributed to shortages and rising grain and bread prices."
+          },
+          {
+            "label": "Expensive bread",
+            "detail": "Higher bread prices squeezed household budgets and made hardship urgent."
+          },
+          {
+            "label": "Public pressure",
+            "detail": "Food distress increased popular anger and pressure for action."
+          },
+          {
+            "label": "Ideas about rights",
+            "detail": "Debates about rights, legal equality and legitimate government offered ways to criticize existing arrangements."
+          },
+          {
+            "label": "Challenge to authority",
+            "detail": "Financial debate, popular pressure and political arguments converged in challenges to privilege and royal authority."
+          }
+        ],
+        "edges": [
+          {
+            "from": 0,
+            "to": 1,
+            "label": "helped prompt"
+          },
+          {
+            "from": 1,
+            "to": 6,
+            "label": "opened a forum for"
+          },
+          {
+            "from": 2,
+            "to": 3,
+            "label": "helped drive up"
+          },
+          {
+            "from": 3,
+            "to": 4,
+            "label": "intensified"
+          },
+          {
+            "from": 4,
+            "to": 6,
+            "label": "added urgency to"
+          },
+          {
+            "from": 5,
+            "to": 6,
+            "label": "supplied arguments for"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "In a classroom reconstruction, a royal official proposes another loan, while a colleague proposes gathering representatives to discuss changes to taxation. The treasury is burdened by debt, and earlier tax reforms have met resistance. Why does gathering representatives address a problem that borrowing does not?",
+        "options": [
+          "It makes tax privileges disappear as soon as the meeting begins.",
+          "It seeks support for tax changes that have faced political resistance.",
+          "It transfers the monarchy’s existing debts to the representatives.",
+          "It replaces the need for tax revenue with payments from new lenders."
+        ],
+        "correctAnswer": "It seeks support for tax changes that have faced political resistance.",
+        "explanation": "Borrowing can provide money temporarily, but it adds debt without resolving resistance to tax reform. Gathering representatives offered a way to seek support while opening a broader political debate."
+      },
+      {
+        "question": "A museum activity pairs two reconstructed complaints from 1789: one describes a family struggling to afford bread; the other demands equal treatment under the law. How should a caption explain the relationship between these complaints?",
+        "options": [
+          "Equality arguments eased food hardship, while bread prices mainly troubled the royal treasury.",
+          "Bread prices created hardship, while equality arguments gave political direction to demands.",
+          "Equality arguments created bread shortages, while food complaints called for tax privileges.",
+          "Bread prices created hardship, while equality arguments mainly sought cheaper royal loans."
+        ],
+        "correctAnswer": "Bread prices created hardship, while equality arguments gave political direction to demands.",
+        "explanation": "Expensive bread intensified immediate distress, while ideas about equality helped people challenge the organization of society and government. The two could reinforce each other without having the same role."
+      }
+    ],
+    "sources": [
+      {
+        "url": "https://courses.lumenlearning.com/suny-worldhistory/chapter/the-beginning-of-revolution",
+        "title": "The Beginning of Revolution | World History"
+      },
+      {
+        "url": "https://colorado.pressbooks.pub/europesince1600concise/chapter/chapter-7-the-french-revolution",
+        "title": "Chapter 7: The French Revolution – Europe Since 1600: A Concise History"
+      },
+      {
+        "url": "https://link.springer.com/article/10.1007/s10887-023-09230-y",
+        "title": "“Let them eat cake”: drought, peasant uprisings, and demand for institutional change in the French Revolution | Journal of Economic Growth | Springer Nature Link"
+      },
+      {
+        "url": "https://publications.essex.ac.uk/esj/article/id/183",
+        "title": "\n  The Influence of Enlightenment Ideals on the French Revolution |\nEssex Student Journal\n"
+      },
+      {
+        "url": "https://www.britannica.com/place/France/The-French-Revolution-and-Napoleon-1789-1815",
+        "title": "The French Revolution and Napoleon, 1789–1815 - Britannica"
+      }
+    ]
+  },
+  "score": 7,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 80063,
+      "approach": "mystery",
+      "blocks": "explain > activity > explain > check > activity > explain > check > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.blind",
+      "iteration": 1,
+      "ms": 4990,
+      "questions": 2,
+      "giveaways": []
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 1,
+      "ms": 13571,
+      "claims": 5,
+      "supported": 5,
+      "contradicted": [],
+      "unclear": 0,
+      "downgraded": []
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 7,
+      "ms": 13583,
+      "problems": [
+        "The checks are easy to answer through general reasoning rather than historical understanding. Distractors such as transferring royal debts to representatives or equality arguments creating bread shortages are too implausible to diagnose meaningful misconceptions.",
+        "The first check largely repeats the opening activity's decision, so assessment difficulty increases little across the lesson.",
+        "The diagram reveals all causal relationships and asks learners only to tap and trace them. It offers useful visualization but little substantive learner decision-making.",
+        "The central transition from financial crisis to revolution remains abstract. The lesson explains that the Estates-General opened debate but does not show how disputes over representation and voting led to the National Assembly's challenge to royal authority.",
+        "Retry feedback mostly restates the original explanation rather than offering a genuinely different explanatory approach."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 52817,
+      "approach": "mystery",
+      "blocks": "explain > activity > explain > check > activity > explain > explain > check > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0,
+      "patch": "Strengthened the checks and retry feedback, replaced passive diagram exploration with causal sorting, and added the voting dispute and National Assembly to explain how financial crisis became a challenge to royal authority.",
+      "changes": 7
+    },
+    {
+      "step": "lesson.blind",
+      "iteration": 2,
+      "ms": 2738,
+      "questions": 2,
+      "giveaways": []
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 2,
+      "ms": 21781,
+      "claims": 5,
+      "supported": 5,
+      "contradicted": [],
+      "unclear": 0,
+      "downgraded": []
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 7,
+      "ms": 21785,
+      "problems": [
+        "Question 1 largely supplies its own answer: the official explicitly identifies high debt payments and blocked taxation, and the correct option simply restates them. A learner could answer without understanding the lesson.",
+        "Question 2 has the flagged wording cue: only the correct option repeats 'claiming' and 'relief' from the question. This weakens the validity of the check.",
+        "Several distractors are weak. Claims that the voting dispute concerned grain distribution or cheaper bread are easy to dismiss, rather than representing plausible misunderstandings about fiscal reform, estate representation and national authority.",
+        "The sorting activity is mostly a vocabulary match: its items closely echo the category labels. It provides less causal reasoning than the lesson's objective requires.",
+        "The opening adviser activity strongly steers learners toward calling representatives by explicitly ruling out the alternatives in its setup. It is more guided recognition than genuine exploration."
+      ],
+      "factErrors": [],
+      "structureIssues": [
+        "Question 2 (\"A fictional newspaper editor in June 1789 hears that brea…\"): only the right answer repeats the question's wording (\"claiming\", \"relief\"); use those words in wrong options too, or in none."
+      ]
+    },
+    {
+      "step": "lesson.select",
+      "score": 7,
+      "passed": false,
+      "sources": 5
+    }
+  ]
+}

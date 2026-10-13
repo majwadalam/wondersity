@@ -1,14 +1,38 @@
 "use client";
 
+import { Download, LifeBuoy } from "lucide-react";
+import Link from "next/link";
 import { useState } from "react";
 import { NotificationSettings } from "@/components/app/NotificationSettings";
 import { Avatar } from "@/components/app/AppShell";
 import { useAppState } from "@/components/app/AppState";
 import { PlanSection } from "@/components/billing/PlanSection";
+import { AvatarPicker } from "@/components/app/AvatarPicker";
+import { SignInSettings } from "@/components/app/SignInSettings";
+import { SettingsSkeleton } from "@/components/Skeletons";
 
-// Account settings: plan, name, daily goal, voice; signing out; deleting everything.
+// Account settings, in tabs: Profile (name, avatar, daily goal, voice), Plan,
+// Notifications, and Account (sign-in, your data, help, signing out, deleting
+// everything). The tab is kept in the URL (?tab=), so links and reloads land on it.
 
 const GOALS = [5, 10, 20, 30];
+
+const TABS = [
+  ["profile", "Profile"],
+  ["plan", "Plan"],
+  ["notifications", "Notifications"],
+  ["account", "Account"],
+] as const;
+type Tab = (typeof TABS)[number][0];
+
+/** The tab the URL asks for: ?tab=…, the old #notifications link, or the plan after checkout. */
+function tabFromUrl(): Tab {
+  if (typeof window === "undefined") return "profile";
+  const params = new URLSearchParams(window.location.search);
+  const asked = params.get("tab") ?? window.location.hash.slice(1);
+  if (TABS.some(([t]) => t === asked)) return asked as Tab;
+  return params.has("upgraded") ? "plan" : "profile";
+}
 
 export default function SettingsPage() {
   const { profile, updateProfile, signOut, refresh } = useAppState();
@@ -16,16 +40,16 @@ export default function SettingsPage() {
   const [saved, setSaved] = useState("");
   const [confirming, setConfirming] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [tab, setTab] = useState<Tab>(tabFromUrl);
+  const choose = (t: Tab) => {
+    setTab(t);
+    setSaved("");
+    window.history.replaceState(null, "", t === "profile" ? "/settings" : `/settings?tab=${t}`);
+  };
   // Back from Paddle's checkout (its success URL adds ?upgraded=1).
   const [upgraded] = useState(() => typeof window !== "undefined" && new URLSearchParams(window.location.search).has("upgraded"));
 
-  if (!profile) {
-    return (
-      <main className="mx-auto max-w-2xl px-5 pt-10 sm:px-8">
-        <div className="skeleton h-96 rounded-2xl" />
-      </main>
-    );
-  }
+  if (!profile) return <main><SettingsSkeleton /></main>;
 
   const save = async (patch: Parameters<typeof updateProfile>[0], what: string) => {
     setSaved("");
@@ -59,106 +83,160 @@ export default function SettingsPage() {
         {saved && `${saved} saved.`}
       </p>
 
-      <Section title="Plan">
-        <PlanSection upgraded={upgraded} />
-      </Section>
-
-      <Section title="Profile">
-        <div className="flex items-center gap-4">
-          <Avatar size={56} />
-          <div className="min-w-0">
-            <p className="truncate font-semibold text-fg">{profile.displayName || "No name yet"}</p>
-            <p className="truncate text-sm text-muted">{profile.email}</p>
-          </div>
-        </div>
-        <form
-          className="mt-5 flex gap-2"
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (name !== null) save({ displayName: name.trim() }, "Name");
-          }}
-        >
-          <label htmlFor="name" className="sr-only">
-            Name
-          </label>
-          <input
-            id="name"
-            value={name ?? profile.displayName ?? ""}
-            onChange={(e) => setName(e.target.value.slice(0, 60))}
-            placeholder="Your name"
-            className="min-w-0 flex-1 rounded-xl border border-line bg-white px-4 py-2.5 text-[15px] text-fg outline-none focus:border-accent focus:ring-4 focus:ring-accent/15"
-          />
-          <button type="submit" disabled={name === null} className="btn-secondary rounded-xl px-4 text-sm font-medium">
-            Save
+      <div role="tablist" aria-label="Settings" className="mt-2 flex gap-1 overflow-x-auto border-b border-line">
+        {TABS.map(([value, label]) => (
+          <button
+            key={value}
+            type="button"
+            role="tab"
+            id={`tab-${value}`}
+            aria-selected={tab === value}
+            aria-controls={`panel-${value}`}
+            onClick={() => choose(value)}
+            className={`-mb-px border-b-2 px-4 py-2.5 text-sm font-medium whitespace-nowrap transition-colors ${
+              tab === value ? "border-accent text-accent" : "border-transparent text-muted hover:text-fg"
+            }`}
+          >
+            {label}
           </button>
-        </form>
-      </Section>
-
-      <Section title="Daily goal" note="Shown on Home as a ring to fill each day.">
-        <div className="grid grid-cols-4 gap-2">
-          {GOALS.map((m) => (
-            <button
-              key={m}
-              type="button"
-              aria-pressed={profile.dailyGoalMinutes === m}
-              onClick={() => save({ dailyGoalMinutes: m }, "Daily goal")}
-              className={`rounded-xl border py-3 text-sm font-medium transition-colors ${
-                profile.dailyGoalMinutes === m ? "border-accent bg-accent-soft text-accent-strong" : "border-line bg-white text-fg hover:bg-canvas"
-              }`}
-            >
-              {m} min
-            </button>
-          ))}
-        </div>
-      </Section>
-
-      <Section title="Voice" note="Your guide reads each step aloud. You can also switch it off inside a lesson.">
-        <label className="flex cursor-pointer items-center justify-between gap-4">
-          <span className="text-[15px] text-fg">Guide speaks</span>
-          <input
-            type="checkbox"
-            role="switch"
-            checked={profile.voiceOn}
-            onChange={(e) => save({ voiceOn: e.target.checked }, "Voice")}
-            className="toggle"
-          />
-        </label>
-      </Section>
-
-      <div id="notifications" className="scroll-mt-20">
-        <Section title="Notifications" note="The bell in the app shows these too.">
-          <NotificationSettings />
-        </Section>
+        ))}
       </div>
 
-      <Section title="Account">
-        <form action="/auth/signout" method="post" onSubmit={(e) => (e.preventDefault(), signOut())}>
-          <button type="submit" className="btn-secondary rounded-xl px-4 py-2.5 text-sm font-medium">
-            Sign out
-          </button>
-        </form>
-      </Section>
-
-      <Section
-        title="Delete your data"
-        note="Removes every course, lesson, answer and setting. This can't be undone. It doesn't cancel a paid plan: cancel that first in Manage billing."
-        danger
-      >
-        {confirming ? (
-          <div className="flex flex-wrap items-center gap-2">
-            <button type="button" onClick={deleteEverything} disabled={deleting} className="rounded-xl bg-bad px-4 py-2.5 text-sm font-semibold text-white disabled:opacity-60">
-              {deleting ? "Deleting…" : "Yes, delete everything"}
-            </button>
-            <button type="button" onClick={() => setConfirming(false)} className="rounded-xl px-4 py-2.5 text-sm text-muted hover:text-fg">
-              Cancel
-            </button>
+      {tab === "profile" && (
+        <div role="tabpanel" id="panel-profile" aria-labelledby="tab-profile">
+        <Section title="Profile">
+          <div className="flex items-center gap-4">
+            <Avatar size={56} />
+            <div className="min-w-0">
+              <p className="truncate font-semibold text-fg">{profile.displayName || "No name yet"}</p>
+              <p className="truncate text-sm text-muted">{profile.email}</p>
+            </div>
           </div>
-        ) : (
-          <button type="button" onClick={() => setConfirming(true)} className="rounded-xl border border-bad/40 px-4 py-2.5 text-sm font-medium text-bad hover:bg-[#fdeeee]">
-            Delete my data
-          </button>
-        )}
-      </Section>
+          <form
+            className="mt-5 flex gap-2"
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (name !== null) save({ displayName: name.trim() }, "Name");
+            }}
+          >
+            <label htmlFor="name" className="sr-only">
+              Name
+            </label>
+            <input
+              id="name"
+              value={name ?? profile.displayName ?? ""}
+              onChange={(e) => setName(e.target.value.slice(0, 60))}
+              placeholder="Your name"
+              className="min-w-0 flex-1 rounded-xl border border-line bg-white px-4 py-2.5 text-[15px] text-fg outline-none focus:border-accent focus:ring-4 focus:ring-accent/15"
+            />
+            <button type="submit" disabled={name === null} className="btn-secondary rounded-xl px-4 text-sm font-medium">
+              Save
+            </button>
+          </form>
+
+          <fieldset className="mt-6">
+            <legend className="text-sm font-medium text-fg">Avatar</legend>
+            <AvatarPicker className="mt-3" value={profile.avatar ?? null} onChange={(avatar) => save({ avatar }, "Avatar")} />
+          </fieldset>
+        </Section>
+
+        <Section title="Daily goal" note="Shown on Home as a ring to fill each day.">
+          <div className="grid grid-cols-4 gap-2">
+            {GOALS.map((m) => (
+              <button
+                key={m}
+                type="button"
+                aria-pressed={profile.dailyGoalMinutes === m}
+                onClick={() => save({ dailyGoalMinutes: m }, "Daily goal")}
+                className={`rounded-xl border py-3 text-sm font-medium transition-colors ${
+                  profile.dailyGoalMinutes === m ? "border-accent bg-accent-soft text-accent-strong" : "border-line bg-white text-fg hover:bg-canvas"
+                }`}
+              >
+                {m} min
+              </button>
+            ))}
+          </div>
+        </Section>
+
+        <Section title="Voice" note="Your guide reads each step aloud. You can also switch it off inside a lesson.">
+          <label className="flex cursor-pointer items-center justify-between gap-4">
+            <span className="text-[15px] text-fg">Guide speaks</span>
+            <input
+              type="checkbox"
+              role="switch"
+              checked={profile.voiceOn}
+              onChange={(e) => save({ voiceOn: e.target.checked }, "Voice")}
+              className="toggle"
+            />
+          </label>
+        </Section>
+        </div>
+      )}
+
+      {tab === "plan" && (
+        <div role="tabpanel" id="panel-plan" aria-labelledby="tab-plan">
+        <Section title="Plan">
+          <PlanSection upgraded={upgraded} />
+        </Section>
+        </div>
+      )}
+
+      {tab === "notifications" && (
+        <div role="tabpanel" id="panel-notifications" aria-labelledby="tab-notifications">
+          <Section title="Notifications" note="The bell in the app shows these too.">
+            <NotificationSettings />
+          </Section>
+        </div>
+      )}
+
+      {tab === "account" && (
+        <div role="tabpanel" id="panel-account" aria-labelledby="tab-account">
+        <Section title="Sign-in">
+          <SignInSettings email={profile.email} signIn={profile.signIn ?? []} />
+        </Section>
+
+        <Section title="Your data" note="Everything Wondersity keeps about you (courses, lessons, answers, ratings, settings) as one JSON file.">
+          <a href="/api/account/export" download className="btn-secondary inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium">
+            <Download size={15} /> Download my data
+          </a>
+        </Section>
+
+        <Section title="Help" note="A question, a problem, an idea: it reaches a person.">
+          <Link href="/help" className="btn-secondary inline-flex items-center gap-2 rounded-xl px-4 py-2.5 text-sm font-medium">
+            <LifeBuoy size={15} /> Help and contact
+          </Link>
+        </Section>
+
+        <Section title="Account">
+          <form action="/auth/signout" method="post" onSubmit={(e) => (e.preventDefault(), signOut())}>
+            <button type="submit" className="btn-secondary rounded-xl px-4 py-2.5 text-sm font-medium">
+              Sign out
+            </button>
+          </form>
+        </Section>
+
+        <Section
+          title="Delete your data"
+          note="Removes every course, lesson, answer and setting. This can't be undone. It doesn't cancel a paid plan: cancel that first in Manage billing."
+          danger
+        >
+          {confirming ? (
+            <div className="flex flex-wrap items-center gap-2">
+              <button type="button" onClick={deleteEverything} disabled={deleting} className="rounded-xl bg-bad px-4 py-2.5 text-sm font-semibold text-white disabled:opacity-60">
+                {deleting ? "Deleting…" : "Yes, delete everything"}
+              </button>
+              <button type="button" onClick={() => setConfirming(false)} className="rounded-xl px-4 py-2.5 text-sm text-muted hover:text-fg">
+                Cancel
+              </button>
+            </div>
+          ) : (
+            <button type="button" onClick={() => setConfirming(true)} className="rounded-xl border border-bad/40 px-4 py-2.5 text-sm font-medium text-bad hover:bg-[#fdeeee]">
+              Delete my data
+            </button>
+          )}
+        </Section>
+        </div>
+      )}
     </main>
   );
 }

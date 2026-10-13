@@ -1,0 +1,6 @@
+■ programming: Python loops (143s, score 7.5, below bar, $0.0554, 18 calls, 57003 in / 28906 out tokens)
+  approach: discovery (Learners first predict what a loop prints, then notice the pattern in the code, so the accumulator idea is named only after they have seen it work.)
+  blocks:   code:predict > explain > check > explain > worked > activity:order > code:bug > check > problem > check
+  issues:   none
+  trace:    lesson.generate, lesson.blind, lesson.verify, lesson.evaluate=7.5, lesson.revise, lesson.blind, lesson.verify, lesson.evaluate=7.4, lesson.select=7.5
+  cost:     write $0.0072 (7678 in / 12884 out) · verify $0.0152 (27812 in / 3402 out) · blind $0.0003 (779 in / 519 out) · review $0.0257 (7151 in / 781 out) · revise $0.0070 (13583 in / 11320 out)

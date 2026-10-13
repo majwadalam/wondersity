@@ -1,13 +1,13 @@
 "use client";
 
-import { Award, Bell, BookOpen, Clock, Flame } from "lucide-react";
+import { Award, Bell, BookOpen, CalendarCheck, Clock, Flame } from "lucide-react";
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 type Item = { id: number; kind: "lesson_ready" | "streak" | "certificate" | "reminder"; title: string; body: string; href: string | null; read_at: string | null; created_at: string };
 
-const ICON = { lesson_ready: BookOpen, streak: Flame, certificate: Award, reminder: Clock } as const;
-const TINT = { lesson_ready: "bg-accent-soft text-accent", streak: "bg-[#fff1e6] text-[#f2711c]", certificate: "bg-[#e9f8ef] text-good", reminder: "bg-canvas text-muted" } as const;
+const ICON = { lesson_ready: BookOpen, streak: Flame, certificate: Award, reminder: Clock, recap: CalendarCheck } as const;
+const TINT = { lesson_ready: "bg-accent-soft text-accent", streak: "bg-[#fff1e6] text-[#f2711c]", certificate: "bg-[#e9f8ef] text-good", reminder: "bg-canvas text-muted", recap: "bg-accent-soft text-accent" } as const;
 
 function ago(iso: string) {
   const s = Math.max(0, (Date.now() - new Date(iso).getTime()) / 1000);
@@ -94,7 +94,7 @@ export function NotificationBell({ align = "left" }: { align?: "left" | "right" 
         >
           <div className="flex items-center justify-between border-b border-line px-4 py-3">
             <p className="text-sm font-semibold text-fg">Notifications</p>
-            <Link href="/settings#notifications" onClick={() => setOpen(false)} className="text-xs font-medium text-accent hover:underline">
+            <Link href="/settings?tab=notifications" onClick={() => setOpen(false)} className="text-xs font-medium text-accent hover:underline">
               Settings
             </Link>
           </div>

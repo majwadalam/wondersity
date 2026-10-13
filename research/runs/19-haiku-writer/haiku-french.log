@@ -1,0 +1,6 @@
+■ history: The French Revolution (168s, score 6.3, below bar, $0.0623, 18 calls, 54436 in / 34328 out tokens)
+  approach: mystery (The puzzle of why a rich, powerful kingdom erupted in 1789 gives the learner a reason to follow each cause, and the final block resolves the question.)
+  blocks:   explain > explain > check > explain > problem > explain > check > activity:scenario > explain > activity:order > check
+  issues:   In 2 of 3 questions the right answer is the longest option, a pattern learners pick up.
+  trace:    lesson.generate, lesson.blind, lesson.verify, lesson.evaluate=5.8, lesson.revise, lesson.blind, lesson.verify, lesson.evaluate=6.3, lesson.select=6.3
+  cost:     write $0.0063 (7684 in / 11038 out) · blind $0.0003 (1065 in / 410 out) · verify $0.0152 (22732 in / 4671 out) · review $0.0304 (7640 in / 1133 out) · revise $0.0101 (15315 in / 17076 out)

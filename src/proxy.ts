@@ -7,7 +7,7 @@ import { REF_COOKIE, REF_DAYS, cleanRefCode } from "@/lib/referrals";
 // app). An optimistic check only: every API route verifies the user again.
 // Also remembers a creator's referral code from ?ref= (see lib/referrals.ts).
 
-const APP = ["/home", "/courses", "/progress", "/library", "/settings", "/welcome", "/admin"];
+const APP = ["/home", "/courses", "/progress", "/review", "/library", "/settings", "/welcome", "/admin"];
 
 export async function proxy(request: NextRequest) {
   let response = NextResponse.next({ request });

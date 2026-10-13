@@ -1,0 +1,6 @@
+■ programming: Python loops (95s, score 8, $0.0687, 7 calls, 17063 in / 5637 out tokens)
+  approach: worked_example (A fully traced total-building loop provides a model, then progressively less scaffolding leads the learner to write a loop independently.)
+  blocks:   code:trace > explain > check > code:predict > explain > activity:order > check > problem > reflect
+  issues:   none
+  trace:    lesson.generate, lesson.blind, lesson.verify, lesson.evaluate=8, lesson.select=8
+  cost:     write $0.0538 (4901 in / 4156 out) · blind $0.0001 (333 in / 45 out) · verify $0.0047 (8901 in / 1151 out) · review $0.0102 (2928 in / 285 out)

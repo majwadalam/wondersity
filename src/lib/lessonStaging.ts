@@ -6,6 +6,7 @@
 // into the lesson, so reopening it costs nothing. Called by POST /api/stage
 // (the browser opening a lesson) and by lesson jobs on the server (lib/jobs.ts).
 
+import { castStaging } from "./courseCast";
 import { generateImage, scenePrompt } from "./coverArt";
 import {
   addSharedLessonStaging,
@@ -120,8 +121,14 @@ export async function stageSavedLesson(learnerId: string, lessonId: number, topi
   ]);
   for (const r of results) if (r.status === "rejected") console.error("stage image failed:", r.reason);
 
+  // The guide and the dialogue's speakers join the course's cast, so each keeps one voice
+  // across lessons and no two sound alike (lib/courseCast.ts). A failure keeps staging's choice.
+  const cast = await castStaging(row.course_id, learnerId, s).catch((e) => {
+    console.error("castStaging:", e);
+    return s;
+  });
   const found = await resources;
-  await updateLessonData(lessonId, { ...lesson, staging: s, ...(found ? { resources: found } : {}) });
+  await updateLessonData(lessonId, { ...lesson, staging: cast, ...(found ? { resources: found } : {}) });
   // A shared plan's lesson: once fully painted, its scenes and "Go deeper"
   // go into the shared copy, so the next learners don't pay to paint them.
   if (lesson.sharedFrom && complete(s) && canWriteShared()) {
@@ -129,5 +136,5 @@ export async function stageSavedLesson(learnerId: string, lessonId: number, topi
       console.error("addSharedLessonStaging:", e)
     );
   }
-  return { ok: true, staging: s, resources: found };
+  return { ok: true, staging: cast, resources: found };
 }

@@ -1,0 +1,267 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Place Value in Base 60",
+    "objective": "Read and write whole numbers in base 60, and convert between base 60 and base 10 using place values of 1, 60, and 3600.",
+    "estimatedMinutes": 8,
+    "approach": "worked_example",
+    "approachReason": "Fully worked conversions establish the procedure, then progressively less-supported tasks let the learner apply it independently.",
+    "blocks": [
+      {
+        "kind": "worked",
+        "heading": "Two groups, one number",
+        "problem": "Suppose a number has two base-60 groups: 2 on the left and 15 on the right. We will write this as **[2, 15]**, using modern brackets and commas to make the groups clear—not reproducing Babylonian writing.\n\nThe rightmost group counts ones. The next group counts sixties. What is this number in base 10?",
+        "steps": [
+          {
+            "title": "Read the places",
+            "text": "The 2 means two sixties; the 15 means fifteen ones.",
+            "why": "A group's position tells you how much each unit in that group is worth."
+          },
+          {
+            "title": "Find each contribution",
+            "text": "2 × 60 = 120, and 15 × 1 = 15.",
+            "why": "Multiply each group by its place value."
+          },
+          {
+            "title": "Combine them",
+            "text": "120 + 15 = 135.",
+            "why": "Add the contributions to get the base-10 value."
+          }
+        ],
+        "answer": "[2, 15] represents 135 in base 10."
+      },
+      {
+        "kind": "explain",
+        "heading": "One group can hold up to 59",
+        "body": "In base 10, each digit has a value from 0 to 9. In base 60, each **place-value group** has a value from 0 to 59—even when we need two decimal digits to write that value.\n\nOnce a group reaches 60, it becomes one unit in the place to its left. Our commas separate places: [2, 15] has two places, not three.",
+        "example": "[1, 59] = 60 + 59 = 119.\n\nAdding one gives [2, 0] = 120: sixty ones have become another sixty.",
+        "layout": "split"
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Label the right-hand place first, then the place to its left.",
+          "Find the value of the full bundles before adding the individual items."
+        ],
+        "retry": "Treat the comma as a boundary between places. The left group counts bundles of sixty, while the right group counts individual items."
+      },
+      {
+        "kind": "problem",
+        "heading": "Your turn: turn groups into a total",
+        "prompt": "Convert **[3, 25]** from base 60 to base 10.\n\nComplete the calculation: \\(3\\times60+25=\\ ?\\)",
+        "answers": [
+          "205"
+        ],
+        "unit": "",
+        "traps": [
+          {
+            "answer": "325",
+            "feedback": "This joins the written groups instead of weighting them by their places."
+          },
+          {
+            "answer": "28",
+            "feedback": "This adds the group values without accounting for the sixties place."
+          }
+        ],
+        "hints": [
+          "First calculate the value of three sixties."
+        ],
+        "solution": "The left group contributes 3 × 60 = 180. The right group contributes 25, so 180 + 25 = 205."
+      },
+      {
+        "kind": "worked",
+        "heading": "Go the other way",
+        "problem": "Write the base-10 number **194** in base 60. We need to find how many full groups of sixty it contains, then how many ones remain.",
+        "steps": [
+          {
+            "title": "Find full sixties",
+            "text": "3 × 60 = 180, while 4 × 60 = 240. So 194 contains three full sixties.",
+            "why": "Choose the largest whole number of sixties that does not exceed the total."
+          },
+          {
+            "title": "Find what remains",
+            "text": "194 − 180 = 14.",
+            "why": "These fourteen remaining units belong in the ones place."
+          },
+          {
+            "title": "Write and verify",
+            "text": "Write [3, 14]. Check: 3 × 60 + 14 = 180 + 14 = 194.",
+            "why": "The remainder is below 60, so it fits in one group."
+          }
+        ],
+        "answer": "194 = 3 × 60 + 14, so its base-60 form is [3, 14]."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "How many full sixties fit into the total?",
+          "Check both the value of your representation and the size of each group."
+        ],
+        "retry": "A valid group is less than 60. If a proposed ones group is 60 or more, another full sixty must move into the place to its left."
+      },
+      {
+        "kind": "explain",
+        "heading": "Another step left means ×60 again",
+        "body": "The place values grow by a factor of 60 as you move left: **1, 60, 3600**, because \\(60\\times60=3600\\). Read a three-group number by multiplying each group by its place value and adding.\n\nIn our modern notation, 0 keeps an empty place visible. In [1, 0, 5], the middle place is empty, but the leftmost 1 still counts 3600.",
+        "example": "[1, 0, 5] = 1 × 3600 + 0 × 60 + 5 = 3605.\n\n[1, 5] = 1 × 60 + 5 = 65.\n\nRemoving an empty place changes the value.",
+        "layout": "split"
+      },
+      {
+        "kind": "problem",
+        "heading": "Read three places",
+        "prompt": "Convert **[1, 2, 5]** from base 60 to base 10. Work from the rightmost place to identify the weight of each group.",
+        "answers": [
+          "3725"
+        ],
+        "unit": "",
+        "traps": [
+          {
+            "answer": "185",
+            "feedback": "This gives both left-hand groups a weight of 60. Each step left must multiply the weight by another 60."
+          },
+          {
+            "answer": "125",
+            "feedback": "This reads the groups as decimal digits rather than using base-60 place values."
+          }
+        ],
+        "hints": [
+          "Start with 1 on the right, then multiply the place value by 60 at each step left.",
+          "Calculate the three contributions separately before adding."
+        ],
+        "solution": "The places are 3600, 60, and 1 from left to right. Therefore 1 × 3600 + 2 × 60 + 5 = 3600 + 120 + 5 = 3725."
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Label all three positions, starting at the right.",
+          "The zero changes one contribution to zero; it does not remove a position."
+        ],
+        "retry": "An empty middle place contributes nothing, but still separates the ones place from the 3600s place. Count positions, including the zero, before calculating."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Write 267 in base 60",
+        "prompt": "Arrange these steps to convert the base-10 number 267 into a two-group base-60 number.",
+        "reveal": "267 contains four full sixties and 27 remaining ones: 4 × 60 + 27 = 240 + 27 = 267. Its base-60 form is [4, 27].",
+        "type": "order",
+        "steps": [
+          "Find the number of full sixties: 4 × 60 = 240, but 5 × 60 = 300 is too much.",
+          "Subtract the full sixties: 267 − 240 = 27.",
+          "Put 4 in the sixties place and 27 in the ones place: [4, 27].",
+          "Check by converting back: 4 × 60 + 27 = 267."
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "In an illustrative inventory, a clerk records a count as [4, 8] in our base-60 notation. What count should you enter in a base-10 spreadsheet?",
+        "options": [
+          "248",
+          "12",
+          "484",
+          "48"
+        ],
+        "correctAnswer": "248",
+        "explanation": "The 4 counts sixties and the 8 counts ones: 4 × 60 + 8 = 240 + 8 = 248."
+      },
+      {
+        "question": "A workshop has 182 beads. Using groups valued from 0 to 59, what two-group base-60 record should it write?",
+        "options": [
+          "[18, 2]",
+          "[2, 62]",
+          "[3, 2]",
+          "[2, 3]"
+        ],
+        "correctAnswer": "[3, 2]",
+        "explanation": "182 = 3 × 60 + 2, so the record is [3, 2]. Although 2 × 60 + 62 also totals 182, 62 is too large for a single group."
+      },
+      {
+        "question": "A museum activity labels a quantity [1, 0, 12] in our modern base-60 notation. What base-10 quantity does the label represent?",
+        "options": [
+          "1012",
+          "3612",
+          "4320",
+          "72"
+        ],
+        "correctAnswer": "3612",
+        "explanation": "All three positions count, including the empty middle one: 1 × 3600 + 0 × 60 + 12 = 3612. Removing the zero would move the 1 into a different place."
+      }
+    ],
+    "sources": [
+      {
+        "url": "https://people.clas.ufl.edu/ufhatch/2022/07/28/babylonian-cuneiform-and-sexagesimal-numbers/",
+        "title": "Babylonian Cuneiform & Sexagesimal Numbers – Robert Hatch"
+      },
+      {
+        "url": "https://people.clas.ufl.edu/ufhatch/2022/07/28/writing-sexagesimal-numbers-modern-notation",
+        "title": "Writing Sexagesimal Numbers – Modern Notation – Robert Hatch"
+      },
+      {
+        "url": "https://en.wikipedia.org/wiki/Sexagesimal",
+        "title": "Sexagesimal - Wikipedia"
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 68825,
+      "approach": "worked_example",
+      "blocks": "worked > explain > check > problem > worked > activity > check > explain > problem > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.blind",
+      "iteration": 1,
+      "ms": 13948,
+      "questions": 3,
+      "giveaways": []
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 1,
+      "ms": 21632,
+      "claims": 4,
+      "supported": 3,
+      "contradicted": [],
+      "unclear": 1,
+      "downgraded": [
+        "In base 60, each place-value group has a value from 0 to 59.: cited a page the search didn't return (https://math.libretexts.org/Bookshelves/Applied_Mathematics/Contemporary_Mathematics_(OpenStax; returned: https://oeis.org/wiki/Sexagesimal, https://www.csmc.uni-hamburg.de/publications/mesopotamia/2017-09-26.html, https://people.clas.ufl.edu/ufhatch/2022/07/28/babylonian-cuneiform-and-sexagesimal-numbers/, https://math.libretexts.org/Bookshelves/Applied_Mathematics/Contemporary_Mathematics_(OpenStax)/04:__Number_Representation_and_Calculation/4.01:__Early_Numeration_Systems, https://math.libretexts.org/Courses/Florida_SouthWestern_State_College/MGF_1131%3A_Mathematics_in_Context__(FSW)/01%3A__Number_Representation_in_Different_Bases_and_Cryptography/1.02%3A__Early_Numeration_Systems)"
+      ]
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8,
+      "ms": 21648,
+      "problems": [
+        "The ordering activity supplies every calculation and the final representation, so it tests recognition of a procedure more than independent conversion.",
+        "Practice in writing base-60 numbers stops at two places, although the objective includes conversions using the 3600 place.",
+        "Check retries mostly repeat the original place-value explanation rather than offering a genuinely different explanation or representation.",
+        "The final check closely mirrors the worked example with an empty middle place, limiting transfer beyond the demonstrated pattern."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true,
+      "sources": 3
+    }
+  ]
+}

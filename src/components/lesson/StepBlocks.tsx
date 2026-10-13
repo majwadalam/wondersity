@@ -1,11 +1,13 @@
 "use client";
 
+import { Square, Volume2 } from "lucide-react";
 import { motion } from "motion/react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { spring } from "../motion/presets";
 import { modelAnswerText, type Block } from "@/lib/lessonBlocks";
 import { BlockFrame, Paragraphs } from "./BlockFrame";
 import { rich } from "./rich";
+import { playLine, stopLine, type VoiceControl } from "./Scene";
 
 type Of<K extends Block["kind"]> = Extract<Block, { kind: K }>;
 
@@ -174,25 +176,120 @@ export function ReflectBlock({ b, onDone, lessonId, blockIndex }: { b: Of<"refle
   );
 }
 
-/** A Socratic exchange that unfolds a line at a time, so the learner can answer each question in their head first. */
-export function DialogueBlock({ b, onDone }: { b: Of<"dialogue">; onDone: () => void }) {
+/**
+ * A Socratic exchange that unfolds a line at a time, so the learner can answer
+ * each question in their head first. With voice, "Listen" reads it aloud, each
+ * speaker in their own voice (the course's cast), and stops after a question
+ * until the learner continues.
+ */
+export function DialogueBlock({
+  b,
+  onDone,
+  voice = null,
+  blockIndex,
+  active = true,
+}: {
+  b: Of<"dialogue">;
+  onDone: () => void;
+  voice?: VoiceControl | null;
+  blockIndex?: number;
+  /** Whether this block's step is on screen; leaving it stops the reading. */
+  active?: boolean;
+}) {
   const [shown, setShown] = useState(1);
+  const [listening, setListening] = useState(false);
+  const [speakingTurn, setSpeakingTurn] = useState<number | null>(null);
+  const audio = useRef<HTMLAudioElement | null>(null);
+  // Bumped when a reading is started or stopped; an older one that's still loading gives up.
+  const run = useRef(0);
   const first = b.turns[0]?.speaker;
   const done = shown >= b.turns.length;
+  const canListen = !!voice && blockIndex !== undefined;
+  const asks = (i: number) => b.turns[i]?.text.trim().endsWith("?");
+
+  function stop() {
+    run.current++;
+    stopLine(audio.current);
+    audio.current = null;
+    setListening(false);
+    setSpeakingTurn(null);
+  }
+
+  // Reads turn i, then goes on to the next one unless this one asked the learner something.
+  async function read(i: number) {
+    if (!voice || blockIndex === undefined) return;
+    const id = ++run.current;
+    setListening(true);
+    for (let t = i; t < b.turns.length; t++) {
+      setShown((n) => Math.max(n, t + 1));
+      if (t === b.turns.length - 1) onDone();
+      const url = await voice.urlForTurn(blockIndex, t);
+      if (id !== run.current) return;
+      if (t + 1 < b.turns.length) voice.urlForTurn(blockIndex, t + 1); // ready by the time this turn ends
+      if (url) {
+        setSpeakingTurn(t);
+        const line = playLine(url);
+        audio.current = line.audio;
+        const finished = await line.done;
+        if (id !== run.current) return;
+        if (!finished) break;
+      }
+      if (asks(t)) break;
+    }
+    setSpeakingTurn(null);
+    if (id === run.current) audio.current = null;
+  }
+
+  // Leaving the step ends the reading: the audio here, the state while rendering.
+  const [wasActive, setWasActive] = useState(active);
+  if (active !== wasActive) {
+    setWasActive(active);
+    if (!active) {
+      setListening(false);
+      setSpeakingTurn(null);
+    }
+  }
+  useEffect(() => {
+    if (active) return;
+    run.current++;
+    stopLine(audio.current);
+  }, [active]);
+  useEffect(() => () => stopLine(audio.current), []);
 
   function next() {
     const n = Math.min(b.turns.length, shown + 1);
     setShown(n);
     if (n === b.turns.length) onDone();
+    if (listening) read(n - 1);
   }
 
   return (
     <BlockFrame kind="dialogue" icon="❞" label="Dialogue" title={b.heading} done={done}>
+      {canListen && (
+        <button
+          type="button"
+          onClick={() => (listening ? stop() : read(Math.max(0, shown - 1)))}
+          aria-pressed={listening}
+          className={`mb-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium ring-1 transition-colors ${
+            listening ? "bg-accent-soft text-accent ring-accent/20" : "text-muted ring-line hover:text-fg"
+          }`}
+        >
+          {listening ? <Square size={12} /> : <Volume2 size={14} />}
+          {listening ? "Stop" : "Listen"}
+        </button>
+      )}
       <div className="space-y-3" aria-live="polite">
         {b.turns.slice(0, shown).map((t, i) => (
           <div key={i} className={`step-reveal flex ${t.speaker === first ? "justify-start" : "justify-end"}`}>
-            <div className={`dialogue-bubble max-w-[85%] rounded-2xl px-4 py-3 ${t.speaker === first ? "rounded-tl-sm bg-canvas ring-1 ring-line" : "rounded-tr-sm bg-accent-soft"}`}>
-              <p className="text-[11px] font-semibold tracking-wide text-accent uppercase">{t.speaker}</p>
+            <div
+              className={`dialogue-bubble max-w-[85%] rounded-2xl px-4 py-3 transition-shadow ${t.speaker === first ? "rounded-tl-sm bg-canvas ring-1 ring-line" : "rounded-tr-sm bg-accent-soft"} ${
+                speakingTurn === i ? "ring-2 ring-accent/40" : ""
+              }`}
+            >
+              <p className="flex items-center gap-1.5 text-[11px] font-semibold tracking-wide text-accent uppercase">
+                {t.speaker}
+                {speakingTurn === i && <Volume2 size={12} className="animate-pulse" aria-label="speaking" />}
+              </p>
               <p className="mt-0.5 text-[15px] leading-relaxed text-fg">{rich(t.text)}</p>
             </div>
           </div>
@@ -203,7 +300,7 @@ export function DialogueBlock({ b, onDone }: { b: Of<"dialogue">; onDone: () => 
           <button type="button" onClick={next} className="btn-primary rounded-full px-4 py-2 text-sm font-semibold">
             Continue
           </button>
-          {b.turns[shown - 1]?.text.trim().endsWith("?") && <span className="text-xs text-muted">Answer it yourself first.</span>}
+          {asks(shown - 1) && <span className="text-xs text-muted">Answer it yourself first.</span>}
         </div>
       )}
     </BlockFrame>

@@ -5,6 +5,7 @@ import { Activity } from "../activities/Activity";
 import { QuizQuestion } from "../QuizQuestion";
 import { CodeBlock } from "./CodeBlock";
 import { ProblemBlock } from "./ProblemBlock";
+import type { VoiceControl } from "./Scene";
 import { DialogueBlock, ReflectBlock, WorkedBlock } from "./StepBlocks";
 import { CompareBlock, ExplainBlock, SummaryBlock } from "./TextBlocks";
 
@@ -18,12 +19,18 @@ export function LessonBlock({
   onAnswer,
   lessonId = null,
   blockIndex,
+  voice = null,
+  active = true,
 }: {
   block: Block;
   lesson: Lesson;
   /** The saved lesson and this block's position in it, for answers graded on the server (reflections). */
   lessonId?: number | null;
   blockIndex?: number;
+  /** Reads dialogues aloud in the course's voices, when the lesson is staged. */
+  voice?: VoiceControl | null;
+  /** Whether the block's step is on screen. */
+  active?: boolean;
   /** For check blocks: its position among the lesson's checks (1-based) and how many there are. */
   checkNumber?: number;
   checkCount?: number;
@@ -64,7 +71,7 @@ export function LessonBlock({
     case "reflect":
       return <ReflectBlock b={block} onDone={onDone} lessonId={lessonId} blockIndex={blockIndex} />;
     case "dialogue":
-      return <DialogueBlock b={block} onDone={onDone} />;
+      return <DialogueBlock b={block} onDone={onDone} voice={voice} blockIndex={blockIndex} active={active} />;
     case "problem":
       return <ProblemBlock b={block} onDone={onDone} />;
   }

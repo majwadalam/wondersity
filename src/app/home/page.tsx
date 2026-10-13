@@ -8,6 +8,7 @@ import { Suspense, useState, useSyncExternalStore } from "react";
 import { useAppState, useStartCourse } from "@/components/app/AppState";
 import { courseArtSrc } from "@/components/app/CourseArt";
 import { CATALOG, CatalogTile, courseProgress } from "@/components/app/CourseCards";
+import { ContinueSkeleton, TodaySkeleton } from "@/components/Skeletons";
 import { greeting, learningStats } from "@/components/stats";
 import type { Course } from "@/components/types";
 import { isRemote } from "@/lib/remoteImage";
@@ -34,7 +35,8 @@ function Home() {
   const stats = learningStats(courses);
   const goal = profile?.dailyGoalMinutes ?? 10;
   const minutesToday = stats.doneToday.reduce((n, d) => n + (d.course.modules[d.moduleIndex].lesson?.data.estimatedMinutes ?? 8), 0);
-  const active = courses.filter((c) => c.status === "active");
+  // Archived courses aren't suggested; they're under Archived on Courses.
+  const active = courses.filter((c) => c.status === "active" && !c.archived);
   const first = profile?.displayName?.split(" ")[0];
   const started = new Set(courses.map((c) => c.topic.trim().toLowerCase()));
   const explore = CATALOG.filter((c) => !started.has(c.topic.toLowerCase())).slice(0, 4);
@@ -53,14 +55,14 @@ function Home() {
 
       <div className="mt-8 grid gap-5 lg:grid-cols-[1fr_320px]">
         {!loaded ? (
-          <div className="skeleton h-[260px] rounded-2xl" />
+          <ContinueSkeleton />
         ) : active[0] && !focusNew ? (
           <ContinueCard course={active[0]} />
         ) : (
           <NewCourse autoFocus={focusNew || courses.length === 0} big />
         )}
         {/* Until the learner's data arrives, a placeholder, not a "0 minutes, 0-day streak" that's about to change. */}
-        {loaded ? <Today minutes={minutesToday} goal={goal} streak={stats.streak} /> : <div className="skeleton h-[260px] rounded-2xl" />}
+        {loaded ? <Today minutes={minutesToday} goal={goal} streak={stats.streak} /> : <TodaySkeleton />}
       </div>
 
       {loaded && active[0] && !focusNew && (

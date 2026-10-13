@@ -1,6 +1,6 @@
 "use client";
 
-import { Activity, BookOpen, Briefcase, Database, Gauge, TriangleAlert, Users, Wallet, type LucideIcon } from "lucide-react";
+import { Activity, BookOpen, Briefcase, Database, Gauge, History, TriangleAlert, Users, Wallet, type LucideIcon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -13,6 +13,7 @@ const NAV: [string, string, LucideIcon][] = [
   ["/admin/problems", "Problems", TriangleAlert],
   ["/admin/cache", "Saved for reuse", Database],
   ["/admin/billing", "Subscriptions", Briefcase],
+  ["/admin/log", "Activity log", History],
 ];
 
 export function AdminNav() {

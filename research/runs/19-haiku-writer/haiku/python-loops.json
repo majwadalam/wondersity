@@ -1,0 +1,363 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "For Loops and Accumulators",
+    "objective": "Read, predict and write for loops that build up a result, using a starting value, an update inside the loop, and a final use after it.",
+    "estimatedMinutes": 8,
+    "approach": "discovery",
+    "approachReason": "Learners first predict what a loop prints, then notice the pattern in the code, so the accumulator idea is named only after they have seen it work.",
+    "blocks": [
+      {
+        "kind": "code",
+        "heading": "Predict before you read on",
+        "prompt": "Read this program. What does it print?",
+        "language": "python",
+        "code": "total = 0\nfor n in [3, 5, 2]:\n    total = total + n\nprint(total)",
+        "explanation": "The loop adds each number to total. Start with total = 0. After 3 the total is 3, after 5 it is 8, and after 2 it is 10. The final print shows 10, the sum of all three numbers.",
+        "hints": [],
+        "mode": "predict",
+        "options": [
+          {
+            "text": "10",
+            "correct": true,
+            "feedback": "Right. Each pass adds the current number to total, so all three numbers are included."
+          },
+          {
+            "text": "2",
+            "correct": false,
+            "feedback": "2 is only the last number. The loop adds into total on each pass rather than replacing it."
+          },
+          {
+            "text": "3",
+            "correct": false,
+            "feedback": "3 is only the first number. The loop keeps going after the first pass."
+          },
+          {
+            "text": "0",
+            "correct": false,
+            "feedback": "0 is the starting value. The loop does add to it on every pass."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "explain",
+        "heading": "The indented line runs once per item.",
+        "body": "A for loop takes each item in a sequence in turn and runs its indented block once for each one. The loop variable, here n, holds the current item on each pass. A list of 3 items gives 3 passes.",
+        "example": "In for n in [3, 5, 2], n is 3 on the first pass, 5 on the second and 2 on the third.",
+        "layout": "spotlight"
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Ask how many items the list holds, and how many times the loop variable takes a new value.",
+          "Each pass runs the indented line once."
+        ],
+        "retry": "Each pass runs the indented line once, and the loop variable takes each of the 4 items in turn. So the line runs 4 times and count ends at 4."
+      },
+      {
+        "kind": "explain",
+        "heading": "An accumulator is built in three moves",
+        "body": "Many loops build up one result, such as a sum, a count or a longest word. This pattern is called an accumulator. The same three moves appear in almost every version of it.",
+        "example": "",
+        "layout": "steps",
+        "points": [
+          {
+            "title": "Start",
+            "text": "Create the variable before the loop with a starting value, such as total = 0."
+          },
+          {
+            "title": "Update",
+            "text": "Inside the loop, set the variable to its old value combined with the current item."
+          },
+          {
+            "title": "Use",
+            "text": "After the loop, use the finished result, such as print(total)."
+          }
+        ]
+      },
+      {
+        "kind": "worked",
+        "heading": "Sum of squares",
+        "problem": "Find the sum of the squares of 1, 2, 3 and 4 with this program: total = 0, then for n in range(1, 5): total = total + n * n. The range(1, 5) call gives 1, 2, 3 and 4.",
+        "steps": [
+          {
+            "title": "Start the accumulator",
+            "text": "Set total = 0 before the loop.",
+            "why": "Nothing has been added yet, so the starting value is 0."
+          },
+          {
+            "title": "Pass 1",
+            "text": "n is 1, so total = 0 + 1 * 1 = 1.",
+            "why": "The first item is 1, and its square is added to the old total."
+          },
+          {
+            "title": "Pass 2",
+            "text": "n is 2, so total = 1 + 2 * 2 = 5.",
+            "why": "The old total of 1 is kept and the new square 4 is added."
+          },
+          {
+            "title": "Pass 3",
+            "text": "n is 3, so total = 5 + 3 * 3 = 14.",
+            "why": "Each pass builds on the total left by the previous pass."
+          },
+          {
+            "title": "Pass 4",
+            "text": "n is 4, so total = 14 + 4 * 4 = 30.",
+            "why": "After the last item, total holds the finished result."
+          }
+        ],
+        "answer": "The final answer is 30, which is 1 + 4 + 9 + 16."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "code",
+        "heading": "Find the bug",
+        "prompt": "This program should print the sum of the prices, 14, but it prints 3. Which single change fixes it?",
+        "language": "python",
+        "code": "prices = [4, 7, 3]\ntotal = 0\nfor price in prices:\n    total = 0\n    total = total + price\nprint(total)",
+        "explanation": "total = 0 inside the loop runs on every pass, so each price wipes out the one before it. Setting total = 0 once, before the loop, lets the running sum build up to 4 + 7 + 3 = 14.",
+        "hints": [
+          "Look closely at where total gets its starting value, relative to the loop."
+        ],
+        "mode": "bug",
+        "options": [
+          {
+            "text": "Delete the total = 0 line inside the loop",
+            "correct": true,
+            "feedback": "Right. total now starts at 0 once and collects 4, 7 and 3, giving 14."
+          },
+          {
+            "text": "Change print(total) to print(prices)",
+            "correct": false,
+            "feedback": "This prints the whole list, not the sum. The loop still resets total on every pass."
+          },
+          {
+            "text": "Replace total = total + price with total = price",
+            "correct": false,
+            "feedback": "total is still replaced on each pass, so only the last price is kept."
+          },
+          {
+            "text": "Move print(total) inside the loop",
+            "correct": false,
+            "feedback": "That prints partial results, but total still resets each pass, so it never reaches 14."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Follow the value of total on each pass. Where does each pass get its starting value?",
+          "Ask whether a pass adds to the previous total or throws it away."
+        ],
+        "retry": "Writing total = 0 inside the loop resets it on every pass, so total only ever holds the latest item. Setting total = 0 once, before the loop, keeps the running sum."
+      },
+      {
+        "kind": "problem",
+        "heading": "Add up 1 to 10",
+        "prompt": "Use a for loop and range to add up the whole numbers from 1 to 10. Write a program with an accumulator that starts at 0. What is the total?",
+        "answers": [
+          "55"
+        ],
+        "unit": "",
+        "traps": [
+          {
+            "answer": "45",
+            "feedback": "That is the sum of 0 to 9. range(10) stops before 10, so it misses the last number. Use range(1, 11) to include 10."
+          },
+          {
+            "answer": "10",
+            "feedback": "That is only the last number. The loop must add every number into the total, not replace it."
+          }
+        ],
+        "hints": [
+          "range(1, 11) produces the numbers 1 through 10.",
+          "Add each number into the total on each pass, so the total grows as the loop runs."
+        ],
+        "solution": "total = 0, then for n in range(1, 11): total = total + n. The total goes 1, then 3, then 6, and so on, ending at 55."
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Which value should the score start from, and does each pass build on the previous score?",
+          "Consider what happens if the loop adds to the starting value on each pass, rather than to the current score."
+        ],
+        "retry": "The total must start at 10, and each pass must add to the current score: 10 + 4 = 14, then 14 + 0 = 14, then 14 + 7 = 21."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Put the accumulator program in order",
+        "prompt": "These lines make a program that prints the sum of the numbers in a list. Drag them into an order that works.",
+        "reveal": "Define the data first, then set the starting value, loop and update, and print the result last.",
+        "type": "order",
+        "steps": [
+          "numbers = [2, 5, 3]",
+          "total = 0",
+          "for n in numbers:",
+          "total = total + n",
+          "print(total)"
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A library has four book returns, stored as returns = ['A', 'B', 'C', 'D']. Ravi writes count = 0, then a loop: for r in returns, whose indented body is count = count + 1. How many times does the line count = count + 1 run?",
+        "options": [
+          "4",
+          "0",
+          "1",
+          "3"
+        ],
+        "correctAnswer": "4",
+        "explanation": "The loop variable r takes each of the 4 items in turn, and the indented line runs once for each item. So count ends at 4."
+      },
+      {
+        "question": "Jun has durations = [3, 4, 5]. Jun writes a loop: for d in durations, whose indented body has two lines, total = 0 and then total = total + d. After the loop, Jun prints total. What is printed?",
+        "options": [
+          "12",
+          "3",
+          "0",
+          "5"
+        ],
+        "correctAnswer": "5",
+        "explanation": "total = 0 runs on every pass, so total is reset before each addition. After the last pass total is 0 + 5 = 5, so only the last duration is printed."
+      },
+      {
+        "question": "In a game, a player starts with 10 points and gains points from three rounds, where rounds = [4, 0, 7]. Which code leaves the final score, 21, in score?",
+        "options": [
+          "Start score at 10, then loop: score = r",
+          "Start score at 10, then loop: score = score + r",
+          "Start score at 0, then loop: score = score + r",
+          "Start score at 10, then loop: score = 10 + r"
+        ],
+        "correctAnswer": "Start score at 10, then loop: score = score + r",
+        "explanation": "The score must start at 10 and each pass must add the round to the current score, giving 10 + 4 + 0 + 7 = 21. The other options either forget the starting 10, replace the score, or reset it to 10 each pass."
+      }
+    ],
+    "sources": [
+      {
+        "url": "https://web.cs.swarthmore.edu/courses/CS21Book/ch02b.html",
+        "title": "Lists and looping — How to Think Like a Computer Scientist: Learning with Python 2nd Edition documentation"
+      },
+      {
+        "url": "https://openstax.org/books/introduction-python-programming/pages/5-2-for-loop",
+        "title": "5.2 For loop - Introduction to Python Programming | OpenStax"
+      },
+      {
+        "url": "https://patrickwalls.github.io/mathematicalpython/python/loops",
+        "title": "Loops - Mathematical Python"
+      },
+      {
+        "url": "https://librarycarpentry.github.io/lc-python-intro/for-loops.html",
+        "title": "Python Intro for Libraries: For Loops"
+      }
+    ]
+  },
+  "score": 7.5,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 59299,
+      "approach": "discovery",
+      "blocks": "code > explain > check > explain > worked > activity > code > check > problem > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.blind",
+      "iteration": 1,
+      "ms": 7240,
+      "questions": 3,
+      "giveaways": []
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 1,
+      "ms": 17512,
+      "claims": 5,
+      "supported": 4,
+      "contradicted": [],
+      "unclear": 1,
+      "downgraded": []
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 7.5,
+      "ms": 17521,
+      "problems": [
+        "The writing objective is only partially assessed: the final problem requests a program but accepts only 55, which can be calculated without writing or understanding a loop.",
+        "The ordering activity shows the update without indentation. Because indentation determines Python's loop body, learners need to construct or see a correctly indented result. Also, defining the data before initializing total is not the only valid order.",
+        "The reset-error check closely repeats the immediately preceding bug exercise, offering little new transfer or increase in difficulty.",
+        "Retry explanations largely repeat the original explanations rather than offering a genuinely different representation or reasoning approach.",
+        "The lesson uses range beyond the one explained example without explicitly teaching its excluded stopping value; the final problem's hint supplies range(1, 11) rather than helping learners derive it."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 50379,
+      "approach": "discovery",
+      "blocks": "code > explain > check > explain > explain > worked > activity > code > check > problem > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0,
+      "patch": "Replaced the reset check with an empty-list trace, added a range explanation covering the excluded stop value, rewrote the ordering task with indentation and a single valid order, and changed the final problem to a typed range call. Retry asides now use tables and a running-jar analogy instead of re",
+      "changes": 8
+    },
+    {
+      "step": "lesson.blind",
+      "iteration": 2,
+      "ms": 6100,
+      "questions": 3,
+      "giveaways": []
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 2,
+      "ms": 15572,
+      "claims": 5,
+      "supported": 5,
+      "contradicted": [],
+      "unclear": 0,
+      "downgraded": []
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 7.4,
+      "ms": 15576,
+      "problems": [
+        "The objective includes writing for loops, but learners never independently write a complete accumulator loop. Ordering supplied lines and entering a range call assess only parts of that skill.",
+        "The ordering activity says to preserve indentation, but its supplied update line has no indentation. As displayed, the ordered lines are not valid Python.",
+        "The description of range(start, stop) as producing 'whole numbers' is imprecise: range can include negative integers, and with the default positive step it is empty when start is greater than or equal to stop.",
+        "The ordering activity explicitly tells learners where the update belongs and supplies the lines in the correct order, weakening its value as an exploratory task unless the interface shuffles them.",
+        "Checks mostly offer modest transfer from the examples. The range exercise arrives well after the range explanation, and the lesson does not finish with an integrated writing task.",
+        "Some explanations and retries repeat the same tracing approach rather than offering a genuinely different explanation. The empty-list hint nearly supplies the reasoning needed for its answer."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 7.5,
+      "passed": false,
+      "sources": 4
+    }
+  ]
+}

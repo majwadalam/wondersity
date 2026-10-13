@@ -9,6 +9,7 @@ import { CATALOG, CatalogTile, CourseTile } from "@/components/app/CourseCards";
 import { DocIcon } from "@/components/Icons";
 import { LessonView } from "@/components/LessonView";
 import { Reveal } from "@/components/Reveal";
+import { CourseTilesSkeleton } from "@/components/Skeletons";
 import type { LessonRow } from "@/components/types";
 
 export default function LibraryPage() {
@@ -20,7 +21,9 @@ export default function LibraryPage() {
       <h1 className="display-xl font-display text-4xl text-fg sm:text-5xl">Library</h1>
       <p className="mt-3 text-lg text-muted">Courses you&rsquo;ve starred, kept in one place.</p>
 
-      {bookmarks.length === 0 ? (
+      {!loaded && bookmarks.length === 0 ? (
+        <CourseTilesSkeleton count={3} className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3" />
+      ) : bookmarks.length === 0 ? (
         <div className="mt-10 flex flex-col items-center rounded-3xl bg-white px-6 py-16 text-center ring-1 ring-line">
           <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-accent-soft text-accent">
             <Star size={24} strokeWidth={1.75} />

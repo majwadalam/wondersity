@@ -1,0 +1,6 @@
+■ niche mathematics: Babylonian sexagesimal numbers (90s, score 8, $0.0542, 8 calls, 20160 in / 6335 out tokens)
+  approach: worked_example (Fully worked conversions establish the procedure, then progressively less-supported tasks let the learner apply it independently.)
+  blocks:   worked > explain > check > problem > worked > activity:order > check > explain > problem > check
+  issues:   none
+  trace:    lesson.generate, lesson.blind, lesson.verify, lesson.evaluate=8, lesson.select=8
+  cost:     write $0.0369 (4911 in / 3617 out) · review $0.0105 (2979 in / 307 out) · blind $0.0003 (359 in / 622 out) · verify $0.0064 (11911 in / 1789 out)

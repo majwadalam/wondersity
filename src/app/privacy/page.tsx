@@ -4,7 +4,7 @@ import { LegalList, LegalPage, LegalSection, Mail } from "@/components/legal/Leg
 
 export const metadata: Metadata = {
   title: "Privacy — Wondersity",
-  description: "What Wondersity stores, who it shares lesson content with, and how to delete your data.",
+  description: "What Wondersity stores, who it shares lesson content with, and how to get or delete your data.",
 };
 
 export default function PrivacyPage() {
@@ -35,6 +35,10 @@ export default function PrivacyPage() {
             "Your progress through each course, and your streaks",
             "Your settings, and when you confirmed you're 13 or older",
             "Mistakes you report in a lesson, with what you wrote",
+            "How you rate a lesson (thumbs up or down) and anything you add",
+            "Checks you missed that you later got right on the Review page",
+            "The avatar you pick, the courses you star and archive, and the voices you choose for a course's guides",
+            "Messages you send us from the Help page, with the page you sent it from (and your email, if you weren't signed in)",
             "How far you get in each lesson, to see where lessons lose people",
             "If you buy Pro: which plan, its status and renewal date, and Paddle's ids for you and your plan (not your card)",
           ]}
@@ -102,6 +106,15 @@ export default function PrivacyPage() {
 
       <LegalSection title="What we don't do">
         <LegalList items={["We don't show ads.", "We don't sell or rent your data.", "We don't use your data to track you across other sites."]} />
+      </LegalSection>
+
+      <LegalSection title="Getting a copy of your data">
+        <p>
+          <Link href="/settings" className="font-medium text-accent hover:text-accent-strong">
+            Settings
+          </Link>{" "}
+          → <strong>Download my data</strong> gives you everything above that&rsquo;s tied to your account, as one JSON file.
+        </p>
       </LegalSection>
 
       <LegalSection title="Deleting your data">

@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { A, Badge, Card, ChartCard, DayChart, Json, PageHead, RunStatus, Section, Stats, Table, Time, duration, num, usd } from "@/components/admin/ui";
 import { adminSupabase } from "@/lib/db";
+import { ActionForm } from "@/components/admin/ActionForm";
 import { changeRole } from "../../actions";
 import { attemptsFor, daysAgo, isAdmin, selectAll, getUser, listCourses, listJobs, listRuns, requireAdmin, spendByDay, spendSince, sumCost } from "@/lib/admin";
 
@@ -49,13 +50,13 @@ export default async function AdminUser({ params }: PageProps<"/admin/users/[id]
           <Badge tone={sub.data ? "good" : "muted"}>{sub.data ? `${sub.data.plan} plan · ${sub.data.status}` : "free plan"}</Badge>
           {admin && <Badge tone="accent">admin</Badge>}
           {user && id !== me.id && (
-            <form action={changeRole}>
-              <input type="hidden" name="userId" value={id} />
-              <input type="hidden" name="grant" value={admin ? "0" : "1"} />
-              <button className="rounded-full bg-surface px-3 py-1 text-[13px] font-medium text-fg ring-1 ring-line hover:ring-line-strong">
-                {admin ? "Remove admin" : "Make admin"}
-              </button>
-            </form>
+            <ActionForm
+              action={changeRole}
+              hidden={{ userId: id, grant: admin ? "0" : "1" }}
+              submit={admin ? "Remove admin" : "Make admin"}
+              confirm={admin ? "Yes, remove admin" : "Yes, make them an admin"}
+              tone="quiet"
+            />
           )}
         </div>
       </PageHead>

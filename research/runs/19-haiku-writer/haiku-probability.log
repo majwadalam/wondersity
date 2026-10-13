@@ -1,0 +1,6 @@
+■ mathematics: Probability (101s, score 8, $0.0512, 18 calls, 56523 in / 21084 out tokens)
+  approach: discovery (Learners first guess the probability of two coin flips both landing heads, then build the multiplication rule from the four equally likely outcomes, so the rule is earned from evidence rather than handed over.)
+  blocks:   activity:predict > explain > check > worked > explain > check > activity:sort > problem > explain > check
+  issues:   none
+  trace:    lesson.generate, lesson.blind, lesson.verify, lesson.evaluate=7, lesson.revise, lesson.blind, lesson.verify, lesson.evaluate=8, lesson.select=8
+  cost:     write $0.0053 (7686 in / 9137 out) · verify $0.0154 (27815 in / 3802 out) · blind $0.0004 (728 in / 719 out) · review $0.0255 (6501 in / 922 out) · revise $0.0046 (13793 in / 6504 out)

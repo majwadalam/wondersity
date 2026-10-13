@@ -1,6 +1,6 @@
 import { BookOpen, TriangleAlert, Users, Wallet } from "lucide-react";
-import { type Attention, Card, ChartCard, DayChart, NeedsAttention, PageHead, Section, Stats, num, usd } from "@/components/admin/ui";
-import { byDay, count, isRecent, daysAgo, isLessonRun, isStale, listJobs, listUsers, requireAdmin, spendByDay, spendSince, sumCost } from "@/lib/admin";
+import { type Attention, Card, ChartCard, DayChart, NeedsAttention, Section, Stats, num, usd } from "@/components/admin/ui";
+import { allMessages, allRatings, byDay, count, isRecent, daysAgo, isLessonRun, isStale, listJobs, listUsers, requireAdmin, spendByDay, spendSince, sumCost } from "@/lib/admin";
 
 // The overview: four numbers, what needs a look, and four charts. Everything
 // else has its own tab (Money, Learners, Problems …).
@@ -8,8 +8,17 @@ import { byDay, count, isRecent, daysAgo, isLessonRun, isStale, listJobs, listUs
 const WINDOW = 30;
 
 export default async function AdminOverview() {
-  await requireAdmin();
-  const [users, runs, jobs, reportsThisWeek] = await Promise.all([listUsers(), spendSince(daysAgo(WINDOW)), listJobs(100), count("lesson_reports", { since: daysAgo(7) })]);
+  const me = await requireAdmin();
+  const [users, runs, jobs, reportsThisWeek, messages, ratings] = await Promise.all([
+    listUsers(),
+    spendSince(daysAgo(WINDOW)),
+    listJobs(100),
+    count("lesson_reports", { since: daysAgo(7) }),
+    allMessages(),
+    allRatings(),
+  ]);
+  const unanswered = messages.filter((m) => !m.resolved_at).length;
+  const downThisWeek = ratings.filter((r) => r.rating < 0 && isRecent(r.updated_at, 7)).length;
 
   const today = runs.filter((r) => isRecent(r.created_at, 1));
   const lessons = runs.filter(isLessonRun);
@@ -52,11 +61,20 @@ export default async function AdminOverview() {
   if (reportsThisWeek)
     attention.push({ tone: "warn", title: `${reportsThisWeek} mistake report${reportsThisWeek === 1 ? "" : "s"} this week`, detail: "Learners flagged something in a lesson.", href: "/admin/problems?tab=reports" });
 
+  if (unanswered)
+    attention.push({ tone: "warn", title: `${unanswered} message${unanswered === 1 ? "" : "s"} waiting for an answer`, detail: "Sent from the Help page.", href: "/admin/problems?tab=messages" });
+  if (downThisWeek)
+    attention.push({ tone: "warn", title: `${downThisWeek} lesson${downThisWeek === 1 ? "" : "s"} rated down this week`, detail: "Learners said what was off.", href: "/admin/problems?tab=ratings" });
+
   return (
     <>
-      <PageHead title="Overview" sub={`The last ${WINDOW} days.`} />
+      <Welcome
+        name={users.find((u) => u.id === me.id)?.name?.split(" ")[0] ?? me.email?.split("@")[0] ?? "there"}
+        today={{ cost: sumCost(today), lessons: today.filter(isLessonRun).length, signups: users.filter((u) => isRecent(u.createdAt, 1)).length, failed: failedToday.length }}
+      />
+      <h2 className="mt-10 text-lg font-semibold text-fg">The last {WINDOW} days</h2>
 
-      <div className="mt-6">
+      <div className="mt-3">
         <Stats
           items={[
             { label: "AI cost", icon: Wallet, value: usd(sumCost(runs)), sub: `${usd(sumCost(today))} in the last 24 hours`, href: "/admin/money", spark: last14(costDays) },
@@ -92,5 +110,23 @@ export default async function AdminOverview() {
         work for in the period.
       </Card>
     </>
+  );
+}
+
+/** The greeting: who's here, over a strip of the painted course world, with today in one line. */
+function Welcome({ name, today }: { name: string; today: { cost: number; lessons: number; signups: number; failed: number } }) {
+  const plural = (n: number, one: string, many = `${one}s`) => `${num(n)} ${n === 1 ? one : many}`;
+  return (
+    <section className="relative isolate overflow-hidden rounded-3xl bg-navy px-6 py-8 text-white shadow-md sm:px-9 sm:py-10">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/art/landing/hero-2400.webp" alt="" className="absolute inset-0 -z-20 h-full w-full object-cover object-[center_62%]" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-r from-navy via-navy/85 to-navy/10" />
+      <p className="text-[13px] font-medium tracking-wide text-accent-on-dark uppercase">Wondersity admin</p>
+      <h1 className="mt-2 font-display text-3xl sm:text-4xl">Welcome back, {name}.</h1>
+      <p className="mt-3 max-w-xl text-[15px] leading-relaxed text-white/80">
+        Today so far: {usd(today.cost)} of AI, {plural(today.lessons, "lesson")} written, {plural(today.signups, "new learner")}
+        {today.failed ? `, and ${plural(today.failed, "AI job")} that failed` : ", and nothing failed"}.
+      </p>
+    </section>
   );
 }

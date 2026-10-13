@@ -1,0 +1,277 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "For loops that build a result",
+    "objective": "Read, predict, and write a for loop that accumulates a total.",
+    "estimatedMinutes": 8,
+    "approach": "worked_example",
+    "approachReason": "A fully traced total-building loop provides a model, then progressively less scaffolding leads the learner to write a loop independently.",
+    "blocks": [
+      {
+        "kind": "code",
+        "heading": "Watch a total grow",
+        "prompt": "You earned 3 points in one round and 5 in another. Step through this complete solution to see how a loop combines them.",
+        "language": "python",
+        "code": "total = 0\nfor points in [3, 5]:\n    total = total + points\nprint(total)",
+        "explanation": "The loop assigns each list value to points in turn. Each update keeps the previous total and adds the current points. After the list is exhausted, print runs once and displays 8.",
+        "hints": [],
+        "mode": "trace",
+        "options": [],
+        "trace": [
+          {
+            "line": 1,
+            "note": "Create the running total.",
+            "state": "total = 0"
+          },
+          {
+            "line": 2,
+            "note": "Assign the first list value to points.",
+            "state": "points = 3, total = 0"
+          },
+          {
+            "line": 3,
+            "note": "Calculate 0 + 3 and store the result in total.",
+            "state": "points = 3, total = 3"
+          },
+          {
+            "line": 2,
+            "note": "Assign the next list value to points.",
+            "state": "points = 5, total = 3"
+          },
+          {
+            "line": 3,
+            "note": "Calculate 3 + 5 and store the result in total.",
+            "state": "points = 5, total = 8"
+          },
+          {
+            "line": 4,
+            "note": "The list is exhausted. Display the completed total.",
+            "state": "points = 5, total = 8; output: 8"
+          }
+        ]
+      },
+      {
+        "kind": "explain",
+        "heading": "One changing value, one growing result",
+        "body": "A **for loop** takes each value from a collection, such as a list, in order. In our example, points is the **loop variable**: it receives the current value.\n\nThe **accumulator**, total, holds the result built so far. Python evaluates total + points using the old total, then stores the new result back in total.",
+        "example": "The colon ends the loop header. The indented update belongs to the loop and repeats; the unindented print comes after the loop.",
+        "layout": "split"
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Keep a separate record of the current delivery and the running total.",
+          "For each update, use the total left by the previous update."
+        ],
+        "retry": "The loop variable holds one delivery at a time. The accumulator carries the combined quantity forward: 0 + 2 = 2, then 2 + 6 = 8, then 8 + 1 = 9."
+      },
+      {
+        "kind": "code",
+        "heading": "Now predict without the trace",
+        "prompt": "A player earns points in three rounds. What does this code print? Pay attention to where print is placed.",
+        "language": "python",
+        "code": "total = 0\nfor points in [4, 1, 3]:\n    total = total + points\n    print(total)",
+        "explanation": "Because print is indented, it runs after every update. The running totals are 0 + 4 = 4, then 4 + 1 = 5, then 5 + 3 = 8.",
+        "hints": [
+          "Execute both indented lines for each value before moving to the next value."
+        ],
+        "mode": "predict",
+        "options": [
+          {
+            "text": "8",
+            "correct": false,
+            "feedback": "That would be the output if print were unindented, after the loop."
+          },
+          {
+            "text": "4\n5\n8",
+            "correct": true,
+            "feedback": "Correct: print runs inside the loop and displays each running total."
+          },
+          {
+            "text": "4\n1\n3",
+            "correct": false,
+            "feedback": "Those are the individual points values, not the accumulated totals."
+          },
+          {
+            "text": "0\n4\n5",
+            "correct": false,
+            "feedback": "Those would appear if print ran before each update rather than after it."
+          }
+        ],
+        "trace": []
+      },
+      {
+        "kind": "explain",
+        "heading": "Build the loop in three parts",
+        "body": "For numeric totals, total += points is a shorter way to write total = total + points. The amount added can also be an expression: total += 2 * points adds twice the current points.\n\nInitialize the accumulator before the loop so it survives from one iteration to the next. Its starting value can be zero or an existing amount you want to build on.",
+        "example": "",
+        "layout": "steps",
+        "points": [
+          {
+            "title": "Initialize",
+            "text": "Set the starting total once, before the loop."
+          },
+          {
+            "title": "Accumulate",
+            "text": "Inside the loop, add the contribution from the current value."
+          },
+          {
+            "title": "Use the result",
+            "text": "After the loop, print the completed total if you want one final output."
+          }
+        ]
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Begin your trace with the stated starting total, not zero.",
+          "For each seats value, calculate its contribution, update total, and then execute the next indented line."
+        ],
+        "retry": "The initial 6 remains part of the running total. Each update adds twice the current seats value, and the indented print displays the result immediately after that update."
+      },
+      {
+        "kind": "problem",
+        "heading": "Calculate a completed charge",
+        "prompt": "A fictional delivery service starts with a 2-credit fee and adds 2 credits per parcel in each batch. What single number does this code print?\n\n```python\ntotal = 2\nfor parcels in [3, 1, 2]:\n    total += 2 * parcels\nprint(total)\n```",
+        "answers": [
+          "14"
+        ],
+        "unit": "credits",
+        "traps": [
+          {
+            "answer": "12",
+            "feedback": "You added the parcel charges but left out the starting fee of 2."
+          },
+          {
+            "answer": "8",
+            "feedback": "Check that you add twice each parcels value, rather than each value itself."
+          },
+          {
+            "answer": "4",
+            "feedback": "That is the final batch's contribution, not the accumulated charge."
+          }
+        ],
+        "hints": [
+          "Write the starting total, then update it once for each batch.",
+          "Calculate 2 * parcels before adding that contribution to total."
+        ],
+        "solution": "Start at 2. The updates are 2 + 2 × 3 = 8, then 8 + 2 × 1 = 10, then 10 + 2 × 2 = 14. The unindented print displays the final total: 14."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Write your own accumulator",
+        "prompt": "Three tasks took 5, 2, and 4 minutes. Write Python code that starts total at zero, uses a for loop with the variable minutes to add these durations, and prints the completed total once. Use += for the update.",
+        "model": "total = 0\nfor minutes in [5, 2, 4]:\n    total += minutes\nprint(total)"
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Put the receipt code in order",
+        "prompt": "Arrange these lines to add the fictional prices 2, 7, and 3, then print the final total once. Keep the shown indentation.",
+        "reveal": "Initialize before the loop, update inside it, and print after it. The completed total is 0 + 2 + 7 + 3 = 12.",
+        "type": "order",
+        "steps": [
+          "total = 0",
+          "for price in [2, 7, 3]:",
+          "total += price",
+          "print(total)"
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A shop receives three deliveries. What number does this code print?\n\n```python\nboxes = 0\nfor delivery in [2, 6, 1]:\n    boxes = boxes + delivery\nprint(boxes)\n```",
+        "options": [
+          "0",
+          "9",
+          "3",
+          "1"
+        ],
+        "correctAnswer": "9",
+        "explanation": "boxes keeps the running total across deliveries: 0 + 2 + 6 + 1 = 9. The unindented print runs after all three updates."
+      },
+      {
+        "question": "A fictional booking starts with a 6-credit fee and adds 2 credits for each seat in two groups. What does this code print?\n\n```python\ntotal = 6\nfor seats in [1, 3]:\n    total += 2 * seats\n    print(total)\n```",
+        "options": [
+          "14 on a single line",
+          "8, then 12 on separate lines",
+          "8, then 14 on separate lines",
+          "2, then 6 on separate lines"
+        ],
+        "correctAnswer": "8, then 14 on separate lines",
+        "explanation": "The updates are 6 + 2 × 1 = 8 and 8 + 2 × 3 = 14. Since print is inside the loop, both running totals are displayed."
+      }
+    ],
+    "sources": [
+      {
+        "url": "https://realpython.com/python-for-loop/",
+        "title": "Python for Loops: The Pythonic Way – Real Python"
+      },
+      {
+        "url": "https://runestone.academy/ns/books/published/py4e-int/iterations/loops.html",
+        "title": "6.6. Loop patterns — Python for Everybody - Interactive"
+      },
+      {
+        "url": "https://librarycarpentry.github.io/lc-python-intro/for-loops.html",
+        "title": "Python Intro for Libraries: For Loops"
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 80627,
+      "approach": "worked_example",
+      "blocks": "code > explain > check > code > explain > activity > check > problem > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.blind",
+      "iteration": 1,
+      "ms": 4650,
+      "questions": 2,
+      "giveaways": []
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 1,
+      "ms": 14159,
+      "claims": 3,
+      "supported": 3,
+      "contradicted": [],
+      "unclear": 0,
+      "downgraded": []
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8,
+      "ms": 14174,
+      "problems": [
+        "The ordering activity says to keep the shown indentation, but its update line, 'total += price', has no indentation. Arranging the supplied lines literally produces an IndentationError rather than a working loop. This directly undermines the indentation rule just taught.",
+        "The check retries largely repeat the original explanations or provide the complete arithmetic trace rather than offering a genuinely different explanatory approach.",
+        "The final writing task is unvalidated reflection. Learners can compare against a model, but there is no explicit check for indentation, accumulator placement, or printing exactly once."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true,
+      "sources": 3
+    }
+  ]
+}

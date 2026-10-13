@@ -7,7 +7,9 @@ import { useAppState } from "@/components/app/AppState";
 import { courseProgress } from "@/components/app/CourseCards";
 import { CourseProgress } from "@/components/app/CourseProgress";
 import { CourseJourney } from "@/components/app/CourseJourney";
+import { CourseActions, CourseVoices } from "@/components/app/CourseOptions";
 import { BackLink } from "@/components/app/BackLink";
+import { CoursePageSkeleton } from "@/components/Skeletons";
 import { levelsOf } from "@/lib/courseHierarchy";
 import type { Course } from "@/components/types";
 
@@ -21,19 +23,14 @@ export default function CoursePage() {
     if (course) ensureCovers(course);
   }, [course, ensureCovers]);
 
+  if (!course && !loaded) return <main><CoursePageSkeleton /></main>;
   if (!course) {
     return (
       <main className="mx-auto max-w-3xl px-5 py-24 text-center">
-        {loaded ? (
-          <>
-            <p className="font-display text-2xl text-fg">We couldn&rsquo;t find that course.</p>
-            <Link href="/courses" className="mt-4 inline-block font-medium text-accent hover:underline">
-              Back to your courses
-            </Link>
-          </>
-        ) : (
-          <div className="skeleton mx-auto h-[420px] rounded-3xl" />
-        )}
+        <p className="font-display text-2xl text-fg">We couldn&rsquo;t find that course.</p>
+        <Link href="/courses" className="mt-4 inline-block font-medium text-accent hover:underline">
+          Back to your courses
+        </Link>
       </main>
     );
   }
@@ -46,6 +43,9 @@ export default function CoursePage() {
   return (
     <main className="mx-auto max-w-[1080px] px-5 pt-8 pb-24">
       <BackLink href="/courses">Courses</BackLink>
+      {course.archived && (
+        <p className="mt-4 rounded-xl bg-canvas px-4 py-2.5 text-sm text-muted ring-1 ring-line">This course is archived. You can still take it; unarchive it below to list it again.</p>
+      )}
 
       <header className="mt-5 grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_340px]">
         <div className="max-w-2xl">
@@ -69,6 +69,11 @@ export default function CoursePage() {
           painting={painting.has(course.id)}
           writingSince={busy?.courseId === course.id ? busy.startedAt : null}
         />
+      </div>
+
+      <div className="mt-8 grid items-start gap-5 lg:grid-cols-2">
+        {course.cast.length > 0 && <CourseVoices course={course} />}
+        <CourseActions course={course} />
       </div>
     </main>
   );

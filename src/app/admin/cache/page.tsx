@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { Badge, num, PageHead, Section, Stats, Table, Time } from "@/components/admin/ui";
+import { A, Badge, num, PageHead, Section, Stats, Table, Time } from "@/components/admin/ui";
 import { cacheStats, coursesPerPlan, daysAgo, listPlans, listSharedLessons, requireAdmin, spendSince } from "@/lib/admin";
 import { PLANNER_VERSION } from "@/lib/coursePlan";
 import { lessonVersion } from "@/lib/lessonWriter";
@@ -39,7 +39,7 @@ export default async function AdminCache() {
               label: "Plan",
               cell: (p) => (
                 <div>
-                  <span className="font-medium">{p.title}</span>
+                  <A href={`/admin/cache/${encodeURIComponent(p.topic_key)}`}>{p.title}</A>
                   <div className="text-[12px] text-muted">key: {p.topic_key}</div>
                 </div>
               ),

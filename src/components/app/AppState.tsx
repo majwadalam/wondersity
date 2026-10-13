@@ -12,13 +12,14 @@ import {
   useMemo,
   useRef,
   useState,
-  useSyncExternalStore,
   type ReactNode,
 } from "react";
 import type { Resources } from "@/lib/enrichment";
 import type { Intake } from "@/lib/intake";
 import type { Staging } from "@/lib/staging";
 import type { Answer, Course, Lesson, LessonRow, LessonStatus, PrefetchState, QuizResult, TraceStep } from "../types";
+import { type AvatarId, avatarSrc } from "@/lib/avatars";
+import type { Voice } from "@/lib/voices";
 import { levelsOf, moduleLabel } from "@/lib/courseHierarchy";
 import { browserSupabase } from "@/lib/supabase/browser";
 
@@ -34,7 +35,12 @@ const BROWSER_ID_KEY = "learner_id";
 export type Profile = {
   email: string | null;
   displayName: string | null;
+  /** The painted avatar picked in Settings (src/lib/avatars.ts), if any. */
+  avatar?: AvatarId | null;
+  /** What to draw: the picked avatar, else the Google photo. */
   avatarUrl: string | null;
+  /** How the account signs in ("email", "google"). */
+  signIn?: string[];
   reason: string | null;
   dailyGoalMinutes: number;
   voiceOn: boolean;
@@ -214,29 +220,36 @@ async function fetchLibrary(): Promise<{ courses?: Course[]; lessons?: LessonRow
   }
 }
 
-// ---------- bookmarks (browser-local, per learner) ----------
+// ---------- bookmarks (with the account; /api/bookmarks) ----------
 
 export type Bookmark = { key: string; topic: string };
-// Storage key keeps the app's old name on purpose: renaming it would lose
-// bookmarks already saved in learners' browsers.
-const BOOKMARK_EVENT = "studybuddy-bookmarks";
+
+export type CourseChange = { action: "recast"; key: string; voice: Voice } | { action: "archive"; archived: boolean } | { action: "reset" };
+// Bookmarks used to live in this browser under this key (the app's old name).
+// They're moved into the account once, then removed here.
 const bookmarkStorageKey = (learnerId: string) => `studybuddy:bookmarks:${learnerId}`;
 
-function subscribeBookmarks(onChange: () => void) {
-  window.addEventListener(BOOKMARK_EVENT, onChange);
-  window.addEventListener("storage", onChange);
-  return () => {
-    window.removeEventListener(BOOKMARK_EVENT, onChange);
-    window.removeEventListener("storage", onChange);
-  };
-}
-function readBookmarksRaw(learnerId: string) {
-  if (!learnerId) return "[]";
+/** The account's bookmarks, after moving in any this browser still holds. */
+async function loadBookmarks(learnerId: string): Promise<Bookmark[] | null> {
+  let local: Bookmark[] = [];
   try {
-    return localStorage.getItem(bookmarkStorageKey(learnerId)) ?? "[]";
+    const parsed = JSON.parse(localStorage.getItem(bookmarkStorageKey(learnerId)) ?? "[]");
+    if (Array.isArray(parsed)) local = parsed.filter((b) => typeof b?.topic === "string");
   } catch {
-    return "[]";
+    /* storage blocked or unreadable: nothing to move */
   }
+  const res = local.length
+    ? await fetch("/api/bookmarks", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ topics: local.slice(0, 50).map((b) => b.topic) }) }).catch(() => null)
+    : await fetch("/api/bookmarks").catch(() => null);
+  if (!res?.ok) return null;
+  if (local.length) {
+    try {
+      localStorage.removeItem(bookmarkStorageKey(learnerId));
+    } catch {
+      /* storage blocked */
+    }
+  }
+  return ((await res.json().catch(() => null))?.bookmarks as Bookmark[] | undefined) ?? null;
 }
 
 // ---------- context ----------
@@ -296,7 +309,7 @@ type AppStateValue = {
   /** null until the session check finishes. */
   signedIn: boolean | null;
   profile: Profile | null;
-  updateProfile: (patch: Partial<Omit<Profile, "email" | "avatarUrl" | "onboarded">> & { onboarded?: true; ageConfirmed?: true }) => Promise<void>;
+  updateProfile: (patch: Partial<Omit<Profile, "email" | "avatarUrl" | "onboarded" | "signIn">> & { onboarded?: true; ageConfirmed?: true }) => Promise<void>;
   signOut: () => Promise<void>;
   loaded: boolean;
   courses: Course[];
@@ -331,6 +344,8 @@ type AppStateValue = {
   bookmarks: Bookmark[];
   isBookmarked: (topic: string) => boolean;
   toggleBookmark: (topic: string) => void;
+  /** Recasts a voice, archives (or unarchives) or starts over one of the learner's courses. */
+  changeCourse: (courseId: number, change: CourseChange) => Promise<Course | null>;
   courseFor: (topic: string) => Course | undefined;
   /** Writes the lesson after the one being taken, in the background, so it's ready on finishing. */
   prepareAhead: (course: Course) => void;
@@ -490,7 +505,17 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   }, [learnerId, applyLibrary]);
 
   const updateProfile = useCallback(async (patch: Parameters<AppStateValue["updateProfile"]>[0]) => {
-    setProfile((p) => (p ? { ...p, ...patch, onboarded: patch.onboarded ?? p.onboarded } : p));
+    setProfile((p) =>
+      p
+        ? {
+            ...p,
+            ...patch,
+            onboarded: patch.onboarded ?? p.onboarded,
+            // A picked avatar shows at once; clearing it waits for the server, which knows the Google photo.
+            ...(patch.avatar ? { avatarUrl: avatarSrc(patch.avatar) } : {}),
+          }
+        : p
+    );
     const res = await fetch("/api/profile", {
       method: "PATCH",
       headers: { "Content-Type": "application/json" },
@@ -713,34 +738,50 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     return result;
   };
 
-  // Bookmarks live in localStorage per learner; the raw string is the snapshot
-  // (stable between changes), parsed once per change.
-  const bookmarksRaw = useSyncExternalStore(
-    subscribeBookmarks,
-    () => readBookmarksRaw(learnerId),
-    () => "[]"
+  // Bookmarks are kept with the account; a change shows at once and the server's list then replaces it.
+  // Kept with whose they are, so another account signing in never sees them.
+  const [marks, setMarks] = useState<{ owner: string; list: Bookmark[] }>({ owner: "", list: [] });
+  const bookmarks = useMemo(() => (signedIn && marks.owner === learnerId ? marks.list : []), [marks, learnerId, signedIn]);
+  const setBookmarks = useCallback(
+    (next: Bookmark[] | ((b: Bookmark[]) => Bookmark[])) =>
+      setMarks((m) => ({ owner: learnerId, list: typeof next === "function" ? next(m.owner === learnerId ? m.list : []) : next })),
+    [learnerId]
   );
-  const bookmarks = useMemo<Bookmark[]>(() => {
-    try {
-      const parsed = JSON.parse(bookmarksRaw);
-      return Array.isArray(parsed) ? parsed : [];
-    } catch {
-      return [];
-    }
-  }, [bookmarksRaw]);
+  useEffect(() => {
+    if (!learnerId || !signedIn) return;
+    let live = true;
+    loadBookmarks(learnerId).then((b) => live && b && setMarks({ owner: learnerId, list: b }));
+    return () => {
+      live = false;
+    };
+  }, [learnerId, signedIn]);
 
   const toggleBookmark = (topic: string) => {
     const key = topicKey(topic);
-    const next = bookmarks.some((b) => b.key === key)
-      ? bookmarks.filter((b) => b.key !== key)
-      : [...bookmarks, { key, topic: topic.trim() }];
-    try {
-      localStorage.setItem(bookmarkStorageKey(learnerId), JSON.stringify(next));
-    } catch {
-      /* storage blocked: bookmarks just won't persist */
-    }
-    window.dispatchEvent(new Event(BOOKMARK_EVENT));
+    const on = bookmarks.some((b) => b.key === key);
+    setBookmarks((bs) => (on ? bs.filter((b) => b.key !== key) : [...bs, { key, topic: topic.trim() }]));
+    fetch("/api/bookmarks", {
+      method: on ? "DELETE" : "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(on ? { key } : { topics: [topic.trim()] }),
+    })
+      .then((r) => (r.ok ? r.json() : null))
+      .then((d) => d?.bookmarks && setBookmarks(d.bookmarks))
+      .catch(() => {});
   };
+
+  const changeCourse = useCallback(async (courseId: number, change: CourseChange) => {
+    const res = await fetch(`/api/courses/${courseId}`, {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(change),
+    });
+    const data = await res.json().catch(() => null);
+    if (!res.ok) throw new AppError(data?.error ?? "Couldn't change this course.");
+    const fresh: Course | null = data?.course ?? null;
+    if (fresh) setCourses((cs) => cs.map((c) => (c.id === fresh.id ? fresh : c)));
+    return fresh;
+  }, []);
 
   const pendingKey = Object.entries(prefetching).find(([, s]) => s === "pending")?.[0];
 
@@ -790,6 +831,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
     bookmarks,
     isBookmarked: (topic) => bookmarks.some((b) => b.key === topicKey(topic)),
     toggleBookmark,
+    changeCourse,
     courseFor,
   };
 

@@ -12,7 +12,7 @@ import type { Lesson } from "./lessonBlocks";
 import { LESSON_GUIDE, lessonJsonSchema, lintStructure, normalizeLesson, toModelFormat, type NormalizeReport } from "./lessonDesign";
 import { checkFacts } from "./factCheck";
 import { verifyEnabled, verifyFacts, type VerifyReport } from "./factVerify";
-import { withStep, callStructured, reviewModel, writerModel, type Deadline } from "./model";
+import { withStep, callStructured, lessonModel, reviewModel, type Deadline } from "./model";
 
 export type { Lesson } from "./lessonBlocks";
 
@@ -120,7 +120,8 @@ const LESSON_CALL_TIMEOUT_MS = 90_000;
 const WRITE_CALL_TIMEOUT_MS = 150_000;
 // Output caps (reasoning included), well above what's been measured: lessons
 // use 3-9k output tokens with GPT-6.1 Sol, a review about 1-2k.
-const WRITER_OPTIONS = { reasoningEffort: "medium", timeoutMs: WRITE_CALL_TIMEOUT_MS, maxTokens: 24_000 } as const;
+// A function, so the model (LESSON_MODEL) is read when each call is made.
+const WRITER_OPTIONS = () => ({ reasoningEffort: "medium", timeoutMs: WRITE_CALL_TIMEOUT_MS, maxTokens: 24_000, model: lessonModel() }) as const;
 const EVALUATOR_OPTIONS = { reasoningEffort: "low", timeoutMs: LESSON_CALL_TIMEOUT_MS, maxTokens: 6_000 } as const;
 
 // The model occasionally ignores the rules. Retry once on a validation
@@ -160,7 +161,7 @@ ${LESSON_REQUIREMENTS}`,
       }Write this module's lesson.`,
       lessonJsonSchema,
       deadline,
-      WRITER_OPTIONS
+      WRITER_OPTIONS()
     )
   );
 }
@@ -240,7 +241,7 @@ ${LESSON_REQUIREMENTS}`,
       `${describeBrief(brief)}\n\nLesson:\n${JSON.stringify(toModelFormat(lesson), null, 2)}\n\n${feedback}`,
       lessonJsonSchema,
       deadline,
-      WRITER_OPTIONS
+      WRITER_OPTIONS()
     )
   );
 }
@@ -273,7 +274,7 @@ ${LESSON_REQUIREMENTS}`,
       `${describeBrief(brief)}\n\nLesson:\n${JSON.stringify(numbered(lesson), null, 2)}\n\n${feedback}`,
       patchJsonSchema,
       deadline,
-      WRITER_OPTIONS
+      WRITER_OPTIONS()
     );
     const applied = applyPatch(lesson, data);
     if (!applied.ok) {
@@ -296,7 +297,7 @@ export const PASS_SCORE = 8;
  * of them retires lessons written the old way.
  */
 export const lessonVersion = () =>
-  createHash("sha256").update(`${LESSON_GUIDE}\n${writerModel()}\n${reviewModel()}`).digest("hex").slice(0, 12);
+  createHash("sha256").update(`${LESSON_GUIDE}\n${lessonModel()}\n${reviewModel()}`).digest("hex").slice(0, 12);
 // Bounded iteration: at most this many evaluations (so at most one revision).
 const MAX_ITERATIONS = 2;
 // A draft scored below this is rewritten from scratch instead of patched: its

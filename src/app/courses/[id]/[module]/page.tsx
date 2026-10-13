@@ -8,6 +8,7 @@ import type { VoiceControl } from "@/components/lesson/Scene";
 import { LessonView } from "@/components/LessonView";
 import { PaintingOwl } from "@/components/mascot/PaintingOwl";
 import { BackLink } from "@/components/app/BackLink";
+import { LessonSkeleton } from "@/components/Skeletons";
 import { courseArtSrc } from "@/components/app/CourseArt";
 import type { View } from "@/components/types";
 import { levelsOf, lessonLabel } from "@/lib/courseHierarchy";
@@ -26,19 +27,14 @@ export default function ModulePage() {
     if (takingCurrent && course) prepareAhead(course);
   }, [takingCurrent, course, prepareAhead]);
 
+  if (!course && !loaded) return <main className="lesson-page"><LessonSkeleton /></main>;
   if (!course || !(index >= 0 && index < course.modules.length)) {
     return (
       <main className="mx-auto max-w-3xl px-4 py-24 text-center sm:px-6">
-        {loaded ? (
-          <>
-            <p className="font-display text-2xl text-fg">That lesson doesn&rsquo;t exist.</p>
-            <Link href="/courses" className="mt-4 inline-block font-medium text-accent hover:underline">
-              Back to your courses
-            </Link>
-          </>
-        ) : (
-          <div className="skeleton mx-auto h-64 rounded-2xl" />
-        )}
+        <p className="font-display text-2xl text-fg">That lesson doesn&rsquo;t exist.</p>
+        <Link href="/courses" className="mt-4 inline-block font-medium text-accent hover:underline">
+          Back to your courses
+        </Link>
       </main>
     );
   }
@@ -155,7 +151,24 @@ function useVoice(learnerId: string, lessonId: number | null): VoiceControl | nu
     },
     [learnerId, lessonId]
   );
-  return useMemo(() => (lessonId ? { enabled, toggle, urlFor } : null), [enabled, toggle, urlFor, lessonId]);
+  const turns = useRef(new Map<string, Promise<string | null>>());
+  const urlForTurn = useCallback(
+    (block: number, turn: number) => {
+      if (!lessonId || !learnerId) return Promise.resolve(null);
+      const key = `${block}:${turn}`;
+      let p = turns.current.get(key);
+      if (!p) {
+        p = fetch(`/api/voice?lessonId=${lessonId}&block=${block}&turn=${turn}`)
+          .then((r) => (r.ok ? r.json() : null))
+          .then((d) => d?.url ?? null)
+          .catch(() => null);
+        turns.current.set(key, p);
+      }
+      return p;
+    },
+    [learnerId, lessonId]
+  );
+  return useMemo(() => (lessonId ? { enabled, toggle, urlFor, urlForTurn } : null), [enabled, toggle, urlFor, urlForTurn, lessonId]);
 }
 
 /**

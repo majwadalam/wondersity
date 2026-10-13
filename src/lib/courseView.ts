@@ -1,6 +1,7 @@
 import { groupLevels, moduleId } from "./courseHierarchy";
 import type { CourseWithLessons } from "./db";
 import type { Lesson } from "./lessonWriter";
+import { readCast, type Voice } from "./voices";
 
 export type LevelStatus = "done" | "current" | "upcoming";
 
@@ -23,6 +24,12 @@ export type CourseView = {
   updatedAt: string;
   /** Set when the learner tailored the course: their goal, the outcomes planned from it, their materials. */
   tailored: { goal: string; outcomes: string[]; materials: string[] } | null;
+  /** Who speaks in this course and in which voice, in the order they joined (lib/voices.ts). */
+  cast: { key: string; name: string; voice: Voice; portrait: string | null; chosen: boolean }[];
+  /** The learner archived it: listed apart, still opens. */
+  archived: boolean;
+  /** When lessons taken before the course was started over were finished (they still count for the streak). */
+  pastCompletions: string[];
   levels: {
     id: string;
     title: string;
@@ -104,6 +111,9 @@ export function toCourseView(course: CourseWithLessons): CourseView {
           materials: course.intake.materials?.map((m) => m.name) ?? [],
         }
       : null,
+    cast: Object.entries(readCast(course.voices)).map(([key, m]) => ({ key, name: m.name, voice: m.voice, portrait: m.portrait ?? null, chosen: !!m.chosen })),
+    archived: !!course.archived_at,
+    pastCompletions: course.lessons.flatMap((l) => (l.module_index === null && l.completed_at ? [l.completed_at] : [])),
     levels: groups.map((g, gi) => ({
       id: g.id,
       title: g.title,

@@ -440,3 +440,29 @@ Tutor runs in the app add the agent's turns, roughly $0.01-0.02 a run (the runs 
 - **The cost of a lesson that passes first time** is now about $0.05-0.06 for the tutor run, about $0.04 of it writing. A revised lesson is about $0.13.
 
 **Data:** `runs/16-luna-agent-patch/` (report.json, the-french-revolution.json, french-patched.json), `runs/16-luna-agent-patch.log`.
+
+
+## Run 19: Claude Haiku 5.5 writing lessons, GPT-6.1 Sol planning
+
+**Question:** Haiku 5.5 costs a twentieth of GPT-6.1 Sol per token ($0.10 / $0.50 per million against $2 / $10). Does it write good enough lessons now that the gate has the fact check, the blind test, question cues in code and targeted revisions? Runs 00-03 used an older gate.
+**Method:** `scripts/sample-lessons.ts` on 4 topics, the same day, once with `LESSON_MODEL=anthropic/claude-haiku-5.5` (writes and revises) and once on Sol. Everything else unchanged: GPT-6.1 Sol reviews, GPT-6 Luna fact-checks and runs the blind test. Planning isn't part of this script; it stays on Sol either way.
+
+| Topic | Haiku score | Haiku cost | Sol score | Sol cost |
+| --- | --- | --- | --- | --- |
+| Python loops | 7.5 → 7.4, below bar | $0.055 | **8**, first draft | $0.069 |
+| The French Revolution | 5.8 → 6.3, below bar | $0.062 | 7 → 7, below bar | $0.119 |
+| Probability | 7 → **8** after revision | $0.051 | **8**, first draft | $0.052 |
+| Babylonian sexagesimal | 6 → 6.8, below bar | $0.050 | **8**, first draft | $0.054 |
+| **Average** | **7.2, 1 of 4 passed** | **$0.055** | **7.75, 3 of 4 passed** | **$0.074** |
+
+**Findings:**
+- **Writing is about 7 times cheaper** ($0.005-0.007 against $0.037-0.054), **but a lesson is only about 25% cheaper.** Haiku writes 2-3 times as many tokens (9-13k against 3.6-4.2k), so the review and fact check of its lessons cost 2-3 times as much, and every Haiku lesson needed a revision.
+- **The problems are accuracy and precision, the things that matter most:**
+  - French Revolution: wars paid with "loans, not taxes", taxation by representatives credited to Rousseau, the Estates-General summoned in spring 1789 (announced August 1788), and bread prices peaking at two different times.
+  - Babylonian numbers: wrong arithmetic in wrong-answer explanations (3660 for 3690), and a claim about separators that a source contradicted.
+  - Python loops: an "order the lines" activity whose result isn't valid Python (indentation lost).
+  - The gate caught these, so wrong lessons wouldn't be shown as passing. But they'd be shown below the bar, or not cached, more often.
+- **Haiku is slower too**: 100-170s per lesson against 88-168s, because of the longer outputs and the revision.
+
+**Decision:** keep GPT-6.1 Sol writing lessons. `LESSON_MODEL` stays as an off-by-default switch for trying other writers. A different `LESSON_MODEL` gets its own `lessonVersion()`, so its lessons never mix with the cached ones.
+**Data:** `runs/19-haiku-writer/` (haiku/, sol/ lessons with traces; one log per model and topic).

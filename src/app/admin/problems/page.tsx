@@ -1,6 +1,8 @@
 import { plainError, reportKind } from "@/components/admin/labels";
 import { A, Badge, Card, Details, Explain, PageHead, Pager, RunStatus, Section, Table, Tabs, Time, pageParam, paginate } from "@/components/admin/ui";
-import { allReports, count, emailsById, isStale, listJobs, listRuns, requireAdmin, RUNS_PER_PAGE, weakLessons } from "@/lib/admin";
+import { ActionForm } from "@/components/admin/ActionForm";
+import { allMessages, allRatings, allReports, count, emailsById, isStale, listJobs, listRuns, requireAdmin, RUNS_PER_PAGE, weakLessons } from "@/lib/admin";
+import { markMessage } from "../actions";
 
 // Everything that went wrong, in one place: AI jobs that failed, lessons that
 // couldn't be written, what learners reported, and lessons that never reached
@@ -14,7 +16,17 @@ export default async function AdminProblems({ searchParams }: PageProps<"/admin/
   const tab = typeof sp.tab === "string" ? sp.tab : undefined;
   const page = pageParam(sp.page);
   const params = { tab };
-  const [failedCount, jobs, reports, weak, email] = await Promise.all([count("runs", { eq: ["ok", "false"] }), listJobs(1000), allReports(), weakLessons(), emailsById()]);
+  const [failedCount, jobs, reports, weak, email, ratings, messages] = await Promise.all([
+    count("runs", { eq: ["ok", "false"] }),
+    listJobs(1000),
+    allReports(),
+    weakLessons(),
+    emailsById(),
+    allRatings(),
+    allMessages(),
+  ]);
+  const thumbsDown = ratings.filter((r) => r.rating < 0);
+  const openMessages = messages.filter((m) => !m.resolved_at);
   const badJobs = jobs.filter((j) => j.status === "failed" || isStale(j));
   const who = (id: string) => email.get(id) ?? `deleted · ${id.slice(0, 8)}`;
 
@@ -37,6 +49,13 @@ export default async function AdminProblems({ searchParams }: PageProps<"/admin/
               <b className="text-fg">Mistake reports.</b> Learners press the flag in a lesson. The report keeps what they chose, what they wrote and which screen they were on.
             </li>
             <li>
+              <b className="text-fg">Thumbs down.</b> At the end of a lesson learners rate it up or down, and can say what was off. Only thumbs down are listed; the count of
+              thumbs up is in the tab&rsquo;s note.
+            </li>
+            <li>
+              <b className="text-fg">Messages.</b> What people sent from the Help page, with the page they came from. Mark one answered once you&rsquo;ve replied by email.
+            </li>
+            <li>
               <b className="text-fg">Lessons below the bar.</b> Every lesson is scored out of 10 by an AI review. Under 8, it&rsquo;s rewritten once; if no version reaches
               8, the best one is shown and listed here.
             </li>
@@ -57,6 +76,8 @@ export default async function AdminProblems({ searchParams }: PageProps<"/admin/
             { value: "queue", label: "Lessons that failed", count: badJobs.length },
             { value: "reports", label: "Mistake reports", count: reports.length },
             { value: "weak", label: "Lessons below the bar", count: weak.length },
+            { value: "ratings", label: "Thumbs down", count: thumbsDown.length },
+            { value: "messages", label: "Messages", count: openMessages.length },
           ]}
         />
       </div>
@@ -99,6 +120,69 @@ export default async function AdminProblems({ searchParams }: PageProps<"/admin/
                   { label: "Where", cell: (r) => <A href={`/admin/lessons/${r.lesson_id}`}>Lesson #{r.lesson_id}, screen {r.step}</A> },
                   { label: "From", cell: (r) => <A href={`/admin/users/${r.learner_id}`}>{who(r.learner_id)}</A> },
                   { label: "When", cell: (r) => <Time iso={r.created_at} /> },
+                ]}
+              />
+            )}
+          </Paged>
+        </Section>
+      )}
+
+      {tab === "ratings" && (
+        <Section
+          title="Thumbs down"
+          sub={`Lessons learners rated down, with what they said. ${ratings.length - thumbsDown.length} of ${ratings.length} ratings so far are thumbs up.`}
+        >
+          <Paged rows={thumbsDown} page={page} params={params}>
+            {(rows) => (
+              <Table
+                rows={rows}
+                rowKey={(r) => `${r.learner_id}:${r.lesson_id}`}
+                empty="No lesson has been rated down."
+                columns={[
+                  { label: "What they said", cell: (r) => <span className="text-[13px]">{r.comment || <span className="text-muted">nothing</span>}</span> },
+                  { label: "Lesson", cell: (r) => <A href={`/admin/lessons/${r.lesson_id}`}>Lesson #{r.lesson_id}</A> },
+                  { label: "From", cell: (r) => <A href={`/admin/users/${r.learner_id}`}>{who(r.learner_id)}</A> },
+                  { label: "When", cell: (r) => <Time iso={r.updated_at} /> },
+                ]}
+              />
+            )}
+          </Paged>
+        </Section>
+      )}
+
+      {tab === "messages" && (
+        <Section title="Messages" sub="Sent from the Help page. Answer by email, then mark it answered.">
+          <Paged rows={messages} page={page} params={params}>
+            {(rows) => (
+              <Table
+                rows={rows}
+                rowKey={(m) => m.id}
+                empty="No messages yet."
+                columns={[
+                  { label: "About", cell: (m) => <Badge tone={m.kind === "problem" || m.kind === "billing" ? "warn" : "muted"}>{m.kind}</Badge> },
+                  { label: "Message", cell: (m) => <span className="block max-w-md text-[13px] whitespace-pre-wrap">{m.message}</span> },
+                  {
+                    label: "From",
+                    cell: (m) =>
+                      m.learner_id ? (
+                        <A href={`/admin/users/${m.learner_id}`}>{m.email ?? who(m.learner_id)}</A>
+                      ) : (
+                        <span className="text-[13px]">{m.email ?? "–"} <span className="text-muted">(signed out)</span></span>
+                      ),
+                  },
+                  { label: "Page", cell: (m) => <span className="font-mono text-[12px]">{m.page ?? "–"}</span> },
+                  { label: "When", cell: (m) => <Time iso={m.created_at} /> },
+                  {
+                    label: "",
+                    cell: (m) => (
+                      <ActionForm
+                        action={markMessage}
+                        hidden={{ id: m.id, resolved: m.resolved_at ? "0" : "1" }}
+                        submit={m.resolved_at ? "Reopen" : "Mark answered"}
+                        tone="quiet"
+                      />
+                    ),
+                  },
                 ]}
               />
             )}

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { PlanSkeleton } from "@/components/Skeletons";
 
 // The learner's plan in Settings: which plan, what's used in the last 30 days,
 // and a link to Paddle's portal to change or cancel it.
@@ -51,7 +52,7 @@ export function PlanSection({ upgraded }: { upgraded: boolean }) {
   };
 
   if (error && !billing) return <p className="text-sm text-bad">{error}</p>;
-  if (!billing) return <div className="skeleton h-16 rounded-xl" />;
+  if (!billing) return <PlanSkeleton />;
   if (!billing.billingEnabled) {
     return <p className="text-[15px] text-fg">Free during the beta, with no limits. Nothing is charged.</p>;
   }

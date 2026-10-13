@@ -1,0 +1,355 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Independent Events and the Multiplication Rule",
+    "objective": "Compute the probability that two independent events both happen, by multiplying their probabilities.",
+    "estimatedMinutes": 7,
+    "approach": "discovery",
+    "approachReason": "Learners first guess the probability of two coin flips both landing heads, then build the multiplication rule from the four equally likely outcomes, so the rule is earned from evidence rather than handed over.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Two independent events",
+        "body": "Two events are **independent** when knowing that one happened tells you nothing about whether the other happens. Flipping a coin twice is the standard case: the first flip cannot change the second.\n\nFor independent events A and B, the probability that both happen is\n\\[ P(A \\text{ and } B) = P(A) \\times P(B) \\]\nFor two fair coin flips, \\( \\frac{1}{2} \\times \\frac{1}{2} = \\frac{1}{4} \\). This matches the list of four equally likely outcomes: HH, HT, TH, TT. Only HH has two heads.",
+        "example": "Check the list: 4 outcomes, 1 of them is HH, so 1/4. The rule gives the same answer without writing the list."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Ask whether the spinner's result depends on the die.",
+          "Find the chance of a 6 alone and the chance of section 1 alone, then combine them with the rule for two independent events."
+        ],
+        "retry": "Multiply the two separate probabilities, since neither result changes the other. Adding them would give a probability larger than either event's own chance of coming up on its own."
+      },
+      {
+        "kind": "worked",
+        "heading": "Two free throws",
+        "problem": "A basketball player makes 70% of her free throws. A different player on her team makes 40% of his. Each takes one free throw. Assume neither shot affects the other, for example no shared pressure or crowd effect. What is the probability that both shots go in?",
+        "steps": [
+          {
+            "title": "Name the events",
+            "text": "Let A be \"her shot goes in\" and B be \"his shot goes in\". P(A) = 0.7 and P(B) = 0.4.",
+            "why": "Naming the events first keeps track of which probability belongs to which shot."
+          },
+          {
+            "title": "Assume independence",
+            "text": "We assume neither shot changes the chance of the other, so A and B are independent.",
+            "why": "Independence is an assumption here, not something one example proves. Unchanged chances are not enough on their own if a shared condition could affect both shots."
+          },
+          {
+            "title": "Multiply",
+            "text": "P(A and B) = 0.7 × 0.4 = 0.28.",
+            "why": "The product P(A) × P(B) requires independence. For dependent events you would need the general rule, P(A) × P(B given A)."
+          }
+        ],
+        "answer": "The probability that both shots go in is 0.28, or 28%."
+      },
+      {
+        "kind": "explain",
+        "heading": "A coin has no memory.",
+        "body": "After four heads in a row, the fifth flip still has probability 1/2 of heads. The earlier flips are over, and independent events do not carry any record forward.",
+        "example": "",
+        "layout": "spotlight"
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Which flips does the event 'the next two flips both land heads' involve?",
+          "Would the nine earlier flips change the chance of each of those two new flips?"
+        ],
+        "retry": "Independence means the past does not change the next result. A streak of tails is still just a streak. Each new fair flip has the same chance of heads as every other flip."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "problem",
+        "heading": "A die, twice, and a coin",
+        "prompt": "A fair six-sided die is rolled twice, and a fair coin is flipped once, all separately. What is the probability that both die rolls show a 6 and the coin lands heads? Give your answer as a fraction.",
+        "answers": [
+          "1/72"
+        ],
+        "unit": "",
+        "traps": [
+          {
+            "answer": "1/36",
+            "feedback": "You found the chance of two 6s but forgot the coin must also land heads. Multiply by 1/2 as well."
+          },
+          {
+            "answer": "1/12",
+            "feedback": "That is the chance of one 6 and heads. The problem needs a 6 on both rolls, so you must multiply by 1/6 for the second roll too."
+          }
+        ],
+        "hints": [
+          "Find the probability of each separate event first, including each roll.",
+          "Count how many separate events must all happen, and think about how their chances combine."
+        ],
+        "solution": "P(a 6 on one roll) = 1/6, so P(6 on both rolls) = 1/6 × 1/6 = 1/36. P(heads) = 1/2. All three events are independent, so P = 1/36 × 1/2 = 1/72 ≈ 0.0139."
+      },
+      {
+        "kind": "explain",
+        "heading": "Three or more events",
+        "body": "The same rule extends to any number of independent events. For independent events A, B and C,\n\\[ P(A \\text{ and } B \\text{ and } C) = P(A) \\times P(B) \\times P(C) \\]\nThis is why the probability of getting several things right in a row drops quickly.",
+        "example": "",
+        "layout": "steps",
+        "points": [
+          {
+            "title": "Check independence",
+            "text": "Confirm that no event changes the chance of another."
+          },
+          {
+            "title": "Multiply every probability",
+            "text": "Write the probability of each event and multiply them all together."
+          },
+          {
+            "title": "Read the result",
+            "text": "The product is the probability that all the events happen."
+          }
+        ]
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "How many checks must a part pass, and does passing one check change the chance of passing another?",
+          "Work out the chance of passing one check, then think about how many times that same step must happen."
+        ],
+        "retry": "Each check is independent, so the three pass probabilities multiply: 0.9 × 0.9 × 0.9 = 0.729. Multiplying by 0.9 again each time means the probability shrinks with each added check."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Two flips, both heads",
+        "prompt": "A fair coin is flipped twice. What is the probability that both flips land heads?",
+        "reveal": "The answer is 1/4, not 1/2. Each flip halves the chance of the pair, so both flips together reduce the probability.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "1/2",
+            "correct": false,
+            "feedback": "1/2 is the chance of heads on a single flip. The second flip also has to land heads, which makes the pair less likely."
+          },
+          {
+            "text": "1/4",
+            "correct": true,
+            "feedback": "Correct. Four equally likely outcomes (HH, HT, TH, TT) and only HH has two heads, giving 1/4, which is also 1/2 × 1/2."
+          },
+          {
+            "text": "1/3",
+            "correct": false,
+            "feedback": "Listing the outcomes shows there are four equally likely results, not three. Only one of the four is HH."
+          },
+          {
+            "text": "1/8",
+            "correct": false,
+            "feedback": "1/8 would be the chance of three heads in three flips. This problem has only two flips."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Independent or not?",
+        "prompt": "Sort each situation: does the result of the first event change the chance of the second?",
+        "reveal": "Independent events leave each other's chances unchanged. Drawing without replacement changes the cards left in the deck, so those events are not independent.",
+        "type": "sort",
+        "buckets": [
+          "Independent",
+          "Not independent"
+        ],
+        "items": [
+          {
+            "text": "Two separate rolls of a fair die, both showing a 6",
+            "bucket": "Independent"
+          },
+          {
+            "text": "Drawing a heart, then another heart, from a shuffled 52-card deck with the first card put back",
+            "bucket": "Independent"
+          },
+          {
+            "text": "A coin flipped on Monday and again on Tuesday",
+            "bucket": "Independent"
+          },
+          {
+            "text": "Drawing a heart, then another heart, from a shuffled 52-card deck without putting the first card back",
+            "bucket": "Not independent"
+          },
+          {
+            "text": "Drawing a red marble from a bag, then a second red marble after putting the first one back",
+            "bucket": "Independent"
+          },
+          {
+            "text": "Drawing a red marble from a bag, then a second red marble without replacing the first",
+            "bucket": "Not independent"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "Sam rolls a fair six-sided die and, separately, spins a spinner with four equal sections. What is the probability that the die shows a 6 and the spinner lands on section 1?",
+        "options": [
+          "1/6",
+          "1/24",
+          "1/4",
+          "5/12"
+        ],
+        "correctAnswer": "1/24",
+        "explanation": "The die and spinner are independent, so P = 1/6 × 1/4 = 1/24. Adding the two probabilities (5/12) would not give the chance that both happen."
+      },
+      {
+        "question": "A fair coin has landed tails on each of its last 9 flips. What is the probability that the next two flips both land heads?",
+        "options": [
+          "1/1024",
+          "1/4",
+          "1/2",
+          "1/2048"
+        ],
+        "correctAnswer": "1/4",
+        "explanation": "The nine past flips do not change the next two, so P = 1/2 × 1/2 = 1/4. The 1/1024 and 1/2048 answers wrongly count the past flips as part of the event."
+      },
+      {
+        "question": "A factory runs three separate quality checks on each part. A good part passes each check independently with probability 0.9. What is the probability that a good part passes all three checks?",
+        "options": [
+          "0.900",
+          "0.729",
+          "0.810",
+          "0.300"
+        ],
+        "correctAnswer": "0.729",
+        "explanation": "The checks are independent, so P(all three pass) = 0.9 × 0.9 × 0.9 = 0.729. The 0.810 answer only multiplies two checks, and 0.900 counts only one."
+      }
+    ],
+    "sources": [
+      {
+        "url": "https://s3.amazonaws.com/prod-hmhco-vmg-craftcms-private/documents/W2_D5_G9-12_IndependentAndDependentEvents_Student.pdf",
+        "title": "10 Independent and Dependent Events"
+      },
+      {
+        "url": "https://su26.eecs70.org/assets/pdf/lecture16-post.pdf",
+        "title": "CS70: Discrete Mathematics and Probability Theory"
+      },
+      {
+        "url": "http://www.wtamu.edu/~cbaird/sq/2025/01/24/how-does-a-coin-know-to-land-heads-half-of-the-time",
+        "title": "How does a coin know to land heads half of the time? | Science Questions with Surprising Answers"
+      },
+      {
+        "url": "https://www.csueastbay.edu/scaa/files/docs/student-handouts/ariel-li-basic-probability.pdf",
+        "title": "Basic Probability: Key Definitions and Rules"
+      },
+      {
+        "url": "https://www.cs.umb.edu/~skovitz/math125/DefnsConceptsFormulas/Chapters13--15.pdf",
+        "title": "Chapter 13"
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 40551,
+      "approach": "discovery",
+      "blocks": "activity > explain > check > worked > explain > check > activity > problem > explain > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.blind",
+      "iteration": 1,
+      "ms": 7147,
+      "questions": 3,
+      "giveaways": []
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 1,
+      "ms": 16986,
+      "claims": 5,
+      "supported": 5,
+      "contradicted": [],
+      "unclear": 0,
+      "downgraded": []
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 7,
+      "ms": 17000,
+      "problems": [
+        "Independence is sometimes conflated with lack of causal influence. One shot not changing another does not establish statistical independence; shared conditions can affect both. The worked example should explicitly assume independent outcomes.",
+        "The worked example says the multiplication rule only applies to independent events. More precisely, the product P(A) × P(B) requires independence; the general multiplication rule uses P(A) × P(B given A).",
+        "The sorting activity assigns definite labels to underspecified situations. Studying and passing are ordinarily associated, but this is not guaranteed from the wording. Card draws also need defined events and deck assumptions to make the classification precise.",
+        "The coin-streak check repeats the immediately preceding example almost verbatim, allowing recall rather than demonstrating transfer. Its difficulty is lower than the earlier multiplication check.",
+        "The discovery approach is shallow: learners select an answer, then receive the outcome list. They never construct the sample space or use it to discover why multiplication works.",
+        "Retry explanations mostly restate the rule rather than offering a genuinely different representation or explanation. Several hints directly identify the required operation.",
+        "Question 3 has the flagged answer-length cue: 0.729 is visibly longer than every distractor. The 0.27 distractor also has a less clear misconception basis.",
+        "The final die-and-coin problem is easier than the earlier die-and-spinner check, and accepts rounded decimals despite explicitly requesting a fraction."
+      ],
+      "factErrors": [],
+      "structureIssues": [
+        "Question 3 (\"A factory runs three separate quality checks on each part…\"): the right answer is clearly the longest option; make the options similar in length and detail."
+      ]
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 27015,
+      "approach": "discovery",
+      "blocks": "activity > explain > check > worked > explain > check > activity > problem > explain > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0,
+      "patch": "Clarified that independence is an assumption in the free-throw example and that the product rule needs it, replaced the ambiguous sorting items with defined events, swapped the repeated coin-streak check for a new tails-streak transfer question, equalised the option lengths in question 3, and made t",
+      "changes": 7
+    },
+    {
+      "step": "lesson.blind",
+      "iteration": 2,
+      "ms": 8640,
+      "questions": 3,
+      "giveaways": []
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 2,
+      "ms": 16168,
+      "claims": 5,
+      "supported": 5,
+      "contradicted": [],
+      "unclear": 0,
+      "downgraded": []
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 8,
+      "ms": 16172,
+      "problems": [
+        "The independence sorting activity omits assumptions: replacing a card needs reshuffling or random selection before the next draw, and marble examples need a bag containing both red and non-red marbles. Without these conditions, the classifications are not universally correct.",
+        "The three-event explanation should specify mutual independence. Its instruction to confirm that no event changes another's chance can be read as pairwise independence, which is insufficient for multiplying three probabilities.",
+        "The discovery approach is somewhat shallow: learners select a prediction, then receive the outcome list rather than construct it themselves.",
+        "Several retry explanations repeat the multiplication procedure rather than provide a genuinely different explanation. The first check's second hint nearly states the full solution method.",
+        "The streak question has two closely related distractors that count past flips, but neither directly represents the central gambler's-fallacy misconception that heads becomes more likely after repeated tails."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true,
+      "sources": 5
+    }
+  ]
+}

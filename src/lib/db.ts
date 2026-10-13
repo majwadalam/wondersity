@@ -5,6 +5,7 @@ import { env, requireEnv } from "./env";
 import type { StoredModule } from "./courseHierarchy";
 import type { Lesson } from "./lessonWriter";
 import type { Staging } from "./staging";
+import { readCast, type Cast } from "./voices";
 
 // A request from a signed-in learner runs inside withDb(), so every query
 // here goes out as that learner and the row rules keep them to their own data.
@@ -59,6 +60,10 @@ export type CourseRow = {
   intake?: StoredIntake | null;
   /** A tailored course's learning outcomes, written by the planner. */
   outcomes?: string[] | null;
+  /** The course's cast: who speaks in which voice (lib/voices.ts). */
+  voices?: unknown;
+  /** Set when the learner archived the course. */
+  archived_at?: string | null;
   created_at: string;
   updated_at: string;
 };
@@ -242,6 +247,8 @@ export async function getCourseAttempts(courseId: number) {
     .from("lessons")
     .select("id, module_index, lesson_data, attempts(question_index, chosen, correct)")
     .eq("course_id", courseId)
+    // A course started over leaves its old lessons off the path (resetCourse): they don't count.
+    .not("module_index", "is", null)
     .order("module_index", { ascending: true });
   if (error) throw new Error(`getCourseAttempts: ${error.message}`);
   return (data ?? []) as {
@@ -378,6 +385,150 @@ export async function getCourseGuides(courseId: number, learnerId: string) {
     const guide = (r.lesson_data as { staging?: Staging } | null)?.staging?.guide;
     return guide ? [guide] : [];
   });
+}
+
+// ---------- Help and contact (migration 019) ----------
+
+export type SupportKind = "question" | "problem" | "idea" | "billing" | "other";
+
+/** Saves a message from the Help page: as the learner when signed in, with the server key otherwise. */
+export async function insertSupportMessage(m: { learnerId: string | null; email: string | null; kind: SupportKind; message: string; page: string | null }) {
+  const client = m.learnerId ? supabase() : adminSupabase();
+  const { error } = await client.from("support_messages").insert({ learner_id: m.learnerId, email: m.email, kind: m.kind, message: m.message, page: m.page });
+  if (error) throw new Error(`insertSupportMessage: ${error.message}`);
+}
+
+// ---------- Review: checks answered wrong (migration 019) ----------
+
+/** The learner's lessons with a check they got wrong the first time, newest first, with what they chose. */
+export async function lessonsWithMistakes(learnerId: string) {
+  const { data, error } = await supabase()
+    .from("lessons")
+    .select("id, course_id, module_index, created_at, lesson_data, attempts!inner(question_index, chosen, correct, created_at)")
+    .eq("learner_id", learnerId)
+    .eq("attempts.correct", false)
+    .order("id", { ascending: false })
+    .limit(100);
+  if (error) throw new Error(`lessonsWithMistakes: ${error.message}`);
+  return (data ?? []) as unknown as {
+    id: number;
+    course_id: number | null;
+    module_index: number | null;
+    created_at: string;
+    lesson_data: Lesson;
+    attempts: { question_index: number; chosen: string; correct: boolean; created_at: string }[];
+  }[];
+}
+
+export async function courseTitles(learnerId: string) {
+  const { data, error } = await supabase().from("courses").select("id, title").eq("learner_id", learnerId);
+  if (error) throw new Error(`courseTitles: ${error.message}`);
+  return new Map((data ?? []).map((c) => [c.id as number, c.title as string]));
+}
+
+export async function listReviewClears(learnerId: string) {
+  const { data, error } = await supabase().from("review_clears").select("lesson_id, question_index, cleared_at").eq("learner_id", learnerId);
+  if (error) throw new Error(`listReviewClears: ${error.message}`);
+  return new Map((data ?? []).map((c) => [`${c.lesson_id}:${c.question_index}`, c.cleared_at as string]));
+}
+
+export async function addReviewClear(learnerId: string, lessonId: number, questionIndex: number) {
+  const { error } = await supabase()
+    .from("review_clears")
+    .upsert({ learner_id: learnerId, lesson_id: lessonId, question_index: questionIndex }, { onConflict: "learner_id,lesson_id,question_index", ignoreDuplicates: true });
+  if (error) throw new Error(`addReviewClear: ${error.message}`);
+}
+
+// ---------- Lesson ratings (migration 019) ----------
+
+/** A thumbs up (1) or down (-1) on one of the learner's own lessons; a second rating replaces the first. */
+export async function rateLesson(learnerId: string, r: { lessonId: number; rating: 1 | -1; comment?: string }) {
+  if (!(await getLessonForLearner(r.lessonId, learnerId))) return false;
+  const { error } = await supabase()
+    .from("lesson_ratings")
+    .upsert(
+      { learner_id: learnerId, lesson_id: r.lessonId, rating: r.rating, comment: r.comment || null, updated_at: new Date().toISOString() },
+      { onConflict: "learner_id,lesson_id" }
+    );
+  if (error) throw new Error(`rateLesson: ${error.message}`);
+  return true;
+}
+
+export async function getLessonRating(learnerId: string, lessonId: number) {
+  const { data, error } = await supabase().from("lesson_ratings").select("rating, comment").eq("learner_id", learnerId).eq("lesson_id", lessonId).maybeSingle();
+  if (error) throw new Error(`getLessonRating: ${error.message}`);
+  return data as { rating: 1 | -1; comment: string | null } | null;
+}
+
+// ---------- Bookmarks (starred courses, migration 019) ----------
+
+export async function listBookmarks(learnerId: string) {
+  const { data, error } = await supabase().from("bookmarks").select("topic_key, topic").eq("learner_id", learnerId).order("created_at");
+  if (error) throw new Error(`listBookmarks: ${error.message}`);
+  return (data ?? []).map((b) => ({ key: b.topic_key as string, topic: b.topic as string }));
+}
+
+export async function addBookmarks(learnerId: string, marks: { key: string; topic: string }[]) {
+  if (!marks.length) return;
+  const { error } = await supabase()
+    .from("bookmarks")
+    .upsert(marks.map((m) => ({ learner_id: learnerId, topic_key: m.key, topic: m.topic })), { onConflict: "learner_id,topic_key", ignoreDuplicates: true });
+  if (error) throw new Error(`addBookmarks: ${error.message}`);
+}
+
+export async function removeBookmark(learnerId: string, key: string) {
+  const { error } = await supabase().from("bookmarks").delete().eq("learner_id", learnerId).eq("topic_key", key);
+  if (error) throw new Error(`removeBookmark: ${error.message}`);
+}
+
+/** Tidies a course away (it still opens), or brings it back. */
+export async function setCourseArchived(courseId: number, learnerId: string, archived: boolean) {
+  const { error } = await supabase()
+    .from("courses")
+    .update({ archived_at: archived ? new Date().toISOString() : null })
+    .eq("id", courseId)
+    .eq("learner_id", learnerId);
+  if (error) throw new Error(`setCourseArchived: ${error.message}`);
+}
+
+/**
+ * Starts a course over from lesson 1. Its lessons aren't deleted: they're
+ * taken off the course's path (module_index null), so the learner's streak,
+ * certificate, answers and mistakes to review are kept, and the course shows
+ * every lesson as not started.
+ */
+export async function resetCourse(courseId: number, learnerId: string) {
+  const { error: lessonsError } = await supabase()
+    .from("lessons")
+    .update({ module_index: null })
+    .eq("course_id", courseId)
+    .eq("learner_id", learnerId);
+  if (lessonsError) throw new Error(`resetCourse: ${lessonsError.message}`);
+  const { error } = await supabase()
+    .from("courses")
+    .update({ current_module: 0, status: "active", archived_at: null, updated_at: new Date().toISOString() })
+    .eq("id", courseId)
+    .eq("learner_id", learnerId);
+  if (error) throw new Error(`resetCourse: ${error.message}`);
+}
+
+/** A course's cast (courses.voices, lib/voices.ts): who speaks in which voice. */
+export async function getCourseCast(courseId: number, learnerId: string): Promise<Cast> {
+  const { data, error } = await supabase().from("courses").select("voices").eq("id", courseId).eq("learner_id", learnerId).maybeSingle();
+  if (error) throw new Error(`getCourseCast: ${error.message}`);
+  return readCast(data?.voices);
+}
+
+/**
+ * Adds characters to a course's cast. Re-reads first and never replaces someone
+ * already cast (unless `replace`), so two lines voiced at once can't undo each other.
+ */
+export async function addToCourseCast(courseId: number, learnerId: string, members: Cast, replace = false) {
+  const current = await getCourseCast(courseId, learnerId);
+  const next = replace ? { ...current, ...members } : { ...members, ...current };
+  const { error } = await supabase().from("courses").update({ voices: next }).eq("id", courseId).eq("learner_id", learnerId);
+  if (error) throw new Error(`addToCourseCast: ${error.message}`);
+  return next;
 }
 
 /** Records that a learner reached a step of a lesson (0 = opened it). Only their own lessons. */
@@ -832,7 +983,7 @@ export async function getPublicCertificate(id: string) {
   return data as CertificateRow | null;
 }
 
-export type NotificationKind = "lesson_ready" | "streak" | "certificate" | "reminder";
+export type NotificationKind = "lesson_ready" | "streak" | "certificate" | "reminder" | "recap";
 export type NotificationRow = { id: number; kind: NotificationKind; title: string; body: string; href: string | null; read_at: string | null; created_at: string };
 
 /** Saves a notification for the bell. Uses the learner's own client in a request, the server key otherwise (cron). */
@@ -887,11 +1038,11 @@ export async function completionTimes(learnerId: string, asServer = false) {
   return (data ?? []).map((r) => r.completed_at as string);
 }
 
-export type ReminderProfile = { id: string; display_name: string | null; timezone: string | null; reminders: boolean; last_reminded_on: string | null };
+export type ReminderProfile = { id: string; display_name: string | null; timezone: string | null; reminders: boolean; last_reminded_on: string | null; last_recap_on: string | null };
 
 /** Profiles that may get today's reminder (server key, for the cron route). */
 export async function reminderCandidates() {
-  const { data, error } = await adminSupabase().from("profiles").select("id, display_name, timezone, reminders, last_reminded_on").eq("reminders", true).limit(5000);
+  const { data, error } = await adminSupabase().from("profiles").select("id, display_name, timezone, reminders, last_reminded_on, last_recap_on").eq("reminders", true).limit(5000);
   if (error) throw new Error(`reminderCandidates: ${error.message}`);
   return (data ?? []) as ReminderProfile[];
 }
@@ -899,6 +1050,35 @@ export async function reminderCandidates() {
 export async function markReminded(learnerId: string, day: string) {
   const { error } = await adminSupabase().from("profiles").update({ last_reminded_on: day }).eq("id", learnerId);
   if (error) throw new Error(`markReminded: ${error.message}`);
+}
+
+/** What the weekly recap needs (server key, for the cron route): lessons finished in the last 7 days, and the next lesson. */
+export async function recapData(learnerId: string) {
+  const since = new Date(Date.now() - 7 * 86_400_000).toISOString();
+  const [{ data: week, error }, { data: course, error: courseError }] = await Promise.all([
+    adminSupabase().from("lessons").select("minutes:lesson_data->estimatedMinutes").eq("learner_id", learnerId).gte("completed_at", since),
+    adminSupabase()
+      .from("courses")
+      .select("title, modules, current_module")
+      .eq("learner_id", learnerId)
+      .eq("status", "active")
+      .is("archived_at", null)
+      .order("updated_at", { ascending: false })
+      .limit(1)
+      .maybeSingle(),
+  ]);
+  if (error) throw new Error(`recapData: ${error.message}`);
+  if (courseError) throw new Error(`recapData: ${courseError.message}`);
+  const lesson = course ? (course.modules as { title?: string }[])?.[course.current_module as number]?.title : undefined;
+  return {
+    week: (week ?? []).map((l) => ({ minutes: Number((l as { minutes: unknown }).minutes) })),
+    next: course && lesson ? { course: course.title as string, lesson } : null,
+  };
+}
+
+export async function markRecapped(learnerId: string, day: string) {
+  const { error } = await adminSupabase().from("profiles").update({ last_recap_on: day }).eq("id", learnerId);
+  if (error) throw new Error(`markRecapped: ${error.message}`);
 }
 
 /** The name a certificate carries: the profile's display name, else the account's (e.g. from Google). */

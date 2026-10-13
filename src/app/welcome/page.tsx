@@ -10,8 +10,10 @@ import { useAppState, useStartCourse } from "@/components/app/AppState";
 import { LogoMark } from "@/components/app/Brand";
 import { CATALOG } from "@/components/app/CourseCards";
 import { CourseArt } from "@/components/app/CourseArt";
+import { AvatarPicker } from "@/components/app/AvatarPicker";
+import type { AvatarId } from "@/lib/avatars";
 
-// First run after creating an account: a name, why they're here, a daily
+// First run after creating an account: a name, an avatar, why they're here, a daily
 // goal, voice on or off, and the first topic. Saved to the profile once, at
 // the end; someone who has done it is sent straight on.
 
@@ -47,6 +49,7 @@ function Welcome() {
   // Wondersity isn't built for children under 13 (COPPA), so the learner confirms their age.
   const [ofAge, setOfAge] = useState(false);
   const [name, setName] = useState("");
+  const [avatar, setAvatar] = useState<AvatarId | null>(null);
   const [reason, setReason] = useState("");
   const [goal, setGoal] = useState(10);
   const [voice, setVoice] = useState(true);
@@ -87,6 +90,12 @@ function Welcome() {
           onKeyDown={(e) => e.key === "Enter" && setStep(1)}
         />
       ),
+    },
+    {
+      title: `Pick an avatar${first ? `, ${first}` : ""}`,
+      sub: "It shows beside your name. Skip it to use your initial or Google photo.",
+      ok: true,
+      body: <AvatarPicker value={avatar} onChange={setAvatar} />,
     },
     {
       title: `What brings you here${first ? `, ${first}` : ""}?`,
@@ -178,7 +187,7 @@ function Welcome() {
     } catch {
       /* storage blocked */
     }
-    await updateProfile({ displayName: name.trim() || profile?.displayName || undefined, reason, dailyGoalMinutes: goal, voiceOn: voice, onboarded: true, ageConfirmed: true }).catch(() => {});
+    await updateProfile({ displayName: name.trim() || profile?.displayName || undefined, ...(avatar ? { avatar } : {}), reason, dailyGoalMinutes: goal, voiceOn: voice, onboarded: true, ageConfirmed: true }).catch(() => {});
     router.replace("/home");
     start(topic);
   }

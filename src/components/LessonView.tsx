@@ -14,6 +14,8 @@ import { SceneHeader, SpeakButton, type VoiceControl } from "./lesson/Scene";
 import { Burst, ProgressFill } from "./motion/primitives";
 import { GoDeeper } from "./lesson/GoDeeper";
 import { ReportMistake } from "./lesson/ReportMistake";
+import { LessonRating } from "./lesson/LessonRating";
+import { ShareCourseButton } from "./app/CourseOptions";
 import { spring } from "./motion/presets";
 import type { Answer, Course, PrefetchState, QuizResult, View } from "./types";
 import { levelsOf, lessonLabel } from "@/lib/courseHierarchy";
@@ -149,6 +151,37 @@ export function LessonView({
   const continueLabel = step === 0 ? "Start" : practice && !practiceDone ? "Skip" : step === blocks.length ? "Finish" : "Continue";
   const tone = (isCheck && checkAnswered && answers[block.ref].correct) || practiceDone ? "good" : undefined;
   const unanswered = checkOrder.filter((q) => !answers[q]);
+
+  // Keyboard: → or Enter continues, ← goes back, 1-4 (or A-D) answers a check.
+  // Keys meant for a field, a slider or a drag handle are left alone.
+  const keys = useRef({ canContinue, step, answering: isCheck && !checkAnswered, go });
+  useEffect(() => {
+    keys.current = { canContinue, step, answering: isCheck && !checkAnswered, go };
+  });
+  useEffect(() => {
+    function onKey(e: KeyboardEvent) {
+      if (e.defaultPrevented || e.metaKey || e.ctrlKey || e.altKey) return;
+      const t = e.target instanceof HTMLElement ? e.target : null;
+      if (t?.closest("input, textarea, select, [contenteditable=true], [role=slider], [aria-roledescription], [role=dialog]")) return;
+      const k = keys.current;
+      if ((e.key === "ArrowRight" || (e.key === "Enter" && !t?.closest("button, a, [role=button]"))) && k.canContinue) {
+        e.preventDefault();
+        k.go(k.step + 1);
+      } else if (e.key === "ArrowLeft" && k.step > 0) {
+        e.preventDefault();
+        k.go(k.step - 1);
+      } else if (k.answering && /^[1-4a-d]$/i.test(e.key)) {
+        const n = /\d/.test(e.key) ? Number(e.key) - 1 : e.key.toLowerCase().charCodeAt(0) - 97;
+        const option = document.querySelectorAll<HTMLButtonElement>("#lesson .lesson-step:not([hidden]) .quiz-option")[n];
+        if (option && !option.disabled) {
+          e.preventDefault();
+          option.click();
+        }
+      }
+    }
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
   // The lesson's own summary, repeated at the end as what the learner takes away.
   const recap = blocks.flatMap((b) => (b.kind === "summary" ? b.points : [])).slice(0, 4);
 
@@ -279,6 +312,8 @@ export function LessonView({
                 onAnswer={handleAnswer}
                 lessonId={lessonId}
                 blockIndex={i}
+                voice={staging ? voice : null}
+                active={step === i + 1}
               />
             </WithScene>
           </Step>
@@ -387,6 +422,7 @@ export function LessonView({
                     </ul>
                   </div>
                 )}
+                {answered === total && lessonId !== null && <LessonRating lessonId={lessonId} />}
                 {answered === total && lesson.resources && <GoDeeper resources={lesson.resources} />}
                 {answered === total && lesson.sources && lesson.sources.length > 0 && (
                   <details className="mt-4 rounded-2xl border border-line px-6 py-4 text-sm">
@@ -417,15 +453,20 @@ export function LessonView({
         <div data-fixed-bottom className="fixed inset-x-0 bottom-0 z-20 border-t border-line bg-surface/95 pb-[env(safe-area-inset-bottom)] backdrop-blur">
           <div className={`mx-auto flex items-center gap-3 px-4 py-3 sm:px-6 ${staging ? "max-w-6xl" : "max-w-2xl"}`}>
             {step > 0 && (
-              <button type="button" onClick={() => go(step - 1)} className="btn-secondary btn-continue px-5 text-sm">
+              <button type="button" onClick={() => go(step - 1)} aria-keyshortcuts="ArrowLeft" className="btn-secondary btn-continue px-5 text-sm">
                 Back
               </button>
             )}
             {isCheck && !checkAnswered && <span className="text-sm text-muted">Choose an answer to continue</span>}
+            {/* Only where there's a keyboard to use. */}
+            <span className="hidden text-xs text-muted [@media(hover:hover)_and_(pointer:fine)]:lg:inline" aria-hidden>
+              {isCheck && !checkAnswered ? "Press 1-4 to answer" : "← → to move"}
+            </span>
             <button
               type="button"
               disabled={!canContinue}
               onClick={() => go(step + 1)}
+              aria-keyshortcuts="ArrowRight Enter"
               data-tone={tone}
               className={`btn-continue ml-auto px-8 text-sm sm:min-w-[10rem] ${
                 practice && !practiceDone ? "btn-secondary" : "btn-primary"
@@ -615,6 +656,7 @@ function QuizOutcome({
                 </motion.div>
               )}
               <p className="flex-1 text-sm text-muted">You&rsquo;ve finished the whole course.</p>
+              <ShareCourseButton course={latest} />
               <button type="button" onClick={() => onContinue(latest.topic)} className="btn-primary rounded-xl px-5 py-2.5 text-sm font-semibold">
                 See your course →
               </button>

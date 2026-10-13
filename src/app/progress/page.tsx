@@ -1,6 +1,6 @@
 "use client";
 
-import { Award, BookOpen, Crosshair, Flame, Map as MapIcon, Sprout, type LucideIcon } from "lucide-react";
+import { Award, BookOpen, Crosshair, Flame, Map as MapIcon, Snowflake, Sprout, type LucideIcon } from "lucide-react";
 import { CertificateList } from "@/components/app/Certificates";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,6 +12,7 @@ import { HoverArrow } from "@/components/landing/HoverArrow";
 import { learningStats } from "@/components/stats";
 import type { Course } from "@/components/types";
 import { isRemote } from "@/lib/remoteImage";
+import { Bone, CourseRowsSkeleton } from "@/components/Skeletons";
 
 const noSubscribe = () => () => {};
 const dayKey = (d: Date) => `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
@@ -29,7 +30,7 @@ export default function ProgressPage() {
   );
 
   const kpis = [
-    { label: "Lessons finished", value: loaded ? `${done}` : "–", sub: total ? `of ${total} planned` : "none planned yet" },
+    { label: "Lessons finished", value: `${done}`, sub: total ? `of ${total} planned` : "none planned yet" },
     { label: "First-try accuracy", value: stats.accuracy === null ? "–" : `${stats.accuracy}%`, sub: "on graded checks" },
     { label: "Time learning", value: `${minutes}`, sub: "minutes" },
     { label: "Streak", value: `${stats.streak}`, sub: stats.streak === 1 ? "day" : "days" },
@@ -46,12 +47,30 @@ export default function ProgressPage() {
           <div key={k.label} className={`p-6 ${i ? "border-line md:border-l" : ""} ${i % 2 ? "border-l" : ""} ${i > 1 ? "border-t md:border-t-0" : ""}`}>
             <dt className="text-sm text-muted">{k.label}</dt>
             <dd className="mt-2 flex flex-wrap items-baseline gap-x-1.5">
-              <span className="display-xl font-display text-4xl text-fg tabular-nums">{k.value}</span>
-              <span className="text-sm text-muted">{k.sub}</span>
+              {loaded ? (
+                <>
+                  <span className="display-xl font-display text-4xl text-fg tabular-nums">{k.value}</span>
+                  <span className="text-sm text-muted">{k.sub}</span>
+                </>
+              ) : (
+                <Bone className="my-1 h-8 w-20" />
+              )}
             </dd>
           </div>
         ))}
       </dl>
+
+      <div className="mt-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 text-sm text-muted">
+        <p className="flex items-center gap-1.5">
+          <Snowflake size={14} className="text-accent" />
+          {stats.frozen.length
+            ? `Your streak freeze covered ${new Date(`${stats.frozen[0]}T12:00:00`).toLocaleDateString(undefined, { weekday: "long" })}, so your streak lives on.`
+            : "One streak freeze a week: miss a day and your streak survives."}
+        </p>
+        <Link href="/review" className="font-medium text-accent hover:underline">
+          Review the checks you missed →
+        </Link>
+      </div>
 
       <UpNext courses={courses} />
 
@@ -69,7 +88,9 @@ export default function ProgressPage() {
             All courses <HoverArrow />
           </Link>
         </div>
-        {courses.length === 0 ? (
+        {!loaded ? (
+          <CourseRowsSkeleton />
+        ) : courses.length === 0 ? (
           <p className="mt-4 rounded-2xl bg-white p-8 text-center text-muted ring-1 ring-line">
             No courses yet.{" "}
             <Link href="/home?new=1" className="font-medium text-accent">

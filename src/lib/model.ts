@@ -24,6 +24,12 @@ export const writerModel = () => env("OPENROUTER_MODEL") ?? DEFAULT_MODEL;
  * course stays on the writer model (harness.ts), since every lesson builds on it.
  */
 export const agentModel = () => env("AGENT_MODEL") ?? "openai/gpt-6-luna";
+/**
+ * The model that writes and revises lessons. Defaults to the writer model;
+ * LESSON_MODEL overrides it to try another writer while planning stays on the
+ * writer model (run 19, an experiment: unset LESSON_MODEL to revert).
+ */
+export const lessonModel = () => env("LESSON_MODEL") ?? writerModel();
 /** The model that reviews lessons. */
 export const reviewModel = () => env("REVIEW_MODEL") ?? DEFAULT_REVIEW_MODEL;
 

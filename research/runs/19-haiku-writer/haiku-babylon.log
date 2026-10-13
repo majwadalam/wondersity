@@ -1,0 +1,6 @@
+■ niche mathematics: Babylonian sexagesimal numbers (120s, score 6.8, below bar, $0.0504, 16 calls, 52120 in / 23882 out tokens)
+  approach: discovery (Place value is best learned by reading an unfamiliar number and noticing what each position must be worth before the rule is stated, so the learner predicts first and the rule is named afterwards.)
+  blocks:   activity:predict > explain > check > explain > worked > activity:sort > explain > problem > check
+  issues:   none
+  trace:    lesson.generate, lesson.blind, lesson.verify, lesson.evaluate=6, lesson.revise, lesson.blind, lesson.verify, lesson.evaluate=6.8, lesson.select=6.8
+  cost:     write $0.0057 (7701 in / 9770 out) · blind $0.0001 (629 in / 90 out) · verify $0.0129 (23564 in / 3894 out) · review $0.0258 (6371 in / 989 out) · revise $0.0060 (13855 in / 9139 out)

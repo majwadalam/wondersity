@@ -1,6 +1,6 @@
 "use client";
 
-import { BarChart3, BookOpen, Bookmark, House, LogOut, Menu, Plus, Settings, Shield, X } from "lucide-react";
+import { BarChart3, BookOpen, Bookmark, House, LogOut, Menu, Plus, RotateCcw, Settings, Shield, X } from "lucide-react";
 import { NotificationBell } from "./NotificationBell";
 import { AnimatePresence, MotionConfig, motion } from "motion/react";
 import Link from "next/link";
@@ -15,17 +15,18 @@ import { StartCourseDialog } from "./StartCourse";
 
 // Three kinds of page, three frames:
 //   marketing (landing, pricing, legal, sign in): a site header and footer;
-//   the app (home, courses, progress, library, settings): a sidebar;
+//   the app (home, courses, progress, review, library, settings): a sidebar;
 //   focus (a lesson, onboarding): the page alone, full screen.
 
 const NAV = [
   { href: "/home", label: "Home", Icon: House },
   { href: "/courses", label: "Courses", Icon: BookOpen },
   { href: "/progress", label: "Progress", Icon: BarChart3 },
+  { href: "/review", label: "Review", Icon: RotateCcw },
   { href: "/library", label: "Library", Icon: Bookmark },
 ];
 
-const APP_PREFIXES = ["/home", "/courses", "/progress", "/library", "/settings"];
+const APP_PREFIXES = ["/home", "/courses", "/progress", "/review", "/library", "/settings"];
 const isAppPage = (pathname: string) => APP_PREFIXES.some((p) => pathname === p || pathname.startsWith(`${p}/`));
 /** A lesson (/courses/:id/:n), onboarding or the admin panel (its own frame): nothing around the page. */
 const isFocusPage = (pathname: string) =>
@@ -168,7 +169,7 @@ function MarketingHeader() {
 
 export function MarketingFooter({ dark = false }: { dark?: boolean }) {
   const cols: [string, [string, string][]][] = [
-    ["Product", [["How it works", "/#how"], ["Subjects", "/#subjects"], ["Pricing", "/pricing"]]],
+    ["Product", [["How it works", "/#how"], ["Subjects", "/#subjects"], ["Pricing", "/pricing"], ["Help", "/help"]]],
     ["Account", [["Sign in", "/login"], ["Create an account", "/login?mode=signup"]]],
     ["Legal", [["Privacy", "/privacy"], ["Terms", "/terms"]]],
   ];
@@ -336,7 +337,7 @@ function PhoneBars() {
         </div>
       </header>
       <nav
-        className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-4 border-t border-line bg-surface/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden"
+        className="fixed inset-x-0 bottom-0 z-30 grid grid-cols-5 border-t border-line bg-surface/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden"
         aria-label="App"
       >
         {NAV.map(({ href, label, Icon }) => {

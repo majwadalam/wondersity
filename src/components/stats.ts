@@ -1,3 +1,4 @@
+import { streakFrom } from "@/lib/streak";
 import type { Course } from "./types";
 
 const dayKey = (d: Date) => `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
@@ -8,7 +9,7 @@ export function learningStats(courses: Course[], now = new Date()) {
   let doneModules = 0;
   let correct = 0;
   let answered = 0;
-  const activeDays = new Set<string>();
+  const finishedAt: string[] = [];
   const doneToday: { course: Course; moduleIndex: number }[] = [];
 
   for (const course of courses) {
@@ -22,22 +23,16 @@ export function learningStats(courses: Course[], now = new Date()) {
         answered += lesson.quiz.total;
       }
       if (lesson.completedAt) {
-        const day = dayKey(new Date(lesson.completedAt));
-        activeDays.add(day);
-        if (day === dayKey(now)) doneToday.push({ course, moduleIndex: i });
+        finishedAt.push(lesson.completedAt);
+        if (dayKey(new Date(lesson.completedAt)) === dayKey(now)) doneToday.push({ course, moduleIndex: i });
       }
     });
+    // Lessons from before a course was started over still count for the streak.
+    finishedAt.push(...(course.pastCompletions ?? []));
   }
 
-  // Consecutive days with a finished module, ending today (or yesterday, so
-  // the streak doesn't look broken before today's first module).
-  let streak = 0;
-  const cursor = new Date(now);
-  if (!activeDays.has(dayKey(cursor))) cursor.setDate(cursor.getDate() - 1);
-  while (activeDays.has(dayKey(cursor))) {
-    streak++;
-    cursor.setDate(cursor.getDate() - 1);
-  }
+  // The same streak the server keeps (lib/streak.ts, freeze included), in this browser's time zone.
+  const { streak, frozen } = streakFrom(finishedAt, Intl.DateTimeFormat().resolvedOptions().timeZone, now);
 
   return {
     totalModules,
@@ -45,6 +40,8 @@ export function learningStats(courses: Course[], now = new Date()) {
     percent: totalModules ? Math.round((doneModules / totalModules) * 100) : 0,
     accuracy: answered ? Math.round((correct / answered) * 100) : null,
     streak,
+    /** Days the weekly streak freeze bridged, newest first. */
+    frozen,
     doneToday,
   };
 }

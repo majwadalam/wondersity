@@ -6,8 +6,10 @@
 
 import { z } from "zod";
 import { lessonBlocks, type Lesson } from "./lessonBlocks";
+import { REGISTERS, VOICES, type Register } from "./voices";
 
-export const VOICES = ["cedar", "marin", "ash", "ballad", "coral", "sage", "verse", "echo"] as const;
+export { VOICES };
+const REGISTER_NAMES = Object.keys(REGISTERS) as Register[];
 
 export type Staging = {
   guide: {
@@ -26,6 +28,11 @@ export type Staging = {
    * caption, so a picture is never labelled as somewhere it isn't.
    */
   images: { setting: string; prompt: string; url?: string }[];
+  /**
+   * The other people who speak in the lesson's dialogue blocks, so each gets a
+   * voice of their own (lib/voices.ts). Lessons staged before it have none.
+   */
+  cast?: { name: string; manner: string; register: Register }[];
   /** What the guide says when the lesson is finished (lessons staged before it existed have none). */
   farewell?: string;
   /** steps[0] is the intro; steps[i + 1] goes with block i. `setting` only on lessons staged before images had one. */
@@ -40,7 +47,7 @@ const MAX_IMAGES = 2;
 export const STAGING_SCHEMA = {
   type: "object",
   additionalProperties: false,
-  required: ["guide", "images", "steps", "farewell"],
+  required: ["guide", "images", "steps", "farewell", "cast"],
   properties: {
     guide: {
       type: "object",
@@ -64,6 +71,15 @@ export const STAGING_SCHEMA = {
       },
     },
     farewell: { type: "string" },
+    cast: {
+      type: "array",
+      items: {
+        type: "object",
+        additionalProperties: false,
+        required: ["name", "manner", "register"],
+        properties: { name: { type: "string" }, manner: { type: "string" }, register: { type: "string", enum: REGISTER_NAMES } },
+      },
+    },
     steps: {
       type: "array",
       items: {
@@ -87,6 +103,10 @@ const Parsed = z.object({
   images: z.array(z.object({ setting: z.string().max(60), prompt: z.string().min(10).max(800) })).min(1),
   steps: z.array(z.object({ at: z.number().int().optional(), image: z.number().int(), line: z.string().min(1).max(400) })),
   farewell: z.string().max(300).optional(),
+  cast: z
+    .array(z.object({ name: z.string().min(1).max(80), manner: z.string().max(120), register: z.enum(REGISTER_NAMES as [Register, ...Register[]]) }))
+    .max(8)
+    .optional(),
 });
 
 export const STAGING_SYSTEM = `You are the director of an interactive documentary lesson. You cast a guide and stage an existing lesson as scenes. You never change the lesson's content, questions or answers.
@@ -95,7 +115,7 @@ The guide:
 - If the input names the guide from earlier lessons of this course, keep that same guide (same name, manner and voice) unless this lesson is set in a different era or place they could not speak for.
 - A character who fits the subject and can speak with authority: a historical figure for history or philosophy (e.g. Socrates, Seneca, a Roman senator, Marie Curie), or an invented expert for other subjects (e.g. "Dr. Ada Reyes, field biologist"). Never a living person.
 - A historical figure speaks in their own voice and time, and never claims knowledge from after their death; if a step needs later knowledge, they say "historians later found…".
-- manner: three or four words for how they sound. voice: pick the one that fits (cedar/ash/verse: deeper male; marin/coral/ballad: female; sage/echo: neutral).
+- manner: three or four words for how they sound. voice: pick one that fits (cedar/ash/verse: deeper male; marin/coral/ballad: female; sage/echo: neutral). The course settles the exact voice, so only the kind matters.
 - portraitPrompt: a stylised soft 3D clay bust of the character (or a fitting object for an invented expert), for a small round avatar. Never a photoreal face.
 
 The images (${MAX_IMAGES} at most; 1 when one place carries the whole lesson): the main places and moments the lesson moves through. Each one is expensive, so choose the few that matter most.
@@ -108,6 +128,8 @@ The steps: exactly one intro step, then one step for each block listed, in order
 - image: the index of the picture this step shows.
 - line: what the guide says out loud as the step opens, 1-3 sentences, under 45 words, spoken to the learner ("you"). It sets up the step: a challenge, a vivid detail, a reason to care.
 - It must not give away the answer to any check or problem, and for a check it must not restate the question (the learner reads the question right below); set the stakes instead.
+
+The cast: every speaker in the lesson's dialogue blocks other than the guide, once each, by the exact name the dialogue uses (empty when there are none). manner: three or four words for how they sound. register: deep (a deeper male voice), bright (a female voice) or neutral.
 
 The farewell: what the guide says when the learner finishes, 1-2 sentences, under 35 words, in character: name the one idea to carry forward and hint at what comes next.
 
@@ -128,6 +150,8 @@ export function stagingInput(lesson: Lesson, topic: string, earlierGuide?: Stagi
       }
       case "explain":
         return `${i + 1}. explain: ${b.heading} — ${b.body.slice(0, 220)}`;
+      case "dialogue":
+        return `${i + 1}. dialogue: ${b.heading} (speakers: ${[...new Set(b.turns.map((t) => t.speaker))].join(", ")})`;
       case "summary":
         return `${i + 1}. summary: ${b.points.join("; ").slice(0, 220)}`;
       default:
@@ -167,6 +191,7 @@ export function normalizeStaging(raw: unknown, blockCount: number): { ok: true; 
       images,
       steps: filled,
       ...(parsed.data.farewell ? { farewell: parsed.data.farewell } : {}),
+      ...(parsed.data.cast?.length ? { cast: parsed.data.cast } : {}),
     },
   };
 }

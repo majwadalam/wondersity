@@ -209,6 +209,8 @@ export type VoiceControl = {
   toggle: () => void;
   /** Resolves to a playable URL for a step's line (cached by the server). */
   urlFor: (step: number) => Promise<string | null>;
+  /** The same for one turn of a dialogue block, in that speaker's voice. */
+  urlForTurn: (block: number, turn: number) => Promise<string | null>;
 };
 
 /**
@@ -221,6 +223,25 @@ function stopSpeaking(only?: HTMLAudioElement | null) {
   if (!speaking || (only !== undefined && speaking !== only)) return;
   speaking.pause();
   speaking = null;
+}
+
+/** Plays a line, stopping whatever was speaking; resolves when it ends or is stopped. */
+export function playLine(url: string): { audio: HTMLAudioElement; done: Promise<boolean> } {
+  stopSpeaking();
+  const audio = new Audio(url);
+  speaking = audio;
+  const done = new Promise<boolean>((resolve) => {
+    audio.onended = () => resolve(true);
+    audio.onpause = () => resolve(audio.ended);
+    audio.onerror = () => resolve(false);
+  });
+  audio.play().catch(() => audio.onerror?.(new Event("error")));
+  return { audio, done };
+}
+
+/** Stops a line started by playLine, if it's still the one speaking. */
+export function stopLine(audio: HTMLAudioElement | null) {
+  stopSpeaking(audio);
 }
 
 /** Plays the step's line when it becomes active (if voice is on); click to replay. */

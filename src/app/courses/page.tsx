@@ -9,10 +9,14 @@ import type { Course } from "@/components/types";
 import { isRemote } from "@/lib/remoteImage";
 import { CATALOG, CatalogTile, CourseTile, courseProgress } from "@/components/app/CourseCards";
 import { Reveal } from "@/components/Reveal";
+import { CourseTilesSkeleton } from "@/components/Skeletons";
 
 export default function CoursesPage() {
-  const { courses, loaded } = useAppState();
-  const started = new Set(courses.map((c) => c.topic.trim().toLowerCase()));
+  const { courses: all, loaded } = useAppState();
+  // Archived courses are listed apart, at the bottom.
+  const courses = all.filter((c) => !c.archived);
+  const archived = all.filter((c) => c.archived);
+  const started = new Set(all.map((c) => c.topic.trim().toLowerCase()));
   const explore = CATALOG.filter((c) => !started.has(c.topic.toLowerCase()));
   const modulesDone = courses.reduce((n, c) => n + courseProgress(c).done, 0);
   const current = courses.find((c) => c.status === "active");
@@ -40,11 +44,7 @@ export default function CoursesPage() {
           Your courses
         </h2>
         {!loaded ? (
-          <div className="mt-4 grid grid-cols-2 gap-4 lg:grid-cols-4">
-            {[0, 1, 2, 3].map((i) => (
-              <div key={i} className="skeleton h-64 rounded-2xl" />
-            ))}
-          </div>
+          <CourseTilesSkeleton className="mt-4 grid grid-cols-2 gap-4 lg:grid-cols-4" />
         ) : courses.length === 0 ? (
           <p className="mt-4 rounded-2xl border border-dashed border-line-strong bg-surface p-8 text-center text-muted">
             No courses yet. Start one below, or name any topic on the{" "}
@@ -63,6 +63,21 @@ export default function CoursesPage() {
           </div>
         )}
       </section>
+      )}
+
+      {archived.length > 0 && (
+        <details className="group mt-14">
+          <summary className="cursor-pointer list-none text-sm font-semibold text-fg">
+            Archived ({archived.length}) <span className="ml-1 text-muted group-open:hidden">Show</span>
+            <span className="ml-1 hidden text-muted group-open:inline">Hide</span>
+          </summary>
+          <p className="mt-1 text-sm text-muted">Open one and choose Unarchive to list it again.</p>
+          <div className="mt-4 grid grid-cols-2 gap-4 opacity-80 lg:grid-cols-4">
+            {archived.map((c) => (
+              <CourseTile key={c.id} course={c} />
+            ))}
+          </div>
+        </details>
       )}
 
       {explore.length > 0 && (

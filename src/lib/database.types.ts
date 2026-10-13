@@ -14,6 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      admin_actions: {
+        Row: {
+          action: string
+          admin_email: string | null
+          admin_id: string | null
+          after: Json | null
+          before: Json | null
+          created_at: string
+          id: number
+          summary: string
+          target_id: string
+          target_type: string
+        }
+        Insert: {
+          action: string
+          admin_email?: string | null
+          admin_id?: string | null
+          after?: Json | null
+          before?: Json | null
+          created_at?: string
+          id?: never
+          summary: string
+          target_id: string
+          target_type: string
+        }
+        Update: {
+          action?: string
+          admin_email?: string | null
+          admin_id?: string | null
+          after?: Json | null
+          before?: Json | null
+          created_at?: string
+          id?: never
+          summary?: string
+          target_id?: string
+          target_type?: string
+        }
+        Relationships: []
+      }
       attempts: {
         Row: {
           chosen: string
@@ -51,6 +90,27 @@ export type Database = {
             referencedColumns: ["id"]
           },
         ]
+      }
+      bookmarks: {
+        Row: {
+          created_at: string
+          learner_id: string
+          topic: string
+          topic_key: string
+        }
+        Insert: {
+          created_at?: string
+          learner_id: string
+          topic: string
+          topic_key: string
+        }
+        Update: {
+          created_at?: string
+          learner_id?: string
+          topic?: string
+          topic_key?: string
+        }
+        Relationships: []
       }
       certificates: {
         Row: {
@@ -240,6 +300,7 @@ export type Database = {
       }
       courses: {
         Row: {
+          archived_at: string | null
           cover_url: string | null
           created_at: string
           current_module: number
@@ -255,9 +316,11 @@ export type Database = {
           topic: string
           topic_key: string
           updated_at: string
+          voices: Json
           world_road: Json | null
         }
         Insert: {
+          archived_at?: string | null
           cover_url?: string | null
           created_at?: string
           current_module?: number
@@ -273,9 +336,11 @@ export type Database = {
           topic: string
           topic_key: string
           updated_at?: string
+          voices?: Json
           world_road?: Json | null
         }
         Update: {
+          archived_at?: string | null
           cover_url?: string | null
           created_at?: string
           current_module?: number
@@ -291,6 +356,7 @@ export type Database = {
           topic?: string
           topic_key?: string
           updated_at?: string
+          voices?: Json
           world_road?: Json | null
         }
         Relationships: []
@@ -342,6 +408,41 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      lesson_ratings: {
+        Row: {
+          comment: string | null
+          created_at: string
+          learner_id: string
+          lesson_id: number
+          rating: number
+          updated_at: string
+        }
+        Insert: {
+          comment?: string | null
+          created_at?: string
+          learner_id: string
+          lesson_id: number
+          rating: number
+          updated_at?: string
+        }
+        Update: {
+          comment?: string | null
+          created_at?: string
+          learner_id?: string
+          lesson_id?: number
+          rating?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "lesson_ratings_lesson_id_fkey"
+            columns: ["lesson_id"]
+            isOneToOne: false
+            referencedRelation: "lessons"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       lesson_reports: {
         Row: {
@@ -532,10 +633,12 @@ export type Database = {
       profiles: {
         Row: {
           age_confirmed_at: string | null
+          avatar: string | null
           created_at: string
           daily_goal_minutes: number
           display_name: string | null
           id: string
+          last_recap_on: string | null
           last_reminded_on: string | null
           onboarded_at: string | null
           reason: string | null
@@ -548,10 +651,12 @@ export type Database = {
         }
         Insert: {
           age_confirmed_at?: string | null
+          avatar?: string | null
           created_at?: string
           daily_goal_minutes?: number
           display_name?: string | null
           id: string
+          last_recap_on?: string | null
           last_reminded_on?: string | null
           onboarded_at?: string | null
           reason?: string | null
@@ -564,10 +669,12 @@ export type Database = {
         }
         Update: {
           age_confirmed_at?: string | null
+          avatar?: string | null
           created_at?: string
           daily_goal_minutes?: number
           display_name?: string | null
           id?: string
+          last_recap_on?: string | null
           last_reminded_on?: string | null
           onboarded_at?: string | null
           reason?: string | null
@@ -646,6 +753,35 @@ export type Database = {
           p256dh?: string
         }
         Relationships: []
+      }
+      review_clears: {
+        Row: {
+          cleared_at: string
+          learner_id: string
+          lesson_id: number
+          question_index: number
+        }
+        Insert: {
+          cleared_at?: string
+          learner_id: string
+          lesson_id: number
+          question_index: number
+        }
+        Update: {
+          cleared_at?: string
+          learner_id?: string
+          lesson_id?: number
+          question_index?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "review_clears_lesson_id_fkey"
+            columns: ["lesson_id"]
+            isOneToOne: false
+            referencedRelation: "lessons"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       runs: {
         Row: {
@@ -796,6 +932,39 @@ export type Database = {
             referencedColumns: ["code"]
           },
         ]
+      }
+      support_messages: {
+        Row: {
+          created_at: string
+          email: string | null
+          id: number
+          kind: string
+          learner_id: string | null
+          message: string
+          page: string | null
+          resolved_at: string | null
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          id?: never
+          kind: string
+          learner_id?: string | null
+          message: string
+          page?: string | null
+          resolved_at?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          id?: never
+          kind?: string
+          learner_id?: string | null
+          message?: string
+          page?: string | null
+          resolved_at?: string | null
+        }
+        Relationships: []
       }
       user_roles: {
         Row: {

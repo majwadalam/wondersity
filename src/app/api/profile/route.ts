@@ -2,14 +2,17 @@ import type { SupabaseClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { currentLearner } from "@/lib/auth";
+import { AVATAR_IDS, avatarSrc, isAvatarId } from "@/lib/avatars";
 import { refFromCookieHeader } from "@/lib/referrals";
 import { serverError } from "@/lib/requestGuards";
 
-// The learner's profile: name, why they're here, daily goal, voice, and
+// The learner's profile: name, avatar, why they're here, daily goal, voice, and
 // whether they've finished onboarding.
 
 const Patch = z.object({
   displayName: z.string().trim().max(60).optional(),
+  // One of the painted avatars, or null to go back to their Google photo or initial.
+  avatar: z.enum(AVATAR_IDS).nullable().optional(),
   reason: z.string().max(40).optional(),
   dailyGoalMinutes: z.number().int().min(5).max(60).optional(),
   voiceOn: z.boolean().optional(),
@@ -54,6 +57,7 @@ export async function PATCH(request: Request) {
       id: session.user.id,
       updated_at: new Date().toISOString(),
       ...(p.displayName !== undefined ? { display_name: p.displayName || null } : {}),
+      ...(p.avatar !== undefined ? { avatar: p.avatar } : {}),
       ...(p.reason !== undefined ? { reason: p.reason } : {}),
       ...(p.dailyGoalMinutes !== undefined ? { daily_goal_minutes: p.dailyGoalMinutes } : {}),
       ...(p.voiceOn !== undefined ? { voice_on: p.voiceOn } : {}),
@@ -80,7 +84,7 @@ export async function PATCH(request: Request) {
   }
 }
 
-type Row = { display_name: string | null; reason: string | null; daily_goal_minutes: number; voice_on: boolean; onboarded_at: string | null; reminders?: boolean } | null;
+type Row = { display_name: string | null; avatar?: string | null; reason: string | null; daily_goal_minutes: number; voice_on: boolean; onboarded_at: string | null; reminders?: boolean } | null;
 
 /** Whether the learner has the admin role. They can read only their own row (migration 016). */
 async function hasAdminRole(db: SupabaseClient, userId: string) {
@@ -88,12 +92,21 @@ async function hasAdminRole(db: SupabaseClient, userId: string) {
   return data?.role === "admin";
 }
 
-function view(user: { email?: string; user_metadata?: Record<string, unknown> }, row: Row, admin: boolean) {
+function view(user: { email?: string; user_metadata?: Record<string, unknown>; app_metadata?: Record<string, unknown> }, row: Row, admin: boolean) {
+  const providers = user.app_metadata?.providers;
   const metaName = typeof user.user_metadata?.full_name === "string" ? user.user_metadata.full_name : null;
   return {
     email: user.email ?? null,
     displayName: row?.display_name ?? metaName ?? null,
-    avatarUrl: typeof user.user_metadata?.avatar_url === "string" ? user.user_metadata.avatar_url : null,
+    avatar: isAvatarId(row?.avatar) ? row.avatar : null,
+    // A picked avatar wins over the Google photo.
+    avatarUrl: isAvatarId(row?.avatar)
+      ? avatarSrc(row.avatar)
+      : typeof user.user_metadata?.avatar_url === "string"
+        ? user.user_metadata.avatar_url
+        : null,
+    // How they sign in ("email", "google"), so Settings offers only what applies.
+    signIn: Array.isArray(providers) ? providers.filter((x): x is string => typeof x === "string") : [],
     reason: row?.reason ?? null,
     dailyGoalMinutes: row?.daily_goal_minutes ?? 10,
     voiceOn: row?.voice_on ?? true,

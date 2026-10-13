@@ -271,11 +271,21 @@ stored in the public `covers` bucket as resized WebP (`uploadImage`, via
 `lesson_data.staging`. The lesson's blocks, questions and grading are
 untouched, and a lesson that fails to stage is shown without scenes.
 
-**Voice.** `GET /api/voice` speaks one step's line with `gpt-audio-mini`
-through OpenRouter (strict word-for-word prompt), stores it as a WAV keyed by
+**Voice.** `GET /api/voice` speaks one step's line (`?step=`) or one turn of
+a dialogue block (`?block=&turn=`) with `gpt-audio-mini` through OpenRouter
+(`lib/speech.ts`, strict word-for-word prompt), stores it as a WAV keyed by
 the words and voice, and returns its URL. The line is read from the saved
 lesson, never from the request. The player plays it when a step opens and
 fetches the next one ahead; voice can be turned off and the choice is kept.
+Each course has a cast (`courses.voices`, `lib/voices.ts`, `lib/courseCast.ts`):
+staging casts the guide and the dialogue's other speakers (`staging.cast`,
+with a deep, bright or neutral register), and the course settles the voice,
+so a character keeps one voice in every lesson, different characters get
+different voices, and which voice of a kind comes first varies by course
+(left alone, the model gave nearly every male guide "cedar"). A dialogue's
+"Listen" reads it turn by turn in those voices and pauses after a question.
+The course page lists the cast with a preview (`public/audio/voices/`, made
+by `scripts/generate-voice-samples.ts`) and lets the learner recast anyone.
 
 **Course covers and world.** Opening a course runs `POST /api/covers` once to
 paint a wide "world" for the course (`courses.cover_url`). The road in the
@@ -321,8 +331,14 @@ from app pages to `/login`. Progress made before accounts (a browser-made
 `learner-…` id in localStorage) is offered to the account on sign-in: the app lists what that browser holds
 (`preview_browser_learner`, migration 010) and moves it only if the learner
 chooses "Add it"
-(`claim_browser_learner`). `profiles` holds name, reason, daily goal, voice
-and whether onboarding is done.
+(`claim_browser_learner`). `profiles` holds name, avatar, reason, daily goal, voice
+and whether onboarding is done. Settings is in tabs (Profile, Plan,
+Notifications, Account; `?tab=`); Account changes the email or password of an
+email account, downloads everything as JSON (`/api/account/export`) and links
+to Help. Avatars are 12 painted clay animals
+(`lib/avatars.ts`, `public/art/avatars/`, made by `scripts/generate-avatars.ts`)
+picked in Settings or onboarding; the profile stores only the id (`profiles.avatar`, migration
+018), and a picked one shows instead of the Google photo.
 
 **Plans and billing.** Free: plan any course and take its first 2 lessons,
 3 new courses per 30 days. Pro ($19.99 a month, $119.99 a year): every
@@ -430,6 +446,20 @@ admin" on a learner's page (never on yourself). Otherwise read-only. Admins see
 an "Admin" link in the sidebar (`admin` on the profile, read from their own
 role row).
 
+**Admin controls.** A course's page (`/admin/courses/<id>`) has tabs:
+Lessons (per lesson: edit the title and goal of one not written yet, move the
+learner there, or rewrite an unfinished one, which deletes it so the tutor
+writes it fresh on next open), Edit (title, description, delete), Tailoring
+(the brief as asked, and editing its goal, context, what they know and the
+outcomes; lessons not written yet are briefed from these), AI work and
+History. A shared plan's page (`/admin/cache/<key>`) edits its wording and
+lessons, retires a saved lesson, or stops reusing it. Finished lessons can't
+be rewritten. Every change goes through a server action in
+`app/admin/actions.ts` (admin check, zod) to a function in `lib/admin.ts` that
+records it in `admin_actions` (migration 017) with the before and after; the
+Activity log tab lists them. Destructive buttons confirm in place
+(`components/admin/ActionForm.tsx`), never with a browser dialog.
+
 **How failures are recorded.** Every AI job (tutor run, staging, painting)
 is a `runs` row with ok, the error text, time, cost and, for tutor runs, the
 trace. A failed staging records the real reason (`detail` on `StageResult`)
@@ -439,14 +469,31 @@ error is in the server log under that reference and in the matching run.
 Learner reports are `lesson_reports`. Browser errors and server errors outside
 jobs are only in the server log.
 
+**Small product pieces.** A lesson's finish screen asks "How was this
+lesson?" (`lesson_ratings`; thumbs down with a comment go to the admin
+panel's Problems). `/review` lists every check answered wrong the first time
+(`lib/review.ts`): a retry is graded on the server, a right one is recorded in
+`review_clears`, the first answer's grade never changes, and the answer isn't
+sent until it's cleared or asked for. A course can be shared (`/start?topic=`
+starts it for whoever opens it), archived (`courses.archived_at`: listed apart,
+still opens) or started over (its lessons are taken off the path with
+`module_index` null, so streak, certificate and mistakes are kept). In a lesson,
+→ or Enter continues, ← goes back, 1-4 or A-D answers a check. Bookmarks are
+kept with the account (`bookmarks`; ones saved in a browser move in once).
+`/help` has quick answers and a form (`support_messages`, signed in or out;
+Problems → Messages, marked answered from there). The streak forgives one
+missed day a week (`streakFrom` in `lib/streak.ts`, also used by the client),
+and on Sunday evenings the reminder cron sends a weekly recap (`lib/recap.ts`).
+`scripts/e2e-product.ts` checks all of it through the running app.
+
 **Mistake reports and age.** A flag in the lesson's top bar saves a report
 (`lesson_reports`) with the step it was made on; metrics.sql lists them.
 Onboarding asks learners to confirm they're 13 or older
 (`profiles.age_confirmed_at`).
 
 **Product frames.** Marketing pages (`/`, `/pricing`, `/privacy`, `/terms`,
-`/login`) have a site header and footer; app pages (`/home`, `/courses`,
-`/progress`, `/library`, `/settings`) have a sidebar (tabs on phones);
+`/help`, `/start`, `/login`) have a site header and footer; app pages (`/home`, `/courses`,
+`/progress`, `/review`, `/library`, `/settings`) have a sidebar (tabs on phones);
 lessons and onboarding (`/welcome`) are full screen. Starting a course
 signed out goes through sign-up with the topic kept (`useStartCourse`). On phones the
 site header's links sit in a menu. Shared links show `app/opengraph-image.jpg`
@@ -508,6 +555,18 @@ staged, so it opens instantly.
 - `src/app/api/voice/route.ts` — speaks a guide's line
 - `src/app/api/covers/route.ts` — paints a course's world
 - `scripts/generate-art.ts` — the built-in catalog covers in `public/art/`
+- `scripts/generate-avatars.ts`, `src/lib/avatars.ts`, `src/components/app/AvatarPicker.tsx` — the avatars learners pick, in `public/art/avatars/`
+- `src/lib/voices.ts`, `src/lib/courseCast.ts`, `src/lib/speech.ts` — a course's cast of voices; speaking a line
+- `scripts/generate-voice-samples.ts` — the voice previews in `public/audio/voices/`
+- `src/app/api/courses/[id]/route.ts`, `src/components/app/CourseOptions.tsx` — recast a voice, archive, start over, share
+- `src/lib/review.ts`, `src/app/review/`, `src/app/api/review/` — Review: missed checks to try again
+- `src/app/api/ratings/`, `src/components/lesson/LessonRating.tsx` — rating a lesson
+- `src/app/api/bookmarks/` — bookmarks with the account
+- `src/app/help/`, `src/app/api/support/` — Help and contact
+- `src/app/start/` — a shared course link
+- `src/app/api/account/export/` — Download my data; `src/components/app/SignInSettings.tsx` — change email or password
+- `src/lib/recap.ts` — the weekly recap
+- `scripts/e2e-product.ts` — the features above end to end with a throwaway learner
 - `scripts/generate-landing-art.ts` — the landing page's hero world and closing illustration in `public/art/landing/`
 - `src/lib/requestGuards.ts` — input validation, rate limiting, error responses
 - `src/lib/auth.ts`, `src/lib/supabase/` — the signed-in learner; Supabase clients for server and browser
@@ -548,13 +607,13 @@ staged, so it opens instantly.
 - `src/components/lesson/math.tsx` — math in lesson text (KaTeX)
 - `src/lib/questionCheck.ts`, `src/lib/blindCheck.ts` — giveaway checks on knowledge checks; `research/question-quality.md`
 - `src/lib/worldRoad.ts`, `src/lib/journeyPath.ts` — tracing the road in a course's world; placing the journey's stops on it
+- `src/components/Skeletons.tsx` — loading placeholders shaped like each page (home, tiles, course, lesson, review, settings, plan)
 - `src/components/`, `src/hooks/` — UI pieces
 
-Bookmarks are stored in the browser (localStorage, per learner id); they are
-not in Supabase yet.
-- `supabase/migrations/` — SQL migrations (001 lessons and progress, 002 courses and attempts, 003 covers, 004 accounts: own-rows rules, profiles, claiming old progress, 005 lesson views, 006 subscriptions, lesson reports, age confirmation, 007 creator partners and companion pages, referrals, 008 shared course plans and run logs, 009 matching plans by meaning and sharing lesson 1, 010 asking before claiming pre-account progress, 011 lesson jobs, 012 shared lessons beyond lesson 1, 013 the road traced in a course's world, 014 tailored courses: intake, outcomes, course materials, 015 certificates, notifications, push subscriptions, profile time zone and reminders, 016 user roles: who may open the admin panel); apply with `pnpm db:push`
+- `supabase/migrations/` — SQL migrations (001 lessons and progress, 002 courses and attempts, 003 covers, 004 accounts: own-rows rules, profiles, claiming old progress, 005 lesson views, 006 subscriptions, lesson reports, age confirmation, 007 creator partners and companion pages, referrals, 008 shared course plans and run logs, 009 matching plans by meaning and sharing lesson 1, 010 asking before claiming pre-account progress, 011 lesson jobs, 012 shared lessons beyond lesson 1, 013 the road traced in a course's world, 014 tailored courses: intake, outcomes, course materials, 015 certificates, notifications, push subscriptions, profile time zone and reminders, 016 user roles: who may open the admin panel, 017 the admin activity log, 018 the learner's chosen avatar, 019 course voices and archiving, lesson ratings, cleared reviews, bookmarks, Help messages, the weekly recap, 020 deleting one's own Help messages); apply with `pnpm db:push`
 - `src/lib/plans.ts` — what each plan allows; `src/lib/billing.ts` — Paddle webhook checks and portal links
 - `src/app/api/billing/` — the learner's plan, the Paddle webhook, the customer portal
+- `scripts/setup-paddle.ts` — creates the Pro product, both prices, the webhook destination and a client token in Paddle, and writes their values to `.env.local` (idempotent)
 - `src/components/billing/` — checkout button, Settings plan section
 - `src/lib/enrichment.ts`, `src/components/lesson/GoDeeper.tsx` — "Go deeper" resources, confirmed by real services
 - `src/app/api/reports/route.ts`, `src/components/lesson/ReportMistake.tsx` — reporting a mistake in a lesson
@@ -575,7 +634,8 @@ not in Supabase yet.
     OPENROUTER_API_KEY=...
     OPENROUTER_MODEL=openai/gpt-6.1-sol    # writes lessons, runs the tutor agent
     REVIEW_MODEL=openai/gpt-6.1-sol        # reviews lessons; another family is more independent
-    # optional: VERIFY_FACTS=off, VERIFY_MODEL (default openai/gpt-6-luna),
+    # optional: LESSON_MODEL (writes and revises lessons; default OPENROUTER_MODEL; run 19 tried Haiku and kept Sol),
+    #           VERIFY_FACTS=off, VERIFY_MODEL (default openai/gpt-6-luna),
     #           VERIFY_SEARCH_ENGINE (default parallel, fast mode),
     #           BLIND_MODEL (default the verify model), ROAD_MODEL (default google/gemini-3.1-pro-preview),
     #           DIGEST_MODEL (outlines learner materials; default openai/gpt-6-luna)
@@ -629,6 +689,18 @@ webhook with `SUPABASE_SECRET_KEY`; learners can read their own row.
 **lesson_reports** — id, learner_id, lesson_id, step, kind (wrong_fact,
 confusing, broken, other), message, created_at.
 
+**courses** also has voices (jsonb: name in lower case → {name, voice,
+manner?, portrait?, chosen?}) and archived_at. **profiles** also has avatar
+and last_recap_on.
+
+**lesson_ratings** — learner_id, lesson_id (together the key), rating (1 or
+-1), comment, created_at, updated_at. **review_clears** — learner_id,
+lesson_id, question_index, cleared_at. **bookmarks** — learner_id, topic_key,
+topic, created_at. **support_messages** — id, learner_id (null signed out),
+email, kind (question, problem, idea, billing, other), message, page,
+created_at, resolved_at. All own rows only; signed-out Help messages are
+written with the server key.
+
 **profiles** also has age_confirmed_at, referred_by, referred_at;
 **subscriptions** also has referred_by and started_at.
 
@@ -658,6 +730,9 @@ out, only code, name, url and discount_code of active rows can be read.
 **user_roles** — user_id (primary key, cascade), role ('admin'), granted_by,
 created_at. A user reads only their own row; written only with the server key.
 
+**admin_actions** — id, admin_id, admin_email, action, target_type (course,
+plan, learner), target_id, summary, before, after, created_at. Server key only.
+
 **companions** — slug (primary key), partner_code, topic, title, blurb,
 video_url, active, created_at. Public when active.
 
@@ -676,13 +751,15 @@ video_url, active, created_at. Public when active.
 
 - Turning billing on: a Paddle account, products and prices, and the env
   values in `.env.example`
-- Lifecycle email (welcome, streak reminders, renewal notices) and shareable
-  course pages, which the GTM plan relies on
+- Lifecycle email (welcome, streak reminders, renewal notices), which the GTM
+  plan relies on, and a richer shared course page than `/start` (it opens the
+  course; it doesn't show the plan to a visitor yet)
 - A "Pro Plus" tier for learners who need more than 60 lessons a month
-- Spaced-repetition scheduling from recorded mistakes
+- Spaced-repetition scheduling from recorded mistakes (Review lists them; nothing schedules them yet)
 - A placement check in lesson 1 that can override a tailored course's self-rated starting point;
   deadlines; editing a tailored course's outcomes
 - A visual level map for courses (the hierarchy exists; the UI is still a list)
+- Email for Help replies and the weekly recap (today they're answered by hand and the recap goes to the bell and push)
 - More than one lesson per module (today a module is one lesson of activity blocks)
 - An eval suite for the agent (fixed topics, expected tool sequences, scores);
   `scripts/sample-lessons.ts` is a manual start for lesson variety

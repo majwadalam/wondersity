@@ -7,7 +7,7 @@ import { disablePush, enablePush, pushState } from "./push";
 /**
  * Settings → Notifications: browser notifications on this device (lesson
  * ready, certificate, streak milestones, the daily reminder), and whether the
- * daily streak reminder is sent at all. The bell in the app works either way.
+ * daily streak reminder and the weekly recap are sent at all. The bell in the app works either way.
  */
 export function NotificationSettings() {
   const { profile, updateProfile } = useAppState();
@@ -59,8 +59,10 @@ export function NotificationSettings() {
       </label>
       <label className="flex cursor-pointer items-center justify-between gap-4">
         <span>
-          <span className="block text-[15px] text-fg">Daily streak reminder</span>
-          <span className="mt-0.5 block text-sm text-muted">One nudge in the evening, only on a day you haven&rsquo;t learned yet and only while you have a streak.</span>
+          <span className="block text-[15px] text-fg">Reminders and weekly recap</span>
+          <span className="mt-0.5 block text-sm text-muted">
+            One nudge in the evening, only on a day you haven&rsquo;t learned yet and only while you have a streak. And on Sunday evening, your week: lessons, minutes and what&rsquo;s next.
+          </span>
         </span>
         <input
           type="checkbox"

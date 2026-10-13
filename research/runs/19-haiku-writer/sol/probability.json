@@ -1,0 +1,250 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "When Two Events Both Happen",
+    "objective": "Recognize when two events are independent and multiply their probabilities to find the probability that both happen.",
+    "estimatedMinutes": 7,
+    "approach": "discovery",
+    "approachReason": "The learner first counts possible outcome pairs, discovers the multiplication rule, and then tests when its independence assumption is justified.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Multiply for “both”—when events are independent",
+        "body": "The coin and spinner produce six equally likely pairs, and just one pair wins. The winning probability is \\(\\frac{1}{6}=\\frac{1}{2}\\times\\frac{1}{3}\\).\n\nTwo events are **independent** when knowing that one happened does not change the probability of the other. For independent events \\(A\\) and \\(B\\), the **multiplication rule** is:\n\\[\nP(A\\text{ and }B)=P(A)\\times P(B).\n\\]",
+        "example": "Getting heads does not change the spinner's chance of landing on blue: it remains 1/3. We are assuming the coin toss and spinner operate independently.",
+        "layout": "split"
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Does learning the coin result change the spinner's probability?",
+          "Write the probability of each requirement separately, then combine them for “both.”"
+        ],
+        "retry": "Think of the spinner's winning outcomes as a fraction of all outcomes. The coin requirement keeps half of that fraction."
+      },
+      {
+        "kind": "worked",
+        "heading": "The probabilities need not match",
+        "problem": "In an illustrative game, you pass a first challenge with probability 0.8 and a second challenge with probability 0.6. The outcomes are independent. What is the probability of passing both?",
+        "steps": [
+          {
+            "title": "Identify the target",
+            "text": "You need to pass the first challenge and the second challenge.",
+            "why": "The word “both” requires the two successes together, not either success on its own."
+          },
+          {
+            "title": "Check independence",
+            "text": "Passing the first challenge leaves the second challenge's success probability at 0.6.",
+            "why": "The problem states that the outcomes are independent."
+          },
+          {
+            "title": "Multiply",
+            "text": "\\(0.8\\times0.6=0.48\\).",
+            "why": "The second requirement keeps 60% of the probability represented by the first requirement."
+          }
+        ],
+        "answer": "The probability of passing both is 0.48, or 48%."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "Check what the first result changes",
+        "body": "Two events are not independent just because they happen at different times. Ask: **If I learn the first result, does the probability of the second event change?**\n\nFor a bag containing two red and three blue counters, replacing the first counter and mixing thoroughly restores the second draw's red probability to \\(2/5\\). Without replacement, drawing red first leaves one red among four counters, so the second draw's red probability becomes \\(1/4\\). You cannot multiply the two original probabilities as though nothing changed.",
+        "example": ""
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Imagine the contents of the bag immediately before the second draw.",
+          "Find the gold probability on each draw before calculating the probability of two gold results."
+        ],
+        "retry": "Replacement restores the original collection. After thorough mixing, the second draw has the same probabilities regardless of the first result."
+      },
+      {
+        "kind": "problem",
+        "heading": "Your turn: two successful tests",
+        "prompt": "In an illustrative software simulation, test A succeeds with probability 0.85 and test B succeeds with probability 0.6. Their outcomes are independent.\n\nWhat is the probability that both tests succeed? Enter a decimal.",
+        "answers": [
+          "0.51",
+          ".51"
+        ],
+        "unit": "",
+        "traps": [
+          {
+            "answer": "1.45",
+            "feedback": "You added the probabilities. For two independent successes together, multiply: the combined probability must be no larger than either individual probability."
+          },
+          {
+            "answer": "0.85",
+            "feedback": "This accounts for test A but does not impose the requirement that test B also succeeds."
+          },
+          {
+            "answer": "0.6",
+            "feedback": "This accounts for test B but does not impose the requirement that test A also succeeds."
+          }
+        ],
+        "hints": [
+          "The target is success on A and success on B, not success on just one test.",
+          "Take 60% of 0.85."
+        ],
+        "solution": "Independence means test B's success probability stays 0.6 when test A succeeds. Therefore, \\(P(\\text{both succeed})=0.85\\times0.6=0.51\\)."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "One winning pair",
+        "prompt": "Toss a fair coin and spin a spinner with three equal sections: red, blue, and yellow. Assume the toss and spin are independent. You win when the coin shows heads AND the spinner lands on blue. List or imagine all the possible pairs: what fraction win?",
+        "reveal": "The six equally likely pairs are heads–red, heads–blue, heads–yellow, tails–red, tails–blue, and tails–yellow. Just one wins, giving 1/6—the same result as (1/2) × (1/3).",
+        "type": "predict",
+        "options": [
+          {
+            "text": "1/6",
+            "correct": true,
+            "feedback": "Yes. Heads–blue is one winning pair among six equally likely pairs."
+          },
+          {
+            "text": "1/2",
+            "correct": false,
+            "feedback": "Half the pairs have heads, but some of those have red or yellow rather than blue."
+          },
+          {
+            "text": "1/3",
+            "correct": false,
+            "feedback": "A third of the pairs have blue, but tails–blue does not win."
+          },
+          {
+            "text": "5/6",
+            "correct": false,
+            "feedback": "Adding 1/2 and 1/3 does not count outcomes meeting both requirements. Only heads–blue wins."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "What does the first result tell you?",
+        "prompt": "Sort each setup by whether learning the first result changes the probability of the second target event. For each random draw, assume every remaining object is equally likely to be selected.",
+        "reveal": "Separate trials can be independent, and replacement can restore independence between draws. Removing an object or copying an outcome makes the first result relevant to the second.",
+        "type": "sort",
+        "buckets": [
+          "Second probability unchanged",
+          "Second probability changes"
+        ],
+        "items": [
+          {
+            "text": "Toss a fair coin twice, using independent tosses. The targets are heads first and heads second.",
+            "bucket": "Second probability unchanged"
+          },
+          {
+            "text": "Draw from a bag of two red and three blue counters. Replace the counter and mix thoroughly before drawing again. The targets are red first and red second.",
+            "bucket": "Second probability unchanged"
+          },
+          {
+            "text": "Draw from a bag of two red and three blue counters without replacement. The targets are red first and red second.",
+            "bucket": "Second probability changes"
+          },
+          {
+            "text": "Choose a digit uniformly from 0 through 9, then copy it into a second box. The targets are 7 in the first box and 7 in the second.",
+            "bucket": "Second probability changes"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "At a school fair, a fair coin and a spinner with four equal sections operate independently. You receive a prize if the coin shows tails and the spinner lands on its single star section. What is the probability of receiving a prize?",
+        "options": [
+          "1/2",
+          "1/8",
+          "3/4",
+          "1/4"
+        ],
+        "correctAnswer": "1/8",
+        "explanation": "The tails probability is 1/2 and the star probability is 1/4. Since they are independent, the probability of both is (1/2) × (1/4) = 1/8."
+      },
+      {
+        "question": "A treasure-game bag holds three gold tokens and seven blue tokens. A player draws a token at random, replaces it, mixes thoroughly, and draws again. What is the probability that both draws are gold?",
+        "options": [
+          "3/10",
+          "1/15",
+          "3/5",
+          "9/100"
+        ],
+        "correctAnswer": "9/100",
+        "explanation": "Replacement and thorough mixing keep the gold probability at 3/10 on each independent draw. The probability of two gold tokens is (3/10) × (3/10) = 9/100."
+      }
+    ],
+    "sources": [
+      {
+        "url": "https://openstax.org/books/statistics/pages/3-2-independent-and-mutually-exclusive-events",
+        "title": "3.2 Independent and Mutually Exclusive Events - Statistics | OpenStax"
+      },
+      {
+        "url": "https://ocw.mit.edu/courses/14-310x-data-analysis-for-social-scientists-spring-2023/mit14_310x_s23_week02_lec02.pdf",
+        "title": "14.310x Spring 2023 Lecture 2: Fundamentals of Probability"
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 76573,
+      "approach": "discovery",
+      "blocks": "activity > explain > check > worked > activity > explain > check > problem",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.blind",
+      "iteration": 1,
+      "ms": 4731,
+      "questions": 2,
+      "giveaways": []
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 1,
+      "ms": 11682,
+      "claims": 2,
+      "supported": 2,
+      "contradicted": [],
+      "unclear": 0,
+      "downgraded": []
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8,
+      "ms": 11696,
+      "problems": [
+        "Question 2 has a flagged answer-length cue: the correct option, 9/100, is longer than every distractor.",
+        "Assessment difficulty rises only modestly. The final software-test problem repeats the worked example's structure with different numbers, rather than requiring learners to decide whether multiplication is justified.",
+        "The final problem's hint, 'Take 60% of 0.85,' gives the calculation directly instead of helping learners identify the appropriate rule.",
+        "The opening discovery activity invokes independence before defining it, which may briefly confuse a beginner."
+      ],
+      "factErrors": [],
+      "structureIssues": [
+        "Question 2 (\"A treasure-game bag holds three gold tokens and seven blu…\"): the right answer is clearly the longest option; make the options similar in length and detail."
+      ]
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true,
+      "sources": 2
+    }
+  ]
+}

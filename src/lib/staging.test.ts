@@ -8,6 +8,16 @@ const raw = (steps: { at?: number; image: number; line: string }[]) => ({ guide,
 const step = (at: number) => ({ at, image: 0, line: `Line ${at}` });
 
 describe("normalizeStaging", () => {
+  it("keeps the dialogue's cast, and rejects a register that isn't one", () => {
+    const cast = [{ name: "Lucilius", manner: "eager, young", register: "bright" }];
+    const r = normalizeStaging({ ...raw([step(0), step(1)]), cast }, 1);
+    assert.ok(r.ok);
+    if (r.ok) assert.deepEqual(r.staging.cast, cast);
+    assert.equal(normalizeStaging({ ...raw([step(0), step(1)]), cast: [{ name: "X", manner: "m", register: "loud" }] }, 1).ok, false);
+    const none = normalizeStaging({ ...raw([step(0), step(1)]), cast: [] }, 1);
+    assert.ok(none.ok && !("cast" in none.staging));
+  });
+
   it("places steps by their number, whatever order they come in", () => {
     const r = normalizeStaging(raw([step(2), step(0), step(1), step(3)]), 3);
     assert.ok(r.ok);

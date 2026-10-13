@@ -1,0 +1,338 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Place Value in Base 60",
+    "objective": "Read and write numbers in base 60, and convert them to base 10.",
+    "estimatedMinutes": 8,
+    "approach": "discovery",
+    "approachReason": "Place value is best learned by reading an unfamiliar number and noticing what each position must be worth before the rule is stated, so the learner predicts first and the rule is named afterwards.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Each place is worth 60 times the place to its right",
+        "body": "Our everyday base-10 system uses ten digits, and each place is worth 10 times the place to its right. The Babylonian system was based on 60, and modern transcriptions write each place as a value from 0 to 59, with places worth 1, then 60, then 3600 (60 × 60), and so on. So in a two-place number, the left group counts sixties and the right group counts units: 1,25 means 1 × 60 + 25 = 85, not 125 and not 26.\n\nModern transcriptions put a comma between places, as in 1,25, and use a semicolon only between the whole and fractional parts. Babylonian tablets had no such marks, so the reader judged the scale from context. This lesson assumes the rightmost place is units.",
+        "example": "Example: the pair 2,30 is 2 × 60 + 30 = 150."
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Ask which place the 4 occupies, and what that place is worth.",
+          "Once you know what the 4 is worth, add the 12 to it."
+        ],
+        "retry": "Read the left digit as sixties and the right digit as units. Here 4 sits in the sixties place, so it is worth 4 × 60, and 12 is added at the units place."
+      },
+      {
+        "kind": "explain",
+        "heading": "Converting to base 10: multiply each digit by its place, then add",
+        "body": "To read any base-60 number, work from right to left and find the value of each place. Then multiply each digit by its place value and add the results.",
+        "example": "",
+        "layout": "steps",
+        "points": [
+          {
+            "title": "Name the places",
+            "text": "Starting from the right, the places are 1, 60, 3600, and so on."
+          },
+          {
+            "title": "Multiply",
+            "text": "Multiply each digit by its place value."
+          },
+          {
+            "title": "Add",
+            "text": "Add the products to get the base-10 value."
+          }
+        ]
+      },
+      {
+        "kind": "worked",
+        "heading": "Worked example: convert 3,20,15 to base 10",
+        "problem": "The number 3,20,15 has three places. Convert it to base 10.",
+        "steps": [
+          {
+            "title": "Identify the places",
+            "text": "The places are 3600 (left), 60 (middle), and 1 (right).",
+            "why": "The three positions are worth 60 × 60, 60, and 1."
+          },
+          {
+            "title": "Multiply each digit",
+            "text": "3 × 3600 = 10800, 20 × 60 = 1200, and 15 × 1 = 15.",
+            "why": "Each digit is multiplied by the value of its own place, not by the position number."
+          },
+          {
+            "title": "Add the products",
+            "text": "10800 + 1200 = 12000, and 12000 + 15 = 12015.",
+            "why": "Adding in two steps makes the arithmetic easy to check."
+          }
+        ],
+        "answer": "The value is 12015."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "Converting to base 60: divide by 60 and keep the remainders",
+        "body": "To write a base-10 number in base 60, divide by 60. The remainder is the units digit. Divide the quotient by 60 again to get the next digit, and repeat until the quotient is 0. The digits come out from right to left.",
+        "example": "Example: 150 ÷ 60 = 2 remainder 30, so 150 is written 2,30.",
+        "layout": "steps",
+        "points": [
+          {
+            "title": "Divide by 60",
+            "text": "Divide the number by 60 and note the quotient and remainder."
+          },
+          {
+            "title": "Repeat on the quotient",
+            "text": "Divide the quotient by 60 again, writing down each new remainder."
+          },
+          {
+            "title": "Read the digits",
+            "text": "Write the remainders from last to first, separated by commas."
+          }
+        ]
+      },
+      {
+        "kind": "problem",
+        "heading": "Write 7265 in base 60",
+        "prompt": "Convert the base-10 number 7265 into base 60. Write your answer with commas between places, for example 1,02.",
+        "answers": [
+          "2,01,05",
+          "2,1,5"
+        ],
+        "unit": "",
+        "traps": [
+          {
+            "answer": "121,05",
+            "feedback": "You divided once and stopped. The quotient 121 is still 60 or more, so it must be divided by 60 again to get the leftmost digit."
+          }
+        ],
+        "hints": [
+          "Start by dividing 7265 by 60. Which number is the remainder, and which is the quotient?",
+          "Keep dividing the quotient by 60 until the quotient is less than 60."
+        ],
+        "solution": "7265 ÷ 60 = 121 remainder 5, since 121 × 60 = 7260. Then 121 ÷ 60 = 2 remainder 1, since 2 × 60 = 120. The digits from left to right are 2, 1, 5, so the answer is 2,01,05. Check: 2 × 3600 + 1 × 60 + 5 = 7200 + 60 + 5 = 7265."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Which place does the 1 occupy, and how much is that place worth?",
+          "What does a 0 in a place tell you about how many of that place's value you have?"
+        ],
+        "retry": "Regroup: 1,0,30 means one full group of 3600, no groups of 60, and 30 loose units. Count the 3600s first, then add the loose units."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "What is 1 25?",
+        "prompt": "A clay tablet records a quantity as two groups, 1 and then 25, written in base 60. Before any rule is given, what number does it record?",
+        "reveal": "Two groups are not a pair of separate numbers: the left group is worth 60 times more than the right. So 1 25 means 1 × 60 + 25 = 85.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "26",
+            "correct": false,
+            "feedback": "This adds the two groups as if they were ordinary numbers. The left group is not a units count, so it must be multiplied by 60."
+          },
+          {
+            "text": "85",
+            "correct": true,
+            "feedback": "Correct. The left digit counts sixties, so 1 × 60 = 60, and 25 more gives 85."
+          },
+          {
+            "text": "125",
+            "correct": false,
+            "feedback": "This writes the digits side by side, as in base 10. Base 60 gives the left group a larger place value."
+          },
+          {
+            "text": "61",
+            "correct": false,
+            "feedback": "This counts the left group as 60, but forgets to add the 25 that sits in the units place."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Which place is it in?",
+        "prompt": "Sort each group of digits in 2,45,10 and 4,09 by the value its place gives it. The place values are ×1, ×60 and ×3600.",
+        "reveal": "Position decides value, not the digits alone: 45 in the middle of 2,45,10 is worth 45 × 60 = 2700, while a 45 on its own is worth only 45.",
+        "type": "sort",
+        "buckets": [
+          "×1",
+          "×60",
+          "×3600"
+        ],
+        "items": [
+          {
+            "text": "The 2 in 2,45,10",
+            "bucket": "×3600"
+          },
+          {
+            "text": "The 45 in 2,45,10",
+            "bucket": "×60"
+          },
+          {
+            "text": "The 10 in 2,45,10",
+            "bucket": "×1"
+          },
+          {
+            "text": "The 4 in 4,09",
+            "bucket": "×60"
+          },
+          {
+            "text": "The 9 in 4,09",
+            "bucket": "×1"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A grain store's tally is transcribed in modern notation as 4,12. The right-hand place counts units and the left-hand place counts sixties. How many units does the tally record?",
+        "options": [
+          "48",
+          "252",
+          "412",
+          "16"
+        ],
+        "correctAnswer": "252",
+        "explanation": "The left digit 4 is worth 4 × 60 = 240, and the 12 sits in the units place, so the total is 240 + 12 = 252. The other options come from reading the digits as base 10, adding them, or joining them into one number."
+      },
+      {
+        "question": "A surveyor's tally on a clay tablet is transcribed in modern notation as 1,0,30, a three-place base-60 number. Using the place values from this lesson, how many units does the tally record?",
+        "options": [
+          "90",
+          "3660",
+          "3630",
+          "1030"
+        ],
+        "correctAnswer": "3630",
+        "explanation": "The 1 is in the 3600 place, the 0 holds the 60s place and adds nothing, and the 30 sits in the units place, giving 3600 + 0 + 30 = 3630. Treating the zero as a 1 gives 3660, and dropping the top place gives 90."
+      }
+    ],
+    "sources": [
+      {
+        "url": "https://www.britannica.com/science/sexagesimal-number-system",
+        "title": "Sexagesimal number system | mathematics | Britannica"
+      },
+      {
+        "url": "https://people.clas.ufl.edu/ufhatch/2022/07/28/writing-sexagesimal-numbers-modern-notation",
+        "title": "Writing Sexagesimal Numbers – Modern Notation – Robert Hatch"
+      },
+      {
+        "url": "https://mathshistory.st-andrews.ac.uk/HistTopics/Babylonian_numerals/",
+        "title": "\n      Babylonian numerals - MacTutor History of Mathematics\n    "
+      }
+    ]
+  },
+  "score": 6.8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 45596,
+      "approach": "discovery",
+      "blocks": "activity > explain > check > explain > worked > activity > explain > problem > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.blind",
+      "iteration": 1,
+      "ms": 3861,
+      "questions": 2,
+      "giveaways": []
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 1,
+      "ms": 18455,
+      "claims": 4,
+      "supported": 1,
+      "contradicted": [
+        "blocks[1].body: \"Modern writers often use a separator such as a semicolon between sexagesimal places, but the Babylonians did not write numbers with that separator.\" is contradicted by Writing Sexagesimal Numbers – Modern Notation – Robert Hatch (https://people.clas.ufl.edu/ufhatch/2022/07/28/writing-sexagesimal-numbers-modern-notation): Modern writers use commas to separate sexagesimal places; a semicolon separates the integer and fractional parts. Neither separator was used in ancient texts."
+      ],
+      "unclear": 2,
+      "downgraded": [
+        "The Babylonian sexagesimal system uses place values that increase by powers of 60, beginning with 1, 60, and 3600.: cited a page the search didn't return (https://math.libretexts.org/Courses/Florida_SouthWestern_State_College/MGF_1131%3A_Mathematics_in_Context__(FSW; returned: https://people.clas.ufl.edu/ufhatch/2022/07/28/babylonian-cuneiform-and-sexagesimal-numbers/, https://math.libretexts.org/Courses/Florida_SouthWestern_State_College/MGF_1131%3A_Mathematics_in_Context__(FSW)/01%3A__Number_Representation_in_Different_Bases_and_Cryptography/1.02%3A__Early_Numeration_Systems, https://www.britannica.com/science/sexagesimal-number-system, https://math.libretexts.org/Bookshelves/Applied_Mathematics/Contemporary_Mathematics_(OpenStax)/04%3A__Number_Representation_and_Calculation/4.01%3A__Early_Numeration_Systems, https://www.thoughtco.com/why-we-still-use-babylonian-mathematics-116679)",
+        "Babylonian sexagesimal digits are represented in this lesson as values from 0 to 59.: cited a page the search didn't return (https://math.libretexts.org/Bookshelves/Applied_Mathematics/Contemporary_Mathematics_(OpenStax; returned: https://www.parabola.unsw.edu.au/sites/default/files/2024-05/vol60_no1_5.pdf, https://www.ithaca.edu/sites/default/files/2024-03/babylonianslides.pdf, https://www.ms.uky.edu/~droyster/courses/fall06/PDFs/AppendixA.pdf, https://math.libretexts.org/Bookshelves/Applied_Mathematics/Contemporary_Mathematics_(OpenStax)/04%3A__Number_Representation_and_Calculation/4.01%3A__Early_Numeration_Systems, https://math.libretexts.org/Courses/Florida_SouthWestern_State_College/MGF_1131%3A_Mathematics_in_Context__(FSW)/01%3A__Number_Representation_in_Different_Bases_and_Cryptography/1.02%3A__Early_Numeration_Systems)"
+      ]
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 6,
+      "ms": 18469,
+      "problems": [
+        "The notation explanation is misleading: modern sexagesimal notation conventionally uses a semicolon to separate integer and fractional parts, and commas between successive places. Teaching 3;20;15 as an integer without explicitly defining a nonstandard classroom convention risks substantial confusion.",
+        "The first check explicitly says there is nothing else on the tablet, yet demands a uniquely determined integer value. Historical Babylonian notation did not fix the units position; without context, 4 12 does not uniquely establish 252 units. This contradicts the lesson's own warning about contextual interpretation.",
+        "Saying Babylonian digits simply run from 0 to 59 conflates a modern mathematical model with historical notation. Zero placeholders developed over time and did not function exactly like modern zero digits. The final tablet scenario compounds this by presenting a modern explicit zero and semicolons as a scribe's notation.",
+        "The sorting activity repeats the exact three-place number just demonstrated, reducing transfer and discovery. Its reveal refers to 20 appearing in another position, although no such example appears among its items.",
+        "The final check largely repeats the immediately preceding three-place conversion and supplies the incorrect calculation in the prompt. Distractors 2065 and 605 have unclear misconception bases, and the retry explanations repeat the same multiplication procedure rather than offering a genuinely different explanation."
+      ],
+      "factErrors": [
+        "blocks[1].body: \"Modern writers often use a separator such as a semicolon between sexagesimal places, but the Babylonians did not write numbers with that separator.\" is contradicted by Writing Sexagesimal Numbers – Modern Notation – Robert Hatch (https://people.clas.ufl.edu/ufhatch/2022/07/28/writing-sexagesimal-numbers-modern-notation): Modern writers use commas to separate sexagesimal places; a semicolon separates the integer and fractional parts. Neither separator was used in ancient texts."
+      ],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 39170,
+      "approach": "discovery",
+      "blocks": "activity > explain > check > explain > worked > activity > explain > problem > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0,
+      "patch": "Switched all notation to modern comma-separated places with semicolons reserved for fractions, stated that exercises assume the rightmost place is units, reworded the modern-convention claims, replaced the repetitive sorting activity with new numbers, and replaced the final check with a zero-placeho",
+      "changes": 8
+    },
+    {
+      "step": "lesson.blind",
+      "iteration": 2,
+      "ms": 8127,
+      "questions": 2,
+      "giveaways": []
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 2,
+      "ms": 16718,
+      "claims": 4,
+      "supported": 4,
+      "contradicted": [],
+      "unclear": 0,
+      "downgraded": []
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 6.8,
+      "ms": 16723,
+      "problems": [
+        "Several distractor explanations are numerically inaccurate. In question 1, replacing the zero with 1 gives 3690, not 3660; dropping the top place gives 30, not 90. The value 90 results from dropping the middle zero and reading 1,30.",
+        "The opening activity's feedback for 61 does not explain that answer: counting the left group as 60 and forgetting the 25 gives 60.",
+        "The opening tablet example presents 85 as uniquely determined before establishing that the rightmost group represents units. Actual Babylonian notation could require context to determine scale; the later caveat does not fully repair this initial overstatement.",
+        "The first check supplies the place-value rule in the question itself, so learners can answer without retaining the lesson's central idea. The grain-store context is decorative rather than a meaningful transfer task.",
+        "The final check tests straightforward conversion rather than a substantially harder application, and its hints effectively restate the procedure. There is no final independent check of writing base-60 numbers.",
+        "The zero's role as a placeholder first becomes important in the final check without explicit preparation. The lesson also does not distinguish modern written zero from historical Babylonian placeholder conventions."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 6.8,
+      "passed": false,
+      "sources": 3
+    }
+  ]
+}

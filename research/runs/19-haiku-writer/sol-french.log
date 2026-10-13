@@ -1,0 +1,6 @@
+■ history: The French Revolution (168s, score 7, below bar, $0.1186, 18 calls, 41309 in / 11115 out tokens)
+  approach: mystery (The lesson opens with the puzzle of how a financial crisis became a challenge to royal authority, then connects the fiscal, food and political clues to resolve it.)
+  blocks:   explain > activity:scenario > explain > check > activity:diagram > explain > check > reflect
+  issues:   none
+  trace:    lesson.generate, lesson.blind, lesson.verify, lesson.evaluate=7, lesson.revise, lesson.blind, lesson.verify, lesson.evaluate=7, lesson.select=7
+  cost:     write $0.0373 (4902 in / 3657 out) · verify $0.0148 (21507 in / 4140 out) · blind $0.0002 (827 in / 201 out) · review $0.0225 (5688 in / 832 out) · revise $0.0438 (8385 in / 2285 out)

@@ -1,0 +1,333 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Why 1789?",
+    "objective": "Explain how debt, food prices and new ideas combined to start the French Revolution in 1789.",
+    "estimatedMinutes": 8,
+    "approach": "mystery",
+    "approachReason": "The puzzle of why a rich, powerful kingdom erupted in 1789 gives the learner a reason to follow each cause, and the final block resolves the question.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "A rich kingdom in crisis",
+        "body": "In the 1780s, France was the most populous kingdom in Europe, with about 28 million people, and its farmland and trade were among the largest on the continent. Yet by 1789 the monarchy was in deep trouble and the country was in open revolt.\n\nWhy did a state with so much wealth and power fall apart so quickly? Historians point to three pressures that built up together: the crown's debt, the cost of food, and new ideas about who should hold power.",
+        "example": ""
+      },
+      {
+        "kind": "explain",
+        "heading": "Pressure one: the debt",
+        "body": "The crown borrowed heavily to fund its wars, including French support for the American colonists in the 1770s and early 1780s. By the late 1780s, debt service (interest plus repayments on existing loans) absorbed roughly half of state expenditure, by many historians' estimates.\n\nThe tax system made the problem worse. The nobility and clergy were largely exempt from the main direct tax, the taille, so most of the burden fell on the Third Estate, the commoners who made up the vast majority of the population.",
+        "example": "Illustration: imagine a household that borrows to pay last year's loans. Each year the interest grows, and fewer coins remain for food, clothes or repairs. Eventually the household must find new income or stop paying.",
+        "layout": "steps",
+        "points": [
+          {
+            "title": "Borrowing",
+            "text": "Wars were financed heavily through loans, alongside taxes."
+          },
+          {
+            "title": "Debt service",
+            "text": "Interest and repayments absorbed roughly half of state spending, by many estimates."
+          },
+          {
+            "title": "Unfair taxes",
+            "text": "Privileged groups paid little direct tax."
+          }
+        ]
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Ask what the next loan is actually paying for once most of the state's income is already committed.",
+          "Consider which parts of society were paying little direct tax, and where extra money could come from."
+        ],
+        "retry": "Think of it as a household: if new loans only pay the interest on old loans, borrowing more does not solve the problem. Ask where the money could come from that the system is not already using."
+      },
+      {
+        "kind": "explain",
+        "heading": "Pressure two: the price of bread",
+        "body": "Bread was the staple of the diet, and poor households spent a large share of their income on it. When grain was scarce, the price of bread could double, leaving little for anything else.\n\nIn 1788 a hailstorm in July destroyed crops across parts of northern France, and the winter that followed was severe. Grain prices rose sharply in the months before July 1789, when bread was at its most expensive and unrest in towns and countryside grew.",
+        "example": "Many urban workers spent around half their wages on bread in normal times, so a sudden price rise cut deeply into what remained for rent and fuel.",
+        "layout": "split"
+      },
+      {
+        "kind": "problem",
+        "heading": "Work out the bread squeeze",
+        "prompt": "Consider an illustrative day labourer in Paris (these figures are invented for the exercise). He earns 24 sous a day. His household needs 4 loaves of bread each day. After the price rises from 3 sous to 6 sous per loaf, what percentage of his daily income goes on bread?",
+        "answers": [
+          "100"
+        ],
+        "unit": "%",
+        "traps": [
+          {
+            "answer": "50",
+            "feedback": "That is the share at the old price of 3 sous: 4 × 3 = 12, and 12 ÷ 24 = 0.5. The question asks about the new price."
+          },
+          {
+            "answer": "200",
+            "feedback": "You divided the income by the old bread cost instead of the cost at the new price. Divide the cost of bread by the income."
+          },
+          {
+            "answer": "24",
+            "feedback": "24 sous is the cost of bread, not a percentage. Convert the share of income into a percentage."
+          }
+        ],
+        "hints": [
+          "First work out what 4 loaves cost at 6 sous each.",
+          "Then compare that cost with the 24 sous income and express it as a percentage."
+        ],
+        "solution": "Cost of 4 loaves at 6 sous: 4 × 6 = 24 sous. Share of income: 24 ÷ 24 = 1. As a percentage: 1 × 100 = 100%. At the old price, bread took 12 of 24 sous, or 50%. The price rise doubled that share."
+      },
+      {
+        "kind": "explain",
+        "heading": "Pressure three: new ideas",
+        "body": "Through the 18th century, writers such as Montesquieu and Voltaire criticised arbitrary power. Rousseau's *The Social Contract* (1762) argued that legitimate authority rests on the general will of the people, an idea that later supporters of popular sovereignty drew on. These ideas circulated in books, pamphlets, and the salons and cafés of the cities.\n\nHistorians debate how directly these ideas caused the revolution. Many argue they mattered most by giving people a vocabulary for complaints: the privileges of the nobility and clergy began to look like injustice rather than tradition.",
+        "example": "Popular sovereignty and representative government are related but distinct: the first holds that the nation is the source of authority, the second that elected representatives should act for the nation. A 1788 pamphlet might claim that new taxes need the consent of the nation's representatives rather than a royal decree."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Focus on who the pamphlet says should have the final say over taxes, and whether that power belongs to the king or to the nation.",
+          "Ask which idea would make a nation's own representatives, rather than the king or an old order, the rightful decision-makers."
+        ],
+        "retry": "Look at who the pamphlet says should have the final say over taxes. Ask which idea places that power in the nation rather than in the king or in custom."
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "The three pressures met",
+        "body": "Any one of these pressures might have been survived. Together they left the crown with no easy way out. A debt crisis forced the king to seek new revenue; the bread price made ordinary people desperate; and ideas made privilege look illegitimate.\n\nWhen the crown summoned the Estates-General, which met in May 1789, the Third Estate used it to claim a national voice. That moment helped turn a fiscal and food crisis into a political one.",
+        "example": "",
+        "layout": "spotlight"
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Compare what the two provinces share with what differs between them; which difference matters beyond the price of bread?",
+          "Ask what turns a shortage into a demand aimed at the crown's authority, rather than a complaint about prices."
+        ],
+        "retry": "Ask which difference between the provinces, beyond the price of bread, could change how the same hardship was understood."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Advise the king",
+        "prompt": "You advise Louis XVI in spring 1789. Bread prices are high, the treasury is borrowing to pay interest, and the Estates-General is about to meet. Which step do you recommend first to deal with the fiscal crisis?",
+        "reveal": "Every option is constrained: new taxes needed consent, grain depended on the harvest, and borrowing compounded the debt. The summons that addressed the fiscal problem also opened a political one.",
+        "type": "scenario",
+        "options": [
+          {
+            "text": "Impose new taxes by royal decree in the council, without consulting any assembly or representatives.",
+            "correct": false,
+            "feedback": "Decrees on taxation met resistance from the parlements and privileged orders, who insisted that new taxes needed consent."
+          },
+          {
+            "text": "Summon the Estates-General to approve new taxes, giving the debt a route to consent and the nation a voice.",
+            "correct": true,
+            "feedback": "This is what the crown did. It opened a legitimate route to new revenue, but the Third Estate used the meeting to claim a national voice."
+          },
+          {
+            "text": "Fix bread prices by decree now, and postpone the debt problem until a later ministry.",
+            "correct": false,
+            "feedback": "Price controls might ease hunger, but they do nothing about the interest payments that were absorbing much of the state's income."
+          },
+          {
+            "text": "Keep borrowing to cover the interest, since lenders have not yet demanded full repayment.",
+            "correct": false,
+            "feedback": "Borrowing to pay interest deepens the burden each year. This is the trap the crown was already in."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Put the events in order",
+        "prompt": "Arrange these events in the order they happened, from the July 1788 hailstorm to the storming of the Bastille.",
+        "reveal": "The harvest and bread prices were underlying pressures built over years. The immediate trigger in July 1789 was the king's dismissal of Necker, which led Parisians to fear that royal troops would be used against them.",
+        "type": "order",
+        "steps": [
+          "13 July 1788: a hailstorm destroys crops in parts of northern France",
+          "8 August 1788: the crown announces that the Estates-General will meet",
+          "5 May 1789: the Estates-General opens at Versailles",
+          "17 June 1789: the Third Estate declares itself the National Assembly",
+          "11 July 1789: Louis XVI dismisses the finance minister Necker",
+          "14 July 1789: crowds storm the Bastille in Paris"
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A royal minister reports in 1787 that the treasury now borrows new money mainly to pay the interest on older loans, and that most privileged groups still pay little direct tax. What follows most directly for the crown?",
+        "options": [
+          "Repaying the old loans first would free the treasury, so new borrowing could then cover current spending.",
+          "Borrowing now only covers interest, so the gap must be closed by raising new revenue from groups that were exempt.",
+          "Cutting the royal household's spending would close the gap, since it is the single largest cost.",
+          "Taxing the Third Estate more heavily would close the gap, since commoners hold most of the kingdom's wealth."
+        ],
+        "correctAnswer": "Borrowing now only covers interest, so the gap must be closed by raising new revenue from groups that were exempt.",
+        "explanation": "Once new borrowing only covers interest, the gap can be closed only by new income, and the largely exempt privileged groups were the obvious untapped source. The other options either ignore the interest burden or assume the debt can be cleared without new income."
+      },
+      {
+        "question": "In 1788, a pamphleteer argues that taxes should be approved only by the nation's elected representatives, not imposed by the king and the privileged orders. Which idea does this argument most directly draw on?",
+        "options": [
+          "Sovereignty of the nation: legitimate authority rests with the collective will of the people.",
+          "Feudal custom: each estate keeps its traditional privileges because they have always existed.",
+          "Mercantilism: the state should grow rich by controlling colonial trade and stocks of precious metal.",
+          "Divine right: the king's authority comes from God alone and cannot be limited by his subjects."
+        ],
+        "correctAnswer": "Sovereignty of the nation: legitimate authority rests with the collective will of the people.",
+        "explanation": "The pamphlet places the right to tax in the nation's representatives, which is the idea of popular sovereignty that Rousseau's writings helped popularise. Feudal custom and divine right defend the authority of the privileged orders and the king, and mercantilism is about economic policy rather than where political authority lies."
+      },
+      {
+        "question": "In 1789, two provinces suffer the same harvest failure, and the crown's debt applies to both. In Province A, bread takes most of a family's income and no one debates taxation. In Province B, bread takes a smaller share of income, but local assemblies have been demanding a say over new taxes. Which explanation best accounts for why Province B's unrest is more likely to become a challenge to the crown?",
+        "options": [
+          "Creditors demanding repayment from each province directly turned local hardship into a demand for national representation.",
+          "Bread prices are the main driver of political unrest, so the province with the worst harvest would rise first.",
+          "Cheaper bread left Province B's people spare income to spend on political causes, which fed its unrest.",
+          "Demands for consent over taxation gave local hardship a language of national rights, turning it into a political challenge."
+        ],
+        "correctAnswer": "Demands for consent over taxation gave local hardship a language of national rights, turning it into a political challenge.",
+        "explanation": "Hardship was similar in both provinces, so what differed was whether existing claims to consent over taxes gave local anger a national frame. Cheaper bread and creditor demands do not explain the difference described in the scenario."
+      }
+    ],
+    "sources": [
+      {
+        "url": "https://www.countryreports.org/articles/the-french-revolution-1789-1799",
+        "title": "The French Revolution (1789-1799) | CountryReports"
+      },
+      {
+        "url": "https://journals.ametsoc.org/view/journals/bams/58/2/1520-0477_1977_058_0163_ghetws_2_0_co_2.xml",
+        "title": "Great Historical Events That Were Significantly Affected by the Weather: 2, The Year Leading to the Revolution of 1789 in France in: Bulletin of the American Meteorological Society Volume 58 Issue 2 (1977) "
+      },
+      {
+        "url": "https://www.marxists.org/reference/subject/economics/rousseau/social-contract/ch01.htm",
+        "title": "Rousseau: Social Contract by Jean Jacques Rousseau 1762"
+      },
+      {
+        "url": "https://www.neh.gov/article/storming-bastille-led-democracy-not-long",
+        "title": "The Storming of the Bastille Led to Democracy but Not for Long | National Endowment for the Humanities"
+      }
+    ]
+  },
+  "score": 6.3,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 51977,
+      "approach": "mystery",
+      "blocks": "explain > explain > check > explain > problem > explain > check > activity > explain > activity > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.blind",
+      "iteration": 1,
+      "ms": 5534,
+      "questions": 3,
+      "giveaways": []
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 1,
+      "ms": 26407,
+      "claims": 5,
+      "supported": 4,
+      "contradicted": [],
+      "unclear": 1,
+      "downgraded": []
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 5.8,
+      "ms": 26417,
+      "problems": [
+        "The fiscal account overstates several claims. Roughly half of expenditure went to debt service, not simply interest; wars were financed through both borrowing and taxation, not 'loans, not taxes'; and raising revenue from exempt groups was not the 'only lasting fix.'",
+        "The pamphlet example misleadingly associates approval of taxation by elected representatives specifically with Rousseau. Rousseau opposed representation of sovereign legislative authority; popular sovereignty and representative government need to be distinguished.",
+        "Question 2's explanation incorrectly says all other options defend royal or privileged authority: the mercantilism option concerns economic policy.",
+        "The final question places bread prices at their highest level in spring 1789, conflicting with the lesson's July peak.",
+        "The checks are substantially cued. All five detected issues matter: answer-specific vocabulary in hints for each question, a conspicuously long correct final answer, and a recurring longest-answer pattern.",
+        "Several distractors are implausible or easily eliminated without learning the lesson, especially claims that debt was harmless, Enlightenment ideas had no effect, or the king immediately abdicated. The final check largely repeats the preceding synthesis rather than testing transfer.",
+        "The timeline is a reading task rather than a thinking activity. It presents the march toward the Bastille without explaining the immediate political and military triggers, making the causal sequence appear more automatic than it was.",
+        "The sorting activity mainly repeats already-labelled facts, and retry explanations largely restate the original reasoning rather than offering a genuinely different explanation."
+      ],
+      "factErrors": [],
+      "structureIssues": [
+        "Question 1 (\"A royal minister reports in 1787 that the treasury now bo…\"): a hint uses words found only in the right answer (\"revenue\"); hint at the reasoning, not the answer.",
+        "Question 2 (\"In 1788, a pamphleteer argues that taxes should be approv…\"): a hint uses words found only in the right answer (\"legitimate\", \"collective\", \"people\"); hint at the reasoning, not the answer.",
+        "Question 3 (\"In spring 1789, a bad harvest has pushed bread prices to …\"): the right answer is clearly the longest option; make the options similar in length and detail.",
+        "Question 3 (\"In spring 1789, a bad harvest has pushed bread prices to …\"): a hint uses words found only in the right answer (\"gave\", \"food\"); hint at the reasoning, not the answer.",
+        "In 2 of 3 questions the right answer is the longest option, a pattern learners pick up."
+      ]
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 70057,
+      "approach": "mystery",
+      "blocks": "explain > explain > check > explain > problem > explain > check > activity > explain > activity > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0,
+      "patch": "Fixed the fiscal, Rousseau and bread-price accuracy problems, rewrote all three checks with similar-length options and reasoning-only hints, replaced the sort and timeline with a scenario and a sequencing task, and swapped the final check for a transfer comparison.",
+      "changes": 11
+    },
+    {
+      "step": "lesson.blind",
+      "iteration": 2,
+      "ms": 7282,
+      "questions": 3,
+      "giveaways": []
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 2,
+      "ms": 19742,
+      "claims": 5,
+      "supported": 4,
+      "contradicted": [],
+      "unclear": 1,
+      "downgraded": [
+        "The Estates-General met in May 1789, and the Third Estate used it to claim a national voice.: the quoted evidence isn't on the cited page: \"Britannica says the Estates-General met at Versailles on May 5, 1789, and that on June 17 the Third Estate declared itself the National Assembly.\" (https://www.britannica.com/event/French-Revolution/Events-of-1789)"
+      ]
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 6.3,
+      "ms": 19744,
+      "problems": [
+        "The first check teaches an unjustified economic necessity: a borrowing gap can be closed 'only by new income,' specifically from exempt groups. Spending cuts, debt restructuring and combinations of measures are also possible. Tax reform was central historically, but the scenario does not establish it as the only solution.",
+        "The 'Advise the king' activity is chronologically inconsistent: the learner is placed in spring 1789 with the Estates-General already about to meet, yet the correct action is to summon it. Its announcement occurred in August 1788.",
+        "Two of three checks have the longest option as the correct answer, the flagged structural issue. Other cues also weaken assessment: the sovereignty question repeats the lesson's representative-taxation example almost directly, while several distractors are easy to reject without understanding the lesson.",
+        "The ordering activity supplies dates on every event, so learners can succeed by sorting dates rather than understanding historical sequence or causation. It also introduces the National Assembly, Necker's dismissal and the Bastille without first explaining their significance.",
+        "The ordering reveal calls the harvest and bread prices pressures 'built over years,' although the activity centres on the 1788 harvest shock. It also presents Necker's dismissal as the singular immediate trigger, understating the interaction with troop concentrations and fears of repression.",
+        "The final check's explanation says hardship was similar in both provinces, despite the scenario explicitly assigning different bread burdens. The intended comparison between material hardship and political interpretation is useful, but this explanation misstates it.",
+        "Hints often point directly to the correct option, and retry explanations largely repeat the original explanation rather than providing a genuinely different route to understanding."
+      ],
+      "factErrors": [],
+      "structureIssues": [
+        "In 2 of 3 questions the right answer is the longest option, a pattern learners pick up."
+      ]
+    },
+    {
+      "step": "lesson.select",
+      "score": 6.3,
+      "passed": false,
+      "sources": 4
+    }
+  ]
+}
