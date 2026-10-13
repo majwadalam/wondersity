@@ -35,7 +35,8 @@ const portraitPrompt = (p: string) =>
   `${p}. Soft 3D matte clay sculpture, stylised and friendly, shoulders up, three-quarter view, centred. Soft studio light from the upper left. Seamless solid background #EEF0FF. Never a photoreal face. No text, letters or border.`;
 
 export type StageResult =
-  | { ok: true; staging: Staging; resources: Resources | null }
+  /** unpainted: why pictures it tried to paint failed (shown without them, repainted on a later visit). */
+  | { ok: true; staging: Staging; resources: Resources | null; unpainted?: string }
   /** error is shown to the learner; detail (the real reason) is only recorded with the run. */
   | { ok: false; status: number; error: string; detail?: string };
 
@@ -49,7 +50,10 @@ export async function stageLesson(learnerId: string, lessonId: number, topic: st
   try {
     const { result } = await withUsage(() => stageSavedLesson(learnerId, lessonId, topic), usage);
     if (usage.calls > 0) {
-      await recordRun(learnerId, { kind: "stage", topic, lessonId, outcome: result.ok ? "staged" : `http ${result.status}`, ok: result.ok, error: result.ok ? undefined : (result.detail ?? result.error), ms: Date.now() - started, usage });
+      // Pictures that failed (a provider limit, 2026-10-13) are recorded as a failure, not hidden in a success.
+      const outcome = !result.ok ? `http ${result.status}` : result.unpainted ? "unpainted" : "staged";
+      const error = !result.ok ? (result.detail ?? result.error) : result.unpainted;
+      await recordRun(learnerId, { kind: "stage", topic, lessonId, outcome, ok: outcome === "staged", error, ms: Date.now() - started, usage });
     }
     return result;
   } catch (error) {
@@ -119,7 +123,9 @@ export async function stageSavedLesson(learnerId: string, lessonId: number, topi
       s.guide.portrait = await uploadImage(`${folder}/guide-${stamp}`, out.bytes, 256);
     })(),
   ]);
-  for (const r of results) if (r.status === "rejected") console.error("stage image failed:", r.reason);
+  const failed = results.filter((r): r is PromiseRejectedResult => r.status === "rejected");
+  for (const r of failed) console.error("stage image failed:", r.reason);
+  const unpainted = failed.length ? `${failed.length} picture${failed.length > 1 ? "s" : ""} failed: ${String(failed[0].reason).slice(0, 500)}` : undefined;
 
   // The guide and the dialogue's speakers join the course's cast, so each keeps one voice
   // across lessons and no two sound alike (lib/courseCast.ts). A failure keeps staging's choice.
@@ -136,5 +142,5 @@ export async function stageSavedLesson(learnerId: string, lessonId: number, topi
       console.error("addSharedLessonStaging:", e)
     );
   }
-  return { ok: true, staging: cast, resources: found };
+  return { ok: true, staging: cast, resources: found, ...(unpainted ? { unpainted } : {}) };
 }

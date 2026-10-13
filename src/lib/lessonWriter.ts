@@ -9,7 +9,7 @@ import { applyPatch, numbered, patchJsonSchema } from "./lessonPatch";
 import { blindCheck } from "./blindCheck";
 import { z } from "zod";
 import type { Lesson } from "./lessonBlocks";
-import { LESSON_GUIDE, lessonJsonSchema, lintStructure, normalizeLesson, toModelFormat, type NormalizeReport } from "./lessonDesign";
+import { LESSON_GUIDE, lessonJsonSchema, lintLesson, normalizeLesson, toModelFormat, type NormalizeReport } from "./lessonDesign";
 import { checkFacts } from "./factCheck";
 import { verifyEnabled, verifyFacts, type VerifyReport } from "./factVerify";
 import { withStep, callStructured, lessonModel, reviewModel, type Deadline } from "./model";
@@ -40,6 +40,8 @@ export type LessonBrief = {
   previousModules: string[];
   /** Teaching approaches earlier modules used, so a course doesn't repeat one shape. */
   previousApproaches?: string[];
+  /** Earlier modules' block sequences (lessonShape joined with " > "), most recent last. */
+  previousShapes?: string[];
   /** The agent's instructions, e.g. what to recap given past mistakes. */
   focus: string;
   /** Tailored courses: who the lesson is for (goal, purpose, context, starting point; lib/intake.ts). */
@@ -81,7 +83,11 @@ Module ${b.level.moduleNumber} of ${b.level.moduleCount} in this level (${b.modu
 Module goal: ${b.module.goal}${b.module.description ? `
 Module covers: ${b.module.description}` : ""}
 ${before}
-${b.previousApproaches?.length ? `Approaches used in earlier modules: ${b.previousApproaches.join(", ")}.\n` : ""}Tutor's instructions for this module: ${b.focus || "none"}${
+${b.previousApproaches?.length ? `Approaches used in earlier modules: ${b.previousApproaches.join(", ")}.\n` : ""}${
+    b.previousShapes?.length
+      ? `Shapes of the most recent modules (block kinds in order; make this one feel different):\n${b.previousShapes.map((x) => `- ${x}`).join("\n")}\n`
+      : ""
+  }Tutor's instructions for this module: ${b.focus || "none"}${
     b.learner
       ? `
 
@@ -150,10 +156,11 @@ async function requestValidLesson(request: () => Promise<unknown>): Promise<Writ
 function generateLesson(brief: LessonBrief, deadline: Deadline, avoid?: string): Promise<Written> {
   return requestValidLesson(() =>
     callStructured(
-      `You are an expert instructional designer writing one module of an interactive course,
-in the spirit of Brilliant: the learner DOES things, not just reads. Design the lesson the way a
-great teacher of THIS subject would teach THIS idea: choose the approach first, then the sequence.
-Build on earlier modules without repeating them, and don't teach later modules' material.
+      `You are a great teacher writing one module of an interactive course, in the spirit of
+Brilliant: the learner DOES things, not just reads. Design the lesson the way a great teacher of
+THIS subject would teach THIS idea: choose the approach first, then the sequence. Write it in plain,
+warm, short sentences a newcomer can follow on a phone. Build on earlier modules without repeating
+them, and don't teach later modules' material.
 
 ${LESSON_REQUIREMENTS}`,
       `${describeBrief(brief)}\n\n${
@@ -168,7 +175,7 @@ ${LESSON_REQUIREMENTS}`,
 
 export async function evaluateLesson(brief: LessonBrief, lesson: Lesson, deadline: Deadline): Promise<Evaluation> {
   // Problems code can detect are handed to the evaluator as facts.
-  const issues = [...checkFacts(lesson).map((e) => `Arithmetic error (computed in code): ${e}`), ...lintStructure(lesson)];
+  const issues = [...checkFacts(lesson).map((e) => `Arithmetic error (computed in code): ${e}`), ...lintLesson(lesson, brief.previousShapes)];
   const result = await callStructured(
     `You are a strict educational quality evaluator. Evaluate the lesson on a 0-10 scale.
 Use the FULL range: 3 = poor, 5 = mediocre, 7 = good, 8-9 = excellent, 10 = perfect.
@@ -188,14 +195,23 @@ activities and questions arrays. Evaluate for:
   words only in wrong ones), difficulty that rises through the lesson; hints that help without
   giving the answer away, and an alternative explanation that is genuinely different. A check a
   learner could pass without the lesson is a serious problem.
-- clarity, fit to the module goal, and time (5-10 min).
+- readability: could a newcomer follow it on a phone, reading once? One idea per step, short plain
+  sentences, a concrete case before each new term, few new terms, each step connected to the last,
+  claims stated plainly rather than hedged in every sentence, short options and table cells. Correct
+  but dense, abstract or heavily qualified prose is a serious problem: a lesson that is hard to follow
+  can't score above 7, however good its content.
+- variety: does the sequence follow from the approach, or is it the default loop (explain a bit, do
+  an activity, answer a check, repeated)? If the brief lists earlier modules' shapes, a lesson that
+  opens, closes or moves like them can't score above 7.
+- fit to the module goal, and time (5-10 min).
 - when the brief says who the lesson is for: fit to that learner (pitched at their starting point,
   examples from their context where it fits, the things they asked to cover actually covered, their
   materials' terms used and not contradicted without saying so). A lesson that ignores the brief
   can't score above 7.
-Code-detected structural issues are listed with the lesson; each one should lower the score.
+Code-detected issues (structure, variety, readability) are listed with the lesson; each one should
+lower the score.
 Be critical, but score honestly. Return only JSON.`,
-    `${describeBrief(brief)}\n\nLesson:\n${JSON.stringify(lesson, null, 2)}\n\nCode-detected structural issues:${
+    `${describeBrief(brief)}\n\nLesson:\n${JSON.stringify(lesson, null, 2)}\n\nCode-detected issues:${
       issues.length ? issues.map((i) => `\n- ${i}`).join("") : " none"
     }`,
     evaluationJsonSchema,
@@ -220,7 +236,7 @@ function feedbackFor(evaluation: Evaluation, factErrors: string[], uncertain: st
     ? `Verified errors (computed in code or contradicted by a reliable web source; fix every one, or remove the claim):\n${factErrors.map((e) => `- ${e}`).join("\n")}\n\n`
     : "";
   const unconfirmed = uncertain.length
-    ? `Claims a web search couldn't confirm (state each more carefully, e.g. "about", "historians estimate", or remove it if it isn't needed):\n${uncertain.map((e) => `- ${e}`).join("\n")}\n\n`
+    ? `Claims a web search couldn't confirm (state each more carefully with one plain qualifier, e.g. "about", "historians estimate", or remove it if it isn't needed; don't hedge the sentences around it):\n${uncertain.map((e) => `- ${e}`).join("\n")}\n\n`
     : "";
   return `${verified}${blind}${found}${unconfirmed}Reviewer's feedback:\n${JSON.stringify(evaluation, null, 2)}`;
 }
@@ -233,7 +249,7 @@ function reviseLesson(
 ): Promise<Written> {
   return requestValidLesson(() =>
     callStructured(
-      `You are an expert instructional designer. Revise the lesson to fix the evaluator's feedback.
+      `You are a great teacher and editor. Revise the lesson to fix the evaluator's feedback.
 It is shown in the same format you write: keep what works, fix what the feedback names, and
 return the whole lesson.
 
@@ -256,7 +272,7 @@ export async function patchLesson(brief: LessonBrief, lesson: Lesson, feedback: 
   let lastError = "";
   for (let attempt = 1; attempt <= MAX_LESSON_ATTEMPTS; attempt++) {
     const data = await callStructured(
-      `You are an expert instructional designer revising a lesson. Fix every problem the feedback names
+      `You are a great teacher and editor revising a lesson. Fix every problem the feedback names
 by changing ONLY what needs to change; everything you don't mention is kept exactly as it is.
 The lesson is shown in the format you write, with each block, activity and question numbered by "at".
 Return a patch:
@@ -420,7 +436,7 @@ export async function writeLesson(
       ms: Date.now() - t,
       problems: evaluation.problems,
       factErrors,
-      structureIssues: lintStructure(candidate),
+      structureIssues: lintLesson(candidate, brief.previousShapes),
     });
     const version = { lesson: candidate, score: evaluation.score, factErrors, sources: online?.sources ?? [] };
     if (better(version, best)) best = version;
@@ -433,7 +449,7 @@ export async function writeLesson(
     }
 
     t = Date.now();
-    const feedback = feedbackFor(evaluation, factErrors, online?.uncertain, giveaways, lintStructure(candidate));
+    const feedback = feedbackFor(evaluation, factErrors, online?.uncertain, giveaways, lintLesson(candidate, brief.previousShapes));
     const rewrite = evaluation.score < REWRITE_BELOW;
     try {
       // A weak draft is rewritten; otherwise only what the feedback names is changed (a patch),

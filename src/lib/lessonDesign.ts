@@ -10,6 +10,7 @@
 import { z } from "zod";
 import { cleanEmbeds } from "./embeds";
 import { lintQuestions, shuffleOptions } from "./questionCheck";
+import { lintReadability } from "./readability";
 import { ACTIVITY_GUIDE, activityJsonSchema, normalizeActivity, type Activity } from "./activities";
 import {
   APPROACHES,
@@ -122,6 +123,26 @@ export const lessonJsonSchema = {
 
 export const LESSON_GUIDE = `DESIGN THIS LESSON AROUND ITS TOPIC. There is no fixed template.
 
+WRITING. Learners read this on a phone, one step per screen. Write the way a good teacher talks to one
+person, not the way a textbook or a report reads. Every field the learner reads follows these rules:
+- One idea per step. An explain body is 2-4 short sentences, about 40-80 words. If it needs more, it
+  is two steps, or something the learner should do instead of read.
+- Short sentences: most under 15 words, none over 30. One clause each where you can. No chains of
+  semicolons, dashes or parentheses.
+- Plain words. Show the idea with a concrete case first, then name it: "The model got a shortcut it
+  won't have in real use. That's called **data leakage**." At most one new term per step, bolded
+  once, and only terms the module goal needs; say everything else in everyday words.
+- Keep the thread. Each step opens by connecting to what the learner just did or saw ("You just
+  sorted… Notice that…", "So far… Now…"), so they always know why they are looking at it. Vary
+  how you do it: never start two steps with the same words.
+- Say it plainly. Accuracy comes from choosing claims you are sure of, not from qualifying every
+  sentence. Add a caveat only where the caveat is the point, and then say it once, plainly.
+- Never ask the learner to use a term or distinction before the lesson has shown it, unless the step
+  is openly a guess ("Predict first: …").
+- Headings say what the step is about in under 8 plain words, not a slogan.
+- Things to choose between are short: check options, activity choices and sort items are phrases the
+  learner can compare at a glance (aim for under 12 words). Put shared detail in the question once.
+
 1. APPROACH. Pick the ONE teaching approach that best fits THIS module's content and set "approach"
    (and a one-sentence "approachReason"). The approach must visibly shape the lesson: a learner
    should be able to tell which one you chose from the sequence alone. Options and what each does:
@@ -137,13 +158,16 @@ ${APPROACH_KEYS.map((k) => `   - ${k}: ${APPROACHES[k]}. Shape: ${APPROACH_MOVES
    Pitch difficulty to where the module sits: early in a course (level 1), concrete examples, more
    scaffolding and hints; in later levels, less scaffolding, harder transfer and combined ideas.
    If the tutor lists approaches used in earlier modules, choose a different one unless it truly fits better.
+   If it lists their shapes, this lesson must not feel the same: open differently, end differently,
+   use different activity types and a different rhythm.
 
 2. BLOCKS. Write "blocks": 5-12 blocks in teaching order, moving from exploration to understanding
    to application. Use only the kinds this lesson needs; never pad with filler. Every block has all
    fields; leave unused ones empty ("" / [] / 0, and "correct": false, "line": 0 in items).
    Every block includes "answers" and "unit"; leave them [] and "" except in problem blocks.
-   - explain: heading, body = the explanation (2-6 sentences; separate paragraphs with a blank line),
-     aside = an optional concrete example. Define a term only when the learner needs it.
+   - explain: heading, body = the explanation (2-4 short sentences, one idea; a blank line between
+     paragraphs), aside = an optional concrete example in 1-2 sentences. Define a term only when the
+     learner needs it.
      mode = its layout; vary it across the lesson to fit what each step says:
        "" = standard; "split" = the explanation beside its example (needs an aside), for an idea and a
        case side by side; "spotlight" = heading is ONE short, striking statement or number the learner
@@ -164,8 +188,11 @@ ${APPROACH_KEYS.map((k) => `   - ${k}: ${APPROACHES[k]}. Shape: ${APPROACH_MOVES
          text = what happens, detail = variable state after it, like "i = 2, total = 3".
      aside = the explanation shown at the end; hints = 0-2 hints. Outputs and traces must be exactly
      what the code really does. Use code blocks for programming topics, not for others.
-   - compare: heading, body = one-line intro, columns = exactly 2 column names, items = 3-6 rows
-     (label = the aspect, text = first column, detail = second column).
+   - compare: two things side by side, once the learner knows what is being compared and why.
+     heading, body = one sentence saying what to look for, columns = exactly 2 short names (1-3
+     words), items = 3-5 rows (label = the aspect, 1-3 words; text = first column; detail = second
+     column). Cells are short, parallel phrases of 3-12 words, never full paragraphs: the row should
+     be readable at a glance. aside = the one point the contrast makes, in one sentence.
    - reflect: an open question the learner answers in their own words. heading, body = the question,
      aside = a strong model answer they compare against afterwards: the answer itself, as the learner
      would write it. No lead-in ("One possible answer:", "A sample caption:"), no quotes around it,
@@ -190,16 +217,23 @@ ${APPROACH_KEYS.map((k) => `   - ${k}: ${APPROACHES[k]}. Shape: ${APPROACH_MOVES
    - Spread the knowledge checks through the lesson at natural points. At least one check must come
      before the last teaching block; never stack them all at the end. They get harder as the lesson goes:
      early ones apply one idea, later ones combine ideas or transfer them to a new situation.
+   - Avoid the default loop. "Explain a bit, do an activity, answer a check", repeated two or three
+     times, is how every lesson comes out when nobody designs it, and learners notice. Let the
+     approach set the rhythm instead: a stretch of exploring with no check, a dialogue that teaches,
+     a worked example then practice that builds, one scenario that deepens, a check after two ideas
+     instead of after each.
    - At least 2 hands-on blocks (activity, code, worked, problem, reflect) besides the checks.
    - End with a final check or problem only when the lesson builds to applying everything; otherwise
      end where the approach lands.
+   - Every block earns its place: if an activity only repeats what the text just said, cut one of them.
    - Never use the same activity type twice, and don't put two blocks of the same kind back to back
      unless the sequence genuinely needs it. No more than 2 explain blocks in a row.
 
 QUESTIONS (the graded checks): 2-4, each placed by exactly one check block. Each is scenario-based
 (a short realistic situation that asks the learner to apply the idea, never a definition to recall),
 has EXACTLY 4 distinct options, a correctAnswer that is an EXACT copy of one option, and a 1-2 sentence
-explanation of why it is right. A check must make the learner think; someone who skimmed the lesson
+explanation of why it is right. Keep the question to 1-3 short sentences and the options short.
+A check must make the learner think; someone who skimmed the lesson
 or knows how tests work should not be able to pass it. Every question is tested for giveaways:
 - New situation: different names, numbers and context from the lesson's own examples, so it tests
   transfer, not recognition. The question must be answerable before reading the options; never
@@ -355,7 +389,9 @@ export function normalizeBlock(raw: unknown): Block | null {
       const columns = strs(r.columns, 60);
       const rows = items.filter((i) => i.label && i.text && i.detail).map((i) => ({ label: i.label, a: i.text, b: i.detail }));
       if (columns.length !== 2 || rows.length < 2 || rows.length > 8) return null;
-      return { kind, heading, intro: body, columns: [columns[0], columns[1]], rows };
+      const block: Extract<Block, { kind: "compare" }> = { kind, heading, intro: body, columns: [columns[0], columns[1]], rows };
+      if (aside) block.takeaway = aside;
+      return block;
     }
     case "reflect":
       if (!body || !aside) return null;
@@ -566,6 +602,112 @@ export function lintStructure(lesson: Lesson): string[] {
 }
 
 
+// ---------- variety ----------
+
+/**
+ * A lesson's shape as tokens, e.g. ["act:sort", "explain", "check"]: the kind
+ * of each block, with the activity type or code mode. Earlier modules' shapes
+ * go into the next brief, so a course doesn't repeat one rhythm.
+ */
+export function lessonShape(lesson: Lesson): string[] {
+  return lessonBlocks(lesson).map((b) =>
+    b.kind === "activity" ? `act:${lesson.activities?.[b.ref]?.type ?? "unknown"}` : b.kind === "code" ? `code:${b.mode}` : b.kind
+  );
+}
+
+const rhythm = (token: string) => (token === "check" ? "C" : ["explain", "compare", "dialogue", "summary"].includes(token) ? "E" : "H");
+
+/**
+ * The runs of blocks before each check, in rhythm letters: H something to
+ * do, E something to read. "EH" is an explanation then an activity.
+ */
+const unitsBeforeChecks = (shape: string[]) => shape.map(rhythm).join("").split("C").slice(0, -1);
+const isLoopUnit = (u: string) => u.length >= 2 && u.length <= 3 && u.includes("H") && u.includes("E");
+
+/**
+ * How many times the lesson runs the loop "read a bit, do a bit, check":
+ * short runs of explanation and activity, each closed by a check. Nearly
+ * every saved lesson was 2-3 of these, whatever its approach (2026-10-13).
+ */
+export function loopCount(shape: string[]): number {
+  return unitsBeforeChecks(shape).filter(isLoopUnit).length;
+}
+
+type Signs = { has: (shape: string[]) => boolean; need: string };
+const any = (shape: string[], tokens: string[]) => shape.some((t) => tokens.includes(t));
+const count = (shape: string[], test: (t: string) => boolean) => shape.filter(test).length;
+
+/**
+ * What code can see of each approach. The labels drifted from the lessons:
+ * "socratic" with no dialogue, "practice" with one problem, every approach
+ * the same loop (26 saved lessons, 2026-10-13). Approaches whose shape code
+ * can't see (mystery, scenario, case study, misconception) are left to the
+ * reviewer.
+ */
+const APPROACH_SIGNS: Partial<Record<Approach, Signs>> = {
+  discovery: { has: (s) => rhythm(s[0] ?? "") === "H", need: "the learner tries something (an activity, code, a problem) before anything is explained" },
+  visual: {
+    has: (s) => count(s, (t) => ["act:diagram", "act:chart", "act:timeline", "act:graph", "act:simulation", "compare"].includes(t)) >= 2,
+    need: "at least two visual blocks (diagram, chart, timeline, graph, simulation or compare) carrying the explanation",
+  },
+  worked_example: {
+    has: (s) => s.includes("worked") && s.slice(s.indexOf("worked") + 1).some((t) => t === "problem" || t.startsWith("code:")),
+    need: "a worked example first, then a problem (or code) the learner solves alone",
+  },
+  simulation: { has: (s) => any(s.slice(0, 3), ["act:simulation", "act:graph"]), need: "a simulation or graph the learner varies within the first three blocks" },
+  story: { has: (s) => any(s, ["act:story", "dialogue"]), need: "a story activity or a dialogue that carries the idea" },
+  socratic: { has: (s) => s.includes("dialogue"), need: "a dialogue block doing the teaching" },
+  compare: { has: (s) => s.includes("compare") || s.includes("act:sort"), need: "a compare table or a sort the learner classifies with" },
+  practice: {
+    has: (s) => count(s, (t) => t === "problem" || t === "worked" || t.startsWith("code:")) >= 3,
+    need: "at least three problems, worked examples or code exercises, each a little harder",
+  },
+  reflection: { has: (s) => s.includes("reflect"), need: "a reflection where the learner applies the idea to their own life or work" },
+};
+
+/**
+ * Problems with the lesson's shape: the same loop repeated, an approach the
+ * sequence doesn't show, and repeating how the previous module opened, closed
+ * or what it had the learner do. `previousShapes` are earlier modules' shapes
+ * (lessonShape joined with " > "), most recent last.
+ */
+export function lintVariety(lesson: Lesson, previousShapes: string[] = []): string[] {
+  const shape = lessonShape(lesson);
+  const issues: string[] = [];
+  const loops = loopCount(shape);
+  if (loops >= 3) {
+    issues.push(
+      `The lesson runs the same loop ${loops} times: read a bit, do a bit, answer a check (${shape.join(" > ")}). It feels like a template. Change the rhythm: let a stretch run without a check, teach through the activity itself, put two ideas before one harder check, or build to one larger task.`
+    );
+  }
+  const signs = lesson.approach ? APPROACH_SIGNS[lesson.approach] : undefined;
+  if (signs && !signs.has(shape)) {
+    issues.push(`The approach is "${lesson.approach}", but the sequence doesn't show it. A ${lesson.approach} lesson needs ${signs.need}. Make the shape match, or pick the approach that fits what you wrote.`);
+  }
+  const previous = previousShapes.at(-1)?.split(" > ").filter(Boolean);
+  if (previous?.length) {
+    if (shape[0] === previous[0]) issues.push(`The previous module also opened with "${shape[0]}". Open this one differently.`);
+    if (shape.at(-1) === previous.at(-1) && shape.at(-1) !== "check") {
+      issues.push(`The previous module also ended with "${shape.at(-1)}". End this one where its approach lands, not the same way.`);
+    }
+    if (loops >= 2 && loopCount(previous) >= 2) {
+      issues.push(
+        `The previous module had the same rhythm (read a bit, do a bit, check, repeated). Give this one a different shape, e.g. a longer stretch of exploring before any check, a worked example then practice, a dialogue, or one problem built up step by step.`
+      );
+    }
+    const repeated = [...new Set(shape.filter((t) => t.startsWith("act:") && previous.includes(t)))];
+    if (repeated.length >= 2) {
+      issues.push(`The previous module used the same activities (${repeated.map((t) => t.slice(4)).join(", ")}). Use different kinds of activity this time.`);
+    }
+  }
+  return issues;
+}
+
+/** Everything code finds wrong with a lesson's design and reading, for the reviewer and reviser. */
+export function lintLesson(lesson: Lesson, previousShapes: string[] = []): string[] {
+  return [...lintStructure(lesson), ...lintVariety(lesson, previousShapes), ...lintReadability(lesson)];
+}
+
 // ---------- back to the model's format ----------
 
 const flatItem = (o: Partial<{ label: string; text: string; detail: string; correct: boolean; line: number }>) => ({
@@ -686,7 +828,14 @@ export function flatBlock(b: Block) {
             : b.options.map((o) => flatItem({ text: o.text, correct: o.correct, detail: o.feedback })),
       };
     case "compare":
-      return { ...base, heading: b.heading, body: b.intro, columns: [...b.columns], items: b.rows.map((r) => flatItem({ label: r.label, text: r.a, detail: r.b })) };
+      return {
+        ...base,
+        heading: b.heading,
+        body: b.intro,
+        aside: b.takeaway ?? "",
+        columns: [...b.columns],
+        items: b.rows.map((r) => flatItem({ label: r.label, text: r.a, detail: r.b })),
+      };
     case "reflect":
       return { ...base, heading: b.heading, body: b.prompt, aside: b.model };
     case "dialogue":

@@ -184,7 +184,9 @@ reveal: the 1-2 sentence takeaway shown after the learner interacts.
   title + detail say what the curve shows at those settings. Use it only when watching a curve change explains
   the idea (graph transformations, trajectories, growth and decay, waves); the formula must be correct.
 Choose by fit: timeline for history and processes, simulation for quantities, diagram for systems,
-sort for classifying, order for procedures, story and scenario for judgment, chart for comparisons.`;
+sort for classifying, order for procedures, story and scenario for judgment, chart for comparisons.
+Sort and scenario are the easiest to reach for and end up in every lesson; use them only when
+classifying or judging IS the skill being learned, and prefer the type that fits this content best.`;
 
 // ---------- validation ----------
 

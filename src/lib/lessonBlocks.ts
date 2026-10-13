@@ -86,7 +86,15 @@ export type Block =
       explanation: string;
       hints: string[];
     }
-  | { kind: "compare"; heading: string; intro: string; columns: [string, string]; rows: { label: string; a: string; b: string }[] }
+  | {
+      kind: "compare";
+      heading: string;
+      intro: string;
+      columns: [string, string];
+      rows: { label: string; a: string; b: string }[];
+      /** The one point the contrast makes, shown under the table. Absent on lessons written before it. */
+      takeaway?: string;
+    }
   | { kind: "reflect"; heading: string; prompt: string; model: string }
   | { kind: "dialogue"; heading: string; turns: { speaker: string; text: string }[] }
   | { kind: "summary"; heading: string; points: string[] }

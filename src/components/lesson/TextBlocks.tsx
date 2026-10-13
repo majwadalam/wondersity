@@ -69,7 +69,11 @@ export function ExplainBlock({ b }: { b: Of<"explain"> }) {
   );
 }
 
-/** Two things side by side. A table on wide screens; paired cards on phones. */
+/**
+ * Two things side by side: a table with a narrow label column on wide screens,
+ * one card per row on phones, then the point the contrast makes. The second
+ * column carries the accent, so the two read as different at a glance.
+ */
 export function CompareBlock({ b }: { b: Of<"compare"> }) {
   const [left, right] = b.columns;
   return (
@@ -81,21 +85,27 @@ export function CompareBlock({ b }: { b: Of<"compare"> }) {
         Compare
       </p>
       {b.heading && <h3 className="font-display mt-2 text-2xl text-fg sm:text-[28px]">{b.heading}</h3>}
-      {b.intro && <p className="mt-2 text-[15px] leading-relaxed text-fg/85">{rich(b.intro)}</p>}
-      <div className="compare-grid mt-5" role="table" aria-label={b.heading || `${left} compared with ${right}`}>
+      {b.intro && <p className="mt-3 text-[17px] leading-relaxed text-fg/85">{rich(b.intro)}</p>}
+      <div className="compare-table mt-6" role="table" aria-label={b.heading || `${left} compared with ${right}`}>
         <div className="compare-head" role="row">
-          <span role="columnheader" />
-          <span role="columnheader" className="compare-col-a">{left}</span>
-          <span role="columnheader" className="compare-col-b">{right}</span>
+          <span role="columnheader" className="compare-corner" />
+          <span role="columnheader" className="compare-col" data-side="a">{left}</span>
+          <span role="columnheader" className="compare-col" data-side="b">{right}</span>
         </div>
         {b.rows.map((r, i) => (
           <div key={i} className="compare-row" role="row">
-            <span role="rowheader" className="compare-label">{r.label}</span>
-            <span role="cell" className="compare-cell" data-col={left}>{rich(r.a)}</span>
-            <span role="cell" className="compare-cell" data-col={right}>{rich(r.b)}</span>
+            <span role="rowheader" className="compare-label">{rich(r.label)}</span>
+            <span role="cell" className="compare-cell" data-side="a" data-col={left}>{rich(r.a)}</span>
+            <span role="cell" className="compare-cell" data-side="b" data-col={right}>{rich(r.b)}</span>
           </div>
         ))}
       </div>
+      {b.takeaway && (
+        <div className="mt-5 rounded-2xl border-l-[3px] border-accent bg-accent-soft px-5 py-4">
+          <p className="text-xs font-semibold text-accent">The difference</p>
+          <p className="mt-1 text-[16px] leading-relaxed text-fg">{rich(b.takeaway)}</p>
+        </div>
+      )}
     </section>
   );
 }

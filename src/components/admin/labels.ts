@@ -18,6 +18,7 @@ export function runLabel(kind: string, outcome: string | null, ok = true): Label
     return { name: `Tutor: ${o || "other"}`, about: "A tutor run that ended without writing a lesson." };
   }
   if (kind === "stage") {
+    if (o === "unpainted") return { name: "Scenes couldn't be painted", about: "The guide and lines were added, but pictures failed (often the image provider's limit or balance). They're repainted when the lesson is next opened." };
     if (!ok) return { name: "Adding scenes failed", about: "The lesson is shown without paintings and guide lines." };
     return { name: "Added scenes and a guide", about: "Paintings for the lesson, the guide's spoken lines and the \"Go deeper\" links." };
   }

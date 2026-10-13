@@ -147,6 +147,21 @@ approaches are passed in so a course varies. Topic-specific sequences are
 never hardcoded; the guide describes what each approach does to a lesson's
 shape, and the model chooses.
 
+**Lessons are written to be read, and to vary.** Early feedback (2026-10-13):
+every lesson had the same shape and the prose was hard to follow. The guide
+opens with WRITING rules (one idea per step, 40-80 words, short sentences, a
+concrete case before a term is named, steps that connect, plain claims
+instead of hedges, short options and cells). In code, `lintReadability()`
+(`lib/readability.ts`) flags long steps and sentences, several new terms at
+once, wordy options and table cells; `lintVariety()` (`lib/lessonDesign.ts`)
+flags the "read a bit, do a bit, check" loop run 3 or more times, an approach
+the sequence doesn't show (socratic without a dialogue, practice without
+problems…), and repeating the previous module's opening, ending, activities
+or rhythm (the brief carries the last two modules' shapes, `previousShapes`).
+`lintLesson()` hands all of it to the reviewer, who can't score a hard-to-follow
+or same-shaped lesson above 7, and to the reviser. Compare tables have short
+parallel cells and a takeaway (the block's `aside`), drawn as a real table.
+
 **Checks live inside the lesson.** Graded questions (2-4, scenario-based,
 exactly 4 options, `correctAnswer` matching one) stay in `questions`, so
 grading and progress are unchanged; each is placed by a `check` block right
@@ -269,7 +284,10 @@ portrait are generated with Gemini Nano Banana 2.1 (`lib/coverArt.ts`) and
 stored in the public `covers` bucket as resized WebP (`uploadImage`, via
 `sharp`); staging is saved into
 `lesson_data.staging`. The lesson's blocks, questions and grading are
-untouched, and a lesson that fails to stage is shown without scenes.
+untouched, and a lesson that fails to stage is shown without scenes. Pictures
+that fail (e.g. OpenRouter refuses images when the key has under $1 left) are
+recorded as an "unpainted" run, not a success, and painted when the lesson is
+next opened.
 
 **Voice.** `GET /api/voice` speaks one step's line (`?step=`) or one turn of
 a dialogue block (`?block=&turn=`) with `gpt-audio-mini` through OpenRouter
@@ -605,6 +623,7 @@ staged, so it opens instantly.
 - `src/lib/expression.ts` — safe formula compiler for graph activities
 - `src/lib/embeds.ts`, `src/components/lesson/InlineGraph.tsx` — graphs written inside lesson text
 - `src/components/lesson/math.tsx` — math in lesson text (KaTeX)
+- `src/lib/readability.ts` — how hard a lesson is to read (step and sentence length, new terms, wordy options and cells)
 - `src/lib/questionCheck.ts`, `src/lib/blindCheck.ts` — giveaway checks on knowledge checks; `research/question-quality.md`
 - `src/lib/worldRoad.ts`, `src/lib/journeyPath.ts` — tracing the road in a course's world; placing the journey's stops on it
 - `src/components/Skeletons.tsx` — loading placeholders shaped like each page (home, tiles, course, lesson, review, settings, plan)

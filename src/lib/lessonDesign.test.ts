@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { activityJsonSchema } from "./activities";
 import { answerMatches, checkProblem, lessonBlocks, modelAnswerText, parseNumber, type Block, type Lesson } from "./lessonBlocks";
-import { lessonJsonSchema, lintStructure, normalizeBlock, normalizeLesson, toModelFormat } from "./lessonDesign";
+import { flatBlock, lessonJsonSchema, lintStructure, normalizeBlock, normalizeLesson, toModelFormat } from "./lessonDesign";
 import { legacyLesson, question, rawHistoryLesson, rawProgrammingLesson } from "./testFixtures";
 
 const kinds = (l: Lesson) => lessonBlocks(l).map((b) => b.kind);
@@ -120,6 +120,13 @@ describe("normalizeBlock", () => {
     assert.equal(normalizeBlock({ ...reflect, aside: "" }), null);
     const compare = rawHistoryLesson().blocks.find((b) => b.kind === "compare")!;
     assert.equal(normalizeBlock({ ...compare, columns: ["Only one"] }), null);
+  });
+
+  it("keeps a compare table's takeaway, and gives it back to the reviser", () => {
+    const compare = { ...rawHistoryLesson().blocks.find((b) => b.kind === "compare")!, aside: "The Third Estate paid; the nobles voted." };
+    const block = normalizeBlock(compare);
+    assert.ok(block?.kind === "compare" && block.takeaway === "The Third Estate paid; the nobles voted.");
+    assert.equal(flatBlock(block).aside, "The Third Estate paid; the nobles voted.");
   });
 });
 

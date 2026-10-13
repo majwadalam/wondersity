@@ -7,7 +7,7 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { lessonBlocks } from "../src/lib/lessonBlocks";
-import { lintStructure } from "../src/lib/lessonDesign";
+import { lintLesson } from "../src/lib/lessonDesign";
 import { withUsage } from "../src/lib/model";
 import { writeLesson, type LessonBrief, type TraceEntry } from "../src/lib/lessonWriter";
 
@@ -102,7 +102,7 @@ async function one(s: (typeof SAMPLES)[number]) {
       `■ ${s.kind}: ${s.topic} (${Math.round((Date.now() - start) / 1000)}s, score ${score}${passed ? "" : ", below bar"}, $${usage.cost.toFixed(4)}, ${usage.calls} calls, ${usage.promptTokens} in / ${usage.completionTokens} out tokens)`,
       `  approach: ${lesson.approach} (${lesson.approachReason})`,
       `  blocks:   ${blocks.join(" > ")}`,
-      `  issues:   ${lintStructure(lesson).join(" | ") || "none"}`,
+      `  issues:   ${lintLesson(lesson).join(" | ") || "none"}`,
       `  trace:    ${trace.map((t) => `${t.step}${t.score !== undefined ? `=${t.score}` : ""}`).join(", ")}`,
       `  cost:     ${Object.entries(usage.bySteps ?? {}).map(([k, v]) => `${k} $${v.cost.toFixed(4)} (${v.in} in / ${v.out} out)`).join(" · ")}`,
     ].join("\n");

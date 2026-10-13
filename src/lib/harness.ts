@@ -29,6 +29,7 @@ import { PLANNER_VERSION, PLANNING_GUIDE, TAILORED_PLANNING_GUIDE, coursePlanToo
 import { LENGTH_MODULES, describeExcerpts, describeIntake, learnerBriefFor, storedIntake, type Intake } from "./intake";
 import { describeDigest, digestMaterials, excerptsFor, saveMaterials, type MaterialDigest } from "./materials";
 import { latestLessonForModule, toCourseView, type CourseView } from "./courseView";
+import { lessonShape } from "./lessonDesign";
 import { PASS_SCORE, lessonVersion, writeLesson, type Lesson, type TraceEntry } from "./lessonWriter";
 import { findSharedPlan } from "./planCache";
 import { billingEnabled, canWriteLesson, planFrom, windowStart } from "./plans";
@@ -299,6 +300,11 @@ async function runTool(call: ToolCall, state: RunState): Promise<ToolResult> {
             .slice(0, moduleIndex)
             .map((_, i) => latestLessonForModule(course, i)?.lesson_data.approach)
             .filter((a): a is NonNullable<typeof a> => !!a),
+          previousShapes: course.modules
+            .slice(Math.max(0, moduleIndex - 2), moduleIndex)
+            .map((_, i) => latestLessonForModule(course, Math.max(0, moduleIndex - 2) + i)?.lesson_data)
+            .filter((l): l is NonNullable<typeof l> => !!l?.blocks)
+            .map((l) => lessonShape(l).join(" > ")),
           focus: args.data.focus,
         },
         {
