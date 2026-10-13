@@ -15,9 +15,10 @@ const geistMono = Geist_Mono({
 });
 
 // Share images and other URL fields need an absolute base: the site's own address,
-// else the production address Vercel provides, else the local dev server.
+// else the production address Vercel provides, else the local dev server. `||`, not `??`:
+// the Dockerfile declares the build arg, so an unset one arrives as "".
 const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ??
+  process.env.NEXT_PUBLIC_SITE_URL ||
   (process.env.VERCEL_PROJECT_PRODUCTION_URL ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}` : "http://localhost:3000");
 
 const DESCRIPTION = "Courses for what nobody teaches: too niche, too new or too scattered. Name a topic, for work or for curiosity; Wondersity plans a course, teaches it hands-on, and remembers where you left off.";
