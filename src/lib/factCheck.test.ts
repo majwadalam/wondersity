@@ -67,3 +67,22 @@ describe("checkFacts", () => {
     assert.deepEqual(checkFacts(l), []);
   });
 });
+
+describe("arithmetic written in TeX", () => {
+  it("checks simple TeX like plain arithmetic", () => {
+    assert.equal(checkFacts(lesson("\\(3 \\times 4 = 13\\)")).length, 1);
+    assert.equal(checkFacts(lesson("\\[\\frac{6}{3} = 3\\]")).length, 1);
+    assert.equal(checkFacts(lesson("$$10^{3} = 100$$")).length, 1);
+  });
+
+  it("doesn't flag correct TeX, algebra, or chemistry", () => {
+    for (const ok of [
+      "So \\(2^3 = 8\\) and \\(3 \\times 4 = 12\\).",
+      "The area is \\(A = \\pi r^2 = 3.14 \\times 2^2 \\approx 12.57\\) square metres.",
+      "\\(x^2 - 5x + 6 = 0\\) gives \\(x = 2\\) or \\(x = 3\\).",
+      "\\(\\sqrt{16} = 4\\), \\(5! = 120\\), \\(\\tfrac{1}{2} + \\tfrac{1}{4} = \\tfrac{3}{4}\\)",
+      "\\(\\ce{2H2 + O2 -> 2H2O}\\) costs $40.",
+    ])
+      assert.deepEqual(checkFacts(lesson(ok)), [], ok);
+  });
+});

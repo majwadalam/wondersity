@@ -324,3 +324,119 @@ The account had $0.15 left, so these are untested:
   - cost per lesson, from query 11 in `supabase/queries/metrics.sql`
 - **Paintings:** at most 2 per lesson.
 - **Shared lessons:** every lesson of a shared course is reused by learners who haven't answered a check wrong (migration 012).
+
+
+## Run 12: the cheaper harness, live
+
+**Question:** do the changes since run 11 work with credit in the account, and what does a new course really cost?
+
+**Method:** `scripts/e2e-course.ts` with a topic nothing was cached for:
+- **Learner A** started "Photosynthesis" and behaved like a closed browser.
+- **Learner B** started "how plants turn sunlight into food".
+
+| | Learner A (new course, browser closed) | Learner B (same course, other wording) |
+| --- | --- | --- |
+| Job | done in 191s, on its own | done in 20s |
+| Plan | 3 levels, 6 lessons | A's plan, matched by meaning |
+| Lesson 1 | 8.3, passed, misconception approach | A's lesson, from the cache |
+| Fact check | 5 claims: 1 confirmed, 4 unclear | – |
+| Staged by the server | guide Dr. Mira Chen with portrait, 1 painted scene; "Go deeper": 3 videos, 3 articles, 1 book, 3 images | – |
+| Course world | painted by the server | shared from A |
+| Voice | one line spoken in 7s | – |
+| Cost | $0.071 tutor (plan, lesson, check, review) + $0.076 staging (portrait, painting, script, "Go deeper") + $0.047 world = **$0.194** | **$0.007** |
+
+**Findings:**
+- **Everything that needed credit now works:** paintings, the portrait, the world and voice, all made by the server with the browser closed.
+- **A new lesson costs about $0.15** (tutor plus staging), in line with the $0.16 estimate in ECONOMICS.md. The world is $0.047 once per course.
+- **A learner on a shared course pays almost nothing:** $0.007 to match the plan and serve lesson 1 from the cache.
+- **Parallel's results do carry page text,** so the harness can check that a quote is on the cited page.
+- **Prompt caching barely helps yet:** 1,316 of 19,258 input tokens were cached.
+- **A bug threw away real confirmations.** The checker wrote its source as a markdown citation, "[ssec.si.edu](https://…)", and appended the same citation to its quote. The URL never matched a returned page, and the citation's words counted against the quote, so 3 of the 4 "unclear" verdicts were downgraded supported verdicts. `citedUrl()` and `quoteOnly()` in `lib/factVerify.ts` now strip the citation (tests from this run's output).
+- **After the fix:** re-checking a saved lesson (run 08's projectile motion) confirmed 4 of 5 claims against returned pages; the fifth was unclear by the checker's own judgement.
+
+**Data:** `runs/12-live-check/report.json`.
+
+
+## Run 13: checks that make learners think, math, layouts
+
+**Question:** with the new question checks (`lib/questionCheck.ts`, `lib/blindCheck.ts`; research/question-quality.md), the guide's formatting (TeX math, tables, inline graphs) and explain layouts, are checks less guessable, and does the writer use the new tools?
+
+**Method:** `scripts/sample-lessons.ts` for Game theory and Projectile motion, the full gate, nothing saved.
+
+| | Game theory | Projectile motion |
+| --- | --- | --- |
+| Score | 7 (revision skipped: a timed-out call used the time budget) | 8.4, passed |
+| Code-detected question cues | none | none |
+| Blind test | no giveaways | no giveaways |
+| Fact check | 3 of 3 claims confirmed | 4 of 5 confirmed |
+| Layouts used | split, standard | split, split |
+| Formatting used | 3 tables | none (a graph activity) |
+| Cost | $0.049 | $0.051 |
+
+**Findings:**
+- **The checks are no longer guessable from their wording.**
+  - The options are parallel in form: for example, the four combinations of "increases" and "decreases".
+  - Each wrong option is a specific mistake: misreading a payoff table, "horizontal speed stays the same", picking angles that don't add up to 90°.
+  - The right answer isn't the longest option, and it doesn't repeat the question's words.
+- **The blind test needed one fix.** On the first try it flagged a textbook prisoner's dilemma: the checking model recognised the subject from the options and knew the answer. That isn't a flaw in the question. The test now asks what the guess rests on, and only guesses based on wording count.
+- **The writer used the new formatting only where the topic called for it.** It chose tables for payoff tables and the split layout three times. It didn't use TeX or inline graphs for these two topics. A more mathematical topic is the next test.
+- **Network errors** (timeouts, a failed fetch) cost the first try of both lessons. The retry handled one; the other ran out of the revision budget.
+
+**Data:** `runs/13-questions-math-layouts/`, `runs/13-questions-math-layouts.log`.
+
+
+## Run 15: where a lesson's money goes
+
+**Question:** GPT-6.1 Sol feels expensive. Which steps cost what, and is caching working?
+
+**Method:** each model call is now counted under its step (`withStep` in `lib/model.ts`; `bySteps` in a run's `run.cost`). `scripts/sample-lessons.ts` ran on Probability and The French Revolution.
+
+| Step | Model | Probability (passed first time) | French Revolution (revised) |
+| --- | --- | --- | --- |
+| Write | GPT-6.1 Sol | $0.031 (3.0k out) | $0.041 (4.0k out) |
+| Review | GPT-6.1 Sol | $0.009 | $0.023 (two reviews) |
+| Revise | GPT-6.1 Sol | – | $0.060 (4.0k out) |
+| Fact check | GPT-6 Luna + Parallel | $0.007 | $0.015 (two checks) |
+| Blind test | GPT-6 Luna | $0.0001 | $0.0003 |
+| **Total** | | **$0.048**, score 8 | **$0.139**, score 7.5 |
+
+Tutor runs in the app add the agent's turns, roughly $0.01-0.02 a run (the runs table: $0.060-0.066 for lessons that passed first time).
+
+**Findings:**
+- **Output tokens are the cost.** Sol charges $10 per million output tokens and $2 per million input. Writing a lesson produces 3-4k output tokens, about $0.03-0.04, and that is the floor while Sol writes.
+- **Revisions are the spikes.** A revision rewrites the whole lesson, so it costs as much as the first draft or more. It nearly triples a lesson's cost.
+- **Prompt caching works but saves little.** 15-30% of input tokens were cached in recent runs, about a cent a lesson, because input is the cheap side.
+- **The shared lesson cache is the big saving,** but only for learners on a shared course (their first). A learner with several courses gets tailored, uncached lessons.
+- **What could cut cost without touching lesson quality:**
+  - running the tutor agent's turns on GPT-6 Luna (about $0.01-0.02 a run)
+  - making revisions edit only the blocks the review names, instead of rewriting the whole lesson
+
+  Neither was changed: quality comes first, and both need their own quality check.
+
+**Data:** `runs/15-cost-by-step/`, `runs/15-cost-by-step.log`.
+
+
+## Run 16: the tutor agent on GPT-6 Luna, targeted revisions
+
+**Changes tested:**
+- **The tutor agent on GPT-6 Luna:** its turns now run on Luna (`AGENT_MODEL`). The turn that plans a new course stays on GPT-6.1 Sol.
+- **Targeted revisions:** they return a patch (`lib/lessonPatch.ts`), which code applies, instead of a rewritten lesson.
+- **A longer revision window:** revisions may start up to 165s into a run (was 120s).
+
+**Method:** `scripts/e2e-course.ts` (Plate tectonics; "how continents drift"), and `scripts/sample-lessons.ts` for The French Revolution, before and after the longer window.
+
+| | Before | After |
+| --- | --- | --- |
+| Agent turns (2 a run) | about $0.01-0.02 on Sol | **$0.0003** on Luna |
+| Planning a course (once) | part of the above | $0.008 on Sol |
+| A revision (French Revolution, broad review) | $0.060 full rewrite (run 15) | $0.048-0.056 patch |
+| Revisions skipped for time | Game theory (run 13), French Revolution and "how continents drift" (this run, at 120s) | none at 165s: French Revolution revised from 6.5 to 8, passed |
+
+**Findings:**
+- **The agent behaves the same on Luna:** create the course, write the module, close with a note. Planning still runs on Sol.
+- **Patches save less than hoped on broad feedback.** A review naming six problems leads the reviser to touch most of the lesson, so the patch costs about as much as a rewrite. On a narrow review it would save more.
+  - **A side effect:** in one test, the patch introduced new giveaway cues the reviewer hadn't named. The reviser is now also given the problems found in code. With them, the in-loop revision left none.
+- **The bigger quality fix was time.** At 120s, writing and reviewing often used up the window, and lessons below the bar were shown unrevised. At 165s the revision runs and the lesson passes.
+- **The cost of a lesson that passes first time** is now about $0.05-0.06 for the tutor run, about $0.04 of it writing. A revised lesson is about $0.13.
+
+**Data:** `runs/16-luna-agent-patch/` (report.json, the-french-revolution.json, french-patched.json), `runs/16-luna-agent-patch.log`.

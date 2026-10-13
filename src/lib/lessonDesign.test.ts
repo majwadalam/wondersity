@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { activityJsonSchema } from "./activities";
-import { answerMatches, checkProblem, lessonBlocks, parseNumber, type Block, type Lesson } from "./lessonBlocks";
+import { answerMatches, checkProblem, lessonBlocks, modelAnswerText, parseNumber, type Block, type Lesson } from "./lessonBlocks";
 import { lessonJsonSchema, lintStructure, normalizeBlock, normalizeLesson, toModelFormat } from "./lessonDesign";
 import { legacyLesson, question, rawHistoryLesson, rawProgrammingLesson } from "./testFixtures";
 
@@ -295,5 +295,20 @@ describe("typed answers", () => {
     const { lesson } = valid(raw);
     assert.ok(lesson.blocks!.some((b) => b.kind === "problem"));
     assert.deepEqual(valid(toModelFormat(lesson)).lesson, lesson);
+  });
+});
+
+describe("modelAnswerText", () => {
+  it("drops a lead-in and the quotes it introduced, keeping what follows", () => {
+    assert.equal(
+      modelAnswerText("One possible caption: \u201cMany societies, many ways of life.\u201d The later United States inherited this world."),
+      "Many societies, many ways of life. The later United States inherited this world.",
+    );
+    assert.equal(modelAnswerText('A sample answer might be: "Prices rise when supply falls."'), "Prices rise when supply falls.");
+    assert.equal(modelAnswerText("Here's a strong response: rates fell."), "rates fell.");
+  });
+  it("leaves an answer that is just the answer alone", () => {
+    assert.equal(modelAnswerText("Supply fell, so the price rose: buyers competed for less."), "Supply fell, so the price rose: buyers competed for less.");
+    assert.equal(modelAnswerText("The answer depends on context: both matter."), "The answer depends on context: both matter.");
   });
 });

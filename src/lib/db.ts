@@ -1,3 +1,4 @@
+import type { Intake, StoredIntake } from "./intake";
 import { AsyncLocalStorage } from "node:async_hooks";
 import { createClient, type SupabaseClient } from "@supabase/supabase-js";
 import { env, requireEnv } from "./env";
@@ -50,8 +51,14 @@ export type CourseRow = {
   current_module: number;
   status: "active" | "completed";
   cover_url: string | null;
+  /** The road traced in the world, in % of the picture ([] = tracing failed); null until traced. */
+  world_road?: { x: number; y: number }[] | null;
   /** The shared plan this course was made from or seeded (course_plans.topic_key). */
   plan_key?: string | null;
+  /** What the learner asked for when they tailored the course (lib/intake.ts); null for "Plan it for me". */
+  intake?: StoredIntake | null;
+  /** A tailored course's learning outcomes, written by the planner. */
+  outcomes?: string[] | null;
   created_at: string;
   updated_at: string;
 };
@@ -154,8 +161,13 @@ export async function createCourse(course: {
   modules: ModulePlan[];
   /** A world already painted for this plan (from the plan cache). */
   coverUrl?: string | null;
+  /** That world's traced road. */
+  worldRoad?: { x: number; y: number }[] | null;
   /** The shared plan this course comes from or seeds. */
   planKey?: string | null;
+  /** A tailored course's brief and outcomes. */
+  intake?: StoredIntake | null;
+  outcomes?: string[] | null;
 }) {
   const { data, error } = await supabase()
     .from("courses")
@@ -167,7 +179,10 @@ export async function createCourse(course: {
       description: course.description,
       modules: course.modules,
       ...(course.coverUrl ? { cover_url: course.coverUrl } : {}),
+      ...(course.coverUrl && course.worldRoad ? { world_road: course.worldRoad } : {}),
       ...(course.planKey ? { plan_key: course.planKey } : {}),
+      ...(course.intake ? { intake: course.intake } : {}),
+      ...(course.outcomes?.length ? { outcomes: course.outcomes } : {}),
     })
     .select("*")
     .single();
@@ -497,9 +512,10 @@ export type CachedPlan = {
   description: string;
   modules: ModulePlan[];
   cover_url: string | null;
+  world_road: { x: number; y: number }[] | null;
 };
 
-const PLAN_COLUMNS = "topic_key, topic, title, description, modules, cover_url";
+const PLAN_COLUMNS = "topic_key, topic, title, description, modules, cover_url, world_road";
 
 /** The cached plan for a topic, if one was made with the current planning guide. */
 export async function getCachedPlan(topicKey: string, plannerVersion: string) {
@@ -559,6 +575,22 @@ export async function cachePlanCover(planKey: string, coverUrl: string) {
     .eq("topic_key", planKey)
     .is("cover_url", null);
   if (error) throw new Error(`cachePlanCover: ${error.message}`);
+}
+
+/** Saves the road traced in a course's world ([] when tracing failed, so it isn't retried). */
+export async function saveWorldRoad(courseId: number, road: { x: number; y: number }[]) {
+  const { error } = await supabase().from("courses").update({ world_road: road }).eq("id", courseId);
+  if (error) throw new Error(`saveWorldRoad: ${error.message}`);
+}
+
+/** Saves a world's traced road onto the shared plan whose world it is (server key only). */
+export async function cachePlanRoad(planKey: string, coverUrl: string, road: { x: number; y: number }[]) {
+  const { error } = await adminSupabase()
+    .from("course_plans")
+    .update({ world_road: road, updated_at: new Date().toISOString() })
+    .eq("topic_key", planKey)
+    .eq("cover_url", coverUrl);
+  if (error) throw new Error(`cachePlanRoad: ${error.message}`);
 }
 
 /** A shared plan's lesson (any lesson number), if one was cached by the current lesson writer. */
@@ -674,14 +706,16 @@ export type JobRow = {
   error: string | null;
   ref: string | null;
   retryable: boolean | null;
+  /** The learner's brief for a tailored course (with its materials' text), if any. */
+  intake?: Intake | null;
   created_at: string;
   updated_at: string;
 };
 
-export async function insertJob(job: { learnerId: string; kind: JobRow["kind"]; topic: string; topicKey: string }) {
+export async function insertJob(job: { learnerId: string; kind: JobRow["kind"]; topic: string; topicKey: string; intake?: Intake | null }) {
   const { data, error } = await supabase()
     .from("jobs")
-    .insert({ learner_id: job.learnerId, kind: job.kind, topic: job.topic, topic_key: job.topicKey })
+    .insert({ learner_id: job.learnerId, kind: job.kind, topic: job.topic, topic_key: job.topicKey, ...(job.intake ? { intake: job.intake } : {}) })
     .select("*")
     .single();
   if (error) throw new Error(`insertJob: ${error.message}`);
@@ -703,7 +737,50 @@ export async function runningJobs(learnerId: string, topicKey?: string) {
   return (data ?? []) as JobRow[];
 }
 
-export async function updateJob(id: string, patch: Partial<Pick<JobRow, "status" | "result" | "error" | "ref" | "retryable">>) {
+export async function updateJob(id: string, patch: Partial<Pick<JobRow, "status" | "result" | "error" | "ref" | "retryable" | "intake">>) {
   const { error } = await supabase().from("jobs").update({ ...patch, updated_at: new Date().toISOString() }).eq("id", id);
   if (error) throw new Error(`updateJob: ${error.message}`);
+}
+
+// ---------- Course materials (tailored courses) ----------
+
+/** Saves a course's material passages with their embeddings. */
+export async function insertMaterials(
+  learnerId: string,
+  courseId: number,
+  rows: { source: string; chunkIndex: number; content: string; embedding: number[] | null }[]
+) {
+  if (!rows.length) return;
+  const { error } = await supabase()
+    .from("course_materials")
+    .insert(
+      rows.map((r) => ({
+        learner_id: learnerId,
+        course_id: courseId,
+        source: r.source,
+        chunk_index: r.chunkIndex,
+        content: r.content,
+        ...(r.embedding ? { embedding: asVector(r.embedding) } : {}),
+      }))
+    );
+  if (error) throw new Error(`insertMaterials: ${error.message}`);
+}
+
+/** The passages of a course's materials closest in meaning to a query. */
+export async function matchMaterials(courseId: number, embedding: number[], count = 5) {
+  const { data, error } = await supabase().rpc("match_course_materials", { course: courseId, query: asVector(embedding), max_results: count });
+  if (error) throw new Error(`matchMaterials: ${error.message}`);
+  return (data ?? []) as { source: string; chunk_index: number; content: string; similarity: number }[];
+}
+
+/** The first passages of a course's materials, in order (when matching isn't possible). */
+export async function firstMaterials(courseId: number, count = 4) {
+  const { data, error } = await supabase()
+    .from("course_materials")
+    .select("source, chunk_index, content")
+    .eq("course_id", courseId)
+    .order("id", { ascending: true })
+    .limit(count);
+  if (error) throw new Error(`firstMaterials: ${error.message}`);
+  return (data ?? []) as { source: string; chunk_index: number; content: string }[];
 }

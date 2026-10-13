@@ -3,6 +3,7 @@
 import { useState } from "react";
 import type { Activity } from "@/lib/activities";
 import { ActivityFrame } from "./ActivityFrame";
+import { rich } from "../lesson/rich";
 
 type StoryData = Extract<Activity, { type: "story" }>;
 
@@ -33,7 +34,7 @@ export function StoryActivity({ a, onDone }: { a: StoryData; onDone: () => void 
             </span>
             <div className="flex-1 pb-2">
               {b.label && <p className="text-[11px] font-semibold tracking-wide text-accent uppercase">{b.label}</p>}
-              <p className="font-display mt-1 text-lg leading-relaxed text-fg italic">{b.text}</p>
+              <p className="font-display mt-1 text-lg leading-relaxed text-fg italic">{rich(b.text)}</p>
             </div>
           </li>
         ))}

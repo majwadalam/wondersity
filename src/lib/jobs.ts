@@ -21,6 +21,7 @@ import { paintCourseWorld } from "./courseWorld";
 import * as db from "./db";
 import { runTutor, topicKey, type TutorResult } from "./harness";
 import { stageLesson } from "./lessonStaging";
+import type { Intake } from "./intake";
 import { describeFailure } from "./requestGuards";
 
 export type JobKind = db.JobRow["kind"];
@@ -65,15 +66,16 @@ export function view(j: db.JobRow): JobView {
 
 /**
  * Starts a lesson job for the signed-in learner (inside withDb), or returns
- * the one already running for the same topic and kind.
+ * the one already running for the same topic and kind. `intake` is the brief
+ * for a tailored course; it only shapes a course that doesn't exist yet.
  */
-export async function startLessonJob(learnerId: string, topic: string, kind: JobKind): Promise<JobView> {
+export async function startLessonJob(learnerId: string, topic: string, kind: JobKind, intake: Intake | null = null): Promise<JobView> {
   const key = topicKey(topic);
   const running = (await db.runningJobs(learnerId, key)).filter((j) => !isStale(j));
   const same = running.find((j) => j.kind === kind);
   if (same) return view(same);
 
-  const job = await db.insertJob({ learnerId, kind, topic: topic.trim(), topicKey: key });
+  const job = await db.insertJob({ learnerId, kind, topic: topic.trim(), topicKey: key, intake: kind === "learn" ? intake : null });
   const client = db.currentDb();
   if (!client) throw new Error("startLessonJob needs the signed-in learner's database client");
   // After the response: the learner's client keeps its session for the run.
@@ -85,7 +87,7 @@ async function runLessonJob(learnerId: string, job: db.JobRow) {
   const started = Date.now();
   try {
     await waitForEarlierJobs(learnerId, job);
-    const result = await runTutor(job.topic, learnerId, { ahead: job.kind === "ahead" });
+    const result = await runTutor(job.topic, learnerId, { ahead: job.kind === "ahead", intake: job.intake ?? null });
 
     if (result.kind === "lesson" && result.lessonId && !result.resumed) {
       // Stage the new lesson here, so it's ready even if nobody opens it soon.
@@ -106,11 +108,12 @@ async function runLessonJob(learnerId: string, job: db.JobRow) {
         if (painted) result.course = toCourseView(painted);
       }
     }
-    await db.updateJob(job.id, { status: "done", result });
+    // The brief's materials now live with the course; the job doesn't keep a copy.
+    await db.updateJob(job.id, { status: "done", result, ...(job.intake ? { intake: null } : {}) });
   } catch (error) {
     const failure = describeFailure(error, "Failed to prepare your lesson. Please try again.");
     await db
-      .updateJob(job.id, { status: "failed", error: failure.message, ref: failure.ref, retryable: failure.retryable })
+      .updateJob(job.id, { status: "failed", error: failure.message, ref: failure.ref, retryable: failure.retryable, ...(job.intake ? { intake: null } : {}) })
       .catch((e) => console.error(`job ${job.id}: couldn't record its failure`, e));
   }
 }

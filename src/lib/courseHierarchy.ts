@@ -19,6 +19,8 @@ export type LevelInfo = {
   description: string;
   /** What the learner can do once the level is finished. */
   objective: string;
+  /** Tailored courses: the course outcome this level builds toward. */
+  outcome?: string;
 };
 
 /** One entry of courses.modules. Only title and goal exist on older courses. */
@@ -32,6 +34,8 @@ export type StoredModule = {
   level?: LevelInfo;
   /** Cover illustration URL, once generated (see lib/coverArt.ts). */
   cover?: string;
+  /** Tailored courses: the things the learner asked to cover that this module covers. */
+  covers?: string[];
 };
 
 export type LevelGroup = LevelInfo & {

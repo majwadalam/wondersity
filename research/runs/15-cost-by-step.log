@@ -1,0 +1,12 @@
+■ mathematics: Probability (78s, score 8, $0.0477, 9 calls, 19539 in / 5393 out tokens)
+  approach: discovery (The learner first predicts whether one outcome affects another, then sorts equally likely outcomes to discover the multiplication rule.)
+  blocks:   activity:predict > explain > check > activity:sort > explain > check > problem
+  issues:   none
+  trace:    lesson.generate, lesson.blind, lesson.verify, lesson.evaluate=8, lesson.select=8
+  cost:     write $0.0310 (4851 in / 3024 out) · verify $0.0074 (11989 in / 1834 out) · blind $0.0001 (323 in / 214 out) · review $0.0091 (2376 in / 321 out)
+■ history: The French Revolution (194s, score 7.5, below bar, $0.1389, 18 calls, 41084 in / 13165 out tokens)
+  approach: mystery (Learners unravel why familiar problems became revolutionary in 1789 by distinguishing the financial trigger, popular pressures and political challenge.)
+  blocks:   explain > activity:predict > explain > check > explain > check > explain > explain > check > activity:sort > reflect
+  issues:   Question 3 ("A student argues that the National Assembly was simply an…"): a hint uses words found only in the right answer ("shape", "speak", "nation"); hint at the reasoning, not the answer.
+  trace:    lesson.generate, lesson.blind, lesson.verify, lesson.evaluate=6.8, lesson.revise, lesson.blind, lesson.verify, lesson.evaluate=7.5, lesson.select=7.5
+  cost:     write $0.0408 (4854 in / 4009 out) · verify $0.0146 (21086 in / 3900 out) · blind $0.0003 (909 in / 500 out) · review $0.0229 (6046 in / 783 out) · revise $0.0602 (8189 in / 3973 out)

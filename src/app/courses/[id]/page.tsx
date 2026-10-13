@@ -4,9 +4,12 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { useAppState } from "@/components/app/AppState";
-import { StarButton, courseProgress } from "@/components/app/CourseCards";
+import { courseProgress } from "@/components/app/CourseCards";
+import { CourseProgress } from "@/components/app/CourseProgress";
 import { CourseJourney } from "@/components/app/CourseJourney";
+import { BackLink } from "@/components/app/BackLink";
 import { levelsOf } from "@/lib/courseHierarchy";
+import type { Course } from "@/components/types";
 
 export default function CoursePage() {
   const { id } = useParams<{ id: string }>();
@@ -35,18 +38,16 @@ export default function CoursePage() {
     );
   }
 
-  const { total, done, percent } = courseProgress(course);
+  const { total } = courseProgress(course);
   const minutes = course.modules.reduce((n, m) => n + (m.lesson?.data.estimatedMinutes ?? 8), 0);
   const levels = levelsOf(course);
   const hasLevels = !levels.every((l) => l.legacy);
 
   return (
     <main className="mx-auto max-w-[1080px] px-5 pt-8 pb-24">
-      <Link href="/courses" className="text-sm text-muted hover:text-fg">
-        ← Courses
-      </Link>
+      <BackLink href="/courses">Courses</BackLink>
 
-      <header className="mt-5 flex flex-wrap items-end justify-between gap-6">
+      <header className="mt-5 grid items-center gap-8 lg:grid-cols-[minmax(0,1fr)_340px]">
         <div className="max-w-2xl">
           <p className="text-sm font-medium text-muted">
             {hasLevels ? `${levels.length} levels · ` : ""}
@@ -55,17 +56,10 @@ export default function CoursePage() {
           <h1 className="display-xl font-display mt-2 text-4xl text-fg sm:text-5xl">{course.title}</h1>
           <p className="mt-3 text-lg leading-relaxed text-muted">{course.description}</p>
         </div>
-        <StarButton topic={course.topic} />
+        <CourseProgress course={course} onStart={() => learn(course.topic)} busy={!!busy} writing={busy?.courseId === course.id} />
       </header>
 
-      <div className="mt-4 flex items-center gap-3">
-        <span className="h-1.5 max-w-xs flex-1 overflow-hidden rounded-full bg-line">
-          <span className="course-bar block h-full rounded-full bg-accent" style={{ width: `${Math.max(percent, 2)}%` }} />
-        </span>
-        <span className="text-sm text-muted tabular-nums">
-          {done} of {total} done
-        </span>
-      </div>
+      {course.tailored && <TailoredFor tailored={course.tailored} />}
 
       <div className="mt-8">
         <CourseJourney
@@ -77,5 +71,29 @@ export default function CoursePage() {
         />
       </div>
     </main>
+  );
+}
+
+/** What a tailored course was planned from: the learner's goal, the outcomes it builds to, their materials. */
+function TailoredFor({ tailored }: { tailored: NonNullable<Course["tailored"]> }) {
+  return (
+    <section className="mt-6 rounded-2xl bg-white p-5 ring-1 ring-line" aria-label="Your goal">
+      <p className="text-sm font-semibold text-fg">Built for your goal</p>
+      <p className="mt-1 text-[15px] leading-relaxed text-muted">&ldquo;{tailored.goal}&rdquo;</p>
+      {tailored.outcomes.length > 0 && (
+        <>
+          <p className="mt-4 text-sm font-semibold text-fg">By the end you&rsquo;ll be able to</p>
+          <ul className="mt-1.5 space-y-1 text-[15px] text-fg">
+            {tailored.outcomes.map((o) => (
+              <li key={o} className="flex gap-2">
+                <span className="mt-2 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-accent" aria-hidden />
+                {o}
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+      {tailored.materials.length > 0 && <p className="mt-4 text-xs text-muted">Using your materials: {tailored.materials.join(", ")}</p>}
+    </section>
   );
 }

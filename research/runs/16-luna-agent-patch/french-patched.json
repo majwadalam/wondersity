@@ -1,0 +1,206 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Why 1789?",
+    "objective": "Explain how royal debt, rising food prices and ideas about political authority combined to turn a financial crisis into a revolution.",
+    "estimatedMinutes": 7,
+    "approach": "mystery",
+    "approachReason": "The lesson opens with the puzzle of why longstanding problems became revolutionary in 1789, then assembles the financial, social and political clues.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Clue 1: the crown needed money—and cooperation",
+        "body": "Years of costly wars, including French support for the American War of Independence, had added to royal debt. Paying interest consumed a large share of royal revenue, and obtaining more loans became increasingly difficult.\n\nRaising revenue meant confronting an unequal tax system and powerful defenders of privilege. Nobles were not exempt from every tax, but important exemptions and privileges made reform contentious. The king's financial problem became a political problem: who could approve changes, and whose interests would those changes threaten?",
+        "example": "Think of a ruler who needs more income but cannot simply impose a new tax without resistance. The shortage of money forces a dispute over decision-making power.",
+        "layout": "split"
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Separate the pressure to raise money from the obstacle to doing so.",
+          "What would calling representatives together change about how decisions are made?"
+        ],
+        "retry": "A shortage of revenue explains why a ruler needs action. Resistance from privileged groups explains why obtaining that revenue can require a negotiation over political authority."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "Clues 2 and 3: hardship meets a challenge to authority",
+        "body": "A poor harvest in 1788 contributed to grain shortages and rising bread prices. Because bread was a staple food, higher prices put severe pressure on many household budgets. This made the crisis urgent far beyond the royal court.\n\nEnlightenment ideas and wider political debate offered ways to challenge inherited privilege: rights, representation and government serving the nation rather than simply the monarch. These ideas did not give everyone the same goals, but they helped people turn complaints into demands about how France should be governed.",
+        "example": "“We cannot afford bread” identifies a hardship. “The nation's representatives should have a say” proposes a change in political authority. In 1789, such concerns could reinforce one another.",
+        "layout": "split"
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Track which pressure changes in this situation and which pressures remain.",
+          "Does easing one source of discontent also settle disputes about money and decision-making?"
+        ],
+        "retry": "The causes can reinforce one another without depending entirely on one another. Cheaper bread could ease household hardship while leaving the crown's financial difficulties and disputes over representation unresolved."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Test a one-cause explanation",
+        "prompt": "Someone says, “The revolution happened because bread became expensive.” In two sentences, explain what that gets right and what it leaves out. Connect the missing causes rather than simply listing them.",
+        "model": "Expensive bread made daily life harder and increased popular anger. But royal debt pushed the monarchy toward contested reform and the Estates-General, while ideas about rights and representation helped turn grievances into challenges to political authority."
+      },
+      {
+        "kind": "explain",
+        "heading": "1789 brought the pressures together",
+        "body": "The financial crisis led Louis XVI to summon the **Estates-General**, an assembly representing the three estates, which opened in May 1789. It created a national arena for grievances and disputes over representation and authority.\n\nThat is the answer to our puzzle: debt forced the monarchy to seek a political solution just as food hardship intensified discontent and ideas about rights and representation made broader change imaginable. None of these causes made revolution inevitable on its own; together, they helped turn a royal financial crisis into a struggle over who should govern France.",
+        "example": ""
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Start with why the monarchy needed to call an assembly at this particular moment.",
+          "Then ask what made the assembly's disputes matter beyond the royal treasury."
+        ],
+        "retry": "Connect the causes by their different roles: debt helped force a national political meeting, food hardship made grievances urgent, and arguments about representation helped turn that opening into a challenge to authority."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Why did a money problem become a power struggle?",
+        "prompt": "France had debts, unequal privileges and political criticism before 1789. Why did these become revolutionary then? Start with one prediction: when powerful groups block changes to taxation and borrowing becomes harder, which royal response would most directly open a wider dispute over who should decide?",
+        "reveal": "Calling representatives together can turn a search for revenue into a debate over authority. That gives us one clue—but not yet an explanation of why the crisis spread beyond the court in 1789.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "Call a representative assembly to seek agreement on the crisis.",
+            "correct": true,
+            "feedback": "An assembly brings more voices into decisions and creates opportunities to contest the ruler's authority."
+          },
+          {
+            "text": "Seek another loan to postpone decisions about the crisis.",
+            "correct": false,
+            "feedback": "Another loan might buy time if available, but it does not directly create a wider arena for deciding who should govern."
+          },
+          {
+            "text": "Reduce court spending to lessen the demands on revenue.",
+            "correct": false,
+            "feedback": "Spending cuts address the budget, but they do not directly bring representatives into a dispute over decision-making."
+          },
+          {
+            "text": "Keep existing taxes and press officials to collect them.",
+            "correct": false,
+            "feedback": "Collection might raise some revenue, but it leaves the blocked changes and the basis of political authority unresolved."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Identify what each clue explains",
+        "prompt": "Sort these paraphrased clues into the pressure each most directly explains. Distinguish trouble funding the state, trouble feeding a household, and arguments about who should govern; do not put every grievance in the same category.",
+        "reveal": "The clues point to different kinds of pressure: financial constraints, daily hardship and challenges to political authority. Next, investigate how the latter two could widen a crisis that began in royal finances.",
+        "type": "sort",
+        "buckets": [
+          "Funding the state",
+          "Feeding a household",
+          "Who should govern"
+        ],
+        "items": [
+          {
+            "text": "Interest payments absorb money the crown could otherwise spend.",
+            "bucket": "Funding the state"
+          },
+          {
+            "text": "Lenders become less willing to advance money to the crown.",
+            "bucket": "Funding the state"
+          },
+          {
+            "text": "A poor harvest reduces the grain available for making bread.",
+            "bucket": "Feeding a household"
+          },
+          {
+            "text": "Higher bread prices leave families less money for other necessities.",
+            "bucket": "Feeding a household"
+          },
+          {
+            "text": "Political writers question whether inherited privilege justifies power.",
+            "bucket": "Who should govern"
+          },
+          {
+            "text": "Campaigners argue that the nation's representatives should help make decisions.",
+            "bucket": "Who should govern"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "In a fictional kingdom, war debts strain the treasury. Powerful landowners block an attempt to extend taxation to their estates, and the ruler calls representatives together to seek agreement. Why has the money shortage become a political crisis?",
+        "options": [
+          "Creditors have taken control of taxation, so the meeting must negotiate the ruler's repayment schedule.",
+          "Debt has made grain scarce, so the meeting must settle competing claims to food.",
+          "The ruler has secured agreement on taxation, so the meeting must organize collection of the new revenue.",
+          "Resistance has obstructed revenue changes, so the meeting must negotiate who pays and decides."
+        ],
+        "correctAnswer": "Resistance has obstructed revenue changes, so the meeting must negotiate who pays and decides.",
+        "explanation": "Debt creates the need for revenue, while resistance prevents a straightforward solution. Calling representatives together brings questions about payment and decision-making authority into the financial dispute."
+      },
+      {
+        "question": "Imagine that grain supplies improve in a French district in spring 1789 and bread becomes more affordable. The crown still struggles to raise revenue, and local writers still demand a stronger voice for the nation. What would you expect this improvement to change?",
+        "options": [
+          "It would ease household hardship and restore royal revenue enough to end the need for tax changes.",
+          "It would ease household hardship while leaving financial and political pressures capable of sustaining conflict.",
+          "It would ease household hardship and remove the reason for demands about political representation.",
+          "It would leave household hardship unchanged because royal debt determines what families pay for bread."
+        ],
+        "correctAnswer": "It would ease household hardship while leaving financial and political pressures capable of sustaining conflict.",
+        "explanation": "Affordable bread would reduce one immediate pressure, but it would not itself solve royal debt or disputes over representation. The causes reinforced one another without all arising from the same source."
+      },
+      {
+        "question": "A museum exhibit asks why the Estates-General's opening in May 1789 mattered, rather than treating debt, expensive bread and political ideas as three separate problems. What causal explanation should its caption give?",
+        "options": [
+          "Royal debt helped force the assembly to meet; food hardship intensified grievances, and representation gave those grievances a political direction.",
+          "Food hardship forced the assembly to meet; royal borrowing spread that hardship, and representation offered a way to rebuild grain supplies.",
+          "Political ideas forced the assembly to meet; royal debt and food hardship then developed as consequences of the disputes inside it.",
+          "Royal debt forced the assembly to meet; settling its financial business would also settle food hardship and demands for representation."
+        ],
+        "correctAnswer": "Royal debt helped force the assembly to meet; food hardship intensified grievances, and representation gave those grievances a political direction.",
+        "explanation": "The financial crisis helped create a national arena for political dispute at a moment of severe popular hardship. Ideas about rights and representation helped turn grievances into demands about who should govern."
+      }
+    ]
+  },
+  "report": {
+    "approach": "mystery",
+    "blocks": "activity > explain > check > activity > explain > check > reflect > explain > check",
+    "droppedBlocks": 0,
+    "droppedActivities": 0,
+    "droppedQuestions": 0,
+    "placedChecks": 0,
+    "patch": "Strengthened the causal-reasoning checks, added a final synthesis assessment, made the evidence activity diagnostic, removed the hint cue, and delayed the opening mystery’s resolution.",
+    "changes": 8
+  },
+  "evaluation": {
+    "score": 7,
+    "approved": true,
+    "problems": [
+      "The checks are less demanding than their scenario framing suggests. Question 1 largely restates its own answer in the setup, and Question 2 explicitly states that the other causes remain. Learners could answer both through reading comprehension without learning much history.",
+      "Several distractors are weak rather than plausible misconceptions, particularly creditors taking control of taxation in Question 1 and royal debt determining household bread prices in Question 2.",
+      "The correct answer is the longest option in two of three checks. The detected hint-word overlaps add minor answer cues, although the hints generally do support causal reasoning.",
+      "The final check repeats the preceding explanation closely rather than requiring substantially harder application.",
+      "The sorting activity is mostly transparent vocabulary matching. It distinguishes categories but does little to investigate how the causes interacted.",
+      "The explanation stops at the Estates-General creating an arena for dispute. A brief account of the dispute over voting and the Third Estate claiming national authority would make the transition from financial crisis to revolution more concrete."
+    ],
+    "suggestions": [
+      "Replace one straightforward multiple-choice check with a short causal-chain task requiring learners to explain how blocked fiscal reform opened a dispute over authority.",
+      "Use distractors based on credible misconceptions, such as treating bread shortages as the sole cause or assuming the Estates-General already had an agreed system of representation.",
+      "Balance option lengths and remove distinctive answer wording from hints.",
+      "Add a concise bridge from the Estates-General to the Third Estate's assertion of national authority, without expanding into a full chronology.",
+      "Make the final task ask learners to critique a new historical interpretation or select evidence that distinguishes interacting causes from a single-cause explanation."
+    ]
+  }
+}

@@ -51,7 +51,7 @@ export function ProductWindow() {
       <div className="grid gap-0 md:grid-cols-[1fr_1.05fr]">
         {/* The scene */}
         <div className="relative aspect-[16/10] md:aspect-auto md:min-h-[440px]">
-          <Image unoptimized src="/art/scenes/crito-prison.webp" alt="Socrates and Crito in a stone prison cell in Athens, the Acropolis through the window" fill sizes="(min-width: 768px) 560px, 100vw" className="object-cover" priority />
+          <Image unoptimized src="/art/scenes/crito-prison.webp" alt="Socrates and Crito in a stone prison cell in Athens, the Acropolis through the window" fill sizes="(min-width: 768px) 560px, 100vw" className="object-cover" loading="eager" fetchPriority="high" />
           <span className="absolute top-3 left-3 rounded-full bg-black/35 px-2.5 py-1 text-[11px] font-medium text-white backdrop-blur-md">Prison of Athens · 399 BC</span>
           <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0a2540]/95 via-[#0a2540]/60 to-transparent px-4 pt-16 pb-4 sm:px-5">
             <div className="flex items-start gap-3">

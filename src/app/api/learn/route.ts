@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { asLearner } from "@/lib/auth";
+import { parseIntake } from "@/lib/intake";
 import { startLessonJob } from "@/lib/jobs";
 import {
   MAX_TOPIC_LENGTH,
@@ -29,7 +30,7 @@ export async function POST(request: Request) {
   } catch {
     return NextResponse.json({ error: "Request body must be JSON" }, { status: 400 });
   }
-  const { topic: rawTopic, ahead } = (body ?? {}) as Record<string, unknown>;
+  const { topic: rawTopic, ahead, intake: rawIntake } = (body ?? {}) as Record<string, unknown>;
 
   const topic = cleanTopic(rawTopic);
   if (!topic) {
@@ -39,10 +40,16 @@ export async function POST(request: Request) {
     );
   }
 
+  // A tailored course's brief ("Tailor it"); it only shapes a course that doesn't exist yet.
+  const intake = rawIntake == null ? null : parseIntake(rawIntake);
+  if (rawIntake != null && !intake) {
+    return NextResponse.json({ error: "Tell us what you want to be able to do." }, { status: 400 });
+  }
+
   return asLearner(async (learnerId) => {
     try {
       // ahead: write the lesson after the one the learner is taking, so it's ready when they finish.
-      const job = await startLessonJob(learnerId, topic, ahead === true ? "ahead" : "learn");
+      const job = await startLessonJob(learnerId, topic, ahead === true ? "ahead" : "learn", intake);
       return NextResponse.json({ job }, { status: 202 });
     } catch (error) {
       return serverError(error, "Failed to start your lesson. Please try again.");

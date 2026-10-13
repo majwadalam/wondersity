@@ -1,0 +1,320 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Why 1789?",
+    "objective": "Explain how royal debt, food hardship and political ideas combined to turn a financial crisis into a challenge to royal authority.",
+    "estimatedMinutes": 8,
+    "approach": "mystery",
+    "approachReason": "Learners unravel why familiar problems became revolutionary in 1789 by distinguishing the financial trigger, popular pressures and political challenge.",
+    "blocks": [
+      {
+        "kind": "explain",
+        "heading": "Why then—not earlier?",
+        "body": "France had experienced debt, hunger and arguments over privilege before 1789. None of these, by itself, explains why a revolution began that year.\n\nOur puzzle is to discover how a government money problem became a struggle over who had the right to rule.",
+        "example": "",
+        "layout": "spotlight"
+      },
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Clue 1: debt forced a political opening",
+        "body": "The monarchy had accumulated heavy debts through costly wars, including support for American independence. Debt payments absorbed revenue, while further borrowing became increasingly difficult.\n\nAttempts to change taxation met resistance from privileged groups and institutions. To address the financial crisis, Louis XVI summoned the **Estates-General**, an assembly representing the clergy, nobility and Third Estate—the rest of the population—which met in May 1789.",
+        "example": "The Crown wanted help resolving its financial crisis. Calling representatives together also created an opportunity for them to raise grievances and dispute how decisions should be made.",
+        "layout": "split"
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Trace the problem from debt payments through failed borrowing and resisted tax reform.",
+          "Separate the Crown's immediate aim from possible outcomes of assembling representatives."
+        ],
+        "retry": "Distinguish the reason the Crown called the meeting from the demands representatives could raise once it began. A meeting called to address finances could develop a much wider agenda."
+      },
+      {
+        "kind": "explain",
+        "heading": "Clue 2: bread made the crisis urgent",
+        "body": "A poor harvest in 1788 contributed to shortages and high grain and bread prices in 1789. Bread was a staple food, so rising prices placed severe pressure on ordinary households, even when their earnings did not fall.\n\nThe Crown's debt crisis and a family's food crisis were different problems. But they overlapped: while officials argued over revenue, hardship increased popular anger and pressure for action.",
+        "example": "Affordable bread could ease a household's immediate distress without paying the Crown's creditors or settling disputes over taxation.",
+        "layout": "split"
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Which pressure does a larger grain supply affect most directly?",
+          "Which unresolved problem originally pushed the Crown toward a representative meeting?"
+        ],
+        "retry": "Follow two separate accounts: a household needs income to buy food; the Crown needs revenue to meet its obligations. An improvement in one does not automatically repair the other."
+      },
+      {
+        "kind": "explain",
+        "heading": "Clue 3: ideas changed what people demanded",
+        "body": "Enlightenment ideas helped people question inherited privilege and unchecked royal authority. Arguments about rights, equality before the law and representative government offered ways to imagine a different political order.\n\nThese ideas did not make everyone agree or want a republic. They helped turn “How can the king raise money?” into “Who should decide, and under what rules?”",
+        "example": "A demand for cheaper bread addresses an immediate hardship. A demand that representatives approve taxation challenges how political power is exercised.",
+        "layout": "split"
+      },
+      {
+        "kind": "explain",
+        "heading": "The opening became a challenge to authority",
+        "body": "At the Estates-General, disputes over representation and voting made agreement difficult. In June 1789, Third Estate deputies declared themselves the **National Assembly**, claiming to represent the nation rather than simply one estate.\n\nThis challenged royal authority: representatives were asserting a right to shape France's political order, not merely answer the king's financial request. The dispute was becoming one over **sovereignty**—where ultimate political authority should lie.",
+        "example": "",
+        "layout": "steps",
+        "points": [
+          {
+            "title": "Financial opening",
+            "text": "The Crown called representatives together because its financial reforms had stalled."
+          },
+          {
+            "title": "Political dispute",
+            "text": "Representatives disputed how the nation should be represented and decisions made."
+          },
+          {
+            "title": "Revolutionary claim",
+            "text": "The National Assembly claimed authority to act for the nation and reshape government."
+          }
+        ]
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Compare advising a ruler with claiming a right to shape the political order.",
+          "What changes when deputies speak for the nation rather than for one estate?"
+        ],
+        "retry": "A revolutionary challenge concerns the source of authority, not just the amount of money collected. Claiming to represent the nation went beyond helping the king balance his accounts, but it did not immediately abolish the monarchy."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "reflect",
+        "heading": "Solve the mystery: why 1789?",
+        "prompt": "A classmate says, “People were hungry, so they started the revolution.” Write three or four sentences improving that explanation.\n\nExplain what forced the political opening, what made it urgent, and how it became a challenge to royal authority. Include one connection between these causes rather than just listing them.",
+        "model": "Royal debt and resistance to tax reform pushed Louis XVI to summon the Estates-General, bringing representatives together. High bread prices increased hardship and pressure for action, but cheaper bread alone would not have repaired royal finances. Ideas about rights and representation helped shape demands about who should govern. When Third Estate deputies claimed to represent the nation as the National Assembly, the financial consultation became a challenge to royal authority.\n\nCompare your explanation: debt helps explain the opening, food hardship its urgency, and political ideas the direction of demands. The National Assembly shows the change from requesting relief to claiming authority."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Would cheaper bread solve the crisis?",
+        "prompt": "Imagine that bread suddenly became affordable again in early 1789, but nothing else changed. Which pressure would this most directly relieve?",
+        "reveal": "Cheaper bread would ease household hardship, but it would not repay royal debts or settle arguments about political authority. The mystery has several connected parts.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "Families' difficulty paying for daily food.",
+            "correct": true,
+            "feedback": "Lower bread prices directly reduce the cost of a staple food."
+          },
+          {
+            "text": "The Crown's difficulty paying its creditors.",
+            "correct": false,
+            "feedback": "Cheaper bread would not directly cancel debts or provide the Crown with money to pay creditors."
+          },
+          {
+            "text": "Disputes about who should approve taxation.",
+            "correct": false,
+            "feedback": "Lower food prices would not settle who had the authority to approve tax changes."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Build the explanation: different causes, different jobs",
+        "prompt": "Sort each causal connection by its main role in explaining 1789. Then choose one connection from each group and explain to yourself how they could reinforce one another.",
+        "reveal": "These causes did different jobs: financial deadlock opened the meeting, food hardship increased pressure, and political claims challenged who held authority. A causal explanation connects those roles rather than treating them as interchangeable.",
+        "type": "sort",
+        "buckets": [
+          "Financial opening",
+          "Popular urgency",
+          "Challenge to authority"
+        ],
+        "items": [
+          {
+            "text": "Debt payments and difficult borrowing increased the need for tax reform.",
+            "bucket": "Financial opening"
+          },
+          {
+            "text": "Resistance to financial reforms helped push the Crown to summon representatives.",
+            "bucket": "Financial opening"
+          },
+          {
+            "text": "A poor harvest contributed to high bread prices that strained household budgets.",
+            "bucket": "Popular urgency"
+          },
+          {
+            "text": "Difficulty affording a staple food increased anger and pressure for action.",
+            "bucket": "Popular urgency"
+          },
+          {
+            "text": "Arguments about rights and representation gave grounds for questioning inherited privilege.",
+            "bucket": "Challenge to authority"
+          },
+          {
+            "text": "Deputies claiming to represent the nation asserted more than a right to advise the king.",
+            "bucket": "Challenge to authority"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "An adviser reviewing the decision to summon the Estates-General notes that royal borrowing had become difficult and tax reforms had met resistance. What immediate task did the Crown need the meeting to help accomplish?",
+        "options": [
+          "Secure a workable revenue settlement to meet the monarchy's financial obligations.",
+          "Replace the three estates with a single assembly elected on equal terms.",
+          "Establish national representatives as the main source of France's political authority.",
+          "Organize grain supplies to reduce the cost of bread for ordinary households."
+        ],
+        "correctAnswer": "Secure a workable revenue settlement to meet the monarchy's financial obligations.",
+        "explanation": "The Crown summoned the Estates-General to address its financial crisis. Demands to transform representation and political authority developed through the opening this created."
+      },
+      {
+        "question": "Imagine that a French town receives plentiful grain supplies in spring 1789 and bread becomes cheaper. Royal borrowing remains difficult, and proposed tax reforms remain blocked. How would this change the pressures contributing to revolution?",
+        "options": [
+          "Food-related unrest could ease, while the pressure to resolve royal finances would remain.",
+          "Royal tax disputes could ease, while protests over bread would remain largely unchanged.",
+          "Food-related unrest could ease, making the Crown's tax-reform negotiations unnecessary.",
+          "Royal borrowing could recover, while household hardship would remain largely unchanged."
+        ],
+        "correctAnswer": "Food-related unrest could ease, while the pressure to resolve royal finances would remain.",
+        "explanation": "Cheaper bread could reduce immediate hardship and food-related anger. It would not by itself solve the Crown's debt and revenue problems, which had forced the political opening."
+      },
+      {
+        "question": "A student argues that the National Assembly was simply another way to help the king collect revenue. What about the Third Estate deputies' declaration in June 1789 most strongly challenges that interpretation?",
+        "options": [
+          "They claimed to speak for the nation and shape government, rather than merely advise the king.",
+          "They claimed separate authority over Third Estate taxes, leaving national decisions to the king.",
+          "They claimed to have abolished kingship and established a republic through their declaration.",
+          "They claimed each estate should advise the king separately, preserving the existing political structure."
+        ],
+        "correctAnswer": "They claimed to speak for the nation and shape government, rather than merely advise the king.",
+        "explanation": "Declaring a National Assembly asserted authority to represent the nation and reshape the political order. This went beyond fiscal consultation without immediately abolishing the monarchy."
+      }
+    ],
+    "sources": [
+      {
+        "url": "https://en.chateauversailles.fr/discover/history/key-dates/summoning-estates-general-1789",
+        "title": "Summoning of the Estates General, 1789 | Château de Versailles"
+      },
+      {
+        "url": "https://www.jstor.org/stable/26218058",
+        "title": "2, The Year Leading to the Revolution of 1789 in France - jstor"
+      },
+      {
+        "url": "https://www.assemblee-nationale.fr/dyn/langues/welcome-to-the-english-website-of-the-french-national-assembly/history-and-heritage",
+        "title": "History and heritage - Welcome to the english website of the French National Assembly - Assemblée nationale"
+      },
+      {
+        "url": "https://www.britannica.com/event/French-Revolution",
+        "title": "French Revolution | History, Summary, Timeline, Causes, & Facts | Britannica"
+      },
+      {
+        "url": "https://webpages.cs.luc.edu/~dennis/106/106-Bkgr/19-French-Rev.pdf",
+        "title": "[PDF] The Era of the French Revolution and Napoleon"
+      }
+    ]
+  },
+  "score": 7.5,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 94176,
+      "approach": "mystery",
+      "blocks": "explain > activity > explain > check > explain > check > activity > explain > check > explain",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.blind",
+      "iteration": 1,
+      "ms": 6579,
+      "questions": 3,
+      "giveaways": []
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 1,
+      "ms": 14637,
+      "claims": 5,
+      "supported": 5,
+      "contradicted": [],
+      "unclear": 0,
+      "downgraded": []
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 6.8,
+      "ms": 14651,
+      "problems": [
+        "Assessment quality is the main weakness. The household-budget question tests subtraction rather than understanding the French Revolution and can be answered without the lesson.",
+        "The first check has weak distractors: resistance supplying revenue and borrowing difficulties cancelling debts are readily dismissed without historical understanding.",
+        "The final check largely supplies its own answer. Its three distractors all dismiss two explicitly stated pressures, making the balanced explanation conspicuous rather than testing causal reasoning.",
+        "The diagram activity asks learners to explore supplied connections but does not require them to construct, justify or revise a causal explanation. Its placement also introduces political ideas before the explanatory block intended to teach them.",
+        "The lesson explains why a political opening occurred more fully than how that opening became revolutionary. The closing synthesis stops at demands for reform without illustrating the subsequent challenge to royal authority."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 70965,
+      "approach": "mystery",
+      "blocks": "explain > activity > explain > check > explain > check > explain > explain > check > activity > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.blind",
+      "iteration": 2,
+      "ms": 4001,
+      "questions": 3,
+      "giveaways": []
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 2,
+      "ms": 14019,
+      "claims": 5,
+      "supported": 5,
+      "contradicted": [],
+      "unclear": 0,
+      "downgraded": []
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 7.5,
+      "ms": 14022,
+      "problems": [
+        "Question 3's hints repeat answer-specific language such as 'shape', 'speak', and 'nation', making the correct option easier to identify rather than supporting independent reasoning.",
+        "The opening prediction and Question 2 use essentially the same cheaper-bread counterfactual. The initial activity can be answered through everyday reasoning without historical knowledge, and its repetition limits progression.",
+        "The checks mostly retrieve distinctions stated explicitly in the preceding explanations. Question 3 adds interpretation, but none requires learners to apply all three causes together in a genuinely new situation.",
+        "The sorting activity's items closely echo the category labels and earlier explanations, making it more a recognition exercise than an investigation of causal relationships.",
+        "The connection between food hardship and the developing political challenge remains relatively abstract. The lesson explains financial and constitutional developments concretely but gives no comparable example showing how popular pressure affected revolutionary events."
+      ],
+      "factErrors": [],
+      "structureIssues": [
+        "Question 3 (\"A student argues that the National Assembly was simply an…\"): a hint uses words found only in the right answer (\"shape\", \"speak\", \"nation\"); hint at the reasoning, not the answer."
+      ]
+    },
+    {
+      "step": "lesson.select",
+      "score": 7.5,
+      "passed": false,
+      "sources": 5
+    }
+  ]
+}

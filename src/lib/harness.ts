@@ -11,29 +11,41 @@
 //      run, only the module the run is for), and routes all lesson writing
 //      through the quality gate in lessonWriter.ts.
 //
+// A tailored course (the learner filled in "Tailor it", lib/intake.ts) is
+// planned backwards from their goal, with outcomes and coverage checked in
+// code, and its lessons are written for their starting point, context and
+// materials. It's personal, so it never uses or seeds the shared plan cache.
+//
 // A run is normally for the current module. An "ahead" run writes the one
 // after it while the learner is still taking the current one, so the next
 // lesson is ready the moment they finish; it can't see their mistakes in the
 // lesson they're taking, only in the ones before it.
 
 import { z } from "zod";
+import { isCatalogTopic } from "./catalog";
 import * as db from "./db";
 import { groupLevels, modulePlace } from "./courseHierarchy";
-import { PLANNER_VERSION, PLANNING_GUIDE, coursePlanToolParameters, parseCoursePlan } from "./coursePlan";
+import { PLANNER_VERSION, PLANNING_GUIDE, TAILORED_PLANNING_GUIDE, coursePlanToolParameters, parseCoursePlan } from "./coursePlan";
+import { LENGTH_MODULES, describeExcerpts, describeIntake, learnerBriefFor, storedIntake, type Intake } from "./intake";
+import { describeDigest, digestMaterials, excerptsFor, saveMaterials, type MaterialDigest } from "./materials";
 import { latestLessonForModule, toCourseView, type CourseView } from "./courseView";
 import { PASS_SCORE, lessonVersion, writeLesson, type Lesson, type TraceEntry } from "./lessonWriter";
 import { findSharedPlan } from "./planCache";
 import { billingEnabled, canWriteLesson, planFrom, windowStart } from "./plans";
-import { callWithTools, emptyUsage, withUsage, type ChatMessage, type ToolCall, type ToolDefinition, type Usage } from "./model";
+import { withStep, callWithTools, emptyUsage, withUsage, type ChatMessage, type ToolCall, type ToolDefinition, type Usage, agentModel, writerModel } from "./model";
 
 export type { TraceEntry };
 
 // Bounded iteration: the agent gets at most this many model turns per run.
 const MAX_AGENT_STEPS = 6;
-// The lesson writer won't start a revision after this point in the run...
-const REVISE_DEADLINE_MS = 120_000;
-// ...and the agent loop won't start a new turn after this one.
-const RUN_BUDGET_MS = 200_000;
+// The lesson writer won't start a revision after this point in the run. At
+// 120s, writing and reviewing a lesson often used it up, so lessons below the
+// bar were shown unrevised (runs 13-16); a targeted revision and its review take
+// about 70-90s, so one starting by 165s ends well inside the hard deadline.
+const REVISE_DEADLINE_MS = 165_000;
+// ...and the agent loop won't start a new turn after this one (the closing
+// note is a short GPT-6 Luna call).
+const RUN_BUDGET_MS = 250_000;
 // Hard stop for every model call in the run (incl. retries). The route allows
 // 300s; the rest is headroom for database writes.
 const HARD_DEADLINE_MS = 280_000;
@@ -149,6 +161,10 @@ type RunState = {
   fresh: boolean;
   /** The requested topic's embedding, if the plan cache computed one (stored with a new shared plan). */
   embedding: number[] | null;
+  /** The learner's brief for a new tailored course; null once a course exists or for "Plan it for me". */
+  intake: Intake | null;
+  /** An outline of the brief's materials, for the planner. */
+  digest: MaterialDigest | null;
 };
 
 type ToolResult = Record<string, unknown>;
@@ -164,7 +180,11 @@ async function runTool(call: ToolCall, state: RunState): Promise<ToolResult> {
   switch (call.function.name) {
     case "create_course": {
       if (state.course) return { error: "This learner already has a course for this topic. Use write_module." };
-      const parsed = parseCoursePlan(rawArgs);
+      const intake = state.intake;
+      const parsed = parseCoursePlan(
+        rawArgs,
+        intake ? { cover: intake.cover ?? [], modules: intake.length ? LENGTH_MODULES[intake.length] : undefined } : undefined
+      );
       if (!parsed.ok) return { error: `Invalid course plan: ${parsed.error}. Fix it and call create_course again.` };
       // A plan made for a learner with no other courses isn't tailored to anyone,
       // so it's shared: the course points at it, and it's cached for the next
@@ -173,10 +193,21 @@ async function runTool(call: ToolCall, state: RunState): Promise<ToolResult> {
         learnerId: state.learnerId,
         topic: state.topic,
         topicKey: state.key,
-        ...parsed.plan,
+        title: parsed.plan.title,
+        description: parsed.plan.description,
+        modules: parsed.plan.modules,
         planKey: state.fresh ? state.key : null,
+        intake: intake ? storedIntake(intake) : null,
+        outcomes: parsed.plan.outcomes ?? null,
       });
       state.course = { ...row, lessons: [] };
+      if (intake?.materials?.length) {
+        // A failure here costs the lessons their excerpts, not the course.
+        const t = Date.now();
+        await saveMaterials(state.learnerId, row.id, intake.materials)
+          .then((passages) => state.trace.push({ step: "materials_saved", passages, ms: Date.now() - t }))
+          .catch((e) => state.trace.push({ step: "materials_failed", error: e instanceof Error ? e.message : String(e) }));
+      }
       if (state.fresh && db.canWriteShared()) {
         await db
           .cachePlan({
@@ -236,6 +267,10 @@ async function runTool(call: ToolCall, state: RunState): Promise<ToolResult> {
       const cachedLesson = sharedPlan ? await db.getSharedLesson(sharedPlan, moduleIndex, version).catch(() => null) : null;
       if (course.plan_key) state.trace.push({ step: "lesson_cache", module: moduleIndex + 1, eligible: !!sharedPlan, hit: !!cachedLesson });
       const shared = sharedPlan ? { planKey: sharedPlan, moduleIndex, version } : null;
+      // A tailored course: who the lesson is for, and the passages of their materials it should use.
+      const planned = course.modules[moduleIndex];
+      const excerpts = course.intake?.materials?.length && !cachedLesson ? await excerptsFor(course.id, planned).catch(() => []) : [];
+      if (course.intake?.materials?.length) state.trace.push({ step: "material_excerpts", count: excerpts.length });
       const written = cachedLesson
         ? { lesson: cachedLesson.lesson, score: cachedLesson.score, passed: true }
         : await writeLesson(
@@ -244,7 +279,7 @@ async function runTool(call: ToolCall, state: RunState): Promise<ToolResult> {
           courseTitle: course.title,
           moduleIndex,
           moduleCount: course.modules.length,
-          module: course.modules[moduleIndex],
+          module: planned,
           level: level
             ? {
                 number: level.index + 1,
@@ -253,8 +288,12 @@ async function runTool(call: ToolCall, state: RunState): Promise<ToolResult> {
                 objective: level.objective,
                 moduleNumber: place.number,
                 moduleCount: level.modules.length,
+                ...(level.outcome ? { outcome: level.outcome } : {}),
               }
             : undefined,
+          learner: learnerBriefFor(course.intake, course.outcomes) ?? undefined,
+          covers: planned.covers,
+          materials: describeExcerpts(excerpts) ?? undefined,
           previousModules: course.modules.slice(0, moduleIndex).map((m) => m.title),
           previousApproaches: course.modules
             .slice(0, moduleIndex)
@@ -322,7 +361,10 @@ async function describeState(state: RunState) {
     : "The learner hasn't studied other topics here yet.";
 
   if (!state.course) {
-    return `Learner wants to learn: "${state.topic}"\n${historyLine}\nCourse state: no course for this topic yet.`;
+    const tailored = state.intake
+      ? `\nThe learner tailored this course. Their brief:\n${describeIntake(state.intake)}${state.digest ? `\n\n${describeDigest(state.digest)}` : ""}\n\n${TAILORED_PLANNING_GUIDE}`
+      : "";
+    return `Learner wants to learn: "${state.topic}"\n${historyLine}\nCourse state: no course for this topic yet.${tailored}`;
   }
 
   const course = state.course;
@@ -348,9 +390,14 @@ async function describeState(state: RunState) {
       ? `Level ${level.index + 1}: ${level.title} (objective: ${level.objective})\n${line}`
       : line;
   });
+  const brief = course.intake
+    ? `\nThe learner tailored this course. Their brief:\n${describeIntake(course.intake)}${
+        course.outcomes?.length ? `\nCourse outcomes: ${course.outcomes.map((o, i) => `${i + 1}. ${o}`).join("; ")}` : ""
+      }\nKeep the focus on their goal and context.`
+    : "";
   return `Learner wants to continue: "${state.topic}"
 ${historyLine}
-Course: "${course.title}" — ${course.description}
+Course: "${course.title}" — ${course.description}${brief}
 Modules:
 ${lines.join("\n")}`;
 }
@@ -366,7 +413,11 @@ function cleanNote(text: string | null) {
 
 // ---------- The run ----------
 
-export async function runTutor(topic: string, learnerId: string, { ahead = false } = {}): Promise<TutorResult> {
+export async function runTutor(
+  topic: string,
+  learnerId: string,
+  { ahead = false, intake = null }: { ahead?: boolean; intake?: Intake | null } = {}
+): Promise<TutorResult> {
   const state: RunState = {
     learnerId,
     topic: topic.trim(),
@@ -379,6 +430,8 @@ export async function runTutor(topic: string, learnerId: string, { ahead = false
     trace: [],
     fresh: false,
     embedding: null,
+    intake: ahead ? null : intake,
+    digest: null,
   };
   // What the run's model calls cost, so every run says what it spent; the
   // trace, time and cost are also stored (runs table) to measure real costs.
@@ -426,6 +479,8 @@ const costEntry = (u: Usage): TraceEntry => ({
   tokensIn: u.promptTokens,
   tokensOut: u.completionTokens,
   tokensCached: u.cachedTokens ?? 0,
+  // Where the money went: agent turns, writing, review, revision, fact check, blind test, plan matching.
+  bySteps: Object.fromEntries(Object.entries(u.bySteps ?? {}).map(([k, v]) => [k, { ...v, cost: Number(v.cost.toFixed(5)) }])),
 });
 
 async function run(state: RunState): Promise<TutorResult> {
@@ -437,6 +492,8 @@ async function run(state: RunState): Promise<TutorResult> {
     found: !!state.course,
     currentModule: state.course ? state.course.current_module + 1 : null,
   });
+  // A brief only shapes a course that doesn't exist yet.
+  if (state.course) state.intake = null;
 
   if (state.ahead) {
     const course = state.course;
@@ -503,14 +560,16 @@ async function run(state: RunState): Promise<TutorResult> {
     }
   }
 
-  // A new course for a learner with no other courses: use the shared plan for
-  // this topic if there is one, so it isn't planned (or its world painted) again.
-  if (!state.course && !state.ahead) {
+  // A new course for a learner with no other courses, or any learner opening a
+  // catalog course (our curated version, seeded by scripts/seed-catalog.ts): use
+  // the shared plan for this topic if there is one, so it isn't planned (or its
+  // world painted) again. Only a fresh learner's new plan is cached for others.
+  if (!state.course && !state.ahead && !state.intake) {
     const history = (await db.getLearnerHistory(learnerId)) as { topic: string }[];
     state.fresh = !history.some((h) => h.topic !== state.key);
-    if (state.fresh) {
+    if (state.fresh || isCatalogTopic(state.key)) {
       const t = Date.now();
-      const shared = await findSharedPlan(state.topic, state.key, state.startedAt + HARD_DEADLINE_MS);
+      const shared = await withStep("plan_match", () => findSharedPlan(state.topic, state.key, state.startedAt + HARD_DEADLINE_MS));
       state.embedding = shared.embedding;
       trace.push({ step: "plan_cache", ms: Date.now() - t, ...shared.note });
       if (shared.plan) {
@@ -523,6 +582,7 @@ async function run(state: RunState): Promise<TutorResult> {
           description: shared.plan.description,
           modules: shared.plan.modules,
           coverUrl: shared.plan.cover_url,
+          worldRoad: shared.plan.world_road,
           planKey: shared.plan.topic_key,
         });
         state.course = { ...row, lessons: [] };
@@ -530,15 +590,50 @@ async function run(state: RunState): Promise<TutorResult> {
     }
   }
 
+  // A tailored course with materials: outline them once for the planner.
+  if (!state.course && state.intake?.materials?.length) {
+    const t = Date.now();
+    state.digest = await digestMaterials(state.intake.materials, state.startedAt + HARD_DEADLINE_MS);
+    trace.push({ step: "materials_digest", ok: !!state.digest, sections: state.digest?.sections.length ?? 0, ms: Date.now() - t });
+  }
+  if (!state.course && state.intake) {
+    trace.push({
+      step: "intake",
+      level: state.intake.level ?? null,
+      purpose: state.intake.purpose ?? null,
+      cover: state.intake.cover?.length ?? 0,
+      length: state.intake.length ?? null,
+      materials: state.intake.materials?.length ?? 0,
+    });
+  }
+
+  // Fast path: when the next lesson can come straight from the shared cache (a
+  // shared plan, no check answered wrong, a cached copy of this lesson), there
+  // is nothing for the agent to decide, so it's served without its turns
+  // (about 5s of a 12s cached start, measured). No tutor note in that case.
+  let fast = false;
+  if (state.course && state.course.status !== "completed" && !state.course.intake?.materials?.length) {
+    const sharedPlan = await sharedPathFor(state.course).catch(() => null);
+    const hit = sharedPlan ? await db.getSharedLesson(sharedPlan, state.target, lessonVersion()).catch(() => null) : null;
+    if (hit) {
+      trace.push({ step: "fast_path", module: state.target + 1 });
+      const result = await runTool({ id: "fast", type: "function", function: { name: "write_module", arguments: JSON.stringify({ focus: "" }) } }, state);
+      fast = !!state.written;
+      if (!fast) trace.push({ step: "fast_path_failed", result });
+    }
+  }
+
   // The agent loop.
-  const messages: ChatMessage[] = [
-    { role: "system", content: SYSTEM_PROMPT },
-    { role: "user", content: await describeState(state) },
-  ];
+  const messages: ChatMessage[] = fast
+    ? []
+    : [
+        { role: "system", content: SYSTEM_PROMPT },
+        { role: "user", content: await describeState(state) },
+      ];
   let tutorNote: string | null = null;
   let nudged = false;
 
-  for (let step = 1; step <= MAX_AGENT_STEPS; step++) {
+  for (let step = 1; step <= MAX_AGENT_STEPS && !fast; step++) {
     if (Date.now() - state.startedAt > RUN_BUDGET_MS) {
       trace.push({ step: "agent.stop", reason: "time budget" });
       break;
@@ -547,7 +642,12 @@ async function run(state: RunState): Promise<TutorResult> {
     const turnStarted = Date.now();
     let reply: Awaited<ReturnType<typeof callWithTools>>;
     try {
-      reply = await callWithTools(messages, TOOLS, state.startedAt + HARD_DEADLINE_MS);
+      // Until the course exists, a turn plans it: that stays on the writer model, since every
+      // lesson is built on the plan. Every other turn runs on the agent model.
+      const planning = !state.course;
+      reply = await withStep(planning ? "plan" : "agent", () =>
+        callWithTools(messages, TOOLS, state.startedAt + HARD_DEADLINE_MS, planning ? writerModel() : agentModel())
+      );
     } catch (e) {
       // Once the lesson is written and saved, the only turn left is the short
       // note to the learner: losing it must not lose the lesson (an end-to-end

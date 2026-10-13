@@ -92,7 +92,7 @@ async function one(s: (typeof SAMPLES)[number]) {
         level: { number: 1, count: 3, title: "Foundations", objective: `Understand the core ideas of ${s.topic}.`, moduleNumber: 2, moduleCount: 3 },
         focus: "",
       },
-      { reviseDeadline: start + 120_000, deadline: start + 280_000, trace }
+      { reviseDeadline: start + 165_000, deadline: start + 280_000, trace }
     ));
     writeFileSync(join(outDir, `${s.topic.replace(/\W+/g, "-").toLowerCase()}.json`), JSON.stringify({ lesson, score, trace }, null, 2));
     const blocks = lessonBlocks(lesson).map((b) =>
@@ -104,6 +104,7 @@ async function one(s: (typeof SAMPLES)[number]) {
       `  blocks:   ${blocks.join(" > ")}`,
       `  issues:   ${lintStructure(lesson).join(" | ") || "none"}`,
       `  trace:    ${trace.map((t) => `${t.step}${t.score !== undefined ? `=${t.score}` : ""}`).join(", ")}`,
+      `  cost:     ${Object.entries(usage.bySteps ?? {}).map(([k, v]) => `${k} $${v.cost.toFixed(4)} (${v.in} in / ${v.out} out)`).join(" · ")}`,
     ].join("\n");
   } catch (e) {
     return `■ ${s.kind}: ${s.topic} FAILED: ${e instanceof Error ? e.message : e}\n  trace: ${JSON.stringify(trace)}`;

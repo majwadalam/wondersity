@@ -12,10 +12,26 @@ listed. For the full design, read AGENTS.md (how it works) and HARNESS.md
 - Wondersity is a web app (not a phone or desktop app).
 - Look: white and calm, one blue accent, the Geist font, and the two-circle logo. Colours are tokens in `globals.css` (`text-fg`, `bg-accent`, …); never hard-code colours.
 - The site never makes things up: no invented user counts, and features that aren't built are marked "Coming soon".
+- On phones, the site menu opens over the page with the page dimmed and still behind it; before, opening it pushed the page down and let it scroll underneath.
+- The main pictures at the top of pages load first (`loading="eager"`, `fetchPriority="high"`), replacing `priority`, which Next.js 16 deprecated.
+- Raised panels (course map, progress card, spotlight, course and progress cards) have a crisper shadow: a faint navy edge, a tight contact shadow and a soft lift, instead of a large grey blur.
+- Course page polish: the progress card's main button is the brand purple (one purple primary per page), the journey's stops have a firmer shadow so they stand out on pale paintings, and the level key and the sidebar's account area have a little more room.
 
 ## Lessons
 
 - A learner names any topic. The tutor plans a course as levels of short lessons and writes one lesson at a time. Learners see "lessons"; the code still says "module".
+- Clicking a topic no longer plans a course straight away. A dialog offers "Plan it for me" (one click, as before) or "Tailor it", because a course planned from the topic's name alone has to guess what the learner wants.
+- "Tailor it" is one screen where only the goal is required: why they're learning it, where they're starting, and their own notes or files. What they already know, what it must cover and how long it should be sit behind "More options". The research found that more fields lose people, and that choices work best in small sets (research/intake-pedagogy.md).
+- The dialog never asks about "learning styles". Matching teaching to a visual or auditory style has no evidence behind it.
+- A tailored course is planned backwards from the learner's goal. The plan states 2-4 outcomes with checkable verbs (never "understand"). Code checks that every level builds toward an outcome, that everything the learner asked for is covered, and that the course is the length they picked. The course page shows the goal and outcomes.
+- A learner's starting point changes how lessons teach, not just how hard they are: worked examples and generous hints for beginners, harder problems and fewer hints for people who know the subject (the expertise reversal effect).
+- Examples and problems are set where the learner says they'll use the subject (their job, class or project), since personalised problems help people learn.
+- Learners can add PDFs, Word files, text or pasted notes. Each lesson uses the passages from them that fit its topic, along with their terms and page references. Facts are still checked, and text in an upload is treated as reference data, never as instructions to the AI.
+- Tailored courses are personal, so they never use or feed the shared course plans. A learner's materials are private and are deleted with the course.
+- A tailored course's title and description talk to the learner about the course, never about their brief or materials. A test run with unrelated notes had the description say the notes were unrelated.
+- Writing a lesson may now take up to 150 seconds per call (it was 90). A maths-heavy options-pricing lesson took 136 seconds and failed every time at the old limit. Scoring still stops at 90 seconds.
+- Text fields no longer show two focus rings. The default ring now gives way to fields that draw their own.
+- `scripts/e2e-tailored.ts` tests a tailored course end to end through the running app: 18 checks, about $0.08 a run, and it deletes its test learner afterwards.
 - Lessons are designed, not templated. The writer picks a teaching approach that fits the topic, then builds the lesson from blocks: explanations, activities, checks, worked examples, code, typed problems and more.
 - One step per screen with Back / Continue, like Brilliant, so the learner focuses on one thing at a time.
 - Each lesson is a series of scenes with a guide (e.g. Epictetus for Stoicism). Every step has a painted scene and a spoken line, but the content and grading never depend on them.
@@ -26,14 +42,30 @@ listed. For the full design, read AGENTS.md (how it works) and HARNESS.md
 - "Go deeper" lists videos, articles, books and images, each confirmed to exist by a real service: Open Library, Wikipedia/Commons (with licence and credit), YouTube and web search. Nothing listed is invented.
 - A flag in every lesson's top bar lets learners report a mistake on that step.
 - "Sort it" drag and drop uses the dnd-kit library, after hand-written drag code proved unreliable. When the groups are off-screen, compact drop targets dock above the bottom bar during a drag.
+- "Put it in order" drag and drop also uses dnd-kit (its sortable list, `@dnd-kit/sortable`): rows slide aside as a step is dragged and the step follows the pointer, which the hand-written pointer code didn't do reliably. The arrows and keyboard still work.
+- Lesson text draws markdown tables, lists and **bold** properly; a payoff table used to show as a row of pipes.
+- Lesson text renders math (KaTeX: \( \), \[ \], $$ $$, and \ce{} for chemistry); a single $ is still a price.
+- Lessons can put an interactive graph inside any explanation, worked example or problem; graphs that wouldn't draw are removed.
+- Explanation steps have layouts the writer picks: standard, side by side with the example, one big statement, or numbered points.
+- The course journey follows the road painted in the course's world (traced once by Gemini 3.1 Pro, about half a cent), with stops evenly spaced; before, the stops were joined by straight lines across rivers and buildings.
+- Levels on the journey are marked where they begin: a tag on each level's first stop, the road coloured by level, and a key with the full names under the map. The old row of names across the top didn't line up with the road.
+- A course page's header has a progress card: percent done, each level as a row of its lessons in the level's colour, the bookmark, and one button for what to do next. It replaces a thin bar and a star floating on its own.
+- Written reflections are graded: "Check my answer" tells the learner whether they've got the idea, what they got right and what to add, then shows the model answer (GPT-6 Luna, well under a cent; not saved or counted).
+- Lessons no longer lose all their scenes when the staging model skips a step: each step carries its number, a missing one shows its painting without a line, and lines stay on the right blocks. Before, writing 12 steps for a 13-step lesson threw the whole staging away.
+- Course worlds no longer have region names painted into them: the prompt describes what each region shows, without titles or numbers. A fourth level is green instead of a second purple.
 
 ## Quality and facts
+- Knowledge checks are tested for giveaways (research/question-quality.md; run 13): code flags the right answer being the longest or the only one echoing the question, absolute words only in wrong options, "all of the above", and hints that give the answer away; a model shown only the options tries to guess the answer, and a confident right guess sends the lesson back.
+- Answer options are shuffled in code when a lesson is saved, so the right answer isn't always in the same place.
+- The writing guide asks for checks in new situations, with wrong options built from real misconceptions.
+- Arithmetic written as TeX math is checked like plain arithmetic.
 
 - Every lesson goes through a quality gate before anyone sees it: write, check, review, revise once if needed. Only a version that was checked can be shown.
 - Arithmetic in lessons is recomputed in code (`lib/factCheck.ts`). A wrong sum sends the lesson back, and a lesson whose every version is wrong is never shown.
 - Factual claims are checked against web search (`lib/factVerify.ts`). A verdict only counts if its source is a page the search really returned. Contradicted claims block the lesson.
 - These checks exist because tests showed models passing their own wrong facts, such as a lesson teaching 6.75 + 4.75 = 19.00.
 - The writing guide asks for accuracy up front: precise figures only when certain, no invented quotes, disputed views attributed.
+- The fact check reads sources written as markdown citations; before, it threw away most real confirmations as "unclear".
 
 ## AI models and cost
 
@@ -55,12 +87,24 @@ listed. For the full design, read AGENTS.md (how it works) and HARNESS.md
 - Cheaper lessons, from about $0.25-0.31 to about $0.16 each (about $1.35 for a new 8-lesson course; ECONOMICS.md has the table):
   - The fact check now uses GPT-6 Luna to read search results and checks the 5 most important claims, not 8.
   - Web searches (fact check and "Go deeper") use Parallel's fast search, $0.001 a search, instead of Exa ($0.007). Google search through Gemini was considered: $0.014 a search, so it would cost more, not less.
+  - Measured live (run 12): a new course with lesson 1 costs about $0.19 (lesson $0.15, world $0.05); a second learner on the same course costs under a cent.
   - A lesson has at most 2 paintings instead of 3.
 - Every lesson of a shared course is now cached, not just lesson 1 (`shared_lessons`, migration 012). Learners who haven't answered any check wrong get the same, already-checked lessons as others on that path, for under a cent each. A mistake makes their next lessons their own.
 - Each run's cost now records how many prompt tokens the provider served from its cache (`tokensCached`).
 - The app ships as a Docker image (`Dockerfile`, Next.js standalone output) for Coolify. It runs as one long-lived container, because lesson jobs run inside the server process. `NEXT_PUBLIC_*` variables must be build variables; the README has the steps.
+- Paintings survive a rate-limited image model: a failed request is retried once, then painted by Gemini 3.1 Flash Lite Image (same price). On 2026-10-12 Nano Banana 2.1 was rate-limited upstream for minutes, and every painting failed.
+- Images also failed earlier that day because the OpenRouter key's own spending cap was nearly used up; images need $1 of headroom on the key, whatever the account balance.
+- Each run's cost is split by step in its trace (agent, write, review, revise, verify, blind). Measured (run 15): writing is about 65% of a lesson's cost, and a revision costs more than the first draft.
+- The tutor agent's turns run on GPT-6 Luna (about $0.0003 a run instead of $0.01-0.02); planning a new course stays on GPT-6.1 Sol, like writing and reviewing lessons.
+- Revisions change only what the review names (a patch applied in code) instead of rewriting the lesson: about 20% cheaper on a broad review, more on a narrow one. The reviser also sees the problems found in code, so it stops reintroducing them.
+- A lesson below the bar now gets its revision: the cutoff moved from 120s to 165s into a run, since writing and reviewing often used up the old one.
+- The catalog courses on the home page are seeded into the shared cache, so clicking one opens its plan, painted world and lesson 1 at once for under a cent. Catalog courses use the shared version for everyone; topics people type still get tailored plans. Re-run `scripts/seed-catalog.ts` after the lesson guide or models change.
+- Checked from a learner's side (scripts/check-cache.ts): a seeded catalog course, the same course in other words, and a catalog course for a learner with other courses all come from the cache (plan, lesson 1, scenes and world) for under a tenth of a cent.
+- A cached lesson is served without the tutor agent's turns, since there's nothing to decide: a cached start went from 12s to 7s on the dev machine, almost all of it database round trips that are much shorter on the production server.
 
 ## Accounts and data
+
+- Migration 014 (applied) adds tailored courses: `courses.intake` and `outcomes`, `jobs.intake`, and the `course_materials` table (passages with embeddings, own rows only). Deleting an account now deletes its jobs too.
 
 - Sign-in is email and password or Google (Supabase Auth). Emailed codes broke when opened in another browser, so they were dropped.
 - Each learner can only reach their own rows: database row rules (migration 004) enforce this, not the app.
@@ -88,3 +132,11 @@ listed. For the full design, read AGENTS.md (how it works) and HARNESS.md
 
 - How far learners get in each lesson is recorded (`lesson_views`).
 - `supabase/queries/metrics.sql` has the funnel, drop-off, return rate, hardest checks, mistake reports, creator payouts and costs.
+- Home topic form: removed the double focus ring (input marked input-bare); pill gets a soft accent halo on focus, like the other inputs.
+- Back links on course and module pages use a BackLink with an aligned arrow icon instead of a "←" text glyph.
+- Diagram activity: the view fits its nodes and 3-line captions (no clipped labels), no browser focus box on a tapped node, the canvas fills its cell beside the panel, and connections list the linked node with the relationship underneath.
+- "Split" explain layout splits on the card's own width (container query), so beside a scene it stacks instead of squeezing text and example into two thin columns.
+- Hands-on lesson steps (activities, code, compare) show their scene as a short banner above instead of a side column, so they get the full width; reading steps keep the scene beside them.
+- Diagram panel sits beside the map only when the activity is wide (container query), else below; connections are chips, and a relationship label that repeats the node's name is hidden. The map is capped at 560px wide.
+- Reflect model answers show only the answer: a lead-in like "One possible caption:" and its quotes are stripped in code (modelAnswerText, also for saved lessons), and the writing guide asks for the answer alone.
+- Guide voice lines no longer overlap: one line plays at a time on the page, and a line whose audio arrives after its step (or lesson) closed is dropped instead of played (SpeakButton in Scene.tsx).

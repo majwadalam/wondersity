@@ -45,13 +45,29 @@ export const BLOCK_KINDS = [
   "summary",
   "problem",
 ] as const;
+export const EXPLAIN_LAYOUTS = ["split", "spotlight", "steps"] as const;
+export type ExplainLayout = (typeof EXPLAIN_LAYOUTS)[number];
+
 export type BlockKind = (typeof BLOCK_KINDS)[number];
 
 export type CodeOption = { text: string; correct: boolean; feedback: string };
 export type TraceStep = { line: number; note: string; state: string };
 
 export type Block =
-  | { kind: "explain"; heading: string; body: string; example: string }
+  | {
+      kind: "explain";
+      heading: string;
+      body: string;
+      example: string;
+      /**
+       * How the step is laid out (standard when absent): "split" puts the example
+       * beside the text on wide screens, "spotlight" sets the heading large as the
+       * one idea to remember, "steps" adds numbered points.
+       */
+      layout?: ExplainLayout;
+      /** The numbered points of a "steps" layout. */
+      points?: { title: string; text: string }[];
+    }
   /** Places lesson.activities[ref]. */
   | { kind: "activity"; ref: number }
   /** Places graded question lesson.questions[ref], with progressive hints and another way to explain it. */
@@ -139,6 +155,26 @@ export function lessonBlocks(lesson: Lesson): Block[] {
   });
   (lesson.questions ?? []).forEach((_, ref) => blocks.push({ kind: "check", ref, hints: [], retry: "" }));
   return blocks;
+}
+
+/**
+ * A reflect block's model answer, as the answer itself: the box is already
+ * headed "A model answer", so a lead-in like "One possible caption:" and the
+ * quotes around what follows it are dropped. Saved lessons go through it too.
+ */
+export function modelAnswerText(text: string): string {
+  const lead = /^\s*(?:here(?:'s| is) )?(?:one|an?|the|my)? ?(?:possible|sample|example|model|strong|good|stronger)? ?(?:answer|response|caption|reply|summary|reflection|explanation|version)(?: (?:could|might|would) (?:be|read|say))?\s*:\s*/i;
+  const m = text.match(lead);
+  if (!m) return text.trim();
+  let rest = text.slice(m[0].length).trim();
+  // Unwrap the quote the lead-in introduced, keeping anything after it.
+  const open = rest[0];
+  const close = open === "\u201c" ? "\u201d" : open === '"' ? '"' : "";
+  if (close) {
+    const end = rest.indexOf(close, 1);
+    if (end > 0) rest = (rest.slice(1, end) + " " + rest.slice(end + 1)).replace(/\s+/g, " ").trim();
+  }
+  return rest || text.trim();
 }
 
 /** Blocks the learner engages with (they count toward the session bar). */

@@ -112,7 +112,7 @@ function ContinueCard({ course }: { course: Course }) {
       href={m.lesson ? `/courses/${course.id}/${i + 1}` : `/courses/${course.id}`}
       className="group relative flex min-h-[260px] overflow-hidden rounded-2xl bg-navy text-white shadow-[var(--shadow-lg)]"
     >
-      <Image unoptimized={isRemote(art)} src={art} alt="" fill sizes="(min-width: 1024px) 760px, 100vw" className="object-cover opacity-90 transition-transform duration-700 group-hover:scale-[1.03]" priority />
+      <Image unoptimized={isRemote(art)} src={art} alt="" fill sizes="(min-width: 1024px) 760px, 100vw" className="object-cover opacity-90 transition-transform duration-700 group-hover:scale-[1.03]" loading="eager" fetchPriority="high" />
       <span className="absolute inset-0 bg-gradient-to-r from-[#0a2540] via-[#0a2540]/80 to-[#0a2540]/10" />
       <span className="relative flex max-w-lg flex-col justify-end p-7">
         <span className="text-xs font-semibold tracking-wide text-white/70 uppercase">Continue · {course.title}</span>
@@ -176,11 +176,11 @@ function NewCourse({ autoFocus = false, big = false }: { autoFocus?: boolean; bi
       {big && (
         <>
           <p className="text-2xl font-semibold tracking-[-0.02em] text-fg">What do you want to learn?</p>
-          <p className="mt-1.5 text-[15px] text-muted">Name anything. Wondersity plans a course in under a minute and opens it.</p>
+          <p className="mt-1.5 text-[15px] text-muted">Name anything. Let your tutor plan it, or tailor it to your goal, your level and your own notes.</p>
         </>
       )}
       <form
-        className={`flex items-center gap-2 rounded-full bg-white p-1.5 pl-5 ring-1 ring-line focus-within:ring-2 focus-within:ring-accent ${big ? "mt-5" : ""}`}
+        className={`flex items-center gap-2 rounded-full bg-white p-1.5 pl-5 ring-1 ring-line transition-shadow hover:ring-line-strong focus-within:shadow-[0_0_0_4px_rgba(99,91,255,0.15)] focus-within:ring-accent ${big ? "mt-5" : ""}`}
         onSubmit={(e) => {
           e.preventDefault();
           start(topic);
@@ -193,10 +193,10 @@ function NewCourse({ autoFocus = false, big = false }: { autoFocus?: boolean; bi
           placeholder="The Silk Road, black holes, jazz harmony…"
           maxLength={120}
           aria-label="What do you want to learn?"
-          className="min-w-0 flex-1 bg-transparent py-2 text-[15px] text-fg outline-none placeholder:text-muted/80"
+          className="input-bare min-w-0 flex-1 bg-transparent py-2 text-[15px] text-fg outline-none placeholder:text-muted/80"
         />
         <button type="submit" disabled={!!busy || !topic.trim()} className="btn-pill btn-pill-dark flex-shrink-0">
-          Plan course
+          Start
         </button>
       </form>
     </div>

@@ -1,0 +1,210 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "The Prisoner's Dilemma: Sensible Choices, Worse Results",
+    "objective": "Show why a choice that benefits each player individually can leave both worse off than another possible outcome.",
+    "estimatedMinutes": 7,
+    "approach": "discovery",
+    "approachReason": "The learner first chooses a strategy and tests possible outcomes, then discovers the conflict between individual incentives and mutual benefit.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "The same choice wins both comparisons",
+        "body": "If your partner stays silent, confessing gives you 0 years instead of 1. If your partner confesses, confessing gives you 2 years instead of 3.\n\nConfessing is a **strictly dominant strategy** here: it gives you a better outcome whatever your partner chooses. You do not need to predict their choice to identify your own best choice.",
+        "example": "Here, “better” means fewer years in prison. We are assuming that each prisoner's goal is to minimize their own sentence.",
+        "layout": "split"
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Compare the florist's profits separately for each possible rival action.",
+          "Does the action with the higher profit change when the rival's action changes?"
+        ],
+        "retry": "Keep the rival's action fixed while comparing your two actions. Then repeat the comparison with the rival's other action."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "Both can lose by choosing what helps them",
+        "body": "Both prisoners face the same incentives, so each has a reason to confess. Yet mutual confession gives each 2 years, while mutual silence would give each just 1 year.\n\nThis is the **prisoner's dilemma**: individually better choices lead to an outcome that is worse for both than mutual cooperation. In this example, silence is cooperation and confession is defection; these labels describe the game's choices, not a moral judgment.\n\nThe obstacle is a one-person change: switching alone from confession to silence raises that person's sentence from 2 years to 3. Both would benefit from changing together, but neither benefits from changing alone.",
+        "example": ""
+      },
+      {
+        "kind": "reflect",
+        "heading": "Respond to the objection",
+        "prompt": "A friend says, “If both prisoners would be better off staying silent, then confessing must be an irrational choice.” How would you respond? Use one comparison where just one prisoner changes and another where both change.",
+        "model": "Starting from mutual confession, staying silent alone increases your sentence from 2 years to 3, so it does not serve your individual goal. If both switch to silence, each sentence falls from 2 years to 1. A better joint outcome does not automatically make a one-person switch worthwhile."
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "For the one-boat change, keep the other boat's choice fixed at large.",
+          "For the two-boat change, look at the outcome where both use small nets."
+        ],
+        "retry": "Moving together and moving alone lead to different cells of the table. The benefit of a coordinated change does not tell you what happens to the first person who changes alone."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Your choice in a fictional interrogation",
+        "prompt": "You and a partner must independently choose whether to stay silent or confess. You cannot communicate or make an enforceable agreement, and your goal is to minimize your own sentence. These are the complete outcomes; each pair lists (your years, partner's years).\n\n| Your choice | Partner stays silent | Partner confesses |\n|---|---|---|\n| Stay silent | (1, 1) | (3, 0) |\n| Confess | (0, 3) | (2, 2) |\n\nWhich rule gives you fewer years for each possible choice by your partner?",
+        "reveal": "Confessing reduces your own sentence in both cases. The surprising part is that your partner can make exactly the same argument.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "Confess whether my partner stays silent or confesses.",
+            "correct": true,
+            "feedback": "Against silence, 0 years beats 1. Against confession, 2 years beats 3."
+          },
+          {
+            "text": "Stay silent whether my partner stays silent or confesses.",
+            "correct": false,
+            "feedback": "Mutual silence is attractive, but confessing would lower your sentence for either partner choice."
+          },
+          {
+            "text": "Stay silent against silence; confess against confession.",
+            "correct": false,
+            "feedback": "Against silence, staying silent gives you 1 year, while confessing gives you 0."
+          },
+          {
+            "text": "Confess against silence; stay silent against confession.",
+            "correct": false,
+            "feedback": "Against confession, staying silent gives you 3 years, while confessing gives you 2."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Look for a profitable one-person switch",
+        "prompt": "Return to the prisoners' choices. Mutual silence gives each 1 year; mutual confession gives each 2 years. If just one confesses, that person gets 0 years and the silent person gets 3.\n\nFor each outcome, ask: could either prisoner reduce their own sentence by changing their choice while the other prisoner keeps theirs unchanged?",
+        "reveal": "At mutual confession, neither prisoner can improve by changing alone. Mutual silence is better for both, but either prisoner could reduce their own sentence by breaking away from it.",
+        "type": "sort",
+        "buckets": [
+          "Someone can improve alone",
+          "No one can improve alone"
+        ],
+        "items": [
+          {
+            "text": "You stay silent; your partner stays silent.",
+            "bucket": "Someone can improve alone"
+          },
+          {
+            "text": "You confess; your partner stays silent.",
+            "bucket": "Someone can improve alone"
+          },
+          {
+            "text": "You stay silent; your partner confesses.",
+            "bucket": "Someone can improve alone"
+          },
+          {
+            "text": "You confess; your partner confesses.",
+            "bucket": "No one can improve alone"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "In a fictional market, two florists independently decide whether to discount. If neither discounts, each earns $60. If both discount, each earns $40. If just one discounts, that florist earns $90 and the other earns $20. Each wants to maximize their own profit. What rule gives a florist the higher profit for each possible rival action?",
+        "options": [
+          "Discount against no discount; keep prices against a discount.",
+          "Discount against either rival action.",
+          "Keep prices against either rival action.",
+          "Keep prices against no discount; discount against a discount."
+        ],
+        "correctAnswer": "Discount against either rival action.",
+        "explanation": "If the rival keeps prices, discounting gives $90 rather than $60. If the rival discounts, discounting gives $40 rather than $20."
+      },
+      {
+        "question": "In a fictional fishing game, each boat chooses a small or large net and wants the greatest catch. Two small nets give each boat 8 crates; two large nets give each 5 crates. If just one uses a large net, it gets 11 crates and the small-net boat gets 3. Both currently use large nets. How much would one boat catch if it switched to a small net alone, and how much would it catch if both switched?",
+        "options": [
+          "8 crates alone; 8 crates if both switch.",
+          "3 crates alone; 8 crates if both switch.",
+          "11 crates alone; 8 crates if both switch.",
+          "5 crates alone; 8 crates if both switch."
+        ],
+        "correctAnswer": "3 crates alone; 8 crates if both switch.",
+        "explanation": "Switching alone leaves the boat using a small net against a large net, so its catch falls from 5 to 3 crates. Switching together raises each catch from 5 to 8, illustrating why a mutually beneficial change can conflict with individual incentives."
+      }
+    ],
+    "sources": [
+      {
+        "url": "https://plato.stanford.edu/entries/prisoner-dilemma?pubDate=20250412",
+        "title": "\nPrisoner’s Dilemma (Stanford Encyclopedia of Philosophy)\n"
+      },
+      {
+        "url": "http://www.econ.jku.at/t3/staff/frimmel/gt/lecture2.pdf",
+        "title": "Game Theory"
+      },
+      {
+        "url": "https://www.cs.cmu.edu/~15281-f23/coursenotes/gametheory/index.html",
+        "title": "Game Theory"
+      }
+    ]
+  },
+  "score": 7,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 163795,
+      "approach": "discovery",
+      "blocks": "activity > explain > check > activity > explain > reflect > check",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.blind",
+      "iteration": 1,
+      "ms": 5220,
+      "questions": 2,
+      "giveaways": []
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 1,
+      "ms": 10271,
+      "claims": 3,
+      "supported": 3,
+      "contradicted": [],
+      "unclear": 0,
+      "downgraded": []
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 7,
+      "ms": 12840,
+      "problems": [
+        "Both checks can be answered by comparing or retrieving the stated numbers without understanding the prisoner's dilemma. They assess payoff reading more strongly than the module's central idea.",
+        "The final check does not substantially increase conceptual difficulty. Every option gives 8 crates for the coordinated switch, so the learner only needs to identify the payoff for switching alone.",
+        "The retry explanations repeat the original comparison procedure rather than offering a genuinely different explanation of the conflict between individual incentives and mutual benefit."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.revise_skipped",
+      "iteration": 1,
+      "reason": "time budget"
+    },
+    {
+      "step": "lesson.select",
+      "score": 7,
+      "passed": false,
+      "sources": 3
+    }
+  ]
+}

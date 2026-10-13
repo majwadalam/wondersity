@@ -69,8 +69,8 @@ export const STAGING_SCHEMA = {
       items: {
         type: "object",
         additionalProperties: false,
-        required: ["image", "line"],
-        properties: { image: { type: "integer" }, line: { type: "string" } },
+        required: ["at", "image", "line"],
+        properties: { at: { type: "integer" }, image: { type: "integer" }, line: { type: "string" } },
       },
     },
   },
@@ -85,7 +85,7 @@ const Parsed = z.object({
     portraitPrompt: z.string().min(10).max(600),
   }),
   images: z.array(z.object({ setting: z.string().max(60), prompt: z.string().min(10).max(800) })).min(1),
-  steps: z.array(z.object({ image: z.number().int(), line: z.string().min(1).max(400) })),
+  steps: z.array(z.object({ at: z.number().int().optional(), image: z.number().int(), line: z.string().min(1).max(400) })),
   farewell: z.string().max(300).optional(),
 });
 
@@ -135,7 +135,7 @@ export function stagingInput(lesson: Lesson, topic: string, earlierGuide?: Stagi
     }
   });
   const guide = earlierGuide ? `Guide from earlier lessons: ${earlierGuide.name}, ${earlierGuide.role} (${earlierGuide.manner}; voice ${earlierGuide.voice})\n` : "";
-  return `Course topic: ${topic}\n${guide}Lesson: ${lesson.title}\nObjective: ${lesson.objective}\n\nBlocks (${blocks.length}):\n${lines.join("\n")}\n\nWrite ${blocks.length + 1} steps: the intro, then one per block.`;
+  return `Course topic: ${topic}\n${guide}Lesson: ${lesson.title}\nObjective: ${lesson.objective}\n\nBlocks (${blocks.length}):\n${lines.join("\n")}\n\nWrite ${blocks.length + 1} steps: the intro, then one per block. Number each in "at": 0 for the intro, then 1 to ${blocks.length} for the blocks above, in order.`;
 }
 
 /** Checks the model's staging against the lesson; fixes what it safely can, rejects the rest. */
@@ -144,13 +144,28 @@ export function normalizeStaging(raw: unknown, blockCount: number): { ok: true; 
   if (!parsed.success) return { ok: false, error: parsed.error.issues[0]?.message ?? "invalid staging" };
   const { guide, steps } = parsed.data;
   const images = parsed.data.images.slice(0, MAX_IMAGES);
-  if (steps.length < blockCount + 1) return { ok: false, error: `expected ${blockCount + 1} steps, got ${steps.length}` };
+  const clampImage = (i: number) => Math.min(Math.max(0, i), images.length - 1);
+  // Steps are placed by their number, so one the model skips doesn't shift every line after it
+  // onto the wrong block (it often wrote 12 steps for 13 and the whole staging was lost).
+  // A few gaps show the step's painting without a line; more than that is rejected and retried.
+  const placed: ({ line: string; image: number } | null)[] = Array(blockCount + 1).fill(null);
+  if (steps.every((s) => s.at !== undefined)) {
+    // Numbered from 1 instead of 0 (the intro as 1): shift back.
+    const shift = !steps.some((s) => s.at === 0) && steps.some((s) => s.at === blockCount + 1) ? 1 : 0;
+    for (const s of steps.map((x) => ({ ...x, at: x.at! - shift }))) if (s.at! >= 0 && s.at! <= blockCount && !placed[s.at!]) placed[s.at!] = { line: s.line, image: clampImage(s.image) };
+  } else {
+    steps.slice(0, blockCount + 1).forEach((s, i) => (placed[i] = { line: s.line, image: clampImage(s.image) }));
+  }
+  const missing = placed.filter((s) => !s).length;
+  if (!placed[0] || missing > Math.max(1, Math.floor((blockCount + 1) / 4)))
+    return { ok: false, error: `expected ${blockCount + 1} steps, got ${blockCount + 1 - missing}` };
+  const filled = placed.reduce<{ line: string; image: number }[]>((out, s) => [...out, s ?? { line: "", image: out[out.length - 1].image }], []);
   return {
     ok: true,
     staging: {
       guide,
       images,
-      steps: steps.slice(0, blockCount + 1).map((s) => ({ line: s.line, image: Math.min(Math.max(0, s.image), images.length - 1) })),
+      steps: filled,
       ...(parsed.data.farewell ? { farewell: parsed.data.farewell } : {}),
     },
   };

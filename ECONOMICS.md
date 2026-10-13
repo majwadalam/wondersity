@@ -149,11 +149,11 @@ What a new lesson costs now (2026-10-12), against before. "Measured" figures com
 | Part of a lesson | Before | Now | Basis |
 | --- | --- | --- | --- |
 | Writing and review (GPT-6.1 Sol) | ~$0.04-0.05 | same | measured (run 05) |
-| Online fact check | up to 8 claims, Exa search, GPT-6.1 Sol reading: ~$0.05-0.15 | 5 claims, Parallel fast search ($0.001 each), GPT-6 Luna reading: ~$0.01 | estimate |
+| Online fact check | up to 8 claims, Exa search, GPT-6.1 Sol reading: ~$0.05-0.15 | 5 claims, Parallel fast search ($0.001 each), GPT-6 Luna reading: ~$0.01 | estimate; run 12's whole tutor run, check included, was $0.071 |
 | Guide's script and "Go deeper" (GPT-6 Luna) | ~$0.024 | same | measured (run 10) |
 | Scene paintings | up to 3: ~$0.105 | at most 2: ~$0.07 | list price |
 | Voice | ~$0.01 | same | estimate |
-| **A new lesson** | **~$0.25-0.31** | **~$0.16** | |
+| **A new lesson** | **~$0.25-0.31** | **~$0.16** | measured $0.15 with 1 painting (run 12) |
 
 **A new 8-lesson course: about $1.35** (was about $2.00), plus about $0.06 once for its plan and world. With the fact check off (`VERIFY_FACTS=off`), about $1.25: the check now costs about a cent a lesson.
 

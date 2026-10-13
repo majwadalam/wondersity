@@ -210,7 +210,7 @@ function UpNext({ courses }: { courses: Course[] }) {
   const m = course.modules[i];
   const art = m.cover ?? course.cover ?? courseArtSrc(course.topic);
   return (
-    <Link href={`/courses/${course.id}${m.lesson ? `/${i + 1}` : ""}`} className="group shadow-card mt-6 flex flex-col overflow-hidden rounded-2xl bg-white ring-1 ring-line sm:flex-row sm:items-center sm:gap-5 sm:p-3 sm:pr-6">
+    <Link href={`/courses/${course.id}${m.lesson ? `/${i + 1}` : ""}`} className="group shadow-card mt-6 flex flex-col overflow-hidden rounded-2xl bg-white sm:flex-row sm:items-center sm:gap-5 sm:p-3 sm:pr-6">
       <span className="relative h-40 w-full flex-shrink-0 overflow-hidden bg-canvas sm:h-24 sm:w-36 sm:rounded-xl">
         <Image unoptimized={isRemote(art)} src={art} alt="" fill sizes="144px" className="object-cover" />
       </span>

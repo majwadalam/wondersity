@@ -16,6 +16,7 @@ import {
   type ReactNode,
 } from "react";
 import type { Resources } from "@/lib/enrichment";
+import type { Intake } from "@/lib/intake";
 import type { Staging } from "@/lib/staging";
 import type { Answer, Course, Lesson, LessonRow, LessonStatus, PrefetchState, QuizResult, TraceStep } from "../types";
 import { levelsOf, moduleLabel } from "@/lib/courseHierarchy";
@@ -182,11 +183,11 @@ async function waitForJob(id: string): Promise<LearnResponse> {
 }
 
 /** Starts (or joins) the server's lesson job for a topic and waits for its result. */
-async function runLessonJob(topic: string, ahead = false): Promise<LearnResponse> {
+async function runLessonJob(topic: string, ahead = false, intake?: Intake): Promise<LearnResponse> {
   const response = await fetch("/api/learn", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ topic, ...(ahead ? { ahead: true } : {}) }),
+    body: JSON.stringify({ topic, ...(ahead ? { ahead: true } : {}), ...(intake ? { intake } : {}) }),
   });
   const data = await readJson(response);
   // Only the server's plain message is shown; it never includes internals.
@@ -244,6 +245,8 @@ type Busy = {
   topic: string;
   label: string;
   kind: "plan" | "module";
+  /** A new course the learner tailored (goal, materials…). */
+  tailored?: boolean;
   startedAt: number;
   /** A new course, once its plan is saved: the learner is moved to its page while lesson 1 is written. */
   courseId?: number;
@@ -309,8 +312,13 @@ type AppStateValue = {
   cancelLearn: () => void;
   /** Re-runs the request that last failed, if any. */
   retryLearn: (() => void) | null;
-  /** Runs the tutor for a topic, then opens the module (or the course page). */
-  learn: (topic: string, landing?: "module" | "course") => Promise<void>;
+  /** Runs the tutor for a topic, then opens the module (or the course page). `intake` tailors a new course. */
+  learn: (topic: string, landing?: "module" | "course", intake?: Intake) => Promise<void>;
+  /** The topic the start dialog is open for ("Plan it for me" or "Tailor it"), if any. */
+  starting: string | null;
+  /** Opens the start dialog for a new topic. */
+  openStart: (topic: string) => void;
+  closeStart: () => void;
   submitQuiz: (lessonId: number, answers: Answer[]) => Promise<QuizResult>;
   prefetchState: (topic: string) => PrefetchState | undefined;
   /** The course whose next module is being written in the background, if any. */
@@ -331,16 +339,19 @@ type AppStateValue = {
 const AppStateContext = createContext<AppStateValue | null>(null);
 
 /**
- * Starts a course from anywhere: signed in, it plans it right away; signed
- * out, it goes to sign-up first and the topic comes along.
+ * Starts a course from anywhere. Signed in, a topic they already have opens
+ * that course; a new one opens the start dialog, where the learner chooses
+ * "Plan it for me" or tailors it (StartCourse.tsx). Signed out, it goes to
+ * sign-up first and the topic comes along.
  */
 export function useStartCourse() {
-  const { signedIn, learn } = useAppState();
+  const { signedIn, learn, courseFor, openStart } = useAppState();
   const router = useRouter();
   return (topic: string) => {
     if (!topic.trim()) return;
-    if (signedIn) learn(topic, "course");
-    else router.push(`/login?mode=signup&topic=${encodeURIComponent(topic.trim())}`);
+    if (!signedIn) router.push(`/login?mode=signup&topic=${encodeURIComponent(topic.trim())}`);
+    else if (courseFor(topic)) learn(topic, "course");
+    else openStart(topic.trim());
   };
 }
 
@@ -363,7 +374,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   const [busy, setBusy] = useState<Busy | null>(null);
   const [error, setError] = useState<ShownError | null>(null);
   const [upgrade, setUpgrade] = useState<string | null>(null);
-  const [failed, setFailed] = useState<{ topic: string; landing: "module" | "course" } | null>(null);
+  const [failed, setFailed] = useState<{ topic: string; landing: "module" | "course"; intake?: Intake } | null>(null);
+  const [starting, setStarting] = useState<string | null>(null);
   const runAbort = useRef<AbortController | null>(null);
   const [runs, setRuns] = useState<Record<string, ModuleRun>>({});
   // Next modules being written in the background, keyed by topic. A click on
@@ -398,7 +410,8 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   const paintRequested = useRef(new Set<number>());
   const ensureCovers = useCallback(
     (course: Course) => {
-      const missing = !course.cover;
+      // No world yet, or a world whose road hasn't been traced (courses painted before roads were).
+      const missing = !course.cover || course.road === null;
       if (!missing || !learnerId || paintRequested.current.has(course.id)) return;
       paintRequested.current.add(course.id);
       setPainting((p) => new Set(p).add(course.id));
@@ -483,7 +496,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
   }, [router]);
 
   // The tutor runs on the server as a job (it finishes even if this page closes); this waits for it.
-  const requestLearn = useCallback((topic: string): Promise<LearnResponse> => runLessonJob(topic), []);
+  const requestLearn = useCallback((topic: string, intake?: Intake): Promise<LearnResponse> => runLessonJob(topic, false, intake), []);
 
   // Lessons being written ahead, by topic. learn() waits for one before
   // asking for the next lesson, so the same lesson is never written twice.
@@ -596,17 +609,21 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
 
   const courseFor = (topic: string) => courses.find((c) => topicKey(c.topic) === topicKey(topic));
 
-  const learn = async (topic: string, landing: "module" | "course" = "module") => {
+  const learn = async (topic: string, landing: "module" | "course" = "module", intake?: Intake) => {
     if (!topic.trim() || busy) return;
     const key = topicKey(topic);
     const existing = courseFor(topic);
+    // A brief only shapes a new course.
+    if (existing) intake = undefined;
+    setStarting(null);
     setBusy({
       topic,
       kind: existing ? "module" : "plan",
+      ...(intake ? { tailored: true } : {}),
       startedAt: Date.now(),
       label: existing
         ? `Preparing ${moduleLabel(levelsOf(existing), Math.min(existing.currentModule, existing.modules.length - 1))} of ${existing.title}`
-        : `Planning a course on ${topic.trim()}`,
+        : `Planning ${intake ? "your" : "a"} course on ${topic.trim()}`,
     });
     setError(null);
     setFailed(null);
@@ -629,7 +646,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
         }, 3000);
     try {
       await aheadRuns.current.get(key);
-      const request = prefetched ? prefetched.catch(() => requestLearn(topic)) : requestLearn(topic);
+      const request = prefetched ? prefetched.catch(() => requestLearn(topic)) : requestLearn(topic, intake);
       const data = await untilAborted(request, abort.signal);
       if (data.kind === "nothing_ahead") throw new AppError("Something went wrong on our side. Please try again.");
       if (data.kind === "upgrade_required") {
@@ -659,7 +676,7 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
             : // A network failure or anything unexpected: never show its raw text.
               { message: "We couldn't reach Wondersity. Check your connection and try again.", retryable: true }
         );
-        setFailed({ topic, landing });
+        setFailed({ topic, landing, intake });
       }
     } finally {
       if (watch) clearInterval(watch);
@@ -750,7 +767,10 @@ export function AppStateProvider({ children }: { children: ReactNode }) {
       setFailed(null);
     },
     cancelLearn: () => runAbort.current?.abort(),
-    retryLearn: failed && !busy ? () => learn(failed.topic, failed.landing) : null,
+    retryLearn: failed && !busy ? () => learn(failed.topic, failed.landing, failed.intake) : null,
+    starting,
+    openStart: (topic: string) => setStarting(topic),
+    closeStart: () => setStarting(null),
     learn,
     submitQuiz,
     prefetchState: (topic) => prefetching[topicKey(topic)],

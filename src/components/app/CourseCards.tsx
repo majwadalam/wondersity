@@ -7,18 +7,7 @@ import type { Course } from "../types";
 import { useAppState, useStartCourse } from "./AppState";
 import { CourseArt } from "./CourseArt";
 
-/** Topics to explore before the learner has a course on them. */
-export const CATALOG = [
-  { topic: "Stoicism", blurb: "Calm, clear thinking in a chaotic world." },
-  { topic: "Black holes", blurb: "Where gravity bends light and time." },
-  { topic: "Game theory", blurb: "Strategy, incentives and smart choices." },
-  { topic: "Photosynthesis", blurb: "How plants turn sunlight into life." },
-  { topic: "Jazz harmony", blurb: "Why some chords sound like longing." },
-  { topic: "Machine learning", blurb: "How computers learn from examples." },
-  { topic: "The French Revolution", blurb: "Bread, ideas and a falling crown." },
-  { topic: "The fall of Rome", blurb: "How the greatest empire came apart." },
-  { topic: "Supply and demand", blurb: "The invisible tug-of-war behind prices." },
-];
+export { CATALOG } from "@/lib/catalog";
 
 /** ★ toggle that saves a course (or topic) to the Library. */
 export function StarButton({ topic, className = "" }: { topic: string; className?: string }) {

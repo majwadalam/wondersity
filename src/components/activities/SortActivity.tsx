@@ -23,6 +23,7 @@ import { useId, useRef, useState, useSyncExternalStore, type KeyboardEvent, type
 import { createPortal } from "react-dom";
 import type { Activity } from "@/lib/activities";
 import { ActivityFrame, seededShuffle } from "./ActivityFrame";
+import { rich } from "../lesson/rich";
 
 type SortData = Extract<Activity, { type: "sort" }>;
 
@@ -142,7 +143,7 @@ export function SortActivity({ a, onDone }: { a: SortData; onDone: () => void })
     const state = checked && where ? (a.items[index].bucket === where ? "good" : "bad") : selected === index ? "selected" : "idle";
     return (
       <Card key={index} index={index} activity={a.title} state={state} disabled={solved} selected={selected === index} onTap={() => tap(index)}>
-        {a.items[index].text}
+        {rich(a.items[index].text)}
       </Card>
     );
   };
@@ -198,7 +199,7 @@ export function SortActivity({ a, onDone }: { a: SortData; onDone: () => void })
             )}
             <DragOverlay dropAnimation={dropAnimation} zIndex={60}>
               {active !== null ? (
-                <div className="sort-ghost rounded-xl border border-accent bg-surface px-3 py-2 text-left text-sm text-fg">{a.items[active].text}</div>
+                <div className="sort-ghost rounded-xl border border-accent bg-surface px-3 py-2 text-left text-sm text-fg">{rich(a.items[active].text)}</div>
               ) : null}
             </DragOverlay>
             </>,

@@ -16,9 +16,14 @@ export function LessonBlock({
   checkCount = 0,
   onDone,
   onAnswer,
+  lessonId = null,
+  blockIndex,
 }: {
   block: Block;
   lesson: Lesson;
+  /** The saved lesson and this block's position in it, for answers graded on the server (reflections). */
+  lessonId?: number | null;
+  blockIndex?: number;
   /** For check blocks: its position among the lesson's checks (1-based) and how many there are. */
   checkNumber?: number;
   checkCount?: number;
@@ -57,7 +62,7 @@ export function LessonBlock({
     case "code":
       return <CodeBlock b={block} onDone={onDone} />;
     case "reflect":
-      return <ReflectBlock b={block} onDone={onDone} />;
+      return <ReflectBlock b={block} onDone={onDone} lessonId={lessonId} blockIndex={blockIndex} />;
     case "dialogue":
       return <DialogueBlock b={block} onDone={onDone} />;
     case "problem":

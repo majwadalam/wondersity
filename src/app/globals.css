@@ -90,10 +90,14 @@ body {
   line-height: 1.02;
 }
 
-:focus-visible {
-  outline: 2px solid var(--accent);
-  outline-offset: 3px;
-  border-radius: 6px;
+/* The default focus ring. In the base layer, so a field that draws its own
+   ring (outline-none plus a ring or border) isn't given a second one. */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
 }
 /* An input inside a box that draws its own focus ring. */
 .input-bare:focus-visible {
@@ -672,7 +676,7 @@ body {
   border-color: var(--line);
   background: var(--surface);
   box-shadow: 0 2px 0 var(--line);
-  transition: border-color 150ms ease, background-color 150ms ease, transform 150ms ease;
+  transition: border-color 150ms ease, background-color 150ms ease;
 }
 .order-row[data-state="dragging"] {
   border-color: var(--accent);
@@ -756,6 +760,14 @@ body {
 }
 .diagram-node:hover {
   transform: scale(1.08);
+}
+/* No browser focus box around the node; the keyboard focus ring is on its circle. */
+.diagram-node:focus {
+  outline: none;
+}
+.diagram-node:focus-visible circle {
+  stroke: var(--accent-strong);
+  stroke-width: 3.5;
 }
 .diagram-node[data-state="seen"] circle {
   stroke: var(--accent);
@@ -973,6 +985,14 @@ body {
   }
 }
 
+/* Math in lesson text (KaTeX): its default 1.21em makes inline math loom over the words around it. */
+.math-inline .katex {
+  font-size: 1.06em;
+}
+.math-display .katex {
+  font-size: 1.15em;
+}
+
 /* `inline code` inside lesson text */
 .inline-code {
   padding: 0.05em 0.35em;
@@ -1180,8 +1200,15 @@ a:hover > .hover-arrow .head {
 .shadow-float {
   box-shadow: var(--shadow-xl);
 }
+/* Raised panels (the course map, its cards, progress): a navy hairline for a crisp edge, a tight
+   contact shadow so the panel sits on the page, and a soft offset ambient shadow. Tinted navy,
+   not grey, so it reads as light on the canvas instead of haze. */
 .shadow-card {
-  box-shadow: var(--shadow-lg);
+  box-shadow:
+    0 0 0 1px rgba(10, 37, 64, 0.06),
+    0 1px 2px rgba(10, 37, 64, 0.06),
+    0 4px 8px -2px rgba(10, 37, 64, 0.05),
+    0 18px 36px -14px rgba(10, 37, 64, 0.14);
 }
 
 /* A slow push-in on lesson scenes, so the painting feels alive. */
@@ -1419,4 +1446,28 @@ a:hover > .hover-arrow .head {
 }
 @media (prefers-reduced-motion: reduce) {
   .nudge { animation: none; }
+}
+
+/* Text fields in forms (the start dialog's "Tailor it"). */
+.input-box {
+  display: block;
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 0.625rem;
+  background: var(--surface);
+  color: var(--fg);
+  padding: 0.6rem 0.8rem;
+  font-size: 15px;
+  line-height: 1.45;
+  outline: none;
+  resize: vertical;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+.input-box::placeholder {
+  color: color-mix(in srgb, var(--muted) 80%, transparent);
+}
+.input-box:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
 }

@@ -3,7 +3,7 @@ import { describe, it } from "node:test";
 import type { CachedPlan } from "./db";
 import { MIN_SIMILARITY, findSharedPlan, type PlanCacheDeps } from "./planCache";
 
-const stoicism: CachedPlan = { topic_key: "stoicism", topic: "Stoicism", title: "Stoicism in Practice", description: "d", modules: [], cover_url: "https://x/world.webp" };
+const stoicism: CachedPlan = { topic_key: "stoicism", topic: "Stoicism", title: "Stoicism in Practice", description: "d", modules: [], cover_url: "https://x/world.webp", world_road: null };
 const vector = Array.from({ length: 1536 }, () => 0.01);
 const deadline = Date.now() + 60_000;
 

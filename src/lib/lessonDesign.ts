@@ -8,12 +8,16 @@
 // Pure functions only (no model or database calls), so it can be unit tested.
 
 import { z } from "zod";
+import { cleanEmbeds } from "./embeds";
+import { lintQuestions, shuffleOptions } from "./questionCheck";
 import { ACTIVITY_GUIDE, activityJsonSchema, normalizeActivity, type Activity } from "./activities";
 import {
   APPROACHES,
   BLOCK_KINDS,
+  EXPLAIN_LAYOUTS,
   checkProblem,
   lessonBlocks,
+  modelAnswerText,
   type Approach,
   type Block,
   type BlockKind,
@@ -59,7 +63,7 @@ export const QuestionSchema = z
 const str = { type: "string" };
 const strings = { type: "array", items: str };
 
-const blockJsonSchema = {
+export const blockJsonSchema = {
   type: "object",
   properties: {
     kind: { type: "string", enum: [...BLOCK_KINDS] },
@@ -88,7 +92,7 @@ const blockJsonSchema = {
   additionalProperties: false,
 };
 
-const questionJsonSchema = {
+export const questionJsonSchema = {
   type: "object",
   properties: {
     question: str,
@@ -140,6 +144,11 @@ ${APPROACH_KEYS.map((k) => `   - ${k}: ${APPROACHES[k]}. Shape: ${APPROACH_MOVES
    Every block includes "answers" and "unit"; leave them [] and "" except in problem blocks.
    - explain: heading, body = the explanation (2-6 sentences; separate paragraphs with a blank line),
      aside = an optional concrete example. Define a term only when the learner needs it.
+     mode = its layout; vary it across the lesson to fit what each step says:
+       "" = standard; "split" = the explanation beside its example (needs an aside), for an idea and a
+       case side by side; "spotlight" = heading is ONE short, striking statement or number the learner
+       should remember, set large, with a short body; "steps" = numbered points after the body,
+       items = 2-5 (label = a short title, text = one sentence), for a process or a list of reasons.
    - activity: ref = index into "activities" (0-based). Each activity is placed by exactly one block.
    - check: a graded knowledge check placed right after the idea it tests. ref = index into
      "questions"; hints = 1-2 progressive hints that nudge without giving the answer away;
@@ -158,7 +167,9 @@ ${APPROACH_KEYS.map((k) => `   - ${k}: ${APPROACHES[k]}. Shape: ${APPROACH_MOVES
    - compare: heading, body = one-line intro, columns = exactly 2 column names, items = 3-6 rows
      (label = the aspect, text = first column, detail = second column).
    - reflect: an open question the learner answers in their own words. heading, body = the question,
-     aside = a strong model answer they compare against afterwards.
+     aside = a strong model answer they compare against afterwards: the answer itself, as the learner
+     would write it. No lead-in ("One possible answer:", "A sample caption:"), no quotes around it,
+     nothing after it; it is shown under the heading "A model answer".
    - dialogue: a short Socratic exchange. heading, items = 3-8 turns (label = speaker, text = line).
    - summary: heading, items = 2-4 takeaways (text). Only if it adds something; never just repeat.
    - problem: the learner works something out and TYPES the answer (a number, or a word or short
@@ -188,10 +199,45 @@ ${APPROACH_KEYS.map((k) => `   - ${k}: ${APPROACHES[k]}. Shape: ${APPROACH_MOVES
 QUESTIONS (the graded checks): 2-4, each placed by exactly one check block. Each is scenario-based
 (a short realistic situation that asks the learner to apply the idea, never a definition to recall),
 has EXACTLY 4 distinct options, a correctAnswer that is an EXACT copy of one option, and a 1-2 sentence
-explanation of why it is right.
+explanation of why it is right. A check must make the learner think; someone who skimmed the lesson
+or knows how tests work should not be able to pass it. Every question is tested for giveaways:
+- New situation: different names, numbers and context from the lesson's own examples, so it tests
+  transfer, not recognition. The question must be answerable before reading the options; never
+  "which of the following is true".
+- Wrong options come from real misconceptions: each is what a learner who holds one specific,
+  common wrong idea (or makes one specific slip, e.g. a sign or unit error) would choose. Never pad
+  with silly or obviously off-topic options.
+- No cues: all four options the same kind of thing, similar in length, detail and tone; the right
+  one not the longest or most careful; the question's key words used in wrong options too (or in
+  none); no "always/never/only" just in wrong options; no "all/none of the above".
+  The order of options doesn't matter; it is shuffled.
+- Hard enough: aim for most learners who followed the lesson to get it right on a first try, not
+  all of them; later checks combine ideas.
+- Hints help the learner reason (which idea applies? what changes if…?) and never name, paraphrase
+  or rule out options.
 
 ACTIVITIES: 1-4, each placed by one activity block, each a different type that fits the topic.
 ${ACTIVITY_GUIDE}
+
+FORMATTING inside text fields: plain sentences, plus where they help:
+- math in TeX: \\( inline \\) and \\[ on its own line \\] (in JSON, write \\\\( ); chemistry as
+  \\ce{H2O}. Never use $ for math: a single $ is a price.
+- **bold** for a key term, a list with "- " or "1. " lines, or a small table with | pipes |
+  (header row, then a |---| row), when a table really is clearer.
+- an interactive graph in an explain, worked or problem body, when seeing a curve helps (a
+  function, a relationship, a rate), as a fenced block on its own lines:
+    \`\`\`graph
+    y = k*x^2
+    y = x^2
+    x: -5 to 5, distance (m)
+    y: 0 to 25, height (m)
+    k: 0.5 to 3, steepness, start 1
+    caption: The dashed curve is y = x^2 for comparison.
+    \`\`\`
+  1-3 "y =" curves in x, using numbers, + - * / ^ ( ), pi, e, sin cos tan sqrt abs exp ln log; the
+  first curve may use k, set by the optional "k:" slider (min to max, what it means, start value);
+  "x:" and "y:" are the window. A graph that doesn't draw a visible curve is removed. Use it at most
+  twice per lesson, and not when a graph activity already shows the same thing.
 
 ACCURACY. Every factual claim is checked against the web before the lesson is shown, and a wrong
 one sends the lesson back. Teach only what is well established:
@@ -253,14 +299,23 @@ export function normalizeBlock(raw: unknown): Block | null {
   const kind = r.kind as BlockKind;
   if (!BLOCK_KINDS.includes(kind)) return null;
   const heading = text(r.heading, 140);
-  const body = text(r.body, 1600);
+  // Room for a graph or two written in the text; ones that don't draw are dropped (lib/embeds.ts).
+  const body = cleanEmbeds(text(r.body, 2400));
   const aside = text(r.aside, 900);
   const items = normItems(r.items);
 
   switch (kind) {
-    case "explain":
+    case "explain": {
       if (!body) return null;
-      return { kind, heading, body, example: aside };
+      const block: Extract<Block, { kind: "explain" }> = { kind, heading, body, example: aside };
+      // A layout is kept only when the block has what it needs; otherwise it's a standard step.
+      const layout = EXPLAIN_LAYOUTS.find((l) => l === text(r.mode, 20).toLowerCase());
+      const points = items.filter((i) => i.text).map((i) => ({ title: i.label, text: i.text })).slice(0, 5);
+      if (layout === "split" && aside) block.layout = layout;
+      if (layout === "spotlight" && heading && body.length <= 600) block.layout = layout;
+      if (layout === "steps" && points.length >= 2) Object.assign(block, { layout, points });
+      return block;
+    }
     case "activity":
       return int(r.ref) >= 0 ? { kind, ref: int(r.ref) } : null;
     case "check":
@@ -304,7 +359,7 @@ export function normalizeBlock(raw: unknown): Block | null {
     }
     case "reflect":
       if (!body || !aside) return null;
-      return { kind, heading, prompt: body, model: aside };
+      return { kind, heading, prompt: body, model: modelAnswerText(aside) };
     case "dialogue": {
       const turns = items.filter((i) => i.label && i.text).map((i) => ({ speaker: i.label, text: i.text }));
       if (turns.length < 2 || turns.length > 10) return null;
@@ -448,7 +503,8 @@ export function normalizeLesson(raw: unknown): NormalizeResult {
       approachReason: text(r.approachReason, 300),
       blocks,
       activities,
-      questions,
+      // The order of options is set here, not by the writer (lib/questionCheck.ts).
+      questions: shuffleOptions(questions),
     },
     report: {
       droppedBlocks: rawBlocks.length - (blocks.length - placedChecks),
@@ -504,6 +560,8 @@ export function lintStructure(lesson: Lesson): string[] {
     issues.push("Follows the old fixed template (predict, explain, activities, quiz at the end). Design for this topic.");
   }
   if ((lesson.estimatedMinutes ?? 0) > 12) issues.push("Longer than a 5-10 minute module.");
+  // Questions answerable without knowing the idea.
+  issues.push(...lintQuestions(lesson));
   return issues;
 }
 
@@ -592,7 +650,14 @@ export function flatBlock(b: Block) {
   };
   switch (b.kind) {
     case "explain":
-      return { ...base, heading: b.heading, body: b.body, aside: b.example };
+      return {
+        ...base,
+        heading: b.heading,
+        body: b.body,
+        aside: b.example,
+        mode: b.layout ?? "",
+        items: (b.points ?? []).map((p) => flatItem({ label: p.title, text: p.text })),
+      };
     case "activity":
       return { ...base, ref: b.ref };
     case "check":

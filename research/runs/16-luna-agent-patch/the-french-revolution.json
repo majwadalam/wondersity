@@ -1,0 +1,316 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Why 1789?",
+    "objective": "Explain how royal debt, rising bread prices and new ideas about political authority combined to make 1789 a revolutionary moment.",
+    "estimatedMinutes": 8,
+    "approach": "mystery",
+    "approachReason": "The lesson investigates why longstanding problems became revolutionary in 1789, uncovering financial, social and political clues before the learner solves the puzzle.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Clue 1: yesterday's wars, today's bills",
+        "body": "Costly wars, including French support for American independence, added to the monarchy's debts. **Interest** meant that borrowing created continuing payments, even after fighting ended.\n\nThe crown struggled to finance its spending and debt payments, but changing taxes was politically difficult. Tax burdens were uneven, privileged groups enjoyed important exemptions, and influential bodies resisted reforms that threatened their advantages.",
+        "example": "Think of a household whose loan payments continue after a large purchase. The purchase is over; the financial pressure is not.",
+        "layout": "split"
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Distinguish the source of the financial strain from the obstacle to reform.",
+          "Ask whose agreement or opposition could affect a change in taxation."
+        ],
+        "retry": "The crown's difficulty involved both money and political resistance. Borrowing left continuing obligations, while attempts to spread taxation more widely threatened established privileges."
+      },
+      {
+        "kind": "explain",
+        "heading": "Clue 2: the crisis reaches the dinner table",
+        "body": "A poor harvest in 1788 helped drive up grain and bread prices. Bread was a staple food, so rising prices placed severe pressure on many households, especially when earnings did not keep pace.\n\nThis was not the same problem as royal debt: one concerned state finances, the other daily survival. But hardship increased anger and made disputes over privilege and government more urgent.",
+        "example": ""
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Identify who owes the loans and who is struggling to obtain food.",
+          "Distinguish a direct financial cause from a way that hardship could increase resentment."
+        ],
+        "retry": "State finances and household survival were different problems. They could reinforce each other politically: people struggling to obtain food could become more hostile to taxes and privileges, without bread prices directly creating the crown's war debts."
+      },
+      {
+        "kind": "explain",
+        "heading": "Clue 3: a financial problem opens a political door",
+        "body": "Facing financial crisis and resistance to tax reform, Louis XVI called the **Estates-General**, which met in May 1789. It was an assembly representing the three estates: clergy, nobility and the Third Estate—the rest of the population.\n\nIts organization raised a crucial question: should each estate have one collective vote, or should each deputy vote individually? Voting by estate could allow the clergy and nobility to outvote the Third Estate two to one; voting by individual deputy could give the Third Estate greater influence. Seeking help with finances therefore opened disputes about representation and who could speak for the nation.",
+        "example": ""
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "Hardship supplied urgency; ideas supplied arguments",
+        "body": "Some Enlightenment writings offered arguments for government based on consent rather than inherited power. These ideas did not give everyone the same political goal, but they offered language for challenging privilege and demanding representation.\n\nThe Estates-General created an opening in which financial reform became entangled with questions about who represented the nation and who could authorize taxation. Debt helped open the door, expensive bread made change urgent, and arguments about consent helped people demand a different political order.",
+        "example": ""
+      },
+      {
+        "kind": "check",
+        "ref": 2,
+        "hints": [
+          "Start with the crown's reason for summoning representatives, then consider what happened once they gathered.",
+          "Separate the cause of the meeting from the pressures that shaped demands within it."
+        ],
+        "retry": "The crown sought a way out of its financial crisis, but convening representatives did not settle the underlying disagreements. Food hardship intensified grievances, and arguments about consent helped turn the gathering into a dispute over political power."
+      },
+      {
+        "kind": "reflect",
+        "heading": "Solve the mystery: why 1789?",
+        "prompt": "A friend says, “People were hungry, so the revolution began.” Replace that explanation with three or four sentences connecting debt, bread prices, new ideas and the Estates-General. Explain why their combination mattered.",
+        "model": "Hunger mattered, but it was not the whole explanation. Royal debt and resistance to tax reform helped push the crown to call the Estates-General in 1789, opening a debate about political authority. High bread prices made many people's grievances more urgent, while ideas about rights and representation gave them arguments for challenging privilege. These pressures reinforced one another, turning a financial crisis into a wider political challenge."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "The fighting ends. Do the bills?",
+        "prompt": "Imagine advising a monarchy that borrowed heavily to fight a war. Peace has returned. What would you expect to happen to the financial pressure from those loans?",
+        "reveal": "War costs can outlast a war because debts carry continuing payments. France's financial emergency was therefore more than a bill for current fighting.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "It disappears because military spending has fallen.",
+            "correct": false,
+            "feedback": "Lower military spending can help, but existing loans still require payments."
+          },
+          {
+            "text": "It continues because the earlier loans still require payments.",
+            "correct": true,
+            "feedback": "Yes. Borrowing leaves obligations that continue after the original expense."
+          },
+          {
+            "text": "It disappears because peace cancels wartime loans.",
+            "correct": false,
+            "feedback": "Peace does not itself cancel the monarchy's obligations to its lenders."
+          },
+          {
+            "text": "It stays unchanged because wartime spending must continue.",
+            "correct": false,
+            "feedback": "Current spending can fall after war. The continuing pressure comes from the debts already incurred."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Sort the clues by their causal role",
+        "prompt": "Sort each clue by its most direct role in the crisis. Before revealing the result, consider how a clue in one group could make a clue in another group more politically important.",
+        "reveal": "The crown's financial pressures helped bring representatives together, while household hardship made grievances urgent. The meeting then provided an opportunity for arguments about consent and representation to reshape demands.",
+        "type": "sort",
+        "buckets": [
+          "Pressure on the crown",
+          "Pressure on households",
+          "Political arguments and opportunities"
+        ],
+        "items": [
+          {
+            "text": "Interest remains due on loans taken out for earlier wars.",
+            "bucket": "Pressure on the crown"
+          },
+          {
+            "text": "Privileged groups resist proposals to broaden taxation.",
+            "bucket": "Pressure on the crown"
+          },
+          {
+            "text": "A poor harvest reduces the supply of grain.",
+            "bucket": "Pressure on households"
+          },
+          {
+            "text": "Bread takes a larger share of earnings that have not risen.",
+            "bucket": "Pressure on households"
+          },
+          {
+            "text": "Deputies dispute voting by estate versus voting individually.",
+            "bucket": "Political arguments and opportunities"
+          },
+          {
+            "text": "A pamphlet argues that taxation requires the nation's consent.",
+            "bucket": "Political arguments and opportunities"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "In an illustrative royal council discussion in 1788, a minister reports that France is at peace but earlier borrowing still strains its finances. His proposal to extend taxation to privileged landowners meets resistance. What obstacle must his plan overcome to turn financial reform into usable revenue?",
+        "options": [
+          "The disappearance of ordinary tax income when wartime borrowing ends.",
+          "Opposition from groups whose tax advantages the reform would reduce.",
+          "Opposition from lenders whose wartime loans the reform would cancel.",
+          "Continued military costs that keep the kingdom fighting its earlier war."
+        ],
+        "correctAnswer": "Opposition from groups whose tax advantages the reform would reduce.",
+        "explanation": "Extending taxation threatened established advantages, so obtaining revenue required overcoming political resistance. Peace did not remove obligations from earlier borrowing."
+      },
+      {
+        "question": "Imagine two reports reaching a provincial official in early 1789: villagers cannot afford enough bread after a poor harvest, and the crown cannot meet obligations on earlier war loans. A proposed tax increase angers the villagers. How should the official explain the connection between the reports?",
+        "options": [
+          "They describe separate crises: food hardship has little bearing on resistance to royal taxation.",
+          "They describe one debt crisis: rising food costs created the obligations on the crown's earlier loans.",
+          "They describe one food crisis: restoring the harvest would remove the crown's earlier loan obligations.",
+          "They describe different crises: food hardship can intensify resistance to attempts to raise royal revenue."
+        ],
+        "correctAnswer": "They describe different crises: food hardship can intensify resistance to attempts to raise royal revenue.",
+        "explanation": "A subsistence crisis concerned access to food, while a fiscal crisis concerned state finances. The two could interact politically when struggling households resisted additional demands."
+      },
+      {
+        "question": "Imagine a provincial deputy arriving at the Estates-General in May 1789. He knows royal loans remain unpaid and tax reforms have met resistance; his constituents complain about costly bread, and pamphlets demand the nation's consent to taxation. Which explanation best connects why the meeting occurred with why it could become a political challenge?",
+        "options": [
+          "Debt made consultation urgent; the assembly exposed disputes; bread hardship and consent arguments intensified them.",
+          "Consent arguments made consultation urgent; the assembly exposed disputes; debt and bread hardship intensified them.",
+          "Bread hardship made consultation urgent; the assembly exposed disputes; debt and consent arguments intensified them.",
+          "Debt made consultation urgent; the assembly settled disputes; bread hardship and consent arguments remained separate."
+        ],
+        "correctAnswer": "Debt made consultation urgent; the assembly exposed disputes; bread hardship and consent arguments intensified them.",
+        "explanation": "Debt and blocked fiscal reform helped prompt the summons, which opened disputes over representation and taxation. Food hardship added urgency, while consent arguments supplied grounds for changing political power."
+      }
+    ],
+    "sources": [
+      {
+        "url": "https://courses.lumenlearning.com/suny-hccc-worldhistory2/chapter/the-beginning-of-revolution",
+        "title": "The Beginning of Revolution | History of Western Civilization II"
+      },
+      {
+        "url": "https://link.springer.com/article/10.1007/s10887-023-09230-y",
+        "title": "“Let them eat cake”: drought, peasant uprisings, and demand for institutional change in the French Revolution | Journal of Economic Growth | Springer Nature Link"
+      },
+      {
+        "url": "https://colorado.pressbooks.pub/europesince1600concise/chapter/chapter-7-the-french-revolution",
+        "title": "Chapter 7: The French Revolution – Europe Since 1600: A Concise History"
+      },
+      {
+        "url": "https://socialsci.libretexts.org/Courses/Mizzou_Academy/AP_European_History/12:_The_French_Revolution/12.02:_Events_of_the_Early_Revolution",
+        "title": "12.2: Events of the Early Revolution - Social Sci LibreTexts"
+      },
+      {
+        "url": "https://plato.stanford.edu/entries/enlightenment/",
+        "title": "\nEnlightenment (Stanford Encyclopedia of Philosophy)\n"
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 110577,
+      "approach": "mystery",
+      "blocks": "activity > explain > check > explain > check > activity > explain > check > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.blind",
+      "iteration": 1,
+      "ms": 4893,
+      "questions": 3,
+      "giveaways": [
+        "Question 1 (\"Imagine a royal adviser finds that ordinary revenue canno…\"): a reader who saw only the options picked the right answer with confidence, so the options give it away. Make the wrong options as specific and plausible as the right one, each built on a real misconception.",
+        "Question 2 (\"In an illustrative French household, a tailor earns the s…\"): a reader who saw only the options picked the right answer with confidence, so the options give it away. Make the wrong options as specific and plausible as the right one, each built on a real misconception.",
+        "Question 3 (\"Imagine a town preparing complaints for the Estates-Gener…\"): a reader who saw only the options picked the right answer with confidence, so the options give it away. Make the wrong options as specific and plausible as the right one, each built on a real misconception."
+      ]
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 1,
+      "ms": 22727,
+      "claims": 5,
+      "supported": 4,
+      "contradicted": [],
+      "unclear": 1,
+      "downgraded": [
+        "Enlightenment writers debated rights, equality before the law, and the basis of legitimate government.: cited a page the search didn't return (https://human.libretexts.org/Bookshelves/History/World_History/World_History_II:_From_1400_(OpenStax; returned: https://human.libretexts.org/Bookshelves/History/World_History/World_History_II:_From_1400_(OpenStax)/02:_An_Age_of_Revolution_17501914/07:_Revolutions_in_Europe_and_North_America/7.02:__The_Enlightenment, https://www.open.edu/openlearn/history-the-arts/history-art/the-enlightenment/content-section-8.3.2, http://revolution.chnm.org/d/295, https://courses.lumenlearning.com/suny-hccc-worldhistory2/chapter/the-enlightenment, https://www.history.com/articles/french-revolution)"
+      ]
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 6.5,
+      "reviewerScore": 6.5,
+      "ms": 22734,
+      "problems": [
+        "Question 1 (\"Imagine a royal adviser finds that ordinary revenue canno…\"): a reader who saw only the options picked the right answer with confidence, so the options give it away. Make the wrong options as specific and plausible as the right one, each built on a real misconception.",
+        "Question 2 (\"In an illustrative French household, a tailor earns the s…\"): a reader who saw only the options picked the right answer with confidence, so the options give it away. Make the wrong options as specific and plausible as the right one, each built on a real misconception.",
+        "Question 3 (\"Imagine a town preparing complaints for the Estates-Gener…\"): a reader who saw only the options picked the right answer with confidence, so the options give it away. Make the wrong options as specific and plausible as the right one, each built on a real misconception.",
+        "The checks are too easy to pass without learning the history. Question 2 primarily tests everyday budget arithmetic, and Question 1 largely restates the opening activity rather than advancing the learner's reasoning.",
+        "Several distractors are implausible: peace cancelling loans, exemptions cancelling debts, and consent arguments ending food shortages. These make elimination easier than demonstrating understanding.",
+        "All four flagged cueing issues weaken assessment: the first two checks' hints echo answer-specific payment and bill language; the final check uniquely repeats 'challenge' in the correct option, and its hint supplies answer-specific 'authority' language.",
+        "The diagram activity asks learners to tap and follow an already completed causal explanation. It provides useful information but requires little independent thinking.",
+        "The Estates-General is central to the explanation but is never clearly defined. A foundations learner needs to know that it represented the three estates and why convening it created disputes over representation.",
+        "The final check addresses bread, ideas and the assembly but does not require learners to explain how debt generated the political opening. Full causal integration is assessed only through a reflection with a supplied model."
+      ],
+      "factErrors": [],
+      "structureIssues": [
+        "Question 1 (\"Imagine a royal adviser finds that ordinary revenue canno…\"): a hint uses words found only in the right answer (\"payment\"); hint at the reasoning, not the answer.",
+        "Question 2 (\"In an illustrative French household, a tailor earns the s…\"): a hint uses words found only in the right answer (\"bill\"); hint at the reasoning, not the answer.",
+        "Question 3 (\"Imagine a town preparing complaints for the Estates-Gener…\"): only the right answer repeats the question's wording (\"challenge\"); use those words in wrong options too, or in none.",
+        "Question 3 (\"Imagine a town preparing complaints for the Estates-Gener…\"): a hint uses words found only in the right answer (\"authority\"); hint at the reasoning, not the answer."
+      ]
+    },
+    {
+      "step": "lesson.revise",
+      "iteration": 1,
+      "ms": 74419,
+      "approach": "mystery",
+      "blocks": "activity > explain > check > explain > check > explain > activity > explain > check > reflect",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0,
+      "patch": "Revised all three checks and their hints, defined the Estates-General, replaced passive diagram exploration with causal sorting, and clarified the explanation of political ideas.",
+      "changes": 9
+    },
+    {
+      "step": "lesson.blind",
+      "iteration": 2,
+      "ms": 5025,
+      "questions": 3,
+      "giveaways": []
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 2,
+      "ms": 12862,
+      "claims": 5,
+      "supported": 5,
+      "contradicted": [],
+      "unclear": 0,
+      "downgraded": []
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 2,
+      "score": 8,
+      "ms": 12864,
+      "problems": [
+        "Several distractors are too easy to dismiss, especially claims that peace cancels loans or that a better harvest removes royal debt. These test basic common sense more than historical understanding.",
+        "The first check largely repeats the scenario and explanation immediately preceding it. Its correct option closely echoes the stated resistance to tax reform, limiting transfer.",
+        "The sorting activity introduces a pamphlet arguing for national consent to taxation before the lesson explains Enlightenment arguments about consent.",
+        "The explanation ends at a potential political challenge without showing the concrete transition toward revolution, such as the Third Estate declaring itself the National Assembly. This slightly weakens the answer to why these pressures started a revolution in 1789."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true,
+      "sources": 5
+    }
+  ]
+}

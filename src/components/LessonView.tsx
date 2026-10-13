@@ -6,7 +6,7 @@ import { motion } from "motion/react";
 import { Volume2, VolumeX } from "lucide-react";
 import Link from "next/link";
 import { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
-import { APPROACHES, isInteractive, lessonBlocks } from "@/lib/lessonBlocks";
+import { APPROACHES, isInteractive, lessonBlocks, type Block } from "@/lib/lessonBlocks";
 import { HarnessTrace } from "./HarnessTrace";
 import { Lottie } from "./motion/Lottie";
 import { LessonBlock } from "./lesson/LessonBlock";
@@ -205,7 +205,7 @@ export function LessonView({
       <div className={`mx-auto px-4 pb-40 sm:px-6 ${staging ? "max-w-6xl pt-4 sm:pt-8" : "max-w-2xl pt-10"}`}>
         {/* Intro */}
         {staging && step === 0 && (
-          <p className="sr-only">Your guide for this lesson is {staging.guide.name}, {staging.guide.role}.</p>
+          <p className="sr-only">Your guide for this lesson is {staging.guide.name}, {staging.guide.role.replace(/[.\s]+$/, "")}.</p>
         )}
         <Step active={step === 0} dir={dir}>
           <WithScene scene={staging && <SceneHeader staging={staging} step={0} active={step === 0} voice={voice} />}>
@@ -262,7 +262,14 @@ export function LessonView({
         {/* Blocks */}
         {blocks.map((b, i) => (
           <Step key={i} active={step === i + 1} dir={dir}>
-            <WithScene scene={staging && <SceneHeader staging={staging} step={i + 1} active={step === i + 1} voice={voice} />}>
+            <WithScene
+              banner={WIDE_BLOCKS.has(b.kind)}
+              scene={
+                staging && (
+                  <SceneHeader staging={staging} step={i + 1} active={step === i + 1} voice={voice} banner={WIDE_BLOCKS.has(b.kind)} />
+                )
+              }
+            >
               <LessonBlock
                 block={b}
                 lesson={lesson}
@@ -270,6 +277,8 @@ export function LessonView({
                 checkCount={checkOrder.length}
                 onDone={() => markDone(i)}
                 onAnswer={handleAnswer}
+                lessonId={lessonId}
+                blockIndex={i}
               />
             </WithScene>
           </Step>
@@ -440,12 +449,25 @@ export function LessonView({
   );
 }
 
+/** Hands-on blocks that need the lesson's full width; their scene is a banner above them. */
+const WIDE_BLOCKS = new Set<Block["kind"]>(["activity", "code", "compare"]);
+
 /**
  * A step beside its scene: side by side on wide screens (the scene stays put
- * while the step scrolls), stacked on phones. Without staging, just the step.
+ * while the step scrolls), stacked on phones. A banner step has its scene as a
+ * short strip on top instead, so the block below keeps the full width.
+ * Without staging, just the step.
  */
-function WithScene({ scene, children }: { scene: ReactNode; children: ReactNode }) {
+function WithScene({ scene, banner, children }: { scene: ReactNode; banner?: boolean; children: ReactNode }) {
   if (!scene) return <>{children}</>;
+  if (banner) {
+    return (
+      <div>
+        <div className="mb-7">{scene}</div>
+        {children}
+      </div>
+    );
+  }
   return (
     <div className="lg:grid lg:grid-cols-[minmax(0,1fr)_minmax(0,1.05fr)] lg:items-start lg:gap-12">
       <div className="mb-7 lg:sticky lg:top-20 lg:mb-0">{scene}</div>

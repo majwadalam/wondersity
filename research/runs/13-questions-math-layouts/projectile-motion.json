@@ -1,0 +1,233 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "Launch angle and range",
+    "objective": "Explain how launch angle changes a projectile’s height and landing distance, and identify angles that give the same range.",
+    "estimatedMinutes": 7,
+    "approach": "simulation",
+    "approachReason": "Changing the launch angle while holding speed fixed lets the learner see the height–distance trade-off before explaining it.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "One speed, two directions",
+        "body": "The **launch angle** is measured upward from the horizontal. At a fixed launch speed, raising the angle gives the projectile more upward speed but less horizontal speed.\n\nMore upward speed means a higher peak and more time before returning to launch height. Less horizontal speed means less distance covered each second: the **range**, or horizontal distance to the landing point, depends on both effects.",
+        "example": "Your simulated launch at 75° stays in the air longer than the launch at 45°, but lands closer. Extra time cannot fully compensate for its smaller horizontal speed.",
+        "layout": "split"
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Separate motion across the ground from motion upward.",
+          "What determines how long the projectile takes to return to its starting height?"
+        ],
+        "retry": "Think of the same launch speed being aimed in a different direction. A steeper launch directs more of that speed upward and less of it horizontally."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "45° balances the trade-off",
+        "body": "For a fixed launch speed, with no air resistance and landing at launch height, **45° gives the greatest range**. Below 45°, raising the angle increases range; above 45°, raising it decreases range.\n\nIn this same model, two angles that add to 90° have equal ranges. They are called **complementary angles**: the steeper launch travels horizontally more slowly, but stays airborne longer, and these effects exactly balance.",
+        "example": "The 35° and 55° launches land equally far away because 35° + 55° = 90°. The 55° launch has the higher peak and longer flight. These rules need not hold with air resistance or a different landing height.",
+        "layout": "split"
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "First find pairs whose angles add to 90°.",
+          "Then compare how close each pair is to the angle that gives maximum range."
+        ],
+        "retry": "Angles equally far below and above 45° have equal ranges. To compare two such pairs, consider which pair is closer to the maximum-range angle."
+      },
+      {
+        "kind": "problem",
+        "heading": "Clear the obstacle, keep the landing point",
+        "prompt": "In an idealized launcher test, a ball launched at 28° lands at a marked spot on level ground. You want a **higher arc that lands at the same spot**, without changing launch speed.\n\nIgnore air resistance. What launch angle should you use?",
+        "answers": [
+          "62",
+          "62°"
+        ],
+        "unit": "°",
+        "traps": [
+          {
+            "answer": "28",
+            "feedback": "Keeping the original angle keeps the range, but does not produce a higher arc."
+          },
+          {
+            "answer": "45",
+            "feedback": "45° gives maximum range in this model, so it would move the landing point farther away."
+          }
+        ],
+        "hints": [
+          "You need equal range, not maximum range.",
+          "What must the original angle and the new angle add up to?"
+        ],
+        "solution": "The different angle with the same range must add to 90° with the original angle: 90° − 28° = 62°. Because 62° is steeper than 28°, it gives a higher arc while keeping the landing point unchanged."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "Aim the launcher",
+        "prompt": "This idealized launcher fires at a fixed speed of 20 m/s, with no air resistance and gravitational acceleration of 9.8 m/s². It lands at the same height it starts. Drag the launch angle to 15°, 45°, and 75°. Compare the peak height and the range—the horizontal position where the curve meets the ground again. Does the highest arc land farthest?",
+        "reveal": "The 75° launch reaches the highest peak, but the 45° launch lands farthest. Increasing the angle changes height and range in different ways.",
+        "type": "graph",
+        "expression": "x*tan(k*pi/180)-9.8*x^2/(2*20^2*cos(k*pi/180)^2)",
+        "slider": {
+          "label": "Launch angle",
+          "min": 15,
+          "max": 75,
+          "step": 5,
+          "unit": "°",
+          "initial": 15
+        },
+        "bands": [
+          {
+            "upTo": 40,
+            "title": "Higher and farther",
+            "detail": "Across these settings, raising the angle raises the peak and moves the landing point farther away."
+          },
+          {
+            "upTo": 45,
+            "title": "Farthest landing",
+            "detail": "At 45°, the range reaches its maximum for this launch speed and level-ground model."
+          },
+          {
+            "upTo": 75,
+            "title": "Higher, but closer",
+            "detail": "Above 45°, raising the angle raises the peak but moves the landing point closer."
+          }
+        ],
+        "axis": {
+          "xLabel": "Horizontal distance (m)",
+          "yLabel": "Height (m)",
+          "xMin": 0,
+          "xMax": 45,
+          "yMin": 0,
+          "yMax": 21
+        }
+      },
+      {
+        "afterConcept": 0,
+        "title": "Compare 35° and 55°",
+        "prompt": "Using the same idealized launcher, predict how the range at 55° compares with the range at 35°. Both launches have the same speed and land at launch height.",
+        "reveal": "The ranges are equal, even though the paths differ. Notice that 35° + 55° = 90°: this pairing is the clue.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "The 55° launch lands farther.",
+            "correct": false,
+            "feedback": "It stays airborne longer, but its smaller horizontal speed offsets that extra time."
+          },
+          {
+            "text": "The 35° launch lands farther.",
+            "correct": false,
+            "feedback": "It has greater horizontal speed, but its shorter flight offsets that advantage."
+          },
+          {
+            "text": "They land equally far away.",
+            "correct": true,
+            "feedback": "The longer flight at 55° exactly balances its smaller horizontal speed in this model."
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "A student changes a toy launcher’s angle from 20° to 70° while keeping launch speed fixed. Ignore air resistance; the ball lands at launch height. Compared with the 20° launch, how do its initial horizontal speed and total flight time change?",
+        "options": [
+          "Horizontal speed increases; flight time increases.",
+          "Horizontal speed decreases; flight time increases.",
+          "Horizontal speed stays the same; flight time increases.",
+          "Horizontal speed decreases; flight time decreases."
+        ],
+        "correctAnswer": "Horizontal speed decreases; flight time increases.",
+        "explanation": "A steeper launch directs more of the fixed speed upward and less horizontally. The greater upward speed makes the flight back to launch height last longer."
+      },
+      {
+        "question": "An engineer tests a launcher at 25°, 40°, 50°, and 65°, using the same launch speed each time. With no air resistance and landing at launch height, which two settings tie for the greatest range among these four?",
+        "options": [
+          "40° and 65°",
+          "40° and 50°",
+          "25° and 65°",
+          "25° and 50°"
+        ],
+        "correctAnswer": "40° and 50°",
+        "explanation": "40° and 50° add to 90°, so they have equal ranges. They are closer to the maximum-range angle of 45° than the complementary pair 25° and 65°."
+      }
+    ],
+    "sources": [
+      {
+        "url": "https://www.physicsclassroom.com/mmedia/vectors/mr.cfm",
+        "title": "\n\tThe Physics Classroom Website\n"
+      },
+      {
+        "url": "https://openstax.org/books/university-physics-volume-1/pages/4-3-projectile-motion",
+        "title": "4.3 Projectile Motion - University Physics Volume 1 | OpenStax"
+      },
+      {
+        "url": "https://www.khanacademy.org/science/mechanics-essentials/xafb2c8d81b6e70e3:a-bullet-shot-from-a-gun-and-a-bullet-dropped-reach-the-ground-at-the-same-time-here-s-why/xafb2c8d81b6e70e3:projectile-motion-essentials/a/projectiles-launched-at-angles",
+        "title": "Projectiles launched at an angle review (article)"
+      }
+    ]
+  },
+  "score": 8.4,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 85243,
+      "approach": "simulation",
+      "blocks": "activity > explain > check > activity > explain > check > problem",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.blind",
+      "iteration": 1,
+      "ms": 6409,
+      "questions": 2,
+      "giveaways": []
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 1,
+      "ms": 16318,
+      "claims": 5,
+      "supported": 4,
+      "contradicted": [],
+      "unclear": 1,
+      "downgraded": []
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8.4,
+      "ms": 16329,
+      "problems": [
+        "Hints for the second check and final problem nearly supply the solution procedure, reducing the learner’s opportunity to reason independently.",
+        "Check retries mostly restate the original explanations rather than offering genuinely different explanatory approaches.",
+        "Two distractors in the second check—40° with 65°, and 25° with 50°—do not clearly represent identifiable misconceptions.",
+        "The graph’s angle-dependent bands disclose the range trend during exploration, weakening the intended discovery experience."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8.4,
+      "passed": true,
+      "sources": 3
+    }
+  ]
+}

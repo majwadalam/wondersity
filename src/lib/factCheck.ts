@@ -128,8 +128,29 @@ function checkText(raw: string, where: string, out: string[]) {
   }
 }
 
+/**
+ * Simple TeX math written as plain arithmetic, so it's checked like the rest:
+ * \times and \cdot as ×, \div as ÷, \frac{6}{3} as 6/3 when both parts are
+ * numbers, ^{3} as ^3, and the delimiters and spacing removed. Anything else
+ * in TeX stays as it is, and the checker leaves it alone.
+ */
+export function plainMath(text: string) {
+  if (!text.includes("\\") && !text.includes("$$")) return text;
+  return text.replace(/\\\(([\s\S]+?)\\\)|\\\[([\s\S]+?)\\\]|\$\$([\s\S]+?)\$\$/g, (_, a?: string, b?: string, c?: string) =>
+    (a ?? b ?? c ?? "")
+      .replace(/\\(times|cdot)/g, " × ")
+      .replace(/\\div/g, " ÷ ")
+      .replace(/\\approx/g, " ≈ ")
+      .replace(/\\[dt]?frac\{\s*(-?\d+(?:\.\d+)?)\s*\}\{\s*(-?\d+(?:\.\d+)?)\s*\}/g, "$1/$2")
+      .replace(/\^\{\s*(-?\d+(?:\.\d+)?)\s*\}/g, "^$1")
+      .replace(/\\(left|right)|\\[,;!]/g, "")
+      .replace(/\s+/g, " ")
+      .trim()
+  );
+}
+
 function walk(node: unknown, path: string, out: string[]) {
-  if (typeof node === "string") return checkText(node, path, out);
+  if (typeof node === "string") return checkText(plainMath(node), path, out);
   if (Array.isArray(node)) return node.forEach((v, i) => walk(v, `${path}[${i}]`, out));
   if (node && typeof node === "object") {
     for (const [k, v] of Object.entries(node)) {

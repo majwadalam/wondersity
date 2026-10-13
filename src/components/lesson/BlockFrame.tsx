@@ -1,7 +1,9 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { rich } from "./rich";
+import { splitEmbeds } from "@/lib/embeds";
+import { InlineGraph } from "./InlineGraph";
+import { Chunk, chunks, rich } from "./rich";
 
 /** The frame for hands-on blocks: label, title, prompt, then the block, then the takeaway once done. */
 export function BlockFrame({
@@ -49,19 +51,19 @@ export function BlockFrame({
   );
 }
 
-/** Splits text on blank lines into paragraphs. */
+/** Splits text on blank lines into paragraphs, with tables, lists and graphs drawn as such. */
 export function Paragraphs({ text, className = "" }: { text: string; className?: string }) {
+  let n = 0;
   return (
     <>
-      {text
-        .split(/\n\s*\n/)
-        .map((p) => p.trim())
-        .filter(Boolean)
-        .map((p, i) => (
-          <p key={i} className={`${i > 0 ? "mt-3" : ""} ${className}`}>
-            {rich(p)}
-          </p>
-        ))}
+      {splitEmbeds(text).flatMap((part, pi) =>
+        part.kind === "graph"
+          ? [<div key={`g${pi}`} className={n++ > 0 ? "mt-3" : ""}><InlineGraph graph={part.graph} /></div>]
+          : part.text
+              .split(/\n\s*\n/)
+              .flatMap((p) => chunks(p))
+              .map((c, i) => <Chunk key={`${pi}-${i}`} chunk={c} className={`${n++ > 0 ? "mt-3" : ""} ${className}`} />)
+      )}
     </>
   );
 }

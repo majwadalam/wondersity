@@ -17,6 +17,13 @@ const DEFAULT_REVIEW_MODEL = "openai/gpt-6.1-sol";
 
 /** The model that runs the tutor agent and writes lessons. */
 export const writerModel = () => env("OPENROUTER_MODEL") ?? DEFAULT_MODEL;
+/**
+ * The model for the tutor agent's turns once a course exists: deciding what to
+ * do, reading mistakes, briefing the writer, the closing note. Short calls, so
+ * a small model (run 15: about $0.01-0.02 a run on GPT-6.1 Sol). Planning a new
+ * course stays on the writer model (harness.ts), since every lesson builds on it.
+ */
+export const agentModel = () => env("AGENT_MODEL") ?? "openai/gpt-6-luna";
 /** The model that reviews lessons. */
 export const reviewModel = () => env("REVIEW_MODEL") ?? DEFAULT_REVIEW_MODEL;
 
@@ -45,7 +52,7 @@ export type ToolCall = {
 };
 
 export type ChatMessage =
-  | { role: "system" | "user"; content: string }
+  | { role: "system" | "user"; content: string | ({ type: "text"; text: string } | { type: "image_url"; image_url: { url: string } })[] }
   | { role: "assistant"; content: string | null; tool_calls?: ToolCall[] }
   | { role: "tool"; tool_call_id: string; content: string };
 
@@ -55,10 +62,24 @@ export type ToolDefinition = {
 };
 
 /** Tokens and dollars spent by the model calls inside one `withUsage` scope. */
-export type Usage = { calls: number; promptTokens: number; completionTokens: number; cost: number; cachedTokens?: number };
+export type Usage = {
+  calls: number;
+  promptTokens: number;
+  completionTokens: number;
+  cost: number;
+  cachedTokens?: number;
+  /** The same, split by step (see withStep), so a run's trace shows where its money went. */
+  bySteps?: Record<string, { calls: number; in: number; out: number; cost: number }>;
+};
 
 // Scoped per run, so concurrent requests on one server don't mix their totals.
 const usageScope = new AsyncLocalStorage<Usage>();
+
+// Which step of a run a model call belongs to ("write", "review", "agent", …).
+const stepScope = new AsyncLocalStorage<string>();
+
+/** Runs `fn` with its model calls counted under `step` in the run's usage. */
+export const withStep = <T>(step: string, fn: () => Promise<T>) => stepScope.run(step, fn);
 
 export const emptyUsage = (): Usage => ({ calls: 0, promptTokens: 0, completionTokens: 0, cost: 0 });
 
@@ -84,6 +105,12 @@ export function recordUsage(
   // Prompt tokens the provider served from its cache (cheaper): the writing
   // guide opens every lesson call unchanged, so it should be cached.
   total.cachedTokens = (total.cachedTokens ?? 0) + (u.prompt_tokens_details?.cached_tokens ?? 0);
+  const step = stepScope.getStore() ?? "other";
+  const s = ((total.bySteps ??= {})[step] ??= { calls: 0, in: 0, out: 0, cost: 0 });
+  s.calls++;
+  s.in += u.prompt_tokens ?? 0;
+  s.out += u.completion_tokens ?? 0;
+  s.cost += u.cost ?? 0;
 }
 
 /** A web page a search-backed reply was given, as OpenRouter reports it. */
@@ -175,6 +202,8 @@ type StructuredOptions = {
    * parallel calls fail with 402 "in-flight budget exhausted".
    */
   maxTokens?: number;
+  /** Pictures (URLs) shown to the model with the user message. */
+  images?: string[];
   /** OpenRouter's web search plugin: search before answering. */
   webSearch?: { maxResults?: number; engine?: string; mode?: string; includeDomains?: string[]; excludeDomains?: string[] };
 };
@@ -209,7 +238,7 @@ async function structuredCall(
   user: string,
   schema: Record<string, unknown>,
   deadline: Deadline,
-  { reasoningEffort, timeoutMs, model = writerModel(), webSearch, maxTokens }: StructuredOptions
+  { reasoningEffort, timeoutMs, model = writerModel(), webSearch, maxTokens, images }: StructuredOptions
 ): Promise<{ data: unknown; sources: Source[] }> {
   // Anthropic refuses our larger lesson schemas as constrained grammars ("compiled
   // grammar is too large"), so it gets the schema in the prompt and plain JSON
@@ -222,7 +251,10 @@ async function structuredCall(
         role: "system",
         content: unconstrained ? `${system}\n\nReply with one JSON object matching this JSON Schema, and nothing else:\n${JSON.stringify(schema)}` : system,
       },
-      { role: "user", content: user },
+      {
+        role: "user",
+        content: images?.length ? [...images.map((url) => ({ type: "image_url", image_url: { url } })), { type: "text", text: user }] : user,
+      },
     ],
     response_format: unconstrained ? { type: "json_object" } : { type: "json_schema", json_schema: { name: "response", strict: true, schema } },
     ...(reasoningEffort ? { reasoning: { effort: reasoningEffort } } : {}),
@@ -257,10 +289,11 @@ async function structuredCall(
 export async function callWithTools(
   messages: ChatMessage[],
   tools: ToolDefinition[],
-  deadline: Deadline
+  deadline: Deadline,
+  model = agentModel()
 ): Promise<AssistantMessage> {
   // A turn is a short note or a tool call; the largest is a course plan (~3k tokens).
-  return chat({ messages, tools, tool_choice: "auto", max_tokens: 8_000 }, deadline);
+  return chat({ model, messages, tools, tool_choice: "auto", max_tokens: 8_000 }, deadline);
 }
 
 // Embeddings: a topic as 1536 numbers, so topics that mean the same thing
@@ -285,4 +318,27 @@ export async function embed(text: string, timeoutMs = 15_000): Promise<number[]>
     throw new Error("Embedding came back in an unexpected shape");
   }
   return vector;
+}
+
+/** Embeddings of several texts in one request (the learner's material passages), in order. */
+export async function embedMany(texts: string[], timeoutMs = 30_000): Promise<number[][]> {
+  if (!texts.length) return [];
+  const response = await fetch("https://openrouter.ai/api/v1/embeddings", {
+    method: "POST",
+    signal: AbortSignal.timeout(timeoutMs),
+    headers: { Authorization: `Bearer ${requireEnv("OPENROUTER_API_KEY")}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ model: EMBED_MODEL, input: texts, usage: { include: true } }),
+  });
+  if (!response.ok) throw new ModelHttpError(response.status, await response.text());
+  const data = await response.json();
+  recordUsage(data.usage);
+  const rows: { index?: number; embedding?: unknown }[] = Array.isArray(data.data) ? data.data : [];
+  const vectors = rows
+    .slice()
+    .sort((a, b) => (a.index ?? 0) - (b.index ?? 0))
+    .map((r) => r.embedding);
+  if (vectors.length !== texts.length || !vectors.every((v) => Array.isArray(v) && v.length === EMBED_DIMENSIONS)) {
+    throw new Error("Embeddings came back in an unexpected shape");
+  }
+  return vectors as number[][];
 }

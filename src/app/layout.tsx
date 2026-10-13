@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { AppShell } from "@/components/app/AppShell";
+import "katex/dist/katex.min.css";
 import "./globals.css";
 
 const geist = Geist({

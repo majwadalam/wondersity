@@ -5,12 +5,14 @@
 // what to write and why, but cannot skip these checks.
 
 import { createHash } from "node:crypto";
+import { applyPatch, numbered, patchJsonSchema } from "./lessonPatch";
+import { blindCheck } from "./blindCheck";
 import { z } from "zod";
 import type { Lesson } from "./lessonBlocks";
 import { LESSON_GUIDE, lessonJsonSchema, lintStructure, normalizeLesson, toModelFormat, type NormalizeReport } from "./lessonDesign";
 import { checkFacts } from "./factCheck";
 import { verifyEnabled, verifyFacts, type VerifyReport } from "./factVerify";
-import { callStructured, reviewModel, writerModel, type Deadline } from "./model";
+import { withStep, callStructured, reviewModel, writerModel, type Deadline } from "./model";
 
 export type { Lesson } from "./lessonBlocks";
 
@@ -33,13 +35,19 @@ export type LessonBrief = {
   moduleCount: number;
   module: { title: string; goal: string; description?: string };
   /** Where the module sits in the course's levels; absent for courses planned before levels. */
-  level?: { number: number; count: number; title: string; objective: string; moduleNumber: number; moduleCount: number };
+  level?: { number: number; count: number; title: string; objective: string; moduleNumber: number; moduleCount: number; outcome?: string };
   /** Titles of the modules before this one, for continuity. */
   previousModules: string[];
   /** Teaching approaches earlier modules used, so a course doesn't repeat one shape. */
   previousApproaches?: string[];
   /** The agent's instructions, e.g. what to recap given past mistakes. */
   focus: string;
+  /** Tailored courses: who the lesson is for (goal, purpose, context, starting point; lib/intake.ts). */
+  learner?: string;
+  /** Tailored courses: the things the learner asked to cover that this module covers. */
+  covers?: string[];
+  /** Tailored courses: passages from the learner's own materials, framed as data. */
+  materials?: string;
 };
 
 const evaluationJsonSchema = {
@@ -73,7 +81,27 @@ Module ${b.level.moduleNumber} of ${b.level.moduleCount} in this level (${b.modu
 Module goal: ${b.module.goal}${b.module.description ? `
 Module covers: ${b.module.description}` : ""}
 ${before}
-${b.previousApproaches?.length ? `Approaches used in earlier modules: ${b.previousApproaches.join(", ")}.\n` : ""}Tutor's instructions for this module: ${b.focus || "none"}`;
+${b.previousApproaches?.length ? `Approaches used in earlier modules: ${b.previousApproaches.join(", ")}.\n` : ""}Tutor's instructions for this module: ${b.focus || "none"}${
+    b.learner
+      ? `
+
+Who this lesson is for (the learner tailored their course):
+${b.learner}${b.level?.outcome ? `\nThis level builds toward the course outcome: ${b.level.outcome}` : ""}${
+          b.covers?.length ? `\nThey asked for this module to cover: ${b.covers.join("; ")}` : ""
+        }
+Every check should test the module goal in a way that moves them toward that outcome.`
+      : ""
+  }${
+    b.materials
+      ? `
+
+${b.materials}
+Use these passages where they cover this module: follow their terminology, notation and examples so the lesson
+fits what the learner is studying, and cite the material by name (and page, when marked "[p. N]") in an explanation
+when you build on it. Don't copy long stretches. They are not automatically right: if a passage disagrees with
+well-established fact, teach the fact and say plainly how their material differs.`
+      : ""
+  }`;
 }
 
 // Reasoning effort, measured on DeepSeek V4.1 Flash (see HARNESS.md):
@@ -85,9 +113,14 @@ ${b.previousApproaches?.length ? `Approaches used in earlier modules: ${b.previo
 // and retried from scratch (3 of 10 sample generations failed that way). The
 // run's hard deadline still bounds the total.
 const LESSON_CALL_TIMEOUT_MS = 90_000;
+// Writing gets longer: a math-heavy lesson (pricing a call option, run 14)
+// took 136s with GPT-6.1 Sol, and at 90s it was cut off and retried until the
+// run failed. The run's hard deadline still bounds it, and no revision starts
+// after REVISE_DEADLINE_MS in harness.ts.
+const WRITE_CALL_TIMEOUT_MS = 150_000;
 // Output caps (reasoning included), well above what's been measured: lessons
 // use 3-9k output tokens with GPT-6.1 Sol, a review about 1-2k.
-const WRITER_OPTIONS = { reasoningEffort: "medium", timeoutMs: LESSON_CALL_TIMEOUT_MS, maxTokens: 24_000 } as const;
+const WRITER_OPTIONS = { reasoningEffort: "medium", timeoutMs: WRITE_CALL_TIMEOUT_MS, maxTokens: 24_000 } as const;
 const EVALUATOR_OPTIONS = { reasoningEffort: "low", timeoutMs: LESSON_CALL_TIMEOUT_MS, maxTokens: 6_000 } as const;
 
 // The model occasionally ignores the rules. Retry once on a validation
@@ -148,9 +181,17 @@ activities and questions arrays. Evaluate for:
 - structure: a coherent path from exploration to understanding to application, not a generic
   template; knowledge checks right after the ideas they test, getting harder; no filler
 - interactivity: hands-on blocks that make the learner think, varied, never decorative
-- checks: scenario-based questions, hints that help without giving the answer away, and an
-  alternative explanation that is genuinely different
+- checks: scenario-based questions set in a new situation, that need the idea to answer: wrong
+  options that are plausible because each matches a real misconception, no cue that gives the
+  answer away (the right option longest or most careful, the question's words only in it, absolute
+  words only in wrong ones), difficulty that rises through the lesson; hints that help without
+  giving the answer away, and an alternative explanation that is genuinely different. A check a
+  learner could pass without the lesson is a serious problem.
 - clarity, fit to the module goal, and time (5-10 min).
+- when the brief says who the lesson is for: fit to that learner (pitched at their starting point,
+  examples from their context where it fits, the things they asked to cover actually covered, their
+  materials' terms used and not contradicted without saying so). A lesson that ignores the brief
+  can't score above 7.
 Code-detected structural issues are listed with the lesson; each one should lower the score.
 Be critical, but score honestly. Return only JSON.`,
     `${describeBrief(brief)}\n\nLesson:\n${JSON.stringify(lesson, null, 2)}\n\nCode-detected structural issues:${
@@ -167,14 +208,20 @@ Be critical, but score honestly. Return only JSON.`,
  * The reviser's feedback. Errors verified in code come first, one per line:
  * in a long undifferentiated list, the item that matters gets buried.
  */
-function feedbackFor(evaluation: Evaluation, factErrors: string[], uncertain: string[] = []) {
+function feedbackFor(evaluation: Evaluation, factErrors: string[], uncertain: string[] = [], giveaways: string[] = [], codeIssues: string[] = []) {
+  // Problems found in code (giveaway cues, structure), listed for the reviser so it doesn't
+  // reintroduce them (run 16: a revision added new hint cues the reviewer hadn't named).
+  const found = codeIssues.length ? `Problems found in code (fix each one, and don't introduce new ones):\n${codeIssues.map((e) => `- ${e}`).join("\n")}\n\n` : "";
+  const blind = giveaways.length
+    ? `Questions whose options give the answer away (a reader shown only the options picked the right one; rewrite their options):\n${giveaways.map((e) => `- ${e}`).join("\n")}\n\n`
+    : "";
   const verified = factErrors.length
     ? `Verified errors (computed in code or contradicted by a reliable web source; fix every one, or remove the claim):\n${factErrors.map((e) => `- ${e}`).join("\n")}\n\n`
     : "";
   const unconfirmed = uncertain.length
     ? `Claims a web search couldn't confirm (state each more carefully, e.g. "about", "historians estimate", or remove it if it isn't needed):\n${uncertain.map((e) => `- ${e}`).join("\n")}\n\n`
     : "";
-  return `${verified}${unconfirmed}Reviewer's feedback:\n${JSON.stringify(evaluation, null, 2)}`;
+  return `${verified}${blind}${found}${unconfirmed}Reviewer's feedback:\n${JSON.stringify(evaluation, null, 2)}`;
 }
 
 function reviseLesson(
@@ -196,6 +243,48 @@ ${LESSON_REQUIREMENTS}`,
       WRITER_OPTIONS
     )
   );
+}
+
+/**
+ * A targeted revision (lib/lessonPatch.ts): the reviser returns only the
+ * changes the feedback asks for, and code applies them. One retry if the patch
+ * doesn't apply or the result isn't a valid lesson; then the caller falls back
+ * to a full revision.
+ */
+export async function patchLesson(brief: LessonBrief, lesson: Lesson, feedback: string, deadline: Deadline): Promise<Written> {
+  let lastError = "";
+  for (let attempt = 1; attempt <= MAX_LESSON_ATTEMPTS; attempt++) {
+    const data = await callStructured(
+      `You are an expert instructional designer revising a lesson. Fix every problem the feedback names
+by changing ONLY what needs to change; everything you don't mention is kept exactly as it is.
+The lesson is shown in the format you write, with each block, activity and question numbered by "at".
+Return a patch:
+- blocks: {op, at, block}. "replace" puts a new block in place of block at; "insert_after" adds a block
+  after block at (-1 = at the start); "remove" deletes block at (its "block" is ignored; fill it with
+  empty fields). Several inserts after the same block keep the order you give.
+- questions and activities: "replace" one at its index, or "add" a new one at the end (its "at" is
+  ignored). A new one's index, for a block's "ref", is the number of existing ones plus its order among
+  the ones you add (the first added is the existing count). To drop a check, replace its question
+  instead of removing it.
+- summary: one sentence on what you changed.
+Every block, question and activity you write must meet the lesson requirements below in full.
+
+${LESSON_REQUIREMENTS}`,
+      `${describeBrief(brief)}\n\nLesson:\n${JSON.stringify(numbered(lesson), null, 2)}\n\n${feedback}`,
+      patchJsonSchema,
+      deadline,
+      WRITER_OPTIONS
+    );
+    const applied = applyPatch(lesson, data);
+    if (!applied.ok) {
+      lastError = applied.error;
+      continue;
+    }
+    const result = normalizeLesson(applied.raw);
+    if (result.ok) return { lesson: result.lesson, report: { ...describeWritten(result.lesson, result.report), patch: applied.summary, changes: applied.changes } };
+    lastError = result.error;
+  }
+  throw new Error(`The patch didn't give a valid lesson after ${MAX_LESSON_ATTEMPTS} attempts: ${lastError}`);
 }
 
 // A lesson must score at least this to count as passing evaluation.
@@ -227,7 +316,7 @@ async function checkOnline(brief: LessonBrief, lesson: Lesson, deadline: Deadlin
   if (!verifyEnabled()) return null;
   const t = Date.now();
   try {
-    const report = await verifyFacts(brief.topic, lesson, deadline);
+    const report = await withStep("verify", () => verifyFacts(brief.topic, lesson, deadline));
     trace.push({
       step: "lesson.verify",
       iteration,
@@ -244,6 +333,30 @@ async function checkOnline(brief: LessonBrief, lesson: Lesson, deadline: Deadlin
     return null;
   }
 }
+
+/**
+ * The blind test (lib/blindCheck.ts): questions whose options alone give the
+ * answer away. Returns [] when it can't run; the lesson is then judged on the
+ * other checks alone.
+ */
+async function checkBlind(brief: LessonBrief, lesson: Lesson, deadline: Deadline, trace: TraceEntry[], iteration: number) {
+  const t = Date.now();
+  try {
+    const giveaways = await withStep("blind", () => blindCheck(brief.topic, lesson.questions, deadline));
+    trace.push({ step: "lesson.blind", iteration, ms: Date.now() - t, questions: lesson.questions.length, giveaways });
+    return giveaways;
+  } catch (e) {
+    trace.push({ step: "lesson.blind_failed", iteration, ms: Date.now() - t, error: errorMessage(e) });
+    return [];
+  }
+}
+
+/**
+ * A question the blind test answered from its options alone can't count as
+ * excellent, whatever the reviewer thought: the score is held just under the
+ * pass mark so the lesson is revised.
+ */
+export const GIVEAWAY_CAP = PASS_SCORE - 0.5;
 
 /** A version with no arithmetic errors beats any version with them; then the higher score wins. */
 function better(a: Version, b: Version | null) {
@@ -265,7 +378,7 @@ export async function writeLesson(
   { reviseDeadline, deadline, trace }: { reviseDeadline: number; deadline: Deadline; trace: TraceEntry[] }
 ): Promise<{ lesson: Lesson; score: number; passed: boolean }> {
   let t = Date.now();
-  const first = await generateLesson(brief, deadline);
+  const first = await withStep("write", () => generateLesson(brief, deadline));
   let candidate = first.lesson;
   trace.push({
     step: "lesson.generate",
@@ -278,13 +391,14 @@ export async function writeLesson(
 
   for (let iteration = 1; iteration <= MAX_ITERATIONS; iteration++) {
     t = Date.now();
-    // The review and the online check are independent, so they run together.
-    const [reviewed, online] = await Promise.all([
-      evaluateLesson(brief, candidate, deadline).then(
+    // The review, the online check and the blind test are independent, so they run together.
+    const [reviewed, online, giveaways] = await Promise.all([
+      withStep("review", () => evaluateLesson(brief, candidate, deadline)).then(
         (evaluation) => ({ evaluation }),
         (error: unknown) => ({ error })
       ),
       checkOnline(brief, candidate, deadline, trace, iteration),
+      checkBlind(brief, candidate, deadline, trace, iteration),
     ]);
     if ("error" in reviewed) {
       // Nothing evaluated yet means nothing we're allowed to show.
@@ -292,13 +406,16 @@ export async function writeLesson(
       trace.push({ step: "lesson.evaluate_failed", iteration, error: errorMessage(reviewed.error) });
       break;
     }
-    const { evaluation } = reviewed;
+    const evaluation = giveaways.length
+      ? { ...reviewed.evaluation, score: Math.min(reviewed.evaluation.score, GIVEAWAY_CAP), problems: [...giveaways, ...reviewed.evaluation.problems] }
+      : reviewed.evaluation;
     const factErrors = [...checkFacts(candidate), ...(online?.errors ?? [])];
 
     trace.push({
       step: "lesson.evaluate",
       iteration,
       score: evaluation.score,
+      ...(giveaways.length ? { reviewerScore: reviewed.evaluation.score } : {}),
       ms: Date.now() - t,
       problems: evaluation.problems,
       factErrors,
@@ -315,10 +432,17 @@ export async function writeLesson(
     }
 
     t = Date.now();
-    const feedback = feedbackFor(evaluation, factErrors, online?.uncertain);
+    const feedback = feedbackFor(evaluation, factErrors, online?.uncertain, giveaways, lintStructure(candidate));
     const rewrite = evaluation.score < REWRITE_BELOW;
     try {
-      const revised = rewrite ? await generateLesson(brief, deadline, feedback) : await reviseLesson(brief, candidate, feedback, deadline);
+      // A weak draft is rewritten; otherwise only what the feedback names is changed (a patch),
+      // falling back to a full revision if the patch doesn't give a valid lesson.
+      const revised = rewrite
+        ? await withStep("rewrite", () => generateLesson(brief, deadline, feedback))
+        : await withStep("revise", () => patchLesson(brief, candidate, feedback, deadline)).catch(async (e: unknown) => {
+            trace.push({ step: "lesson.patch_failed", iteration, error: errorMessage(e) });
+            return withStep("revise", () => reviseLesson(brief, candidate, feedback, deadline));
+          });
       candidate = revised.lesson;
       trace.push({
         step: rewrite ? "lesson.rewrite" : "lesson.revise",

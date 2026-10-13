@@ -1,0 +1,246 @@
+{
+  "lesson": {
+    "version": 2,
+    "title": "When Two Independent Events Both Happen",
+    "objective": "Recognize when one event leaves another event’s probability unchanged, and multiply probabilities to find the chance that both happen.",
+    "estimatedMinutes": 6,
+    "approach": "discovery",
+    "approachReason": "The learner first predicts whether one outcome affects another, then sorts equally likely outcomes to discover the multiplication rule.",
+    "blocks": [
+      {
+        "kind": "activity",
+        "ref": 0
+      },
+      {
+        "kind": "explain",
+        "heading": "Independent means unchanged",
+        "body": "Two events are **independent** when learning that one happened does not change the probability of the other. In our experiment, knowing that the coin landed heads leaves the spinner’s chance of landing on 1 at \\(1/4\\).\n\nBeing separate actions is not enough by itself: what matters is whether information about one changes the chance of the other.",
+        "example": "Contrast this with drawing two cards without replacing the first. Knowing which card came out first changes what remains for the second draw.",
+        "layout": "split"
+      },
+      {
+        "kind": "check",
+        "ref": 0,
+        "hints": [
+          "Which device produces the outcome you are being asked about?",
+          "Does the information about the other device change its possible outcomes or their chances?"
+        ],
+        "retry": "Information matters only if it changes the possible outcomes or their chances. A coin result does not alter the chances on an independently rolled die."
+      },
+      {
+        "kind": "activity",
+        "ref": 1
+      },
+      {
+        "kind": "explain",
+        "heading": "Multiply for independent events",
+        "body": "Heads occurs in half of the eight equally likely outcomes. Within that half, one quarter also has spinner result 1, so the fraction satisfying both conditions is \\(\\frac12\\times\\frac14=\\frac18\\).\n\nFor independent events \\(A\\) and \\(B\\), the **multiplication rule** is:\n\\[\nP(A\\text{ and }B)=P(A)\\times P(B).\n\\]\nHere, “and” means that both events happen. Check independence before using this rule.",
+        "example": ""
+      },
+      {
+        "kind": "check",
+        "ref": 1,
+        "hints": [
+          "Does success on just one task satisfy the goal?",
+          "Among the outcomes where the first task succeeds, what fraction also succeeds on the second?"
+        ],
+        "retry": "Keep the outcomes satisfying the first condition, then keep the fraction of those satisfying the second. For independent events, that second fraction is unchanged."
+      },
+      {
+        "kind": "problem",
+        "heading": "Calculate it yourself",
+        "prompt": "In an imaginary game, a chest opens with probability \\(0.8\\), and a separate wheel awards a bonus with probability \\(0.25\\). These events are independent.\n\nWhat is the probability that the chest opens **and** the wheel awards a bonus? Enter a decimal or fraction.",
+        "answers": [
+          "0.2",
+          "0.20",
+          "1/5"
+        ],
+        "unit": "",
+        "traps": [
+          {
+            "answer": "1.05",
+            "feedback": "You added the two probabilities. The goal requires both events, so use multiplication for these independent events."
+          },
+          {
+            "answer": "0.25",
+            "feedback": "This counts the bonus without requiring the chest to open as well."
+          }
+        ],
+        "hints": [
+          "Identify the two probabilities and check whether independence is given.",
+          "One quarter of the chest-opening outcomes also awards a bonus."
+        ],
+        "solution": "Independence lets us multiply: \\(0.8\\times0.25=0.20\\). The probability is \\(0.2\\), or \\(1/5\\). It is smaller than either individual probability because both conditions must be met."
+      }
+    ],
+    "activities": [
+      {
+        "afterConcept": 0,
+        "title": "A coin and a spinner",
+        "prompt": "You toss a fair coin and spin a fair spinner with four equal sections labeled 1, 2, 3, and 4. The coin and spinner operate independently. You learn that the coin landed heads. What is the probability that the spinner landed on 1?",
+        "reveal": "The chance stays at 1/4. Learning the coin result gives no information about the independently operated spinner.",
+        "type": "predict",
+        "options": [
+          {
+            "text": "1/4",
+            "correct": true,
+            "feedback": "Yes. The spinner still has four equally likely results."
+          },
+          {
+            "text": "1/8",
+            "correct": false,
+            "feedback": "That is the chance of heads and section 1 before either result is known. Here, heads is already known."
+          },
+          {
+            "text": "1/2",
+            "correct": false,
+            "feedback": "The coin’s two possible results do not reduce the spinner’s four possible results."
+          },
+          {
+            "text": "1",
+            "correct": false,
+            "feedback": "Heads does not guarantee any particular spinner result."
+          }
+        ]
+      },
+      {
+        "afterConcept": 0,
+        "title": "Both conditions must hold",
+        "prompt": "The fair coin and independent fair spinner produce these eight equally likely outcomes. Sort each outcome according to whether it satisfies BOTH conditions: the coin lands heads and the spinner lands on 1.",
+        "reveal": "Just one of the eight equally likely outcomes satisfies both conditions, so its probability is 1/8. Heads with another number, or tails with 1, is not enough.",
+        "type": "sort",
+        "buckets": [
+          "Both conditions",
+          "Not both"
+        ],
+        "items": [
+          {
+            "text": "Heads, 1",
+            "bucket": "Both conditions"
+          },
+          {
+            "text": "Heads, 2",
+            "bucket": "Not both"
+          },
+          {
+            "text": "Heads, 3",
+            "bucket": "Not both"
+          },
+          {
+            "text": "Heads, 4",
+            "bucket": "Not both"
+          },
+          {
+            "text": "Tails, 1",
+            "bucket": "Not both"
+          },
+          {
+            "text": "Tails, 2",
+            "bucket": "Not both"
+          },
+          {
+            "text": "Tails, 3",
+            "bucket": "Not both"
+          },
+          {
+            "text": "Tails, 4",
+            "bucket": "Not both"
+          }
+        ]
+      }
+    ],
+    "questions": [
+      {
+        "question": "Maya rolls a fair six-sided die and independently tosses a fair coin. She sees that the coin landed tails, but the die is still covered. What is the probability that the die shows 6?",
+        "options": [
+          "1/2",
+          "1/12",
+          "1/3",
+          "1/6"
+        ],
+        "correctAnswer": "1/6",
+        "explanation": "The independent coin result does not change the die’s probabilities. One of the six equally likely die outcomes is 6."
+      },
+      {
+        "question": "In a fictional robot trial, a robot completes a navigation task with probability 0.6 and a recognition task with probability 0.5. Success on the two tasks is independent. What is the probability that it completes both tasks?",
+        "options": [
+          "0.60",
+          "0.55",
+          "0.30",
+          "1.10"
+        ],
+        "correctAnswer": "0.30",
+        "explanation": "Both independent successes are required, so multiply: 0.6 × 0.5 = 0.30. Averaging or adding the probabilities does not calculate the chance of both."
+      }
+    ],
+    "sources": [
+      {
+        "url": "https://openstax.org/books/introductory-statistics-2e/pages/3-2-independent-and-mutually-exclusive-events",
+        "title": "3.2 Independent and Mutually Exclusive Events - Introductory Statistics 2e | OpenStax"
+      },
+      {
+        "url": "http://www.stat.yale.edu/Courses/1997-98/101/probint.htm",
+        "title": "Probability Models"
+      },
+      {
+        "url": "https://www.math.fsu.edu/~wooland/hm2ed/Part3Module5/Sol1.html",
+        "title": "Solution 3.5.1"
+      },
+      {
+        "url": "http://www.math.uni.edu/~campbell/mdm/hand.html",
+        "title": " Dealt cards "
+      }
+    ]
+  },
+  "score": 8,
+  "trace": [
+    {
+      "step": "lesson.generate",
+      "module": 2,
+      "ms": 62150,
+      "approach": "discovery",
+      "blocks": "activity > explain > check > activity > explain > check > problem",
+      "droppedBlocks": 0,
+      "droppedActivities": 0,
+      "droppedQuestions": 0,
+      "placedChecks": 0
+    },
+    {
+      "step": "lesson.blind",
+      "iteration": 1,
+      "ms": 4751,
+      "questions": 2,
+      "giveaways": []
+    },
+    {
+      "step": "lesson.verify",
+      "iteration": 1,
+      "ms": 16112,
+      "claims": 5,
+      "supported": 4,
+      "contradicted": [],
+      "unclear": 1,
+      "downgraded": []
+    },
+    {
+      "step": "lesson.evaluate",
+      "iteration": 1,
+      "score": 8,
+      "ms": 16122,
+      "problems": [
+        "Independence is explicitly supplied in every assessed scenario, so learners never have to decide whether multiplication is justified. The warning that separate actions alone do not establish independence is not tested.",
+        "The eight-item sorting activity is mostly mechanical: only one outcome belongs in 'Both conditions,' and the prompt directly identifies it. It illustrates intersection clearly but offers limited discovery of the multiplication rule.",
+        "The final calculation is not substantially harder than the preceding check, limiting progression and evidence of transfer.",
+        "The robot check includes 1.10 as an addition distractor. Although this reflects a real misconception, learners can eliminate it merely by knowing that probabilities cannot exceed 1."
+      ],
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8,
+      "passed": true,
+      "sources": 4
+    }
+  ]
+}

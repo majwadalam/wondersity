@@ -1,0 +1,81 @@
+Model call failed (The operation was aborted due to timeout); retrying
+■ history: The French Revolution (147s, score 7, below bar, $0.0528, 9 calls, 19315 in / 6075 out tokens)
+  approach: mystery (The lesson opens with the puzzle of why longstanding problems became revolutionary in 1789, then assembles the financial, social and political clues.)
+  blocks:   activity:predict > explain > check > activity:diagram > explain > check > reflect > explain
+  issues:   Question 1 ("Imagine advising the French crown before 1789. Debt payme…"): a hint uses words found only in the right answer ("reform"); hint at the reasoning, not the answer.
+  trace:    lesson.generate, lesson.blind, lesson.verify, lesson.evaluate=7, lesson.revise_skipped, lesson.select=7
+  cost:     write $0.0340 (4854 in / 3348 out) · verify $0.0075 (11231 in / 2109 out) · blind $0.0001 (408 in / 198 out) · review $0.0113 (2822 in / 420 out)
+{
+  "a": {
+    "topic": "Plate tectonics",
+    "onboarding": 200,
+    "learn": {
+      "started": 202,
+      "startSeconds": 1,
+      "job": "done",
+      "seconds": 241,
+      "watched": "database only (browser closed)",
+      "kind": "lesson"
+    },
+    "course": {
+      "title": "Plate tectonics",
+      "levels": 3,
+      "lessons": 7
+    },
+    "lesson1": {
+      "title": "What is a tectonic plate?",
+      "score": 8,
+      "passed": true,
+      "approach": "misconception",
+      "blocks": "activity > explain > activity > check > explain > check > explain > reflect > explain",
+      "sources": 5,
+      "stagedInResult": true
+    },
+    "stagedByServer": {
+      "guide": "Dr. Leila Haddad",
+      "scenes": 2,
+      "painted": 2,
+      "portrait": true,
+      "goDeeper": {
+        "videos": 3,
+        "articles": 3,
+        "books": 2,
+        "images": 3
+      }
+    },
+    "worldPaintedByServer": true,
+    "voice": {
+      "status": 200,
+      "seconds": 5,
+      "url": true
+    },
+    "costUsd": 0.21722000000000002
+  },
+  "b": {
+    "topic": "how continents drift",
+    "onboarding": 200,
+    "learn": {
+      "started": 202,
+      "startSeconds": 1,
+      "job": "done",
+      "seconds": 198,
+      "watched": "the app's job API",
+      "kind": "lesson"
+    },
+    "course": {
+      "title": "How Continents Drift",
+      "levels": 3,
+      "lessons": 7
+    },
+    "lesson1": {
+      "title": "What actually moves?",
+      "score": 7.6,
+      "passed": false,
+      "approach": "misconception",
+      "blocks": "activity > explain > activity > check > explain > check > explain > problem > reflect",
+      "sources": 4,
+      "stagedInResult": true
+    },
+    "costUsd": 0.20095000000000002
+  }
+}

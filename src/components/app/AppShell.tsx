@@ -10,6 +10,7 @@ import { spring } from "../motion/presets";
 import { AppStateProvider, useAppState } from "./AppState";
 import { Brand, LogoMark } from "./Brand";
 import { Notices } from "./Notices";
+import { StartCourseDialog } from "./StartCourse";
 
 // Three kinds of page, three frames:
 //   marketing (landing, pricing, legal, sign in): a site header and footer;
@@ -80,7 +81,14 @@ function MarketingHeader() {
     if (!menu) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpenOn(null);
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
+    // The page stays still under the open menu.
+    const root = document.documentElement;
+    const before = root.style.overflow;
+    root.style.overflow = "hidden";
+    return () => {
+      window.removeEventListener("keydown", onKey);
+      root.style.overflow = before;
+    };
   }, [menu]);
   // Every marketing page has a light header (only the landing footer is dark).
   const dark = false;
@@ -136,8 +144,10 @@ function MarketingHeader() {
           </button>
         </div>
       </div>
+      {/* Over the page, not in its flow: opening it doesn't push the page down. A tap outside closes it. */}
+      {menu && <div className="fixed inset-x-0 top-16 bottom-0 bg-navy/25 md:hidden" aria-hidden onClick={() => setMenu(false)} />}
       {menu && (
-        <nav id="site-menu" aria-label="Site" className="step-sheet border-t border-line bg-white px-4 pt-2 pb-4 shadow-[var(--shadow-md)] md:hidden">
+        <nav id="site-menu" aria-label="Site" className="step-sheet absolute inset-x-0 top-full border-t border-line bg-white px-4 pt-2 pb-4 shadow-[var(--shadow-md)] md:hidden">
           {[...SITE_LINKS, ...(signedIn ? [] : ([["/login", "Sign in"]] as const))].map(([href, label]) => (
             <Link
               key={href}
@@ -273,7 +283,7 @@ function Sidebar() {
           );
         })}
       </nav>
-      <div className="mt-auto space-y-1 border-t border-line pt-3">
+      <div className="mt-auto space-y-1.5 border-t border-line pt-4 pb-1">
         <Link
           href="/settings"
           aria-current={isActive(pathname, "/settings") ? "page" : undefined}
@@ -329,6 +339,11 @@ function PhoneBars() {
 // What a run does, in order. Shown as a description, not as progress: the
 // API reports nothing until the run is finished, so nothing here ticks off.
 const RUN_STEPS = {
+  tailored: [
+    "Turns your goal into the outcomes the course builds to",
+    "Plans levels of short lessons around them and your materials",
+    "Opens your course, and writes lesson 1 for where you're starting",
+  ],
   plan: [
     "Plans the course as levels of short lessons",
     "Opens your course as soon as the plan is ready",
@@ -411,7 +426,7 @@ function BusyDialog({ busy }: { busy: NonNullable<ReturnType<typeof useAppState>
           {busy.kind === "plan" ? "Your tutor is planning it. This usually takes under a minute." : "Your tutor is writing it. This usually takes one to two minutes."}
         </p>
         <ol className="mt-5 space-y-2.5 text-sm text-fg">
-          {RUN_STEPS[busy.kind].map((step, i) => (
+          {RUN_STEPS[busy.tailored ? "tailored" : busy.kind].map((step, i) => (
             <motion.li
               key={step}
               className="flex gap-3"
@@ -457,6 +472,7 @@ function Shell({ children }: { children: ReactNode }) {
         {errors}
         {children}
         <BusyOverlay />
+        <StartCourseDialog />
       </>
     );
   }
@@ -471,6 +487,7 @@ function Shell({ children }: { children: ReactNode }) {
           {children}
         </div>
         <BusyOverlay />
+        <StartCourseDialog />
       </>
     );
   }
@@ -480,6 +497,7 @@ function Shell({ children }: { children: ReactNode }) {
       {errors}
       {children}
       <BusyOverlay />
+      <StartCourseDialog />
     </div>
   );
 }

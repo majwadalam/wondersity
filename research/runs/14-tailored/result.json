@@ -1,0 +1,693 @@
+{
+  "topic": "Cash flow statements 289",
+  "intake": {
+    "goal": "Read a small company's cash flow statement and decide whether it's in trouble before I lend it money",
+    "purpose": "work",
+    "context": "I'm a loan officer at a microfinance bank in Lagos",
+    "level": "basics",
+    "cover": [
+      "free cash flow",
+      "warning signs in the accounts"
+    ],
+    "length": "short",
+    "materials": [
+      {
+        "name": "week3-cash-flow.md",
+        "chars": 889
+      }
+    ]
+  },
+  "seconds": 189,
+  "cost": 0.07415,
+  "checks": [
+    {
+      "check": "upload returns the file's text",
+      "ok": true,
+      "detail": {
+        "status": 200,
+        "chars": 889
+      }
+    },
+    {
+      "check": "an image is refused",
+      "ok": true
+    },
+    {
+      "check": "learn accepts the brief",
+      "ok": true,
+      "detail": {
+        "status": 202
+      }
+    },
+    {
+      "check": "the job carries the brief",
+      "ok": true
+    },
+    {
+      "check": "the job finishes",
+      "ok": true,
+      "detail": {
+        "status": "done",
+        "seconds": 189
+      }
+    },
+    {
+      "check": "course keeps the brief, without the materials' text",
+      "ok": true,
+      "detail": [
+        {
+          "name": "week3-cash-flow.md",
+          "chars": 889
+        }
+      ]
+    },
+    {
+      "check": "course has 2-4 outcomes",
+      "ok": true,
+      "detail": [
+        "Calculate operating cash flow and free cash flow and explain what they reveal about cash available for repayment.",
+        "Diagnose cash-flow warning signs and decide what further evidence is needed before recommending a loan."
+      ]
+    },
+    {
+      "check": "every level names its outcome",
+      "ok": true
+    },
+    {
+      "check": "every 'must cover' item is covered",
+      "ok": true,
+      "detail": [
+        "free cash flow",
+        "warning signs in the accounts"
+      ]
+    },
+    {
+      "check": "title and description don't talk about the brief or materials",
+      "ok": true,
+      "detail": "Read a small company's cash flow statement, spot repayment risks, and make an evidence-based lending recommendation for your work in Lagos."
+    },
+    {
+      "check": "short course has 4-5 lessons",
+      "ok": true,
+      "detail": 4
+    },
+    {
+      "check": "not shared (no plan key)",
+      "ok": true
+    },
+    {
+      "check": "materials saved as passages with embeddings",
+      "ok": true,
+      "detail": {
+        "passages": 1
+      }
+    },
+    {
+      "check": "the job's copy of the brief is cleared",
+      "ok": true
+    },
+    {
+      "check": "materials were outlined for the planner",
+      "ok": true,
+      "detail": {
+        "ms": 4410,
+        "ok": true,
+        "step": "materials_digest",
+        "sections": 3
+      }
+    },
+    {
+      "check": "the lesson was written with excerpts",
+      "ok": true,
+      "detail": {
+        "step": "material_excerpts",
+        "count": 1
+      }
+    },
+    {
+      "check": "lesson 1 saved",
+      "ok": true,
+      "detail": {
+        "score": 8.5,
+        "title": "Is the business generating cash or borrowing it?"
+      }
+    },
+    {
+      "check": "lesson draws on the learner's context or materials",
+      "ok": true
+    }
+  ],
+  "course": {
+    "id": 17,
+    "title": "Cash Flow Analysis for Small-Business Lending",
+    "description": "Read a small company's cash flow statement, spot repayment risks, and make an evidence-based lending recommendation for your work in Lagos.",
+    "intake": {
+      "goal": "Read a small company's cash flow statement and decide whether it's in trouble before I lend it money",
+      "cover": [
+        "free cash flow",
+        "warning signs in the accounts"
+      ],
+      "level": "basics",
+      "length": "short",
+      "context": "I'm a loan officer at a microfinance bank in Lagos",
+      "purpose": "work",
+      "materials": [
+        {
+          "name": "week3-cash-flow.md",
+          "chars": 889
+        }
+      ]
+    },
+    "outcomes": [
+      "Calculate operating cash flow and free cash flow and explain what they reveal about cash available for repayment.",
+      "Diagnose cash-flow warning signs and decide what further evidence is needed before recommending a loan."
+    ],
+    "modules": [
+      {
+        "id": "level-1-module-1",
+        "goal": "Read CFO, CFI, and CFF and reconcile net income to CFO using basic indirect-method adjustments.",
+        "level": {
+          "id": "level-1",
+          "title": "Find the cash behind the profit",
+          "outcome": "Calculate operating cash flow and free cash flow and explain what they reveal about cash available for repayment.",
+          "objective": "Distinguish operating cash from borrowing and calculate CFO and FCF for a small business.",
+          "description": "Check the foundations of cash flow statements, then calculate cash generated by operations and remaining after capital expenditure."
+        },
+        "title": "Is the business generating cash or borrowing it?",
+        "description": "Use a short foundation check and a Lagos bakery example to distinguish profit, operating cash, and financing inflows."
+      },
+      {
+        "id": "level-1-module-2",
+        "goal": "Calculate FCF as CFO minus capex and explain why it is not automatically cash available for a new loan instalment.",
+        "level": {
+          "id": "level-1",
+          "title": "Find the cash behind the profit",
+          "outcome": "Calculate operating cash flow and free cash flow and explain what they reveal about cash available for repayment.",
+          "objective": "Distinguish operating cash from borrowing and calculate CFO and FCF for a small business.",
+          "description": "Check the foundations of cash flow statements, then calculate cash generated by operations and remaining after capital expenditure."
+        },
+        "title": "Calculate free cash flow for repayment analysis",
+        "covers": [
+          "free cash flow"
+        ],
+        "description": "Extend the bakery example to distinguish capital spending, free cash flow, and existing repayment commitments."
+      },
+      {
+        "id": "level-2-module-1",
+        "goal": "Diagnose diverging profit and CFO, receivables outpacing revenue, and dividends paid despite negative FCF.",
+        "level": {
+          "id": "level-2",
+          "title": "Turn warning signs into a lending judgement",
+          "outcome": "Diagnose cash-flow warning signs and decide what further evidence is needed before recommending a loan.",
+          "objective": "Identify cash-flow risks, seek corroborating evidence, and justify a conditional lending recommendation.",
+          "description": "Compare cash-flow trends and account movements, then apply them to a practical small-business lending case."
+        },
+        "title": "Spot warning signs and test their explanations",
+        "covers": [
+          "warning signs in the accounts"
+        ],
+        "description": "Compare several years of small-company figures and distinguish potential distress from growth, seasonal timing, or investment."
+      },
+      {
+        "id": "level-2-module-2",
+        "goal": "Recommend proceeding, seeking more evidence, or declining based on cash generation, repayment commitments, and unresolved warning signs.",
+        "level": {
+          "id": "level-2",
+          "title": "Turn warning signs into a lending judgement",
+          "outcome": "Diagnose cash-flow warning signs and decide what further evidence is needed before recommending a loan.",
+          "objective": "Identify cash-flow risks, seek corroborating evidence, and justify a conditional lending recommendation.",
+          "description": "Compare cash-flow trends and account movements, then apply them to a practical small-business lending case."
+        },
+        "title": "Make a cash-flow-based lending recommendation",
+        "covers": [
+          "free cash flow",
+          "warning signs in the accounts"
+        ],
+        "description": "Combine CFO reconciliation, FCF calculations, and warning signs in a Lagos small-business case, requesting bank records, receivables ageing, and debt schedules where needed."
+      }
+    ],
+    "plan_key": null
+  },
+  "lesson": {
+    "title": "Is the business generating cash or borrowing it?",
+    "blocks": [
+      {
+        "body": "You are reviewing Lagos Bakery Ltd’s loan application at a microfinance bank. The owner points to a growing cash balance as evidence that the bakery can repay, but you first need to identify where that cash came from.\n\nAs a quick foundation check, use the three sections in **week3-cash-flow.md, p. 1**: operating cash flow (**CFO**), investing cash flow (**CFI**), and financing cash flow (**CFF**). The notes do not specify a currency scale; for this illustrative review, treat their figures as **₦000—thousands of naira**.",
+        "kind": "explain",
+        "example": "",
+        "heading": "A bigger cash balance—is that enough?"
+      },
+      {
+        "ref": 0,
+        "kind": "activity"
+      },
+      {
+        "ref": 0,
+        "kind": "check",
+        "hints": [
+          "Identify each transaction’s section before doing any arithmetic.",
+          "Within the operating section, subtract cash payments from cash receipts."
+        ],
+        "retry": "Think of three separate baskets. Customer collections and routine supplier payments belong in the operating basket; receiving a bank loan belongs in the financing basket."
+      },
+      {
+        "kind": "worked",
+        "steps": [
+          {
+            "why": "Net income includes revenues and expenses that do not necessarily match cash received or paid during the period.",
+            "text": "Begin with net income of 120.",
+            "title": "Start with profit"
+          },
+          {
+            "why": "Depreciation reduced profit without a current-period cash payment for that expense. Adding it back reverses that non-cash deduction; it does not create a cash receipt. Cash paid to buy equipment is recorded separately in investing activities.",
+            "text": "120 + 30 = 150.",
+            "title": "Add back depreciation"
+          },
+          {
+            "why": "The increase in receivables represents revenue included in profit that has not yet been collected in cash. Subtracting it removes that uncollected amount from the reconciliation.",
+            "text": "150 − 25 = 125.",
+            "title": "Subtract receivables growth"
+          }
+        ],
+        "answer": "CFO = 120 + 30 − 25 = 125 (₦000), or ₦125,000. This is operating cash flow, not the total change in the bakery’s cash balance.",
+        "heading": "Find the cash behind Lagos Bakery’s profit",
+        "problem": "The bakery reports net income of **120**, depreciation of **30**, and an increase in receivables of **25**, all in **₦000**. Assume these are the only adjustments needed.\n\nUse the indirect-method reconciliation from **week3-cash-flow.md, pp. 1–2**: start with net income and adjust it to obtain CFO."
+      },
+      {
+        "ref": 1,
+        "kind": "check",
+        "hints": [
+          "Depreciation lowered profit, but did it require a cash payment when the expense was recorded?",
+          "If more revenue remains in receivables, should operating cash be higher or lower than it otherwise would be?"
+        ],
+        "retry": "Ask what each item did to profit and whether cash moved. Reverse a non-cash expense, then remove the increase in sales still awaiting collection."
+      },
+      {
+        "body": "Now add illustrative cash-statement details to the bakery’s case: **CFO is +125**, **CFI is −40** for an oven purchase, and **CFF is +200** from a new bank loan, all in ₦000. With no other cash flows or exchange-rate effects, its cash increase is **125 − 40 + 200 = 285**.\n\nThe bakery generated 125 through operations, but received another 200 by borrowing. Loan proceeds increase cash and create a repayment obligation; they are not operating cash generation. Positive CFO is useful evidence, but you still need the repayment schedule and evidence that operating cash can continue before judging repayment strength.",
+        "kind": "explain",
+        "layout": "split",
+        "example": "If the new loan proceeds were absent and the other flows stayed unchanged, cash would increase by 125 − 40 = 85 (₦000), not 285.",
+        "heading": "125 from operations is not 285 from operations"
+      },
+      {
+        "ref": 1,
+        "kind": "activity"
+      },
+      {
+        "ref": 2,
+        "kind": "check",
+        "hints": [
+          "First interpret CFO without considering the total cash increase.",
+          "Which section supplied enough cash to offset the cash used elsewhere?"
+        ],
+        "retry": "A positive total can contain a negative operating component. Read each section’s sign and source before using the closing cash balance as evidence of repayment capacity."
+      }
+    ],
+    "sources": [
+      {
+        "url": "https://openstax.org/books/principles-finance-2e/pages/5-5-the-statement-of-cash-flows",
+        "title": "5.5 The Statement of Cash Flows - Principles of Finance 2e | OpenStax"
+      },
+      {
+        "url": "https://www.ifrs.org/content/dam/ifrs/supporting-implementation/smes/module-07.pdf",
+        "title": "Module 7—Statement of Cash Flows"
+      },
+      {
+        "url": "https://portal.sao.wa.gov/SAOPortal/Public.aspx/ViewManual?FileName=gaap_p4_cashflowstmnt",
+        "title": "[PDF] Statement of Cash Flows - SAO Online Services"
+      },
+      {
+        "url": "https://openstax.org/books/principles-financial-accounting/pages/16-3-prepare-the-statement-of-cash-flows-using-the-indirect-method",
+        "title": "16.3 Prepare the Statement of Cash Flows Using the Indirect Method - Principles of Accounting, Volume 1: Financial Accounting | OpenStax"
+      },
+      {
+        "url": "https://biz.libretexts.org/Bookshelves/Accounting/Accounting_in_the_Finance_World/17%3A_In_a_Set_of_Financial_Statements_What_Information_Is_Conveyed_by_the_Statement_of_Cash_Flows/17.03%3A_Cash_Flows_from_Operating_Activities-_The_Indirect_Method",
+        "title": "17.3: Cash Flows from Operating Activities- The Indirect Method - Business LibreTexts"
+      }
+    ],
+    "staging": {
+      "guide": {
+        "name": "Dr. Tunde Akinyemi",
+        "role": "Invented small-business credit analyst",
+        "voice": "sage",
+        "manner": "measured, curious, practical, reassuring",
+        "portraitPrompt": "A stylised soft 3D clay bust of an invented Nigerian small-business credit analyst in his 40s, wearing a simple collared shirt and jacket, with a calm, attentive expression; warm clay colors, designed for a small round avatar, not photorealistic."
+      },
+      "steps": [
+        {
+          "line": "You’re reviewing a bakery’s loan application, and its growing cash balance looks reassuring. Before you decide what that means for repayment, trace the cash to its source.",
+          "image": 0
+        },
+        {
+          "line": "Each transaction belongs somewhere in the cash-flow story. Sort carefully: the section tells you what kind of activity brought cash in or sent it out.",
+          "image": 1
+        },
+        {
+          "line": "A business can receive cash for more than one reason. Keep the source of each receipt in view as you assess the operating picture.",
+          "image": 1
+        },
+        {
+          "line": "Profit is not the same thing as cash from operations. Follow the bakery’s figures through the adjustments and see what the operating activity actually contributed.",
+          "image": 0
+        },
+        {
+          "line": "Receivables and depreciation affect the bridge from profit to operating cash in different ways. Work through the adjustments before you settle on the result.",
+          "image": 1
+        },
+        {
+          "line": "The bakery’s cash can rise through several channels at once. Look beyond the final balance and separate what operations produced from what other activities supplied.",
+          "image": 0
+        },
+        {
+          "line": "A cash-flow pattern is evidence for a lending decision, not just a set of totals. Consider what further question or action would best protect your judgment.",
+          "image": 1
+        },
+        {
+          "line": "A larger cash balance may conceal dependence on borrowing. Make your lending note clear about what the cash movement says—and what it does not say—about the shop’s operations.",
+          "image": 1
+        },
+        {
+          "line": "When you review a borrower, keep operating cash and borrowed cash distinct even when both raise the balance. That distinction is a useful foundation for the next lending assessment.",
+          "image": 1
+        }
+      ],
+      "images": [
+        {
+          "prompt": "Inside a modest neighborhood bakery in Lagos: a working counter, trays of bread, a metal oven, sacks of flour, and a simple cash ledger on the counter. Show contemporary Lagos shop details and practical modern materials; no European village bakery, no American diner décor, and no historical costumes.",
+          "setting": "Lagos, Nigeria · present day"
+        },
+        {
+          "prompt": "A small contemporary microfinance office in Lagos, with a loan officer reviewing a printed cash-flow statement, ledger, calculator, and application papers at a plain desk. Include practical Nigerian office furnishings and a glimpse of a busy Lagos street through the window; no banknotes as decoration, no foreign currency symbols, and no legible invented text.",
+          "setting": "Lagos microfinance office · present day"
+        }
+      ],
+      "farewell": "Carry this distinction with you: a rising cash balance does not, by itself, tell you whether the business earned that cash or borrowed it. Next, use the same careful reading to support a sound lending decision."
+    },
+    "version": 2,
+    "approach": "scenario",
+    "objective": "Classify operating, investing, and financing cash flows, reconcile net income to CFO, and distinguish cash generated by operations from loan proceeds.",
+    "questions": [
+      {
+        "options": [
+          "130 (₦000)",
+          "−70 (₦000)",
+          "30 (₦000)",
+          "80 (₦000)"
+        ],
+        "question": "An Agege food stall collected 80 from customers, paid 50 for ingredients, and received a bank loan of 100, all in ₦000. These were its only cash transactions. What CFO should you record?",
+        "explanation": "CFO = 80 − 50 = 30 (₦000). The 100 received from the bank is a financing inflow, so it does not enter CFO.",
+        "correctAnswer": "30 (₦000)"
+      },
+      {
+        "options": [
+          "145 (₦000)",
+          "105 (₦000)",
+          "55 (₦000)",
+          "75 (₦000)"
+        ],
+        "question": "A Surulere printing shop reports net income of 90, depreciation of 20, and an increase in receivables of 35, all in ₦000. There are no other indirect-method adjustments. What CFO should you calculate?",
+        "explanation": "CFO = 90 + 20 − 35 = 75 (₦000). Add back the non-cash depreciation expense and subtract the increase in revenue awaiting collection.",
+        "correctAnswer": "75 (₦000)"
+      },
+      {
+        "options": [
+          "Operations generated cash; borrowing added a further buffer.",
+          "Operations broke even; equipment spending caused the shortfall.",
+          "Operations used cash; asset sales drove the cash increase.",
+          "Operations used cash; borrowing drove the cash increase."
+        ],
+        "question": "An Ikeja repair shop reports CFO of −20, CFI of −10 from equipment purchases, and CFF of +90 entirely from a new loan, all in ₦000. With no other cash movements, cash increased by 60. What should your lending note say about the source of that increase?",
+        "explanation": "CFO of −20 means operations consumed cash, while investing used another 10. The 90 loan inflow produced the net increase: −20 − 10 + 90 = 60 (₦000), so rising cash is not evidence of positive operating cash generation.",
+        "correctAnswer": "Operations used cash; borrowing drove the cash increase."
+      }
+    ],
+    "resources": {
+      "at": "2026-10-12T17:02:16.952Z",
+      "books": [
+        {
+          "url": "https://openlibrary.org/works/OL2748151W",
+          "why": "A clear introduction to financial statements, including how to read the cash flow statement and understand operating, investing, and financing activities.",
+          "year": 1998,
+          "cover": "https://covers.openlibrary.org/b/id/799610-M.jpg",
+          "title": "Financial statements",
+          "author": "Thomas R. Ittelson"
+        }
+      ],
+      "images": [
+        {
+          "url": "https://commons.wikimedia.org/wiki/File:Wachovia_National_Bank_1906_statement.jpg",
+          "thumb": "https://thumb.wikimedia.org/wikipedia/commons/thumb/7/76/Wachovia_National_Bank_1906_statement.jpg/960px-Wachovia_National_Bank_1906_statement.jpg",
+          "title": "Wachovia National Bank 1906 statement",
+          "credit": "Wachovia National Bank, Winston, NC",
+          "caption": "The article’s image provides a visual connection to the statement used to distinguish cash from operations, investing, and financing.",
+          "license": "Public domain"
+        }
+      ],
+      "videos": [
+        {
+          "url": "https://www.youtube.com/watch?v=DiVPAjgmnj0",
+          "why": "[youtube.com](https://www.youtube.com/watch?v=DiVPAjgmnj0) gives a beginner-friendly explanation of what the cash flow statement shows and why it matters.",
+          "title": "The CASH FLOW STATEMENT for BEGINNERS",
+          "channel": "Accounting Stuff",
+          "videoId": "DiVPAjgmnj0"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=xbasHzq2fL0",
+          "why": "[youtube.com](https://www.youtube.com/watch?v=xbasHzq2fL0) walks through operating, investing, and financing cash flows and explains both direct and indirect methods.",
+          "title": "A Beginner's Guide to the Cash Flow Statement",
+          "channel": "Accounting Stuff",
+          "videoId": "xbasHzq2fL0"
+        },
+        {
+          "url": "https://www.youtube.com/watch?v=vxNgU-tW2C8",
+          "why": "[youtube.com](https://www.youtube.com/watch?v=vxNgU-tW2C8) features Professor Charles McPeak clearly introducing the three main cash-flow categories.",
+          "title": "Three Categories of Cash Flow with Charles McPeak",
+          "channel": "Pepperdine University",
+          "videoId": "vxNgU-tW2C8"
+        }
+      ],
+      "articles": [
+        {
+          "url": "https://www.accountingcoach.com/cash-flow-statement/explanation",
+          "why": "[accountingcoach.com](https://www.accountingcoach.com/cash-flow-statement/explanation) explains how the operating activities section shows cash generated by a company’s operations and how the indirect method reconciles net income to cash.",
+          "site": "accountingcoach.com",
+          "title": "Cash Flow Statement: In-Depth Explanation with Examples | AccountingCoach"
+        },
+        {
+          "url": "https://www.accountingcoach.com/blog/cash-flows-operating-activities",
+          "why": "[accountingcoach.com](https://www.accountingcoach.com/blog/cash-flows-operating-activities) illustrates why a business can report a net loss yet still generate positive cash from operations.",
+          "site": "accountingcoach.com",
+          "title": "Could a company's statement of cash flows show a positive net cash flow from operating activities even though it reported a net loss on its income statement?"
+        },
+        {
+          "url": "https://www.accountingcoach.com/blog/direct-and-indirect-method-cash-flows",
+          "why": "[accountingcoach.com](https://www.accountingcoach.com/blog/direct-and-indirect-method-cash-flows) compares the direct and indirect methods, helping learners interpret how operating cash flows are presented.",
+          "site": "accountingcoach.com",
+          "title": "What is the difference between the direct method and the indirect method for the statement of cash flows?"
+        }
+      ]
+    },
+    "activities": [
+      {
+        "type": "sort",
+        "items": [
+          {
+            "text": "Cash collected from bread customers",
+            "bucket": "CFO"
+          },
+          {
+            "text": "Cash paid to flour suppliers",
+            "bucket": "CFO"
+          },
+          {
+            "text": "Cash wages paid to bakery staff",
+            "bucket": "CFO"
+          },
+          {
+            "text": "Cash paid to buy a new oven",
+            "bucket": "CFI"
+          },
+          {
+            "text": "Cash received from a new bank loan",
+            "bucket": "CFF"
+          },
+          {
+            "text": "Cash contributed by an owner as new equity",
+            "bucket": "CFF"
+          }
+        ],
+        "title": "Which section receives each transaction?",
+        "prompt": "Sort these cash transactions from Lagos Bakery’s records into CFO, CFI, or CFF. Classify the source or use of cash—not whether the amount is positive or negative.",
+        "reveal": "Customer collections and routine operating payments belong in CFO; equipment purchases belong in CFI. Loan proceeds and owners’ capital contributions belong in CFF, even though both increase the cash balance.",
+        "buckets": [
+          "CFO",
+          "CFI",
+          "CFF"
+        ],
+        "afterConcept": 0
+      },
+      {
+        "type": "scenario",
+        "title": "What should you do next?",
+        "prompt": "You have reconciled Lagos Bakery’s CFO to 125 and identified loan proceeds of 200 within its cash increase of 285, all in ₦000. The owner says, “The cash increase shows we can repay.” What is your best next step?",
+        "reveal": "Separate operating cash generation from funding received, then compare sustainable operating cash with the proposed repayment schedule. Neither a rising cash balance nor positive CFO by itself settles the lending decision.",
+        "options": [
+          {
+            "text": "Use the 285 cash increase as repayment capacity and request the instalment schedule.",
+            "correct": false,
+            "feedback": "You would count borrowed money as operating repayment capacity. The schedule matters, but the cash-source distinction must come first."
+          },
+          {
+            "text": "Use the 120 profit as repayment capacity and request the instalment schedule.",
+            "correct": false,
+            "feedback": "You would discard the reconciliation you just completed. Profit includes non-cash expenses and revenue not yet collected."
+          },
+          {
+            "text": "Separate the 125 CFO from borrowing and request the instalment schedule and cash forecast.",
+            "correct": true,
+            "feedback": "You preserve the distinction between trading cash and funding, then gather evidence about whether operating cash can support future repayments."
+          },
+          {
+            "text": "Treat the 200 borrowing as proof of distress and recommend declining the application.",
+            "correct": false,
+            "feedback": "Borrowing explains part of the cash increase, but does not by itself prove distress. You still need evidence about operating cash and repayment requirements."
+          }
+        ],
+        "afterConcept": 0
+      }
+    ],
+    "approachReason": "A Lagos loan officer’s review of one bakery application connects cash-flow classification and reconciliation to the practical question of where repayment cash comes from.",
+    "estimatedMinutes": 7
+  },
+  "trace": [
+    {
+      "step": "load_course",
+      "found": false,
+      "currentModule": null
+    },
+    {
+      "ms": 4410,
+      "ok": true,
+      "step": "materials_digest",
+      "sections": 3
+    },
+    {
+      "step": "intake",
+      "cover": 2,
+      "level": "basics",
+      "length": "short",
+      "purpose": "work",
+      "materials": 1
+    },
+    {
+      "ms": 15097,
+      "step": "agent.turn",
+      "turn": 1,
+      "toolCalls": [
+        "create_course"
+      ]
+    },
+    {
+      "ms": 2161,
+      "step": "materials_saved",
+      "passages": 1
+    },
+    {
+      "ok": true,
+      "step": "agent.tool",
+      "tool": "create_course",
+      "turn": 1
+    },
+    {
+      "ms": 14923,
+      "step": "agent.turn",
+      "turn": 2,
+      "toolCalls": [
+        "write_module"
+      ]
+    },
+    {
+      "step": "material_excerpts",
+      "count": 1
+    },
+    {
+      "ms": 100130,
+      "step": "lesson.generate",
+      "blocks": "explain > activity > check > worked > check > explain > activity > check",
+      "module": 1,
+      "approach": "scenario",
+      "placedChecks": 0,
+      "droppedBlocks": 0,
+      "droppedQuestions": 0,
+      "droppedActivities": 0
+    },
+    {
+      "ms": 8077,
+      "step": "lesson.blind",
+      "giveaways": [],
+      "iteration": 1,
+      "questions": 3
+    },
+    {
+      "ms": 17376,
+      "step": "lesson.verify",
+      "claims": 5,
+      "unclear": 0,
+      "iteration": 1,
+      "supported": 5,
+      "downgraded": [],
+      "contradicted": []
+    },
+    {
+      "ms": 17380,
+      "step": "lesson.evaluate",
+      "score": 8.5,
+      "problems": [
+        "The final check is easier than the reconciliation check: the signs and explicitly identified loan source make the answer largely a direct reading exercise rather than a harder lending judgment.",
+        "In the lending-decision activity, the correct option is the longest and the only one requesting both a repayment schedule and a cash forecast, providing a mild answer cue.",
+        "Retry explanations mostly restate the original rules rather than offering a genuinely different representation of the cash movements."
+      ],
+      "iteration": 1,
+      "factErrors": [],
+      "structureIssues": []
+    },
+    {
+      "step": "lesson.select",
+      "score": 8.5,
+      "passed": true,
+      "sources": 5
+    },
+    {
+      "step": "save_lesson",
+      "lessonId": 24
+    },
+    {
+      "step": "save_progress",
+      "saved": true
+    },
+    {
+      "ok": true,
+      "step": "agent.tool",
+      "tool": "write_module",
+      "turn": 2
+    },
+    {
+      "ms": 4672,
+      "step": "agent.turn",
+      "turn": 3,
+      "toolCalls": []
+    },
+    {
+      "step": "agent.finish",
+      "turn": 3
+    },
+    {
+      "usd": 0.07415,
+      "step": "run.cost",
+      "calls": 15,
+      "tokensIn": 28918,
+      "tokensOut": 7443,
+      "tokensCached": 8564
+    }
+  ]
+}

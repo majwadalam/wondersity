@@ -30,6 +30,14 @@ export function DiagramActivity({ a, onDone }: { a: DiagramData; onDone: () => v
     const ang = -Math.PI / 2 + (k / total) * Math.PI * 2;
     return { x: 200 + Math.cos(ang) * 145, y: 150 + Math.sin(ang) * 112 };
   });
+  // Fit the view to the nodes and their captions (up to three lines under
+  // each), so no label is cut off at the edge.
+  const CAP_W = 120;
+  const CAP_H = 42;
+  const minX = Math.min(...pos.map((p) => p.x)) - CAP_W / 2 - 6;
+  const maxX = Math.max(...pos.map((p) => p.x)) + CAP_W / 2 + 6;
+  const minY = Math.min(...pos.map((p) => p.y)) - 26;
+  const maxY = Math.max(...pos.map((p) => p.y)) + 19 + CAP_H + 6;
 
   function open(i: number) {
     setActive(i);
@@ -43,119 +51,137 @@ export function DiagramActivity({ a, onDone }: { a: DiagramData; onDone: () => v
 
   return (
     <ActivityFrame type="diagram" title={a.title} prompt={a.prompt} reveal={a.reveal} done={done}>
-      <div className="grid gap-5 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,1fr)]">
-        <motion.svg
-          viewBox="0 0 400 300"
-          className="diagram-svg w-full rounded-2xl bg-canvas"
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.4 }}
-        >
-          <defs>
-            <marker id={`arrow-${a.title.length}`} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-              <path d="M0 0 L10 5 L0 10z" fill="var(--accent)" />
-            </marker>
-          </defs>
-          {a.edges.map((e, i) => {
-            const p = pos[e.from];
-            const q = pos[e.to];
-            // Stop the line at the node's edge.
-            const dx = q.x - p.x;
-            const dy = q.y - p.y;
-            const len = Math.hypot(dx, dy) || 1;
-            // Captions sit under each node, so lines leaving downward or arriving
-            // from below stop further out, clear of the text.
-            const r = 20 + 32 * Math.max(0, dy / len);
-            const rEnd = 22 + 34 * Math.max(0, -dy / len);
-            const on = linked(e);
-            return (
-              <g key={i} className="diagram-edge" data-on={on || undefined} opacity={active === null || on ? 1 : 0.18}>
-                <motion.line
-                  x1={p.x + (dx / len) * r}
-                  y1={p.y + (dy / len) * r}
-                  x2={q.x - (dx / len) * rEnd}
-                  y2={q.y - (dy / len) * rEnd}
-                  stroke={on ? "var(--accent)" : "#c3cbe0"}
-                  strokeWidth={on ? 2.5 : 1.6}
-                  markerEnd={`url(#arrow-${a.title.length})`}
-                  variants={{
-                    hidden: { pathLength: reduce ? 1 : 0, opacity: reduce ? 1 : 0 },
-                    show: { pathLength: 1, opacity: 1, transition: { duration: 0.6, ease: EASE_OUT, delay: 0.35 + i * 0.12 } },
-                  }}
-                />
-                {/* Direction of the relationship, while its node is selected. */}
-                {on && (
-                  <line
-                    x1={p.x + (dx / len) * r}
-                    y1={p.y + (dy / len) * r}
-                    x2={q.x - (dx / len) * rEnd}
-                    y2={q.y - (dy / len) * rEnd}
-                    pathLength={100}
-                    className="diagram-flow"
-                  />
+      {/* The panel sits beside the map only when the activity itself is wide;
+          otherwise under it, so the map is never squeezed. */}
+      <div className="@container">
+        <div className="grid gap-4 @3xl:grid-cols-[minmax(0,1.4fr)_minmax(0,1fr)]">
+          {/* The canvas fills its cell, so a taller panel beside it leaves no gap. */}
+          <div className="flex items-center rounded-2xl bg-canvas p-2">
+            <motion.svg
+              viewBox={`${minX} ${minY} ${maxX - minX} ${maxY - minY}`}
+              className="diagram-svg mx-auto w-full max-w-[560px]"
+              initial="hidden"
+              whileInView="show"
+              viewport={{ once: true, amount: 0.4 }}
+            >
+              <defs>
+                <marker id={`arrow-${a.title.length}`} viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+                  <path d="M0 0 L10 5 L0 10z" fill="var(--accent)" />
+                </marker>
+              </defs>
+              {a.edges.map((e, i) => {
+                const p = pos[e.from];
+                const q = pos[e.to];
+                // Stop the line at the node's edge.
+                const dx = q.x - p.x;
+                const dy = q.y - p.y;
+                const len = Math.hypot(dx, dy) || 1;
+                // Captions sit under each node, so lines leaving downward or arriving
+                // from below stop further out, clear of the text.
+                const r = 20 + 32 * Math.max(0, dy / len);
+                const rEnd = 22 + 34 * Math.max(0, -dy / len);
+                const on = linked(e);
+                return (
+                  <g key={i} className="diagram-edge" data-on={on || undefined} opacity={active === null || on ? 1 : 0.18}>
+                    <motion.line
+                      x1={p.x + (dx / len) * r}
+                      y1={p.y + (dy / len) * r}
+                      x2={q.x - (dx / len) * rEnd}
+                      y2={q.y - (dy / len) * rEnd}
+                      stroke={on ? "var(--accent)" : "#c3cbe0"}
+                      strokeWidth={on ? 2.5 : 1.6}
+                      markerEnd={`url(#arrow-${a.title.length})`}
+                      variants={{
+                        hidden: { pathLength: reduce ? 1 : 0, opacity: reduce ? 1 : 0 },
+                        show: { pathLength: 1, opacity: 1, transition: { duration: 0.6, ease: EASE_OUT, delay: 0.35 + i * 0.12 } },
+                      }}
+                    />
+                    {/* Direction of the relationship, while its node is selected. */}
+                    {on && (
+                      <line
+                        x1={p.x + (dx / len) * r}
+                        y1={p.y + (dy / len) * r}
+                        x2={q.x - (dx / len) * rEnd}
+                        y2={q.y - (dy / len) * rEnd}
+                        pathLength={100}
+                        className="diagram-flow"
+                      />
+                    )}
+                    {/* Relationship labels live in the side panel; on the canvas they collided with node captions. */}
+                  </g>
+                );
+              })}
+              {a.nodes.map((node, i) => {
+                const on = active === i;
+                const near = neighbours.some((e) => e.from === i || e.to === i);
+                return (
+                  <motion.g
+                    key={i}
+                    variants={{
+                      hidden: { opacity: 0, scale: reduce ? 1 : 0.5 },
+                      show: { opacity: 1, scale: 1, transition: { ...spring.bouncy, delay: i * 0.07 } },
+                    }}
+                    role="button"
+                    tabIndex={0}
+                    aria-label={node.label}
+                    onClick={() => open(i)}
+                    onKeyDown={(ev) => (ev.key === "Enter" || ev.key === " ") && open(i)}
+                    className="diagram-node cursor-pointer"
+                    data-state={on ? "active" : near ? "near" : visited.has(i) ? "seen" : "idle"}
+                    style={{ transformOrigin: `${pos[i].x}px ${pos[i].y}px` }}
+                  >
+                    <circle cx={pos[i].x} cy={pos[i].y} r="16" />
+                    <text x={pos[i].x} y={pos[i].y + 4} textAnchor="middle" className="diagram-index" pointerEvents="none">
+                      {i + 1}
+                    </text>
+                    {/* The label sits under its node, so it never spills over the circle. */}
+                    <foreignObject x={pos[i].x - CAP_W / 2} y={pos[i].y + 19} width={CAP_W} height={CAP_H} pointerEvents="none">
+                      <div className="diagram-caption text-center text-[10.5px] leading-[1.2] font-semibold">{node.label}</div>
+                    </foreignObject>
+                  </motion.g>
+                );
+              })}
+            </motion.svg>
+          </div>
+          <div className="rounded-2xl border border-line bg-canvas p-4">
+            {active === null ? (
+              <p className="text-sm text-muted">Tap any node to see what it is and how it connects.</p>
+            ) : (
+              <div key={active} className="diagram-panel">
+                <p className="font-display text-xl text-accent">{a.nodes[active].label}</p>
+                <p className="mt-1 text-sm leading-relaxed text-fg/90">{a.nodes[active].detail}</p>
+                {neighbours.length > 0 && (
+                  <div className="mt-4 border-t border-line pt-3">
+                    <p className="text-xs font-semibold text-muted">Connected to</p>
+                    <ul className="mt-2 flex flex-wrap gap-2">
+                      {neighbours.map((e, i) => {
+                        const other = e.from === active ? e.to : e.from;
+                        const name = a.nodes[other].label;
+                        // Skip a relationship label that only repeats the node's name.
+                        const label = e.label && !name.toLowerCase().includes(e.label.toLowerCase()) ? e.label : "";
+                        return (
+                          <li key={i}>
+                            <button
+                              type="button"
+                              onClick={() => open(other)}
+                              className="rounded-full border border-line bg-surface px-3 py-1.5 text-left text-sm text-fg hover:border-accent hover:text-accent"
+                            >
+                              <span aria-hidden className="text-accent">{e.from === active ? "→ " : "← "}</span>
+                              {name}
+                              {label && <span className="text-muted"> · {label}</span>}
+                            </button>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  </div>
                 )}
-                {/* Relationship labels live in the side panel; on the canvas they collided with node captions. */}
-              </g>
-            );
-          })}
-          {a.nodes.map((node, i) => {
-            const on = active === i;
-            const near = neighbours.some((e) => e.from === i || e.to === i);
-            return (
-              <motion.g
-                key={i}
-                variants={{
-                  hidden: { opacity: 0, scale: reduce ? 1 : 0.5 },
-                  show: { opacity: 1, scale: 1, transition: { ...spring.bouncy, delay: i * 0.07 } },
-                }}
-                role="button"
-                tabIndex={0}
-                aria-label={node.label}
-                onClick={() => open(i)}
-                onKeyDown={(ev) => (ev.key === "Enter" || ev.key === " ") && open(i)}
-                className="diagram-node cursor-pointer"
-                data-state={on ? "active" : near ? "near" : visited.has(i) ? "seen" : "idle"}
-                style={{ transformOrigin: `${pos[i].x}px ${pos[i].y}px` }}
-              >
-                <circle cx={pos[i].x} cy={pos[i].y} r="16" />
-                <text x={pos[i].x} y={pos[i].y + 4} textAnchor="middle" className="diagram-index" pointerEvents="none">
-                  {i + 1}
-                </text>
-                {/* The label sits under its node, so it never spills over the circle. */}
-                <foreignObject x={pos[i].x - 55} y={pos[i].y + 19} width="110" height="34" pointerEvents="none">
-                  <div className="diagram-caption text-center text-[10.5px] leading-[1.2] font-semibold">{node.label}</div>
-                </foreignObject>
-              </motion.g>
-            );
-          })}
-        </motion.svg>
-        <div className="rounded-2xl border border-line bg-canvas p-4">
-          {active === null ? (
-            <p className="text-sm text-muted">Tap any node to see what it is and how it connects.</p>
-          ) : (
-            <div key={active} className="diagram-panel">
-              <p className="font-display text-xl text-accent">{a.nodes[active].label}</p>
-              <p className="mt-1 text-sm leading-relaxed text-fg/90">{a.nodes[active].detail}</p>
-              {neighbours.length > 0 && (
-                <ul className="mt-3 space-y-1.5">
-                  {neighbours.map((e, i) => {
-                    const other = e.from === active ? e.to : e.from;
-                    return (
-                      <li key={i}>
-                        <button type="button" onClick={() => open(other)} className="text-left text-sm text-fg hover:text-accent">
-                          {e.from === active ? "→ " : "← "}
-                          <span className="text-muted">{e.label || "links to"}</span> <b>{a.nodes[other].label}</b>
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ul>
-              )}
-            </div>
-          )}
-          <p className="mt-4 text-xs text-muted tabular-nums">
-            Explored {visited.size}/{a.nodes.length}
-          </p>
+              </div>
+            )}
+            <p className="mt-4 text-xs text-muted tabular-nums">
+              Explored {visited.size}/{a.nodes.length}
+            </p>
+          </div>
         </div>
       </div>
     </ActivityFrame>

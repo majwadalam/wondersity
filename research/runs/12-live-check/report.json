@@ -1,0 +1,311 @@
+{
+  "a": {
+    "topic": "Photosynthesis",
+    "onboarding": 200,
+    "learn": {
+      "started": 202,
+      "startSeconds": 2,
+      "job": "done",
+      "seconds": 191,
+      "watched": "database only (browser closed)",
+      "kind": "lesson"
+    },
+    "course": {
+      "title": "Photosynthesis: How Plants Turn Light into Chemical Energy",
+      "levels": 3,
+      "lessons": 6
+    },
+    "lesson1": {
+      "title": "From Sunlight to Sugar",
+      "score": 8.3,
+      "passed": true,
+      "approach": "misconception",
+      "blocks": "activity > explain > check > activity > explain > check > reflect > check",
+      "sources": 1,
+      "stagedInResult": true
+    },
+    "trace": [
+      {
+        "step": "load_course",
+        "found": false,
+        "currentModule": null
+      },
+      {
+        "ms": 3361,
+        "hit": false,
+        "step": "plan_cache",
+        "nearest": [
+          "Stoicism (0.16)"
+        ]
+      },
+      {
+        "ms": 14192,
+        "step": "agent.turn",
+        "turn": 1,
+        "toolCalls": [
+          "create_course"
+        ]
+      },
+      {
+        "step": "plan_cached"
+      },
+      {
+        "ok": true,
+        "step": "agent.tool",
+        "tool": "create_course",
+        "turn": 1
+      },
+      {
+        "ms": 5274,
+        "step": "agent.turn",
+        "turn": 2,
+        "toolCalls": [
+          "write_module"
+        ]
+      },
+      {
+        "hit": false,
+        "step": "lesson_cache",
+        "module": 1,
+        "eligible": true
+      },
+      {
+        "ms": 69409,
+        "step": "lesson.generate",
+        "blocks": "activity > explain > check > activity > explain > check > reflect > check",
+        "module": 1,
+        "approach": "misconception",
+        "placedChecks": 0,
+        "droppedBlocks": 0,
+        "droppedQuestions": 0,
+        "droppedActivities": 0
+      },
+      {
+        "ms": 24518,
+        "step": "lesson.verify",
+        "claims": 5,
+        "unclear": 4,
+        "iteration": 1,
+        "supported": 1,
+        "downgraded": [
+          "Light supplies energy for photosynthesis, while water and carbon dioxide supply the materials used to make sugars.: cited a page the search didn't return ([ssec.si.edu](https://ssec.si.edu/stemvisions-blog/what-photosynthesis))",
+          "Much of a living plant’s mass is water, while much of its dry material consists of carbon-containing substances whose carbon originally came from carbon dioxide in the air.: the quoted evidence isn't on the cited page: \"“Their mass can be as much as 90% water. But the rest of the mass of most plants is built using that carbon from the air.” ([sparks.learning.asu.edu](https://sparks.learning.asu.edu/videos/do-plants-g\" (https://sparks.learning.asu.edu/videos/do-plants-grow-from-thin-air)",
+          "Plant roots absorb water and mineral nutrients from the soil, and minerals are necessary for healthy growth.: cited a page the search didn't return ([science.umd.edu](https://science.umd.edu/classroom/bsci124/lec2.html))",
+          "A seed contains stored reserves that can support early growth before leaves develop and photosynthesis supplies new sugars.: the quoted evidence isn't on the cited page: \"“The progeny of plants relies on maternal photosynthesis, via food reserves in the seed, to supply the necessary energy for seed germination and early seedling” ([pmc.ncbi.nlm.nih.gov](https://pmc.ncb\" (https://pmc.ncbi.nlm.nih.gov/articles/PMC7140907)"
+        ],
+        "contradicted": []
+      },
+      {
+        "ms": 24525,
+        "step": "lesson.evaluate",
+        "score": 8.3,
+        "problems": [
+          "Several hints give away the answer rather than scaffold reasoning. The final check explicitly identifies carbon dioxide as an input and oxygen as an output; the fertilizer check points directly to the only option mentioning both mineral uptake and sugar production.",
+          "Retry explanations largely repeat the original explanations rather than offer genuinely different ways to understand the concepts.",
+          "The final question is mostly another recognition test of the word equation. Despite its growing-guide framing, it adds little difficulty beyond the earlier sorting activity.",
+          "The opening prediction assumes familiarity with carbon and dry plant material, which may be challenging for a beginner with no prior coursework."
+        ],
+        "iteration": 1,
+        "factErrors": [],
+        "structureIssues": []
+      },
+      {
+        "step": "lesson.select",
+        "score": 8.3,
+        "passed": true,
+        "sources": 1
+      },
+      {
+        "step": "save_lesson",
+        "lessonId": 15
+      },
+      {
+        "step": "lesson_cached"
+      },
+      {
+        "step": "save_progress",
+        "saved": true
+      },
+      {
+        "ok": true,
+        "step": "agent.tool",
+        "tool": "write_module",
+        "turn": 2
+      },
+      {
+        "ms": 4049,
+        "step": "agent.turn",
+        "turn": 3,
+        "toolCalls": []
+      },
+      {
+        "step": "agent.finish",
+        "turn": 3
+      },
+      {
+        "usd": 0.07111,
+        "step": "run.cost",
+        "calls": 12,
+        "tokensIn": 19258,
+        "tokensOut": 6570,
+        "tokensCached": 1316
+      }
+    ],
+    "stagedByServer": {
+      "guide": "Dr. Mira Chen",
+      "scenes": 1,
+      "painted": 1,
+      "portrait": true,
+      "goDeeper": {
+        "videos": 3,
+        "articles": 3,
+        "books": 1,
+        "images": 3
+      }
+    },
+    "worldPaintedByServer": true,
+    "voice": {
+      "status": 200,
+      "seconds": 7,
+      "url": true
+    },
+    "runs": [
+      {
+        "kind": "learn",
+        "outcome": "lesson",
+        "ok": true,
+        "ms": 126584,
+        "cost_usd": 0.07111,
+        "calls": 12,
+        "tokens_in": 19258,
+        "tokens_out": 6570,
+        "error": null
+      },
+      {
+        "kind": "stage",
+        "outcome": "staged",
+        "ok": true,
+        "ms": 29556,
+        "cost_usd": 0.07587,
+        "calls": 6,
+        "tokens_in": 4524,
+        "tokens_out": 5260,
+        "error": null
+      },
+      {
+        "kind": "cover",
+        "outcome": "painted",
+        "ok": true,
+        "ms": 28476,
+        "cost_usd": 0.04689,
+        "calls": 1,
+        "tokens_in": 235,
+        "tokens_out": 2845,
+        "error": null
+      }
+    ]
+  },
+  "b": {
+    "topic": "how plants turn sunlight into food",
+    "onboarding": 200,
+    "learn": {
+      "started": 202,
+      "startSeconds": 1,
+      "job": "done",
+      "seconds": 20,
+      "watched": "the app's job API",
+      "kind": "lesson"
+    },
+    "course": {
+      "title": "Photosynthesis: How Plants Turn Light into Chemical Energy",
+      "levels": 3,
+      "lessons": 6
+    },
+    "lesson1": {
+      "title": "From Sunlight to Sugar",
+      "score": 8.3,
+      "passed": true,
+      "approach": "misconception",
+      "blocks": "activity > explain > check > activity > explain > check > reflect > check",
+      "sources": 1,
+      "stagedInResult": true
+    },
+    "trace": [
+      {
+        "step": "load_course",
+        "found": false,
+        "currentModule": null
+      },
+      {
+        "ms": 5918,
+        "hit": true,
+        "via": "similar",
+        "step": "plan_cache",
+        "matched": "photosynthesis",
+        "nearest": [
+          "Photosynthesis (0.58)",
+          "Stoicism (0.05)"
+        ]
+      },
+      {
+        "ms": 5102,
+        "step": "agent.turn",
+        "turn": 1,
+        "toolCalls": [
+          "write_module"
+        ]
+      },
+      {
+        "hit": true,
+        "step": "lesson_cache",
+        "module": 1,
+        "eligible": true
+      },
+      {
+        "step": "save_lesson",
+        "lessonId": 16
+      },
+      {
+        "step": "save_progress",
+        "saved": true
+      },
+      {
+        "ok": true,
+        "step": "agent.tool",
+        "tool": "write_module",
+        "turn": 1
+      },
+      {
+        "ms": 3154,
+        "step": "agent.turn",
+        "turn": 2,
+        "toolCalls": []
+      },
+      {
+        "step": "agent.finish",
+        "turn": 2
+      },
+      {
+        "usd": 0.00659,
+        "step": "run.cost",
+        "calls": 4,
+        "tokensIn": 2410,
+        "tokensOut": 218,
+        "tokensCached": 0
+      }
+    ],
+    "runs": [
+      {
+        "kind": "learn",
+        "outcome": "lesson",
+        "ok": true,
+        "ms": 17463,
+        "cost_usd": 0.00659,
+        "calls": 4,
+        "tokens_in": 2410,
+        "tokens_out": 218,
+        "error": null
+      }
+    ]
+  }
+}

@@ -3,7 +3,7 @@
 import { motion } from "motion/react";
 import { useState } from "react";
 import { spring } from "../motion/presets";
-import type { Block } from "@/lib/lessonBlocks";
+import { modelAnswerText, type Block } from "@/lib/lessonBlocks";
 import { BlockFrame, Paragraphs } from "./BlockFrame";
 import { rich } from "./rich";
 
@@ -77,44 +77,97 @@ export function WorkedBlock({ b, onDone }: { b: Of<"worked">; onDone: () => void
 const MIN_REFLECTION = 20;
 
 /** An open question in the learner's own words, then a model answer to compare against. Nothing is saved. */
-export function ReflectBlock({ b, onDone }: { b: Of<"reflect">; onDone: () => void }) {
+type Grade = { verdict: "got_it" | "partly" | "not_yet"; right: string; missing: string };
+
+const VERDICT: Record<Grade["verdict"], { label: string; className: string }> = {
+  got_it: { label: "You've got it", className: "bg-[#e9f8ef] text-good" },
+  partly: { label: "Partly there", className: "bg-accent-soft text-accent" },
+  not_yet: { label: "Not quite yet", className: "bg-[#fdecec] text-bad" },
+};
+
+/**
+ * The learner writes an answer in their own words; the server grades it
+ * against the lesson's model answer (lib/reflectGrade.ts) and says what they
+ * got right and what's missing, then shows the model answer. Practice: the
+ * grade isn't saved. Without a saved lesson, or if grading fails, it falls
+ * back to showing the model answer to compare with.
+ */
+export function ReflectBlock({ b, onDone, lessonId, blockIndex }: { b: Of<"reflect">; onDone: () => void; lessonId?: number | null; blockIndex?: number }) {
   const [answer, setAnswer] = useState("");
-  const [compared, setCompared] = useState(false);
+  const [phase, setPhase] = useState<"writing" | "checking" | "done">("writing");
+  const [grade, setGrade] = useState<Grade | null>(null);
   const ready = answer.trim().length >= MIN_REFLECTION;
+  const canGrade = typeof lessonId === "number" && typeof blockIndex === "number";
+
+  async function check() {
+    setPhase("checking");
+    let g: Grade | null = null;
+    if (canGrade) {
+      try {
+        const res = await fetch("/api/reflect", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ lessonId, block: blockIndex, answer: answer.trim() }),
+        });
+        if (res.ok) g = (await res.json()).grade ?? null;
+      } catch {
+        // Falls back to the model answer below.
+      }
+    }
+    setGrade(g);
+    setPhase("done");
+    onDone();
+  }
 
   return (
-    <BlockFrame kind="reflect" icon="✍" label="In your own words" title={b.heading} prompt={b.prompt} done={compared}>
+    <BlockFrame kind="reflect" icon="✍" label="In your own words" title={b.heading} prompt={b.prompt} done={phase === "done"}>
       <textarea
         value={answer}
         onChange={(e) => setAnswer(e.target.value)}
-        readOnly={compared}
+        readOnly={phase !== "writing"}
         rows={4}
         aria-label={b.prompt}
-        placeholder="Write a few sentences. Only you will see this."
+        placeholder="Write a few sentences in your own words."
         className="w-full resize-y rounded-2xl border border-line bg-canvas p-4 text-[15px] leading-relaxed text-fg placeholder:text-muted/70 focus:border-accent/60 focus:outline-none"
       />
-      {!compared ? (
+      {phase !== "done" ? (
         <div className="mt-3 flex flex-wrap items-center gap-3">
           <button
             type="button"
-            disabled={!ready}
-            onClick={() => {
-              setCompared(true);
-              onDone();
-            }}
+            disabled={!ready || phase === "checking"}
+            onClick={check}
             className="btn-primary rounded-full px-4 py-2 text-sm font-semibold disabled:opacity-40"
           >
-            Compare with a model answer
+            {phase === "checking" ? "Checking…" : canGrade ? "Check my answer" : "Compare with a model answer"}
           </button>
           <span className="text-xs text-muted">
-            {ready ? "Not saved or graded; it's for your thinking." : `Write at least ${MIN_REFLECTION} characters first.`}
+            {ready ? "Practice: it isn't saved or counted." : `Write at least ${MIN_REFLECTION} characters first.`}
           </span>
         </div>
       ) : (
-        <div className="step-reveal mt-4 rounded-2xl border border-accent/30 bg-accent-soft px-4 py-3">
-          <p className="text-[11px] font-semibold tracking-wide text-accent uppercase">A model answer</p>
-          <p className="mt-1 text-sm leading-relaxed text-fg">{rich(b.model)}</p>
-          <p className="mt-2 text-xs text-muted">What did you include that it doesn&rsquo;t, and what did it notice that you didn&rsquo;t?</p>
+        <div className="step-reveal mt-4 space-y-3" aria-live="polite">
+          {grade && (
+            <div className="rounded-2xl border border-line bg-surface px-4 py-3">
+              <span className={`inline-block rounded-full px-2.5 py-0.5 text-xs font-semibold ${VERDICT[grade.verdict].className}`}>{VERDICT[grade.verdict].label}</span>
+              {grade.right && <p className="mt-2 text-sm leading-relaxed text-fg">{rich(grade.right)}</p>}
+              {grade.missing && (
+                <p className="mt-1.5 text-sm leading-relaxed text-fg">
+                  <span className="font-semibold">To add: </span>
+                  {rich(grade.missing)}
+                </p>
+              )}
+            </div>
+          )}
+          <div className="rounded-2xl border border-accent/30 bg-accent-soft px-4 py-3">
+            <p className="text-[11px] font-semibold tracking-wide text-accent uppercase">A model answer</p>
+            <p className="mt-1 text-sm leading-relaxed text-fg">{rich(modelAnswerText(b.model))}</p>
+            {!grade && <p className="mt-2 text-xs text-muted">What did you include that it doesn&rsquo;t, and what did it notice that you didn&rsquo;t?</p>}
+          </div>
+          {grade && grade.verdict !== "got_it" && (
+            <button type="button" onClick={() => setPhase("writing")} className="text-sm font-medium text-accent hover:underline">
+              Edit your answer and check again
+            </button>
+          )}
         </div>
       )}
     </BlockFrame>

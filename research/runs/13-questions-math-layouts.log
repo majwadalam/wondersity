@@ -1,0 +1,11 @@
+Model call failed (The operation was aborted due to timeout); retrying
+■ strategy: Game theory (177s, score 7, below bar, $0.0488, 7 calls, 16239 in / 5063 out tokens)
+  approach: discovery (The learner first chooses a strategy and tests possible outcomes, then discovers the conflict between individual incentives and mutual benefit.)
+  blocks:   activity:predict > explain > check > activity:sort > explain > reflect > check
+  issues:   none
+  trace:    lesson.generate, lesson.blind, lesson.verify, lesson.evaluate=7, lesson.revise_skipped, lesson.select=7
+■ physics: Projectile motion (102s, score 8.4, $0.0506, 9 calls, 18717 in / 6129 out tokens)
+  approach: simulation (Changing the launch angle while holding speed fixed lets the learner see the height–distance trade-off before explaining it.)
+  blocks:   activity:graph > explain > check > activity:predict > explain > check > problem
+  issues:   none
+  trace:    lesson.generate, lesson.blind, lesson.verify, lesson.evaluate=8.4, lesson.select=8.4

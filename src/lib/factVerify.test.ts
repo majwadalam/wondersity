@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-import { evidenceOnPage, lessonText, settleVerdict, verifyFacts, type VerifyDeps } from "./factVerify";
+import { citedUrl, evidenceOnPage, quoteOnly, lessonText, settleVerdict, verifyFacts, type VerifyDeps } from "./factVerify";
 import type { Lesson } from "./lessonBlocks";
 
 const britannica = {
@@ -39,6 +39,19 @@ describe("settleVerdict", () => {
     const check = settleVerdict("c", "w", judgement({ verdict: "contradicted", evidence: "The Estates-General last met in 1789 under Louis XV" }), [britannica]);
     assert.equal(check.verdict, "unclear");
     assert.match(check.downgraded!, /evidence/);
+  });
+
+  it("reads a source written as a markdown citation and ignores the citation in the quote (run 12)", () => {
+    const check = settleVerdict(
+      "c",
+      "w",
+      judgement({
+        sourceUrl: "[britannica.com](https://www.britannica.com/event/Estates-General?utm_source=openai)",
+        evidence: "“The Estates-General had not met since 1614” ([britannica.com](https://www.britannica.com/event/Estates-General?utm_source=openai))",
+      }),
+      [britannica]
+    );
+    assert.equal(check.verdict, "supported");
   });
 
   it("keeps the correction of a well-sourced contradiction", () => {
@@ -119,5 +132,18 @@ describe("evidenceOnPage", () => {
     assert.equal(evidenceOnPage("The Sun's Schwarzschild radius was measured at 30 kilometres by NASA in 1998.", page), false);
     assert.equal(evidenceOnPage("Schwarzschild radius approximately 30 km", page), false);
     assert.equal(evidenceOnPage("Schwarzschild radius", page), false);
+  });
+});
+
+describe("citations in the model's answer", () => {
+  it("takes the URL out of a markdown link", () => {
+    assert.equal(citedUrl("[ssec.si.edu](https://ssec.si.edu/stemvisions-blog/what-photosynthesis)"), "https://ssec.si.edu/stemvisions-blog/what-photosynthesis");
+    assert.equal(citedUrl("https://example.org/a"), "https://example.org/a");
+    assert.equal(citedUrl(""), "");
+  });
+
+  it("cuts citations and links from a quote", () => {
+    assert.equal(quoteOnly("“Plants are mostly water.” ([asu.edu](https://asu.edu/x))"), "“Plants are mostly water.”");
+    assert.equal(quoteOnly("Plants are mostly water. https://asu.edu/x"), "Plants are mostly water.");
   });
 });

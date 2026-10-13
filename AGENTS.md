@@ -48,6 +48,20 @@ state, tools, constraints, and evaluation around the model.
 to plan a course, whether to look at quiz mistakes, and what the next module
 should focus on. Lesson writing is a fixed workflow the agent can't skip.
 
+**Models by job.** GPT-6.1 Sol writes, revises and reviews lessons and plans
+a new course (the agent's turn while no course exists). The tutor agent's
+other turns (deciding, reading mistakes, briefing the writer, the closing
+note) run on GPT-6 Luna (`AGENT_MODEL`); so do the fact check, blind test,
+staging script and reflection grading. Run 16: agent turns cost $0.0003 a run
+on Luna, against about $0.01-0.02 on Sol.
+
+**Revisions are targeted.** A draft scoring 5 or more is revised by a patch
+(`lib/lessonPatch.ts`): the reviser returns only the blocks, questions and
+activities to replace, insert or remove, numbered as it was shown them, and
+code applies them. The result is validated and reviewed like any version; a
+patch that doesn't apply falls back to a full revision. The reviser is also
+given the problems found in code. Below 5, the lesson is rewritten.
+
 **Rules in code, not prompts.** Tool calls are validated with zod. The
 harness enforces one course per topic, exactly one module per run, and that
 only the current module is written. Tool misuse is returned to the model as an
@@ -66,6 +80,41 @@ never shown; the pages that confirmed claims are saved with the lesson and
 listed at its end. Only evaluated versions can be shown: the
 highest-scoring one, with its real score and a `passed` flag. A revision that
 fails or can't be evaluated is discarded.
+
+**Checks that make learners think.** Questions are checked for the cues
+that let a learner answer without the idea (research/question-quality.md).
+In code (`lib/questionCheck.ts`): the right answer longest, the only option
+repeating the question's words, absolute words only in wrong options, "all
+of the above", "which of the following is true", hints using the answer's
+own words, a typed problem stating its answer; these go to the reviewer and
+reviser. Options are sorted and shuffled with a seed from the question when a
+lesson is saved, so the writer's order never reaches the learner. The blind
+test (`lib/blindCheck.ts`) shows a model only each question's options; a
+confident right guess caps the score at 7.5, so the lesson is revised.
+
+**Tailored courses.** A new topic opens a start dialog
+(`components/app/StartCourse.tsx`): "Plan it for me" (one click, as before)
+or "Tailor it", one screen where only the goal is required: why (and where
+they'll use it), where they're starting, their materials, and behind "More"
+what they know, up to 6 things it must cover and a length. The brief
+(`lib/intake.ts`, validated with zod) goes with `POST /api/learn` as
+`intake`, rides on the job (`jobs.intake`, cleared when the job ends) and
+shapes only a course that doesn't exist yet. The planner gets
+`TAILORED_PLANNING_GUIDE` and, in code (`parseCoursePlan(raw, rules)`), must
+write 2-4 outcomes with observable verbs, tie every level to one, cover every
+"must cover" item with a module, and fit the length. Courses keep `intake`
+(without the materials' text) and `outcomes`; the course page shows them.
+Lesson briefs carry the learner's goal, context, a format hint for their
+starting point (worked examples for novices, problems for the experienced)
+and the 4 passages of their materials closest to the module; the reviewer
+scores fit to the brief. Uploads (`POST /api/materials`: PDF via unpdf with
+page markers, Word via mammoth, text, Markdown; 10 MB, 40k characters each,
+80k in all) are read and returned, not stored; at course creation a small
+model outlines them for the planner (`lib/materials.ts`) and they're saved in
+passages with embeddings (`course_materials`, `match_course_materials`).
+Material text is always framed as data, not instructions, and lessons still
+pass every fact check. Tailored courses never use or seed the plan cache or
+shared lessons. Rationale: research/intake-pedagogy.md.
 
 **Course hierarchy.** Course → levels → modules → lesson (whose blocks
 are the activities). A level is a stage of learning with its own objective; a
@@ -106,6 +155,26 @@ doesn't reveal the right one: the learner sees an alternative explanation and
 can try again or ask for the answer. Only the first answer is sent and graded;
 retries are practice. The module is saved once every check is answered.
 
+**Text formatting, math and inline graphs.** Lesson text (`components/lesson/rich.tsx`,
+`Paragraphs` in `BlockFrame.tsx`) draws **bold**, `code`, lists, pipe
+tables, and math with KaTeX (`components/lesson/math.tsx`): \( inline \),
+\[ display \] or $$ display $$, \ce{} for chemistry; a single $ is a price,
+never math. Simple TeX arithmetic is translated before the arithmetic check
+(`plainMath` in lib/factCheck.ts), so it is checked too. A fenced ```graph
+block in an explain, worked or problem body draws 1-3 curves with an
+optional slider (`lib/embeds.ts`, `InlineGraph.tsx`); blocks that don't draw
+a visible curve are removed when the lesson is validated. Explain steps have
+a layout (the flat block's `mode`): standard, "split" (text beside its
+example), "spotlight" (one statement set large) or "steps" (numbered points).
+
+**Reflections are graded.** A reflect block's "Check my answer" sends the
+learner's words to `POST /api/reflect`, which reads the question and model
+answer from the saved lesson and has GPT-6 Luna (`lib/reflectGrade.ts`)
+judge the ideas, not the wording: got it, partly, or not yet, with what they
+got right and what to add. Practice: nothing is saved and progress still
+comes from the checks. Without a saved lesson, or if grading fails, the
+model answer is shown to compare with, as before.
+
 **Typed problems.** A `problem` block asks the learner to work something out
 and type the answer. It's checked in the browser (practice, not graded):
 integers exactly, other numbers within 1%, fractions and currency symbols
@@ -128,8 +197,9 @@ The reviser sees the lesson in exactly the format it writes
 touch sensors, a DragOverlay portalled to <body> (a lesson step's animation
 leaves a transform that breaks position: fixed inside it), and, when any
 group is off-screen, compact drop targets docked above the lesson's bottom
-bar for the length of the drag. Hand-written drag code was replaced after it
-proved unreliable.
+bar for the length of the drag. "Put it in order" uses dnd-kit's sortable
+list (`@dnd-kit/sortable`) with the same portalled overlay, plus a keyboard
+sensor. Hand-written drag code was replaced in both after it proved unreliable.
 
 **Interactive activities.** Activity blocks place one of 12 activity types:
 predict, scenario, drag-and-drop sort, drag-to-order, story, timeline,
@@ -160,6 +230,9 @@ tokens in `globals.css` (`bg-canvas`, `bg-surface`, `border-line`, `text-fg`,
 `text-muted`, `bg-accent`, `text-good`, `text-bad`); use those, not raw
 colours. A lesson is one step per screen (`LessonView`): progress bar on top,
 Back / Continue at the bottom, checks must be answered, practice can be skipped.
+In a staged lesson, reading steps sit beside their scene; hands-on steps
+(activities, code, compare) get the scene as a short banner on top and the
+full width below.
 The landing page states only true things: no invented user counts, and
 unbuilt features are marked "Coming soon". The landing page is light. Its
 hero is pinned for three screens: the headline fades and a painted course
@@ -203,7 +276,13 @@ lesson, never from the request. The player plays it when a step opens and
 fetches the next one ahead; voice can be turned off and the choice is kept.
 
 **Course covers and world.** Opening a course runs `POST /api/covers` once to
-paint a wide "world" for the course (`courses.cover_url`). Modules get no
+paint a wide "world" for the course (`courses.cover_url`). The road in the
+painting is then traced once by Gemini 3.1 Pro (`lib/worldRoad.ts`, about
+$0.005; `courses.world_road`, migration 013, shared with the plan's world),
+checked in code (it must run from the left third to the right third), and the
+journey's stops are spaced evenly along a smooth curve through it
+(`lib/journeyPath.ts`). Each level's stretch of road is drawn in its colour, its first stop carries a "Level N" tag, and a key under the map gives the full names. Worlds painted earlier are traced when next opened; a
+failed trace saves [] and the page draws a default curve. Modules get no
 separate cover: a module shows its lesson's first scene once staged, and the
 world until then (courses painted earlier keep their `modules[i].cover`). The
 course page draws the journey as a road across that world, one stop per module.
@@ -221,7 +300,7 @@ server log; the app never displays raw error text.
 
 **Bounded iteration.** Max 6 agent turns, at most one revision per lesson, one
 retry for malformed output, one retry for transient call failures, 60s per
-model call (90s for writing or scoring a lesson), no revision after 120s, no agent turn after 200s, and a hard 280s
+model call (150s for writing a lesson, 90s for scoring one), no revision after 165s, no agent turn after 250s, and a hard 280s
 deadline for every call (300s route limit).
 
 **Server-side grading.** The browser sends chosen options; the server grades
@@ -284,6 +363,18 @@ learner can plant a plan others would get. Every tutor run, staging and world
 painting is stored in `runs` with its trace, time and OpenRouter's reported
 cost (paintings included); metrics.sql queries 10-13 read it.
 
+**Catalog courses are seeded.** The courses offered on the home, Courses and
+welcome pages (`lib/catalog.ts`) use the shared plan for every learner, not
+only first-time ones, since they're our curated versions; topics a learner
+types still get tailored plans. `scripts/seed-catalog.ts` takes each catalog
+course through the running app with a throwaway learner, so its plan, world
+and first lessons (with scenes) are cached before anyone clicks it, and
+deletes the learner afterwards. Re-run it after the lesson guide or models
+change, since that retires cached lessons. When the next lesson can come
+straight from the cache (shared plan, no check answered wrong, a cached copy),
+the run serves it without the agent's turns (`fast_path` in the trace).
+`scripts/check-cache.ts` checks hits from a learner's side.
+
 **Creator partners.** `?ref=CODE` on any page (src/proxy.ts) or a visit to a
 companion page `/c/<slug>` sets a 30-day `agora_ref` cookie; the first
 referral wins (`lib/referrals.ts`). Finishing onboarding saves it on the
@@ -337,9 +428,16 @@ staged, so it opens instantly.
 - `scripts/judge-lessons.ts` — re-scores saved sample lessons with one reviewer, to compare writers
 - `research/` — every model run: method, results, costs and raw outputs (`research/model-runs.md`)
 - `scripts/e2e-course.ts` — a real course through the running app's HTTP API with two throwaway learners
+- `scripts/seed-catalog.ts`, `src/lib/catalog.ts` — the catalog courses, and seeding them into the shared cache
+- `scripts/check-cache.ts` — throwaway learners start courses; prints plan and lesson cache hits, time and cost
+- `scripts/e2e-tailored.ts` — a tailored course end to end (upload, brief, plan rules, materials, lesson) with a throwaway learner
 - `src/lib/progress.ts` — quiz grading and course progression
 - `src/lib/courseView.ts` — client-facing course shape: levels, modules, lessons
-- `src/lib/coursePlan.ts` — course plan schema, planning guide, validation
+- `src/lib/coursePlan.ts` — course plan schema, planning guide, validation (and the tailored rules)
+- `src/lib/intake.ts` — a tailored course's brief: schema, limits, how planner and writer see it, chunking
+- `src/lib/materials.ts`, `src/lib/materialText.ts` — learner materials: outline, storage, retrieval; text from uploads
+- `src/app/api/materials/route.ts` — reads the text out of an uploaded file
+- `src/components/app/StartCourse.tsx` — the start dialog: "Plan it for me" or "Tailor it"
 - `src/lib/courseHierarchy.ts` — levels from the stored module list, labels, old-course handling
 - `src/lib/db.ts` — Supabase access (also cover uploads)
 - `src/lib/staging.ts` — lesson staging: guide, scenes, lines; schema and validation
@@ -381,13 +479,18 @@ staged, so it opens instantly.
 - `src/components/motion/` — motion presets, primitives (Expand, ProgressFill,
   CountUp, Burst), Lottie player
 - `src/components/app/CourseJourney.tsx` — the journey across the course's world, spotlight, chapters
+- `src/components/app/CourseProgress.tsx` — the course page's progress card: percent, levels as rows of lessons, the next action
 - `src/components/lesson/Scene.tsx` — a step's painted scene with the guide's line and voice
 - `src/lib/expression.ts` — safe formula compiler for graph activities
+- `src/lib/embeds.ts`, `src/components/lesson/InlineGraph.tsx` — graphs written inside lesson text
+- `src/components/lesson/math.tsx` — math in lesson text (KaTeX)
+- `src/lib/questionCheck.ts`, `src/lib/blindCheck.ts` — giveaway checks on knowledge checks; `research/question-quality.md`
+- `src/lib/worldRoad.ts`, `src/lib/journeyPath.ts` — tracing the road in a course's world; placing the journey's stops on it
 - `src/components/`, `src/hooks/` — UI pieces
 
 Bookmarks are stored in the browser (localStorage, per learner id); they are
 not in Supabase yet.
-- `supabase/migrations/` — SQL migrations (001 lessons and progress, 002 courses and attempts, 003 covers, 004 accounts: own-rows rules, profiles, claiming old progress, 005 lesson views, 006 subscriptions, lesson reports, age confirmation, 007 creator partners and companion pages, referrals, 008 shared course plans and run logs, 009 matching plans by meaning and sharing lesson 1, 010 asking before claiming pre-account progress, 011 lesson jobs, 012 shared lessons beyond lesson 1); apply with `pnpm db:push`
+- `supabase/migrations/` — SQL migrations (001 lessons and progress, 002 courses and attempts, 003 covers, 004 accounts: own-rows rules, profiles, claiming old progress, 005 lesson views, 006 subscriptions, lesson reports, age confirmation, 007 creator partners and companion pages, referrals, 008 shared course plans and run logs, 009 matching plans by meaning and sharing lesson 1, 010 asking before claiming pre-account progress, 011 lesson jobs, 012 shared lessons beyond lesson 1, 013 the road traced in a course's world, 014 tailored courses: intake, outcomes, course materials); apply with `pnpm db:push`
 - `src/lib/plans.ts` — what each plan allows; `src/lib/billing.ts` — Paddle webhook checks and portal links
 - `src/app/api/billing/` — the learner's plan, the Paddle webhook, the customer portal
 - `src/components/billing/` — checkout button, Settings plan section
@@ -409,15 +512,18 @@ not in Supabase yet.
     OPENROUTER_MODEL=openai/gpt-6.1-sol    # writes lessons, runs the tutor agent
     REVIEW_MODEL=openai/gpt-6.1-sol        # reviews lessons; another family is more independent
     # optional: VERIFY_FACTS=off, VERIFY_MODEL (default openai/gpt-6-luna),
-    #           VERIFY_SEARCH_ENGINE (default parallel, fast mode)
+    #           VERIFY_SEARCH_ENGINE (default parallel, fast mode),
+    #           BLIND_MODEL (default the verify model), ROAD_MODEL (default google/gemini-3.1-pro-preview),
+    #           DIGEST_MODEL (outlines learner materials; default openai/gpt-6-luna)
     NEXT_PUBLIC_SUPABASE_URL=...
     NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=...
-    # optional: ART_MODEL (default google/gemini-nano-banana-2.1),
+    # optional: ART_MODEL (default google/gemini-nano-banana-2.1; on a rate limit or outage it is retried once,
+    #           then ART_FALLBACK_MODEL, default google/gemini-3.1-flash-lite-image, paints instead),
     #           VOICE_MODEL (default openai/gpt-audio-mini)
 
 The writer must support tool calling and structured output (GPT-6 Luna and
 GPT-6.1 Sol do). See HARNESS.md, "Choosing the models", for the comparison;
-every run's trace ends with its cost (`run.cost`).
+every run's trace ends with its cost (`run.cost`), split by step (`bySteps`: agent, write, review, revise, verify, blind, plan_match; `withStep` in lib/model.ts).
 
 ## Data model
 
@@ -427,6 +533,14 @@ description, objective}}]; older courses only {title, goal}),
 current_module (position in modules), status, created_at, updated_at;
 unique(learner_id, topic_key). Level data lives inside `modules`, so the
 hierarchy needed no migration.
+
+**courses** also has intake (jsonb: goal, purpose, context, level, known,
+cover, length, material names; null for "Plan it for me") and outcomes
+(jsonb string list). **jobs** also has intake (with the materials' text,
+cleared when the job ends).
+
+**course_materials** — id, learner_id, course_id (cascade), source,
+chunk_index, content, embedding (vector 1536), created_at. Own rows only.
 
 **lessons** — id, learner_id, topic, lesson_data (jsonb), score, created_at,
 course_id, module_index, completed_at. `lesson_data` is a `Lesson`
@@ -499,6 +613,8 @@ video_url, active, created_at. Public when active.
   course pages, which the GTM plan relies on
 - A "Pro Plus" tier for learners who need more than 60 lessons a month
 - Spaced-repetition scheduling from recorded mistakes
+- A placement check in lesson 1 that can override a tailored course's self-rated starting point;
+  deadlines; editing a tailored course's outcomes
 - A visual level map for courses (the hierarchy exists; the UI is still a list)
 - More than one lesson per module (today a module is one lesson of activity blocks)
 - An eval suite for the agent (fixed topics, expected tool sequences, scores);

@@ -91,7 +91,7 @@ function Featured({ course }: { course: Course }) {
   const next = Math.min(course.currentModule, course.modules.length - 1);
   return (
     <Link href={`/courses/${course.id}`} className="group shadow-card relative mt-10 block h-72 overflow-hidden rounded-3xl bg-navy sm:h-80">
-      <Image unoptimized={isRemote(art)} src={art} alt="" fill sizes="1080px" className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" priority />
+      <Image unoptimized={isRemote(art)} src={art} alt="" fill sizes="1080px" className="object-cover transition-transform duration-700 group-hover:scale-[1.03]" loading="eager" fetchPriority="high" />
       <div className="absolute inset-0 bg-gradient-to-t from-[#0a2540]/95 via-[#0a2540]/60 to-[#0a2540]/10 sm:bg-gradient-to-r sm:from-[#0a2540]/90 sm:via-[#0a2540]/50 sm:to-transparent" />
       <div className="relative flex h-full max-w-lg flex-col justify-end p-7 sm:p-9">
         <p className="text-sm font-medium text-white/70">Continue · lesson {next + 1} of {p.total}</p>

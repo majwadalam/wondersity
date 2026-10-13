@@ -6,7 +6,7 @@ import { ArrowLeft, Briefcase, Compass, GraduationCap, Plane, Sparkles, Volume2,
 import { AnimatePresence, motion } from "motion/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useEffect, useState } from "react";
-import { useAppState } from "@/components/app/AppState";
+import { useAppState, useStartCourse } from "@/components/app/AppState";
 import { LogoMark } from "@/components/app/Brand";
 import { CATALOG } from "@/components/app/CourseCards";
 import { CourseArt } from "@/components/app/CourseArt";
@@ -38,7 +38,9 @@ export default function WelcomePage() {
 }
 
 function Welcome() {
-  const { profile, updateProfile, learn } = useAppState();
+  const { profile, updateProfile } = useAppState();
+  // A new topic opens the start dialog: plan it for me, or tailor it.
+  const start = useStartCourse();
   const router = useRouter();
   const preset = useSearchParams().get("topic") ?? "";
   const [step, setStep] = useState(0);
@@ -56,7 +58,7 @@ function Welcome() {
   useEffect(() => {
     if (!done) return;
     router.replace("/home");
-    if (preset) learn(preset, "course");
+    if (preset) start(preset);
     // Once, when we learn they're onboarded.
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [done]);
@@ -178,7 +180,7 @@ function Welcome() {
     }
     await updateProfile({ displayName: name.trim() || profile?.displayName || undefined, reason, dailyGoalMinutes: goal, voiceOn: voice, onboarded: true, ageConfirmed: true }).catch(() => {});
     router.replace("/home");
-    learn(topic.trim(), "course");
+    start(topic);
   }
 
   return (

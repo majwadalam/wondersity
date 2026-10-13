@@ -93,6 +93,47 @@ export type Database = {
           },
         ]
       }
+      course_materials: {
+        Row: {
+          chunk_index: number
+          content: string
+          course_id: number
+          created_at: string
+          embedding: string | null
+          id: number
+          learner_id: string
+          source: string
+        }
+        Insert: {
+          chunk_index: number
+          content: string
+          course_id: number
+          created_at?: string
+          embedding?: string | null
+          id?: never
+          learner_id: string
+          source: string
+        }
+        Update: {
+          chunk_index?: number
+          content?: string
+          course_id?: number
+          created_at?: string
+          embedding?: string | null
+          id?: never
+          learner_id?: string
+          source?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "course_materials_course_id_fkey"
+            columns: ["course_id"]
+            isOneToOne: false
+            referencedRelation: "courses"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       course_plans: {
         Row: {
           cover_url: string | null
@@ -108,6 +149,7 @@ export type Database = {
           topic: string
           topic_key: string
           updated_at: string
+          world_road: Json | null
         }
         Insert: {
           cover_url?: string | null
@@ -123,6 +165,7 @@ export type Database = {
           topic: string
           topic_key: string
           updated_at?: string
+          world_road?: Json | null
         }
         Update: {
           cover_url?: string | null
@@ -138,6 +181,7 @@ export type Database = {
           topic?: string
           topic_key?: string
           updated_at?: string
+          world_road?: Json | null
         }
         Relationships: []
       }
@@ -148,14 +192,17 @@ export type Database = {
           current_module: number
           description: string
           id: number
+          intake: Json | null
           learner_id: string
           modules: Json
+          outcomes: Json | null
           plan_key: string | null
           status: string
           title: string
           topic: string
           topic_key: string
           updated_at: string
+          world_road: Json | null
         }
         Insert: {
           cover_url?: string | null
@@ -163,14 +210,17 @@ export type Database = {
           current_module?: number
           description: string
           id?: never
+          intake?: Json | null
           learner_id: string
           modules: Json
+          outcomes?: Json | null
           plan_key?: string | null
           status?: string
           title: string
           topic: string
           topic_key: string
           updated_at?: string
+          world_road?: Json | null
         }
         Update: {
           cover_url?: string | null
@@ -178,14 +228,17 @@ export type Database = {
           current_module?: number
           description?: string
           id?: never
+          intake?: Json | null
           learner_id?: string
           modules?: Json
+          outcomes?: Json | null
           plan_key?: string | null
           status?: string
           title?: string
           topic?: string
           topic_key?: string
           updated_at?: string
+          world_road?: Json | null
         }
         Relationships: []
       }
@@ -194,6 +247,7 @@ export type Database = {
           created_at: string
           error: string | null
           id: string
+          intake: Json | null
           kind: string
           learner_id: string
           ref: string | null
@@ -208,6 +262,7 @@ export type Database = {
           created_at?: string
           error?: string | null
           id?: string
+          intake?: Json | null
           kind: string
           learner_id: string
           ref?: string | null
@@ -222,6 +277,7 @@ export type Database = {
           created_at?: string
           error?: string | null
           id?: string
+          intake?: Json | null
           kind?: string
           learner_id?: string
           ref?: string | null
@@ -534,6 +590,44 @@ export type Database = {
           },
         ]
       }
+      shared_lessons: {
+        Row: {
+          created_at: string
+          lesson: Json
+          lesson_version: string
+          module_index: number
+          plan_key: string
+          score: number
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          lesson: Json
+          lesson_version: string
+          module_index: number
+          plan_key: string
+          score: number
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          lesson?: Json
+          lesson_version?: string
+          module_index?: number
+          plan_key?: string
+          score?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "shared_lessons_plan_key_fkey"
+            columns: ["plan_key"]
+            isOneToOne: false
+            referencedRelation: "course_plans"
+            referencedColumns: ["topic_key"]
+          },
+        ]
+      }
       subscriptions: {
         Row: {
           canceled_at: string | null
@@ -590,6 +684,15 @@ export type Database = {
     }
     Functions: {
       claim_browser_learner: { Args: { old_id: string }; Returns: number }
+      match_course_materials: {
+        Args: { course: number; max_results?: number; query: string }
+        Returns: {
+          chunk_index: number
+          content: string
+          similarity: number
+          source: string
+        }[]
+      }
       match_course_plans: {
         Args: { max_results?: number; query: string; version: string }
         Returns: {

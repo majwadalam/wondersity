@@ -18,6 +18,7 @@ export function SceneHeader({
   step,
   active,
   voice,
+  banner,
 }: {
   staging: Staging;
   step: number;
@@ -25,6 +26,8 @@ export function SceneHeader({
   voice: VoiceControl | null;
   /** Kept for older callers; the intro no longer differs. */
   large?: boolean;
+  /** A short strip above a hands-on step, which needs the full width. */
+  banner?: boolean;
 }) {
   const wide = useWide();
   const s = staging.steps[step];
@@ -48,6 +51,23 @@ export function SceneHeader({
     </p>
   );
   // One layout at a time, so the line is spoken once and the painting loads once.
+  if (wide && banner) {
+    return (
+      <div className="relative h-44 overflow-hidden rounded-3xl">
+        <Backdrop image={image} setting={setting} priority={step === 0} sizes="1100px" />
+        {s.line && <div className="absolute inset-0 flex items-end bg-gradient-to-r from-[#0a2540]/90 via-[#0a2540]/55 to-transparent px-6 pb-5">
+          <div className="flex max-w-[640px] items-start gap-3.5">
+            <Portrait staging={staging} size="h-11 w-11" />
+            <div className="min-w-0 flex-1">
+              {speaker(true)}
+              <p className="mt-1 text-[16px] leading-snug text-white">{s.line}</p>
+            </div>
+          </div>
+        </div>}
+        {setting && image && <SettingChip setting={setting} />}
+      </div>
+    );
+  }
   if (wide) {
     return (
       <div className="relative h-[min(640px,calc(100vh-9rem))] overflow-hidden rounded-3xl">
@@ -58,7 +78,7 @@ export function SceneHeader({
           sizes="560px"
         />
         {setting && image && <SettingChip setting={setting} />}
-        <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0a2540]/95 via-[#0a2540]/65 to-transparent px-6 pt-24 pb-6">
+        {s.line && <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#0a2540]/95 via-[#0a2540]/65 to-transparent px-6 pt-24 pb-6">
           <div className="flex items-start gap-3.5">
             <Portrait staging={staging} size="h-12 w-12" />
             <div className="min-w-0 flex-1">
@@ -68,7 +88,7 @@ export function SceneHeader({
               </p>
             </div>
           </div>
-        </div>
+        </div>}
       </div>
     );
   }
@@ -83,13 +103,13 @@ export function SceneHeader({
         />
         {setting && image && <SettingChip setting={setting} />}
       </div>
-      <div className="mt-4 flex items-start gap-3">
+      {s.line && <div className="mt-4 flex items-start gap-3">
         <Portrait staging={staging} size="h-10 w-10" />
         <div className="min-w-0 flex-1">
           {speaker(false)}
           <p className="mt-0.5 text-[15px] leading-snug text-fg">{s.line}</p>
         </div>
-      </div>
+      </div>}
     </div>
   );
 }
@@ -191,6 +211,18 @@ export type VoiceControl = {
   urlFor: (step: number) => Promise<string | null>;
 };
 
+/**
+ * The one guide line playing on the page. Starting a line stops the last one,
+ * so lines never overlap, even when a step changes before its audio loads.
+ */
+let speaking: HTMLAudioElement | null = null;
+
+function stopSpeaking(only?: HTMLAudioElement | null) {
+  if (!speaking || (only !== undefined && speaking !== only)) return;
+  speaking.pause();
+  speaking = null;
+}
+
 /** Plays the step's line when it becomes active (if voice is on); click to replay. */
 export function SpeakButton({
   voice,
@@ -204,14 +236,17 @@ export function SpeakButton({
   tone?: "dark" | "light";
 }) {
   const audio = useRef<HTMLAudioElement | null>(null);
+  // Bumped whenever a play is started or cancelled; a URL that arrives for an older one is dropped.
+  const request = useRef(0);
   const [playing, setPlaying] = useState(false);
 
   async function play() {
+    const id = ++request.current;
     const url = await voice.urlFor(step);
-    if (!url) return;
-    audio.current?.pause();
+    if (!url || id !== request.current) return;
+    stopSpeaking();
     const a = new Audio(url);
-    audio.current = a;
+    audio.current = speaking = a;
     a.onplay = () => setPlaying(true);
     a.onended = a.onpause = () => setPlaying(false);
     a.play().catch(() => setPlaying(false));
@@ -222,7 +257,12 @@ export function SpeakButton({
       play();
       voice.urlFor(step + 1); // warm the next line so it's ready when the learner moves on
     }
-    return () => audio.current?.pause();
+    return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps -- a counter: the latest value is the point
+      request.current++;
+      stopSpeaking(audio.current);
+      audio.current?.pause();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps -- play when the step opens or voice turns on
   }, [active, voice.enabled]);
 

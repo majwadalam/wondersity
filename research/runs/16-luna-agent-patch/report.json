@@ -1,0 +1,523 @@
+{
+  "a": {
+    "topic": "Plate tectonics",
+    "onboarding": 200,
+    "learn": {
+      "started": 202,
+      "startSeconds": 1,
+      "job": "done",
+      "seconds": 241,
+      "watched": "database only (browser closed)",
+      "kind": "lesson"
+    },
+    "course": {
+      "title": "Plate tectonics",
+      "levels": 3,
+      "lessons": 7
+    },
+    "lesson1": {
+      "title": "What is a tectonic plate?",
+      "score": 8,
+      "passed": true,
+      "approach": "misconception",
+      "blocks": "activity > explain > activity > check > explain > check > explain > reflect > explain",
+      "sources": 5,
+      "stagedInResult": true
+    },
+    "trace": [
+      {
+        "step": "load_course",
+        "found": false,
+        "currentModule": null
+      },
+      {
+        "ms": 2114,
+        "hit": false,
+        "step": "plan_cache",
+        "nearest": [
+          "Photosynthesis (0.22)",
+          "Stoicism (0.19)"
+        ]
+      },
+      {
+        "ms": 14452,
+        "step": "agent.turn",
+        "turn": 1,
+        "toolCalls": [
+          "create_course"
+        ]
+      },
+      {
+        "step": "plan_cached"
+      },
+      {
+        "ok": true,
+        "step": "agent.tool",
+        "tool": "create_course",
+        "turn": 1
+      },
+      {
+        "ms": 3844,
+        "step": "agent.turn",
+        "turn": 2,
+        "toolCalls": [
+          "write_module"
+        ]
+      },
+      {
+        "hit": false,
+        "step": "lesson_cache",
+        "module": 1,
+        "eligible": true
+      },
+      {
+        "ms": 69022,
+        "step": "lesson.generate",
+        "blocks": "activity > explain > activity > check > explain > check > explain > reflect > explain",
+        "module": 1,
+        "approach": "misconception",
+        "placedChecks": 0,
+        "droppedBlocks": 0,
+        "droppedQuestions": 0,
+        "droppedActivities": 0
+      },
+      {
+        "ms": 5935,
+        "step": "lesson.blind",
+        "giveaways": [],
+        "iteration": 1,
+        "questions": 2
+      },
+      {
+        "ms": 18895,
+        "step": "lesson.verify",
+        "claims": 5,
+        "unclear": 0,
+        "iteration": 1,
+        "supported": 5,
+        "downgraded": [],
+        "contradicted": []
+      },
+      {
+        "ms": 18904,
+        "step": "lesson.evaluate",
+        "score": 8,
+        "problems": [
+          "The first check's hint names lithosphere, a term appearing only in the correct option, creating an answer cue rather than supporting independent reasoning.",
+          "The opening prediction makes the correct option conspicuously longer and more comprehensive than the distractors.",
+          "The diagram activity primarily asks learners to tap and read supplied relationships rather than construct, classify, or test a model.",
+          "The two checks provide limited progression in difficulty, and there is no independently scored check of the mostly solid, slowly deforming asthenosphere or the distinction between rigidity and movement. The final reflection addresses these ideas but relies on self-comparison."
+        ],
+        "iteration": 1,
+        "factErrors": [],
+        "structureIssues": [
+          "Question 1 (\"Mina builds a cutaway Earth model with crust, rigid upper…\"): a hint uses words found only in the right answer (\"lithosphere\"); hint at the reasoning, not the answer."
+        ]
+      },
+      {
+        "step": "lesson.select",
+        "score": 8,
+        "passed": true,
+        "sources": 5
+      },
+      {
+        "step": "save_lesson",
+        "lessonId": 28
+      },
+      {
+        "step": "lesson_cached"
+      },
+      {
+        "step": "save_progress",
+        "saved": true
+      },
+      {
+        "ok": true,
+        "step": "agent.tool",
+        "tool": "write_module",
+        "turn": 2
+      },
+      {
+        "ms": 1970,
+        "step": "agent.turn",
+        "turn": 3,
+        "toolCalls": []
+      },
+      {
+        "step": "agent.finish",
+        "turn": 3
+      },
+      {
+        "usd": 0.06207,
+        "step": "run.cost",
+        "calls": 13,
+        "bySteps": {
+          "plan": {
+            "in": 855,
+            "out": 608,
+            "cost": 0.00779,
+            "calls": 1
+          },
+          "agent": {
+            "in": 3181,
+            "out": 175,
+            "cost": 0.00031,
+            "calls": 2
+          },
+          "blind": {
+            "in": 372,
+            "out": 305,
+            "cost": 0.00019,
+            "calls": 1
+          },
+          "write": {
+            "in": 5007,
+            "out": 3523,
+            "cost": 0.03635,
+            "calls": 1
+          },
+          "review": {
+            "in": 3023,
+            "out": 264,
+            "cost": 0.0102,
+            "calls": 1
+          },
+          "verify": {
+            "in": 10707,
+            "out": 1795,
+            "cost": 0.00724,
+            "calls": 6
+          },
+          "plan_match": {
+            "in": 5,
+            "out": 0,
+            "cost": 0,
+            "calls": 1
+          }
+        },
+        "tokensIn": 23150,
+        "tokensOut": 6670,
+        "tokensCached": 6249
+      }
+    ],
+    "stagedByServer": {
+      "guide": "Dr. Leila Haddad",
+      "scenes": 2,
+      "painted": 2,
+      "portrait": true,
+      "goDeeper": {
+        "videos": 3,
+        "articles": 3,
+        "books": 2,
+        "images": 3
+      }
+    },
+    "worldPaintedByServer": true,
+    "voice": {
+      "status": 200,
+      "seconds": 5,
+      "url": true
+    },
+    "runs": [
+      {
+        "kind": "learn",
+        "outcome": "lesson",
+        "ok": true,
+        "ms": 114516,
+        "cost_usd": 0.06207,
+        "calls": 13,
+        "tokens_in": 23150,
+        "tokens_out": 6670,
+        "error": null
+      },
+      {
+        "kind": "stage",
+        "outcome": "staged",
+        "ok": true,
+        "ms": 79999,
+        "cost_usd": 0.10563,
+        "calls": 7,
+        "tokens_in": 5821,
+        "tokens_out": 7429,
+        "error": null
+      },
+      {
+        "kind": "cover",
+        "outcome": "painted",
+        "ok": true,
+        "ms": 29974,
+        "cost_usd": 0.03366,
+        "calls": 1,
+        "tokens_in": 247,
+        "tokens_out": 1120,
+        "error": null
+      },
+      {
+        "kind": "cover",
+        "outcome": "road",
+        "ok": true,
+        "ms": 12659,
+        "cost_usd": 0.01586,
+        "calls": 1,
+        "tokens_in": 1278,
+        "tokens_out": 1109,
+        "error": null
+      }
+    ]
+  },
+  "b": {
+    "topic": "how continents drift",
+    "onboarding": 200,
+    "learn": {
+      "started": 202,
+      "startSeconds": 1,
+      "job": "done",
+      "seconds": 198,
+      "watched": "the app's job API",
+      "kind": "lesson"
+    },
+    "course": {
+      "title": "How Continents Drift",
+      "levels": 3,
+      "lessons": 7
+    },
+    "lesson1": {
+      "title": "What actually moves?",
+      "score": 7.6,
+      "passed": false,
+      "approach": "misconception",
+      "blocks": "activity > explain > activity > check > explain > check > explain > problem > reflect",
+      "sources": 4,
+      "stagedInResult": true
+    },
+    "trace": [
+      {
+        "step": "load_course",
+        "found": false,
+        "currentModule": null
+      },
+      {
+        "ms": 2034,
+        "hit": false,
+        "step": "plan_cache",
+        "nearest": [
+          "Plate tectonics (0.42)",
+          "Stoicism (0.11)",
+          "Photosynthesis (0.06)"
+        ]
+      },
+      {
+        "ms": 15215,
+        "step": "agent.turn",
+        "turn": 1,
+        "toolCalls": [
+          "create_course"
+        ]
+      },
+      {
+        "step": "plan_cached"
+      },
+      {
+        "ok": true,
+        "step": "agent.tool",
+        "tool": "create_course",
+        "turn": 1
+      },
+      {
+        "ms": 3237,
+        "step": "agent.turn",
+        "turn": 2,
+        "toolCalls": [
+          "write_module"
+        ]
+      },
+      {
+        "hit": false,
+        "step": "lesson_cache",
+        "module": 1,
+        "eligible": true
+      },
+      {
+        "ms": 81348,
+        "step": "lesson.generate",
+        "blocks": "activity > explain > activity > check > explain > check > explain > problem > reflect",
+        "module": 1,
+        "approach": "misconception",
+        "placedChecks": 0,
+        "droppedBlocks": 0,
+        "droppedQuestions": 0,
+        "droppedActivities": 0
+      },
+      {
+        "ms": 5042,
+        "step": "lesson.blind",
+        "giveaways": [],
+        "iteration": 1,
+        "questions": 2
+      },
+      {
+        "ms": 23255,
+        "step": "lesson.verify",
+        "claims": 5,
+        "unclear": 1,
+        "iteration": 1,
+        "supported": 4,
+        "downgraded": [
+          "Tectonic plates typically move a few centimeters per year, although their speeds vary.: the quoted evidence isn't on the cited page: \"The   says, “individual tectonic plates move at different speeds and in different directions.”   states, “On average, tectonic plates move a few centimeters per year.”\" (https://www.usgs.gov/faqs/how-fast-do-tectonic-plates-move)"
+        ],
+        "contradicted": []
+      },
+      {
+        "ms": 23268,
+        "step": "lesson.evaluate",
+        "score": 7.6,
+        "problems": [
+          "The first check essentially repeats the opening prediction with different labels. Stating that both markers are inside the same rigid plate makes it answerable through everyday reasoning without learning much geology.",
+          "The checks do not meaningfully increase in difficulty. The second largely asks learners to select a sentence already supplied in the explanation, while several distractors are less plausible than the targeted magma misconception.",
+          "Both flagged hint issues are valid: the first check's hint mentions separation, and the second emphasizes long times, closely echoing wording unique to the correct answers.",
+          "The diagram activity mainly involves tapping and reading supplied relationships rather than making a decision, constructing a model, or testing understanding.",
+          "The arithmetic problem is correct but tests multiplication more than the distinction between continents and plates."
+        ],
+        "iteration": 1,
+        "factErrors": [],
+        "structureIssues": [
+          "Question 1 (\"A survey team places one marker on coastal land and anoth…\"): a hint uses words found only in the right answer (\"separation\"); hint at the reasoning, not the answer.",
+          "Question 2 (\"A museum artist wants to show a plate moving over the man…\"): a hint uses words found only in the right answer (\"long\", \"time\"); hint at the reasoning, not the answer."
+        ]
+      },
+      {
+        "step": "lesson.revise_skipped",
+        "reason": "time budget",
+        "iteration": 1
+      },
+      {
+        "step": "lesson.select",
+        "score": 7.6,
+        "passed": false,
+        "sources": 4
+      },
+      {
+        "step": "save_lesson",
+        "lessonId": 29
+      },
+      {
+        "step": "save_progress",
+        "saved": true
+      },
+      {
+        "ok": true,
+        "step": "agent.tool",
+        "tool": "write_module",
+        "turn": 2
+      },
+      {
+        "ms": 2440,
+        "step": "agent.turn",
+        "turn": 3,
+        "toolCalls": []
+      },
+      {
+        "step": "agent.finish",
+        "turn": 3
+      },
+      {
+        "usd": 0.07339,
+        "step": "run.cost",
+        "calls": 13,
+        "bySteps": {
+          "plan": {
+            "in": 855,
+            "out": 630,
+            "cost": 0.00801,
+            "calls": 1
+          },
+          "agent": {
+            "in": 3196,
+            "out": 154,
+            "cost": 0.0003,
+            "calls": 2
+          },
+          "blind": {
+            "in": 384,
+            "out": 180,
+            "cost": 0.00013,
+            "calls": 1
+          },
+          "write": {
+            "in": 5029,
+            "out": 3394,
+            "cost": 0.04651,
+            "calls": 1
+          },
+          "review": {
+            "in": 2916,
+            "out": 394,
+            "cost": 0.01123,
+            "calls": 1
+          },
+          "verify": {
+            "in": 10503,
+            "out": 1805,
+            "cost": 0.00721,
+            "calls": 6
+          },
+          "plan_match": {
+            "in": 3,
+            "out": 0,
+            "cost": 0,
+            "calls": 1
+          }
+        },
+        "tokensIn": 22886,
+        "tokensOut": 6557,
+        "tokensCached": 1522
+      }
+    ],
+    "runs": [
+      {
+        "kind": "learn",
+        "outcome": "lesson",
+        "ok": true,
+        "ms": 130550,
+        "cost_usd": 0.07339,
+        "calls": 13,
+        "tokens_in": 22886,
+        "tokens_out": 6557,
+        "error": null
+      },
+      {
+        "kind": "stage",
+        "outcome": "staged",
+        "ok": true,
+        "ms": 33458,
+        "cost_usd": 0.07177,
+        "calls": 6,
+        "tokens_in": 5542,
+        "tokens_out": 5923,
+        "error": null
+      },
+      {
+        "kind": "cover",
+        "outcome": "painted",
+        "ok": true,
+        "ms": 10763,
+        "cost_usd": 0.03366,
+        "calls": 1,
+        "tokens_in": 249,
+        "tokens_out": 1120,
+        "error": null
+      },
+      {
+        "kind": "cover",
+        "outcome": "road",
+        "ok": true,
+        "ms": 15775,
+        "cost_usd": 0.02213,
+        "calls": 1,
+        "tokens_in": 1279,
+        "tokens_out": 1631,
+        "error": null
+      }
+    ]
+  }
+}

@@ -9,6 +9,7 @@ import { stageLesson, useAppState } from "@/components/app/AppState";
 import type { VoiceControl } from "@/components/lesson/Scene";
 import { LessonView } from "@/components/LessonView";
 import { Lottie } from "@/components/motion/Lottie";
+import { BackLink } from "@/components/app/BackLink";
 import type { View } from "@/components/types";
 import { levelsOf, lessonLabel } from "@/lib/courseHierarchy";
 import type { Staging } from "@/lib/staging";
@@ -52,9 +53,7 @@ export default function ModulePage() {
     const isCurrent = index === course.currentModule;
     return (
       <main className="mx-auto max-w-3xl px-4 py-20 sm:px-6">
-        <Link href={`/courses/${course.id}`} className="text-sm text-muted hover:text-fg">
-          ← {course.title}
-        </Link>
+        <BackLink href={`/courses/${course.id}`}>{course.title}</BackLink>
         <div className="card mt-8 p-10 text-center">
           <p className="text-sm font-medium text-muted">{lessonLabel(levelsOf(course), index)}</p>
           <p className="font-display mt-2 text-2xl text-fg">{course.modules[index].title}</p>

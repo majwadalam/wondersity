@@ -184,6 +184,23 @@ const normalizeUrl = (u: string) => u.trim().replace(/[#?].*$/, "").replace(/\/+
 const normalizeText = (t: string) => t.toLowerCase().replace(/[^\p{L}\p{N}]+/gu, " ").trim();
 
 /**
+ * The model often writes the source as a markdown citation,
+ * "[site.org](https://site.org/page)", and appends one to its quote, as the
+ * web plugin's own answers do. Run 12 lost 3 of 5 real confirmations to that,
+ * so the URL is taken out of the link and citations are cut from the quote.
+ */
+export function citedUrl(source: string) {
+  return (source.match(/\]\((https?:\/\/[^)\s]+)\)/)?.[1] ?? source.match(/https?:\/\/[^\s)\]]+/)?.[0] ?? source).trim();
+}
+
+export function quoteOnly(evidence: string) {
+  return evidence
+    .replace(/\(?\[[^\]]*\]\([^)]*\)\)?/g, " ")
+    .replace(/https?:\/\/\S+/g, " ")
+    .trim();
+}
+
+/**
  * Whether a quote is really on the page. Search results come back as excerpts
  * joined by "…", and models tidy what they copy (citation marks dropped, a
  * quote stitched across a gap), so an exact match rejected most real quotes;
@@ -208,11 +225,13 @@ export function evidenceOnPage(evidence: string, page: string) {
 export function settleVerdict(claim: string, where: string, judgement: Judgement, sources: Source[]): ClaimCheck {
   const base = { claim, where };
   if (judgement.verdict === "unclear") return { ...base, verdict: "unclear" };
-  const source = sources.find((s) => normalizeUrl(s.url) === normalizeUrl(judgement.sourceUrl));
-  if (!source) return { ...base, verdict: "unclear", downgraded: `cited a page the search didn't return (${judgement.sourceUrl || "none"})` };
-  if (source.content && !evidenceOnPage(judgement.evidence, source.content)) {
+  const cited = citedUrl(judgement.sourceUrl);
+  const source = sources.find((s) => normalizeUrl(s.url) === normalizeUrl(cited));
+  if (!source) return { ...base, verdict: "unclear", downgraded: `cited a page the search didn't return (${cited || "none"}; returned: ${sources.map((s) => s.url).join(", ") || "none"})` };
+  const evidence = quoteOnly(judgement.evidence);
+  if (source.content && !evidenceOnPage(evidence, source.content)) {
     // The quote and page are kept so a run's trace shows why (see research/model-runs.md).
-    return { ...base, verdict: "unclear", downgraded: `the quoted evidence isn't on the cited page: "${judgement.evidence.slice(0, 200)}" (${source.url})` };
+    return { ...base, verdict: "unclear", downgraded: `the quoted evidence isn't on the cited page: "${evidence.slice(0, 200)}" (${source.url})` };
   }
   return {
     ...base,

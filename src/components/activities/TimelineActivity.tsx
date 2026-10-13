@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { spring } from "../motion/presets";
 import type { Activity } from "@/lib/activities";
 import { ActivityFrame } from "./ActivityFrame";
+import { rich } from "../lesson/rich";
 
 type TimelineData = Extract<Activity, { type: "timeline" }>;
 
@@ -86,7 +87,7 @@ export function TimelineActivity({ a, onDone }: { a: TimelineData; onDone: () =>
           >
             <p className="text-xs font-semibold tracking-wide text-accent uppercase">{e.marker}</p>
             <p className="font-display mt-1 text-xl text-fg">{e.title}</p>
-            {e.detail && <p className="mt-2 text-sm leading-relaxed text-fg/85">{e.detail}</p>}
+            {e.detail && <p className="mt-2 text-sm leading-relaxed text-fg/85">{rich(e.detail)}</p>}
           </motion.div>
         </AnimatePresence>
       </div>

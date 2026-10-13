@@ -1,6 +1,7 @@
 "use client";
 
 import { Check, Lock, Play, Sparkles } from "lucide-react";
+import { journey, pathOf } from "@/lib/journeyPath";
 import Image from "next/image";
 import { isRemote } from "@/lib/remoteImage";
 import Link from "next/link";
@@ -11,11 +12,12 @@ import type { Course } from "../types";
 
 // Each level gets its own tint, so a lesson without its painting yet still
 // looks like it belongs to its stretch of the course.
-const LEVEL_TINTS = [
+export const LEVEL_TINTS = [
   ["#7a5cff", "#3aa0e8"],
   ["#3aa0e8", "#15be53"],
   ["#f2711c", "#e5484d"],
-  ["#635bff", "#0a2540"],
+  // Green, not another purple: a fourth level has to be told apart from the first at a glance.
+  ["#15be53", "#0a8a6a"],
 ];
 
 /** A lesson's picture: its first painted scene, or a tinted card with its number. */
@@ -63,24 +65,16 @@ function LessonArt({ src, world, at, level, number, locked, sizes, big = false }
 // painted world, grouped into levels. Every state comes from saved progress:
 // done = lesson completed, current = the course's current module, else locked.
 
-type State = "done" | "current" | "locked";
+export type State = "done" | "current" | "locked";
 
 // The course only moves past a lesson once it's finished, so anything before
 // the current lesson is done even if a newer, unfinished copy of it was saved.
-const stateOf = (course: Course, i: number): State =>
+export const stateOf = (course: Course, i: number): State =>
   course.modules[i].lesson?.completed || course.status === "completed" || i < course.currentModule
     ? "done"
     : i === course.currentModule
       ? "current"
       : "locked";
-
-/** Where stop i of n sits on the map, in % of its width and height. */
-function journeyStop(i: number, n: number) {
-  const t = n === 1 ? 0.5 : i / (n - 1);
-  // Rounded, so the server and the browser draw the same road.
-  const r = (v: number) => Math.round(v * 100) / 100;
-  return { x: r(7 + t * 86), y: r(54 + Math.sin(t * Math.PI * 2.2 + 0.4) * 20) };
-}
 
 export function CourseJourney({
   course,
@@ -101,11 +95,15 @@ export function CourseJourney({
   const n = course.modules.length;
   const current = Math.min(course.currentModule, n - 1);
   const [selected, setSelected] = useState(course.status === "completed" ? 0 : current);
-  const points = course.modules.map((_, i) => journeyStop(i, n));
-  const road = points.map((p, i) => `${i ? "L" : "M"} ${p.x} ${p.y}`).join(" ");
+  // The stops sit on the road painted in the world, traced once (lib/worldRoad.ts); a default curve until then.
+  const { curve, stops: points } = journey(course.road, n);
+  const road = pathOf(curve);
   const doneUpTo = course.modules.reduce((last, _, i) => (stateOf(course, i) === "done" ? i : last), -1);
-  const walked = points.slice(0, Math.min(doneUpTo + 2, n)).map((p, i) => `${i ? "L" : "M"} ${p.x} ${p.y}`).join(" ");
+  // The walked part runs out of the last completed stop to the next one.
+  const walked = pathOf(curve.slice(0, points[Math.min(doneUpTo + 1, n - 1)].at + 1));
   const label = (i: number) => lessonLabel(levels, i);
+  // The first stop of each level, and which level it starts.
+  const levelStart = new Map(levels.map((l, li) => [l.modules[0], li]));
 
   return (
     <div>
@@ -113,7 +111,7 @@ export function CourseJourney({
       <div className="-mx-5 overflow-x-auto px-5 pb-2 sm:mx-0 sm:px-0">
         <div className="shadow-card relative aspect-[21/9] min-w-[720px] overflow-hidden rounded-3xl bg-[#e9eefc]">
           {course.cover ? (
-            <Image unoptimized={isRemote(course.cover)} src={course.cover} alt={`An illustrated map of ${course.topic}`} fill sizes="(min-width: 1100px) 1080px, 100vw" className="object-cover" priority />
+            <Image unoptimized={isRemote(course.cover)} src={course.cover} alt={`An illustrated map of ${course.topic}`} fill sizes="(min-width: 1100px) 1080px, 100vw" className="object-cover" loading="eager" fetchPriority="high" />
           ) : (
             <div className="world-placeholder absolute inset-0">
               {painting && (
@@ -129,30 +127,18 @@ export function CourseJourney({
           {/* The road, and the part already walked */}
           <svg viewBox="0 0 100 100" preserveAspectRatio="none" className="absolute inset-0 h-full w-full" aria-hidden>
             <path d={road} fill="none" stroke="white" strokeOpacity="0.85" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />
-            <path d={road} fill="none" stroke="#0a2540" strokeOpacity="0.25" strokeWidth="2" strokeDasharray="2 7" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+            {hasLevels
+              ? // Each level's stretch of road in its own colour, from its first stop to the next level's.
+                levels.map((l, li) => {
+                  const from = li === 0 ? 0 : points[l.modules[0]].at;
+                  const to = levels[li + 1] ? points[levels[li + 1].modules[0]].at : curve.length - 1;
+                  return (
+                    <path key={l.id} d={pathOf(curve.slice(from, to + 1))} fill="none" stroke={LEVEL_TINTS[li % LEVEL_TINTS.length][0]} strokeOpacity="0.7" strokeWidth="2.5" strokeDasharray="2 7" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+                  );
+                })
+              : <path d={road} fill="none" stroke="#0a2540" strokeOpacity="0.25" strokeWidth="2" strokeDasharray="2 7" strokeLinecap="round" vectorEffect="non-scaling-stroke" />}
             {doneUpTo >= 0 && <path d={walked} fill="none" stroke="#635bff" strokeWidth="5" strokeLinecap="round" strokeLinejoin="round" vectorEffect="non-scaling-stroke" />}
           </svg>
-
-          {/* Level names over their stretch of the road */}
-          {hasLevels &&
-            levels.map((l, li) => {
-              // Centred over the level's stretch of road.
-              const first = points[l.modules[0]];
-              const last = points[l.modules[l.modules.length - 1]];
-              const mid = { x: (first.x + last.x) / 2 };
-              // As wide as the level's stretch of road (a little more for short ones), so labels never overlap.
-              const width = Math.max(last.x - first.x + 100 / n, 12) - 2;
-              return (
-                <span
-                  key={l.id}
-                  className="absolute top-4 -translate-x-1/2 truncate rounded-full bg-white/90 px-3 py-1 text-center text-[11px] font-semibold whitespace-nowrap text-fg shadow-sm backdrop-blur"
-                  style={{ left: `${mid.x}%`, maxWidth: `${width}%` }}
-                  title={`Level ${li + 1} · ${l.title}`}
-                >
-                  Level {li + 1} · {l.title}
-                </span>
-              );
-            })}
 
           {/* Stops */}
           {course.modules.map((m, i) => {
@@ -171,7 +157,7 @@ export function CourseJourney({
               >
                 {s === "current" && <span className="absolute -inset-2 animate-ping rounded-full bg-white/50" aria-hidden />}
                 <span
-                  className={`relative block h-14 w-14 overflow-hidden rounded-full bg-white shadow-[var(--shadow-md)] transition-transform group-hover:scale-110 ${
+                  className={`relative block h-14 w-14 overflow-hidden rounded-full bg-white shadow-[0_1px_2px_rgba(10,37,64,0.3),0_10px_20px_-6px_rgba(10,37,64,0.45)] transition-transform group-hover:scale-110 ${
                     selected === i ? "ring-4 ring-white" : s === "current" ? "ring-[3px] ring-accent" : s === "done" ? "ring-[3px] ring-white" : "ring-2 ring-white/70"
                   }`}
                 >
@@ -188,11 +174,34 @@ export function CourseJourney({
                 >
                   {s === "done" ? <Check size={11} strokeWidth={3} /> : s === "locked" ? <Lock size={9} strokeWidth={2.5} /> : i + 1}
                 </span>
+                {/* Where a level begins: a tag on its first stop, in the level's colour (full names in the key below). */}
+                {hasLevels && levelStart.has(i) && (
+                  <span
+                    className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full px-2 py-0.5 text-[10px] font-semibold whitespace-nowrap text-white shadow-sm ring-2 ring-white"
+                    style={{ background: LEVEL_TINTS[levelStart.get(i)! % LEVEL_TINTS.length][0] }}
+                    aria-hidden
+                  >
+                    Level {levelStart.get(i)! + 1}
+                  </span>
+                )}
               </button>
             );
           })}
         </div>
       </div>
+
+      {/* The key: each level's colour on the road and its full name. */}
+      {hasLevels && (
+        <ul className="mt-4 mb-2 flex flex-wrap gap-x-6 gap-y-2 text-sm text-fg">
+          {levels.map((l, li) => (
+            <li key={l.id} className="flex min-w-0 items-center gap-2">
+              <span className="h-2.5 w-2.5 flex-shrink-0 rounded-full" style={{ background: LEVEL_TINTS[li % LEVEL_TINTS.length][0] }} aria-hidden />
+              <span className="font-semibold">Level {li + 1}</span>
+              <span className="truncate text-muted">{l.title}</span>
+            </li>
+          ))}
+        </ul>
+      )}
 
       <Spotlight
         course={course}
@@ -244,7 +253,7 @@ export function CourseJourney({
                       }`}
                     >
                       <span className="art-zoom relative block aspect-[4/3] w-full flex-shrink-0 overflow-hidden bg-canvas">
-                        <LessonArt src={m.cover} world={course.cover} at={journeyStop(i, course.modules.length)} level={li} number={i + 1} locked={s === "locked"} sizes="(min-width: 1024px) 260px, 50vw" />
+                        <LessonArt src={m.cover} world={course.cover} at={journey(course.road, course.modules.length).stops[i]} level={li} number={i + 1} locked={s === "locked"} sizes="(min-width: 1024px) 260px, 50vw" />
                         <StateChip state={s} />
                       </span>
                       <span className="block p-3.5">
@@ -289,7 +298,7 @@ function Spotlight({
   return (
     <div id="spotlight" className="shadow-card mt-6 grid overflow-hidden rounded-3xl bg-white sm:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
       <div className="relative aspect-[4/3] overflow-hidden bg-canvas sm:aspect-auto sm:min-h-[260px]">
-        <LessonArt src={m.cover} world={course.cover} at={journeyStop(index, course.modules.length)} level={level} number={index + 1} locked={false} sizes="(min-width: 640px) 450px, 100vw" big />
+        <LessonArt src={m.cover} world={course.cover} at={journey(course.road, course.modules.length).stops[index]} level={level} number={index + 1} locked={false} sizes="(min-width: 640px) 450px, 100vw" big />
       </div>
       <div className="flex flex-col p-6 sm:p-8">
         <p className="text-sm font-medium text-muted">

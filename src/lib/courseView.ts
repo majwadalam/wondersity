@@ -18,7 +18,11 @@ export type CourseView = {
   currentModule: number;
   /** Cover illustration URL, once generated; otherwise the UI picks built-in art. */
   cover: string | null;
+  /** The road traced in the world (% of the picture); [] when tracing failed (the default curve is drawn); null until traced. */
+  road: { x: number; y: number }[] | null;
   updatedAt: string;
+  /** Set when the learner tailored the course: their goal, the outcomes planned from it, their materials. */
+  tailored: { goal: string; outcomes: string[]; materials: string[] } | null;
   levels: {
     id: string;
     title: string;
@@ -91,7 +95,15 @@ export function toCourseView(course: CourseWithLessons): CourseView {
     status: course.status,
     currentModule: course.current_module,
     cover: course.cover_url ?? null,
+    road: course.world_road ?? null,
     updatedAt: course.updated_at,
+    tailored: course.intake
+      ? {
+          goal: course.intake.goal,
+          outcomes: course.outcomes ?? [],
+          materials: course.intake.materials?.map((m) => m.name) ?? [],
+        }
+      : null,
     levels: groups.map((g, gi) => ({
       id: g.id,
       title: g.title,
