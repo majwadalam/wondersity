@@ -104,7 +104,7 @@ function MarketingHeader() {
           : `app-header ${scrolled ? "border-line" : "border-transparent"}`
       }`}
     >
-      <div className="mx-auto flex h-16 max-w-6xl items-center gap-8 px-4 sm:px-6">
+      <div className="mx-auto flex h-16 max-w-6xl items-center gap-4 px-4 sm:px-6 md:gap-8">
         <Brand light={dark} />
         <nav className="hidden items-center gap-1 md:flex" aria-label="Site">
           {SITE_LINKS.map(([href, label]) => (
@@ -117,20 +117,21 @@ function MarketingHeader() {
             </Link>
           ))}
         </nav>
-        <div className="ml-auto flex items-center gap-2">
+        <div className="ml-auto flex shrink-0 items-center gap-1.5 sm:gap-2">
           {signedIn ? (
-            <Link href="/home" className={`${dark ? "btn-glow" : "btn-pill btn-pill-dark"} px-4 py-2 text-sm`}>
-              Open Wondersity
+            <Link href="/home" className={`${dark ? "btn-glow" : "btn-pill btn-pill-dark"} whitespace-nowrap px-4 py-2 text-sm`}>
+              <span className="sm:hidden">Open app</span>
+              <span className="hidden sm:inline">Open Wondersity</span>
             </Link>
           ) : (
             <>
               <Link
                 href="/login"
-                className={`hidden rounded-full px-3.5 py-2 text-sm font-medium min-[400px]:inline-flex ${dark ? "text-white/75 hover:text-white" : "text-fg/80 hover:text-fg"}`}
+                className={`hidden whitespace-nowrap rounded-full px-3.5 py-2 text-sm font-medium min-[440px]:inline-flex ${dark ? "text-white/75 hover:text-white" : "text-fg/80 hover:text-fg"}`}
               >
                 Sign in
               </Link>
-              <Link href="/login?mode=signup" className={`${dark ? "btn-glow" : "btn-pill btn-pill-dark"} px-4 py-2 text-sm`}>
+              <Link href="/login?mode=signup" className={`${dark ? "btn-glow" : "btn-pill btn-pill-dark"} whitespace-nowrap px-4 py-2 text-sm`}>
                 Get started
               </Link>
             </>

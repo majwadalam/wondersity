@@ -196,3 +196,4 @@ listed. For the full design, read AGENTS.md (how it works) and HARNESS.md
 - Compare tables redrawn: narrow label column, hairline rows, the second column tinted, larger text, a card per row on phones, and a "The difference" takeaway under the table. Writers keep cells to short phrases.
 - Missing lesson pictures came from the OpenRouter key's $25 limit (it refuses images under $1 left). Failed pictures are now logged as "Scenes couldn't be painted" in admin instead of a success; they repaint when the lesson is opened again.
 - Compare table: each column now has its own tint (grey for the first, blue for the second, matching the header dots); the label column stays plain. Before, the label column and the first column were both white.
+- Site header on phones: buttons never wrap; signed in, the button says "Open app" under 640px ("Open Wondersity" above); "Sign in" moves into the menu under 440px; tighter gaps on phones.
